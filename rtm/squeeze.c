@@ -237,8 +237,7 @@ squeeze_array(struct cell_array *arr)
 	double min_real, max_real;
 	int err;
 	unsigned char is_real, is_int;
-
-	err = 0;
+	
 	count = array_count(arr);
 	
 	if (!count)
@@ -257,8 +256,7 @@ squeeze_array(struct cell_array *arr)
 			type = array_max_type(type, t->type);
 		}
 		
-		if (err = cast_values(arr, type))
-			return err;
+		CHKFN(cast_values(arr, type), fail);
 		
 		if (arr->type == ARR_NESTED)
 			return 0;
@@ -281,35 +279,48 @@ squeeze_array(struct cell_array *arr)
 		return 99;
 	}
 	
-	err = find_minmax(&min_real, &max_real, &is_real, &is_int, arr);
-	
-	if (err)
-		return err;
+	CHKFN(find_minmax(&min_real, &max_real, &is_real, &is_int, arr),
+	    fail);
 	
 	if (!is_real)
 		return 0;
 	
-	if (!is_int)
-		return cast_values(arr, ARR_DBL);
+	if (!is_int) {
+		CHKFN(cast_values(arr, ARR_DBL), fail);
+		return err;
+	}
 	
 	if (is_char_array(arr)) {
-		if (0 <= min_real && max_real <= UINT8_MAX)
-			return cast_values(arr, ARR_CHAR8);
+		if (0 <= min_real && max_real <= UINT8_MAX) {
+			CHKFN(cast_values(arr, ARR_CHAR8), fail);
+			return err;
+		}
 		
-		if (0 <= min_real && max_real <= UINT16_MAX)
-			return cast_values(arr, ARR_CHAR16);
+		if (0 <= min_real && max_real <= UINT16_MAX) {
+			CHKFN(cast_values(arr, ARR_CHAR16), fail);
+			return err;
+		}
 		
 		return 0;
 	}
 	
-	if (0 <= min_real && max_real <= 1)
-		return cast_values(arr, ARR_BOOL);
+	if (0 <= min_real && max_real <= 1) {
+		CHKFN(cast_values(arr, ARR_BOOL), fail);
+		return err;
+	}
 	
-	if (INT16_MIN <= min_real && max_real <= INT16_MAX)
-		return cast_values(arr, ARR_SINT);
+	if (INT16_MIN <= min_real && max_real <= INT16_MAX) {
+		CHKFN(cast_values(arr, ARR_SINT), fail);
+		return err;
+	}
 	
-	if (INT32_MIN <= min_real && max_real <= INT32_MAX)
-		return cast_values(arr, ARR_INT);
+	if (INT32_MIN <= min_real && max_real <= INT32_MAX) {
+		CHKFN(cast_values(arr, ARR_INT), fail);
+		return err;
+	}
 	
-	return cast_values(arr, ARR_DBL);
+	CHKFN(cast_values(arr, ARR_DBL), fail);
+	
+fail:
+	return err;
 }
