@@ -353,6 +353,7 @@ set_idx_val(struct cell_array **z, struct cell_array *idx,
 
 	CHKFN(array_promote_storage(idx, tgt), done);
 	CHKFN(array_promote_storage(val, tgt), done);
+	CHKFN(array_promote_storage(idx, val), done);
 
 	CHKFN(cast_values(tgt, mtype), done);
 	CHKFN(cast_values(val, mtype), done);
