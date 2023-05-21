@@ -318,61 +318,21 @@ done:
 DECL_MOPER(identity_ibeam, error_mon_syntax, error_dya_syntax, identity_func, error_dya_syntax)
 
 int
-set_get_idx(struct cell_array **z, struct cell_array *tgt,
-    struct cell_array *iv, struct cell_array *val)
+set_idx_val(struct cell_array **z, struct cell_array *idx,
+    struct cell_array *r)
 {
-	struct cell_array *idx, *nil, *sproto;
-	int err;
-	
-	EXPORT int cdf_idx_rnk_check(struct cell_array **,
-	    struct cell_array *, struct cell_array *);
-	EXPORT int cdf_flatten_idx(struct cell_array **,
-	    struct cell_array *, struct cell_array *);
-	EXPORT int cdf_idx_shp_check(struct cell_array **, 
-	    struct cell_array *, struct cell_array *);
-	    
-	idx = NULL;
-
-	CHKFN(cdf_idx_rnk_check(&nil, tgt, iv), fail);
-	CHKFN(release_array(nil), fail);
-	
-	CHKFN(cdf_flatten_idx(&idx, tgt, iv), fail);
-	
-	sproto = idx->type == ARR_SPAN ? tgt : idx;
-	
-	CHKFN(cdf_idx_shp_check(&nil, sproto, val), fail);
-	CHKFN(release_array(nil), fail);
-	
-	*z = idx;
-	
-fail:
-	if (err)
-		release_array(idx);
-	
-	return err;
-}
-
-int
-set_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	struct cell_array *idx, *tgt, *val, *tmp;
+	struct cell_array *tgt, *tmp, *val;
 	enum array_type mtype;
 	int err;
 	
 	tgt = *z;
-	idx = NULL;
-	val = r;
 	tmp = NULL;
+	val = r;
 
-	CHKFN(set_get_idx(&idx, tgt, l, val), done);
-	
 	if (idx->type == ARR_SPAN) {
 		EXPORT int cdf_rho(struct cell_array **,
 		    struct cell_array *, struct cell_array *);
 		    
-		struct cell_array *t = NULL;
-		
 		CHKFN(cdf_rho(&tmp, NULL, tgt), done);
 		CHKFN(cdf_rho(z, tmp, val), done);
 		
@@ -471,11 +431,37 @@ dev_fail:
 	*z = tgt;
 	
 done:
-	release_array(idx);
 	release_array(tmp);
 	
 	if (val != r)
 		release_array(val);
+	
+	return err;
+}
+
+int
+set_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *idx;
+	struct cell_func *get_idx;
+	struct cell_moper *set_get_idx;
+	int err;
+		
+	idx = NULL;
+	get_idx = NULL;
+	set_get_idx = cdf_prim.cdf_set_get_idx;
+	
+	CHK(apply_mop(&get_idx, set_get_idx, 
+	    set_get_idx->fptr_am, set_get_idx->fptr_ad, l),
+	    done, L"get_idx←⍺ set_get_idx");
+	CHK((get_idx->fptr_dya)(&idx, *z, r, get_idx), done, 
+	    L"idx←(*z) get_idx ⍵");
+	CHKFN(set_idx_val(z, idx, r), done);
+	
+done:
+	release_func(get_idx);
+	release_array(idx);
 	
 	return err;
 }
@@ -486,11 +472,26 @@ int
 mst_oper(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
+	struct cell_array *idx;
+	struct cell_func *oper, *get_idx;
+	struct cell_moper *set_get_idx;
 	int err;
 	
-	CHK(16, fail, L"Modified bracket assignment unsupported.");
+	idx = NULL;
+	oper = self->fv[1];
+	set_get_idx = cdf_prim.cdf_set_get_idx;
+	
+	CHK(apply_mop(&get_idx, set_get_idx,
+	    set_get_idx->fptr_am, set_get_idx->fptr_ad, l),
+	    done, L"get_idx←⍺ set_get_idx");	    
+	CHK((get_idx->fptr_dya)(&idx, *z, r, get_idx), done,
+	    L"idx←(*z) get_idx ⍵");
+	CHKFN(set_idx_val(z, idx, r), fail);
 
 fail:
+	release_array(idx);
+	release_func(get_idx);
+	
 	return err;
 }
 

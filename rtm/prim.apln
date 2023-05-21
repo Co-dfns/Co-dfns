@@ -60,6 +60,13 @@ flatten_idx←{
 	⊃∘.+⌿(i×c↑1↓o),⊂(c↓s)⍴⍳c⌷o←⌽×⍀1,⌽s
 }
 idx_shp_check←{1≡≢,⍵:0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
+set_get_idx←{
+	⍺ idx_rnk_check ⍺⍺:
+	idx←⍺ flatten_idx ⍺⍺
+	proto←⍺{is_span idx:⍺ ⋄ idx}⍵
+	proto idx_shp_check ⍵:
+	idx
+}
 set←'set_ibeam'⌶
 
 ⍝ X[]f←Y: Modified Bracket Assignment
