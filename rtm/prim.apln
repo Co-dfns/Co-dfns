@@ -420,4 +420,7 @@ jot←{
 	⎕SIGNAL 2
 }
 
+⍝ ⌸: Key operator
+key←{fn←⍺⍺ ⋄ ⎕SIGNAL 16}
+
 :EndNamespace
