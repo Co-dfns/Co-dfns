@@ -70,6 +70,12 @@ set_get_idx←{
 set←'set_ibeam'⌶
 
 ⍝ X[]f←Y: Modified Bracket Assignment
+mst_vals←{op←⍵⍵
+	is_span ⍺⍺:⍺⍺(,⍺ ⍵⍵¨⍵)
+	(,⍺⍺)((,⍺)[,⍺⍺] ⍵⍵¨,⍵)
+	(≢idx)≡≢uidx←∪idx←,⍺⍺:uidx((,⍺)[uidx] ⍵⍵¨,⍵)
+	uidx((⌽uidx,idx){op⍨⌿⍵}⌸⌽(,⍺)[uidx],⍵)
+}
 mst←'mst_ibeam'⌶⌶
 
 ⍝ ⌷: Materialize | Squad indexing

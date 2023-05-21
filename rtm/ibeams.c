@@ -472,25 +472,42 @@ int
 mst_oper(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	struct cell_array *idx;
-	struct cell_func *oper, *get_idx;
+	struct cell_array *idx, *iv_idx, *iv_val, *idx_vals, **iv;
+	struct cell_func *oper, *get_idx, *get_idx_vals;
 	struct cell_moper *set_get_idx;
+	struct cell_doper *mst_vals;
 	int err;
 	
+	get_idx = NULL;
+	get_idx_vals = NULL;
 	idx = NULL;
+	idx_vals = NULL;
 	oper = self->fv[1];
 	set_get_idx = cdf_prim.cdf_set_get_idx;
+	mst_vals = cdf_prim.cdf_mst_vals;
 	
 	CHK(apply_mop(&get_idx, set_get_idx,
 	    set_get_idx->fptr_am, set_get_idx->fptr_ad, l),
-	    done, L"get_idx←⍺ set_get_idx");	    
-	CHK((get_idx->fptr_dya)(&idx, *z, r, get_idx), done,
+	    fail, L"get_idx←⍺ set_get_idx");	    
+	CHK((get_idx->fptr_dya)(&idx, *z, r, get_idx), fail,
 	    L"idx←(*z) get_idx ⍵");
-	CHKFN(set_idx_val(z, idx, r), fail);
+	CHK(apply_dop(&get_idx_vals, mst_vals,
+	    mst_vals->fptr_fam, mst_vals->fptr_fad, idx, oper),
+	    fail, L"get_idx_vals←idx mst_vals ⍺⍺");
+	CHK((get_idx_vals->fptr_dya)(&idx_vals, *z, r, get_idx_vals), fail,
+	    L"(idx vals)←(*z) get_idx_vals ⍵");
+	
+	iv = idx_vals->values;
+	iv_idx = iv[0];
+	iv_val = iv[1];
+	
+	CHKFN(set_idx_val(z, iv_idx, iv_val), fail);
 
 fail:
-	release_array(idx);
 	release_func(get_idx);
+	release_func(get_idx_vals);
+	release_array(idx);
+	release_array(idx_vals);
 	
 	return err;
 }
