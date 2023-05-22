@@ -106,1254 +106,1277 @@ extern struct cell_func *cdf_gte_vec_ibeam;
 extern struct cell_func *cdf_gth_vec_ibeam;
 extern struct cell_func *cdf_gth_vec_ibeam;
 extern struct cell_func *cdf_neq_vec_ibeam;
+extern struct cell_func *cdf_roll_ibeam;
+extern struct cell_func *cdf_roll_ibeam;
 extern struct cell_moper *cdf_identity_ibeam;
 extern struct cell_moper *cdf_identity_ibeam;
 extern struct cell_moper *cdf_identity_ibeam;
 extern struct cell_moper *cdf_identity_ibeam;
 
-int cdf_ptr10398(struct cell_array **,
+int cdf_ptr10780(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10399(struct cell_array **,
+int cdf_ptr10781(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10400(struct cell_array **,
+int cdf_ptr10782(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10401(struct cell_array **,
+int cdf_ptr10783(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10402(struct cell_array **,
+int cdf_ptr10784(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10403(struct cell_array **,
+int cdf_ptr10785(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10404(struct cell_array **,
+int cdf_ptr10786(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10405(struct cell_array **,
+int cdf_ptr10787(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10406(struct cell_array **,
+int cdf_ptr10788(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10407(struct cell_array **,
+int cdf_ptr10789(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10408(struct cell_array **,
+int cdf_ptr10790(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10409(struct cell_array **,
+int cdf_ptr10791(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10410(struct cell_array **,
+int cdf_ptr10792(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10411(struct cell_array **,
+int cdf_ptr10793(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10412(struct cell_array **,
+int cdf_ptr10794(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10413(struct cell_array **,
+int cdf_ptr10795(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10414(struct cell_array **,
+int cdf_ptr10796(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10415(struct cell_array **,
+int cdf_ptr10797(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10416(struct cell_array **,
+int cdf_ptr10798(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10417(struct cell_array **,
+int cdf_ptr10799(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10418(struct cell_array **,
+int cdf_ptr10800(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10419(struct cell_array **,
+int cdf_ptr10801(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10420(struct cell_array **,
+int cdf_ptr10802(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10421(struct cell_array **,
+int cdf_ptr10803(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10422(struct cell_array **,
+int cdf_ptr10804(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10423(struct cell_array **,
+int cdf_ptr10805(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10424(struct cell_array **,
+int cdf_ptr10806(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10425(struct cell_array **,
+int cdf_ptr10807(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10426(struct cell_array **,
+int cdf_ptr10808(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10427(struct cell_array **,
+int cdf_ptr10809(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10428(struct cell_array **,
+int cdf_ptr10810(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10429(struct cell_array **,
+int cdf_ptr10811(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10430(struct cell_array **,
+int cdf_ptr10812(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10431(struct cell_array **,
+int cdf_ptr10813(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10432(struct cell_array **,
+int cdf_ptr10814(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10433(struct cell_array **,
+int cdf_ptr10815(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10434(struct cell_array **,
+int cdf_ptr10816(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10435(struct cell_array **,
+int cdf_ptr10817(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10436(struct cell_array **,
+int cdf_ptr10818(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10437(struct cell_array **,
+int cdf_ptr10819(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10438(struct cell_array **,
+int cdf_ptr10820(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10439(struct cell_array **,
+int cdf_ptr10821(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10440(struct cell_array **,
+int cdf_ptr10822(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10441(struct cell_array **,
+int cdf_ptr10823(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10442(struct cell_array **,
+int cdf_ptr10824(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10443(struct cell_array **,
+int cdf_ptr10825(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10444(struct cell_array **,
+int cdf_ptr10826(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10445(struct cell_array **,
+int cdf_ptr10827(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10446(struct cell_array **,
+int cdf_ptr10828(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10447(struct cell_array **,
+int cdf_ptr10829(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10448(struct cell_array **,
+int cdf_ptr10830(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10449(struct cell_array **,
+int cdf_ptr10831(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10450(struct cell_array **,
+int cdf_ptr10832(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10451(struct cell_array **,
+int cdf_ptr10833(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10452(struct cell_array **,
+int cdf_ptr10834(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10453(struct cell_array **,
+int cdf_ptr10835(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10454(struct cell_array **,
+int cdf_ptr10836(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10455(struct cell_array **,
+int cdf_ptr10837(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10456(struct cell_array **,
+int cdf_ptr10838(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10457(struct cell_array **,
+int cdf_ptr10839(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10458(struct cell_array **,
+int cdf_ptr10840(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10459(struct cell_array **,
+int cdf_ptr10841(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10460(struct cell_array **,
+int cdf_ptr10842(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10461(struct cell_array **,
+int cdf_ptr10843(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10462(struct cell_array **,
+int cdf_ptr10844(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10463(struct cell_array **,
+int cdf_ptr10845(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10464(struct cell_array **,
+int cdf_ptr10846(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10465(struct cell_array **,
+int cdf_ptr10847(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10466(struct cell_array **,
+int cdf_ptr10848(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10467(struct cell_array **,
+int cdf_ptr10849(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10468(struct cell_array **,
+int cdf_ptr10850(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10469(struct cell_array **,
+int cdf_ptr10851(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10470(struct cell_array **,
+int cdf_ptr10852(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10471(struct cell_array **,
+int cdf_ptr10853(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10472(struct cell_array **,
+int cdf_ptr10854(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10473(struct cell_array **,
+int cdf_ptr10855(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10474(struct cell_array **,
+int cdf_ptr10856(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10475(struct cell_array **,
+int cdf_ptr10857(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10476(struct cell_array **,
+int cdf_ptr10858(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10477(struct cell_array **,
+int cdf_ptr10859(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10478(struct cell_array **,
+int cdf_ptr10860(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10479(struct cell_array **,
+int cdf_ptr10861(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10480(struct cell_array **,
+int cdf_ptr10862(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10481(struct cell_array **,
+int cdf_ptr10863(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10482(struct cell_array **,
+int cdf_ptr10864(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10483(struct cell_array **,
+int cdf_ptr10865(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10484(struct cell_array **,
+int cdf_ptr10866(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10485(struct cell_array **,
+int cdf_ptr10867(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10486(struct cell_array **,
+int cdf_ptr10868(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10487(struct cell_array **,
+int cdf_ptr10869(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10488(struct cell_array **,
+int cdf_ptr10870(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10489(struct cell_array **,
+int cdf_ptr10871(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10490(struct cell_array **,
+int cdf_ptr10872(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10491(struct cell_array **,
+int cdf_ptr10873(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10492(struct cell_array **,
+int cdf_ptr10874(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10493(struct cell_array **,
+int cdf_ptr10875(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10494(struct cell_array **,
+int cdf_ptr10876(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10495(struct cell_array **,
+int cdf_ptr10877(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10496(struct cell_array **,
+int cdf_ptr10878(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10497(struct cell_array **,
+int cdf_ptr10879(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10498(struct cell_array **,
+int cdf_ptr10880(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10499(struct cell_array **,
+int cdf_ptr10881(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10500(struct cell_array **,
+int cdf_ptr10882(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10501(struct cell_array **,
+int cdf_ptr10883(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10502(struct cell_array **,
+int cdf_ptr10884(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10503(struct cell_array **,
+int cdf_ptr10885(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10504(struct cell_array **,
+int cdf_ptr10886(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10505(struct cell_array **,
+int cdf_ptr10887(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10506(struct cell_array **,
+int cdf_ptr10888(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10507(struct cell_array **,
+int cdf_ptr10889(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10508(struct cell_array **,
+int cdf_ptr10890(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10509(struct cell_array **,
+int cdf_ptr10891(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10510(struct cell_array **,
+int cdf_ptr10892(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10511(struct cell_array **,
+int cdf_ptr10893(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10512(struct cell_array **,
+int cdf_ptr10894(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10513(struct cell_array **,
+int cdf_ptr10895(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10514(struct cell_array **,
+int cdf_ptr10896(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10515(struct cell_array **,
+int cdf_ptr10897(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10516(struct cell_array **,
+int cdf_ptr10898(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10517(struct cell_array **,
+int cdf_ptr10899(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10518(struct cell_array **,
+int cdf_ptr10900(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10519(struct cell_array **,
+int cdf_ptr10901(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10520(struct cell_array **,
+int cdf_ptr10902(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10521(struct cell_array **,
+int cdf_ptr10903(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10522(struct cell_array **,
+int cdf_ptr10904(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10523(struct cell_array **,
+int cdf_ptr10905(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10524(struct cell_array **,
+int cdf_ptr10906(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10525(struct cell_array **,
+int cdf_ptr10907(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10526(struct cell_array **,
+int cdf_ptr10908(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10527(struct cell_array **,
+int cdf_ptr10909(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10528(struct cell_array **,
+int cdf_ptr10910(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10529(struct cell_array **,
+int cdf_ptr10911(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10530(struct cell_array **,
+int cdf_ptr10912(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10531(struct cell_array **,
+int cdf_ptr10913(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10532(struct cell_array **,
+int cdf_ptr10914(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10533(struct cell_array **,
+int cdf_ptr10915(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10534(struct cell_array **,
+int cdf_ptr10916(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10535(struct cell_array **,
+int cdf_ptr10917(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10536(struct cell_array **,
+int cdf_ptr10918(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10537(struct cell_array **,
+int cdf_ptr10919(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10538(struct cell_array **,
+int cdf_ptr10920(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10539(struct cell_array **,
+int cdf_ptr10921(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10540(struct cell_array **,
+int cdf_ptr10922(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10541(struct cell_array **,
+int cdf_ptr10923(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10542(struct cell_array **,
+int cdf_ptr10924(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10543(struct cell_array **,
+int cdf_ptr10925(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10544(struct cell_array **,
+int cdf_ptr10926(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10545(struct cell_array **,
+int cdf_ptr10927(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10546(struct cell_array **,
+int cdf_ptr10928(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10547(struct cell_array **,
+int cdf_ptr10929(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10548(struct cell_array **,
+int cdf_ptr10930(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10549(struct cell_array **,
+int cdf_ptr10931(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10550(struct cell_array **,
+int cdf_ptr10932(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10551(struct cell_array **,
+int cdf_ptr10933(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10552(struct cell_array **,
+int cdf_ptr10934(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10553(struct cell_array **,
+int cdf_ptr10935(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10554(struct cell_array **,
+int cdf_ptr10936(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10555(struct cell_array **,
+int cdf_ptr10937(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10556(struct cell_array **,
+int cdf_ptr10938(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10557(struct cell_array **,
+int cdf_ptr10939(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10558(struct cell_array **,
+int cdf_ptr10940(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10559(struct cell_array **,
+int cdf_ptr10941(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10560(struct cell_array **,
+int cdf_ptr10942(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10561(struct cell_array **,
+int cdf_ptr10943(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10562(struct cell_array **,
+int cdf_ptr10944(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10563(struct cell_array **,
+int cdf_ptr10945(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10564(struct cell_array **,
+int cdf_ptr10946(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10565(struct cell_array **,
+int cdf_ptr10947(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10566(struct cell_array **,
+int cdf_ptr10948(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10567(struct cell_array **,
+int cdf_ptr10949(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10568(struct cell_array **,
+int cdf_ptr10950(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10569(struct cell_array **,
+int cdf_ptr10951(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10570(struct cell_array **,
+int cdf_ptr10952(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10571(struct cell_array **,
+int cdf_ptr10953(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10572(struct cell_array **,
+int cdf_ptr10954(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10573(struct cell_array **,
+int cdf_ptr10955(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10574(struct cell_array **,
+int cdf_ptr10956(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10575(struct cell_array **,
+int cdf_ptr10957(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10576(struct cell_array **,
+int cdf_ptr10958(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10577(struct cell_array **,
+int cdf_ptr10959(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10578(struct cell_array **,
+int cdf_ptr10960(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10579(struct cell_array **,
+int cdf_ptr10961(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10580(struct cell_array **,
+int cdf_ptr10962(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10581(struct cell_array **,
+int cdf_ptr10963(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10582(struct cell_array **,
+int cdf_ptr10964(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10583(struct cell_array **,
+int cdf_ptr10965(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10584(struct cell_array **,
+int cdf_ptr10966(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10585(struct cell_array **,
+int cdf_ptr10967(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10586(struct cell_array **,
+int cdf_ptr10968(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10587(struct cell_array **,
+int cdf_ptr10969(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10588(struct cell_array **,
+int cdf_ptr10970(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10589(struct cell_array **,
+int cdf_ptr10971(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10590(struct cell_array **,
+int cdf_ptr10972(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10591(struct cell_array **,
+int cdf_ptr10973(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10592(struct cell_array **,
+int cdf_ptr10974(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10593(struct cell_array **,
+int cdf_ptr10975(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10594(struct cell_array **,
+int cdf_ptr10976(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10595(struct cell_array **,
+int cdf_ptr10977(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10596(struct cell_array **,
+int cdf_ptr10978(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10597(struct cell_array **,
+int cdf_ptr10979(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10598(struct cell_array **,
+int cdf_ptr10980(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10599(struct cell_array **,
+int cdf_ptr10981(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10600(struct cell_array **,
+int cdf_ptr10982(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10601(struct cell_array **,
+int cdf_ptr10983(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10602(struct cell_array **,
+int cdf_ptr10984(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10603(struct cell_array **,
+int cdf_ptr10985(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10604(struct cell_array **,
+int cdf_ptr10986(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10605(struct cell_array **,
+int cdf_ptr10987(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10606(struct cell_array **,
+int cdf_ptr10988(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10607(struct cell_array **,
+int cdf_ptr10989(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10608(struct cell_array **,
+int cdf_ptr10990(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10609(struct cell_array **,
+int cdf_ptr10991(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10610(struct cell_array **,
+int cdf_ptr10992(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10611(struct cell_array **,
+int cdf_ptr10993(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10612(struct cell_array **,
+int cdf_ptr10994(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10613(struct cell_array **,
+int cdf_ptr10995(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10614(struct cell_array **,
+int cdf_ptr10996(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10615(struct cell_array **,
+int cdf_ptr10997(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10616(struct cell_array **,
+int cdf_ptr10998(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10617(struct cell_array **,
+int cdf_ptr10999(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10618(struct cell_array **,
+int cdf_ptr11000(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10619(struct cell_array **,
+int cdf_ptr11001(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10620(struct cell_array **,
+int cdf_ptr11002(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10621(struct cell_array **,
+int cdf_ptr11003(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10622(struct cell_array **,
+int cdf_ptr11004(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10623(struct cell_array **,
+int cdf_ptr11005(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10624(struct cell_array **,
+int cdf_ptr11006(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10625(struct cell_array **,
+int cdf_ptr11007(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10626(struct cell_array **,
+int cdf_ptr11008(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10627(struct cell_array **,
+int cdf_ptr11009(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10628(struct cell_array **,
+int cdf_ptr11010(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10629(struct cell_array **,
+int cdf_ptr11011(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10630(struct cell_array **,
+int cdf_ptr11012(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10631(struct cell_array **,
+int cdf_ptr11013(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10632(struct cell_array **,
+int cdf_ptr11014(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10633(struct cell_array **,
+int cdf_ptr11015(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10634(struct cell_array **,
+int cdf_ptr11016(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10635(struct cell_array **,
+int cdf_ptr11017(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10636(struct cell_array **,
+int cdf_ptr11018(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10637(struct cell_array **,
+int cdf_ptr11019(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10638(struct cell_array **,
+int cdf_ptr11020(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10639(struct cell_array **,
+int cdf_ptr11021(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10640(struct cell_array **,
+int cdf_ptr11022(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10641(struct cell_array **,
+int cdf_ptr11023(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10642(struct cell_array **,
+int cdf_ptr11024(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10643(struct cell_array **,
+int cdf_ptr11025(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10644(struct cell_array **,
+int cdf_ptr11026(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10645(struct cell_array **,
+int cdf_ptr11027(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10646(struct cell_array **,
+int cdf_ptr11028(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10647(struct cell_array **,
+int cdf_ptr11029(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10648(struct cell_array **,
+int cdf_ptr11030(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10649(struct cell_array **,
+int cdf_ptr11031(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10650(struct cell_array **,
+int cdf_ptr11032(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10651(struct cell_array **,
+int cdf_ptr11033(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10652(struct cell_array **,
+int cdf_ptr11034(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10653(struct cell_array **,
+int cdf_ptr11035(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10654(struct cell_array **,
+int cdf_ptr11036(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10655(struct cell_array **,
+int cdf_ptr11037(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10656(struct cell_array **,
+int cdf_ptr11038(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10657(struct cell_array **,
+int cdf_ptr11039(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10658(struct cell_array **,
+int cdf_ptr11040(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10659(struct cell_array **,
+int cdf_ptr11041(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10660(struct cell_array **,
+int cdf_ptr11042(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10661(struct cell_array **,
+int cdf_ptr11043(struct cell_array **,
     struct cell_array *,
+    struct cell_func *);
+int cdf_ptr11044(struct cell_array **,
+    struct cell_array *,
+    struct cell_array *,
+    struct cell_func *);
+int cdf_ptr11045(struct cell_array **,
+    struct cell_array *,
+    struct cell_array *,
+    struct cell_func *);
+int cdf_ptr11046(struct cell_array **,
+    struct cell_array *,
+    struct cell_func *);
+int cdf_ptr11047(struct cell_array **,
+    struct cell_array *,
+    struct cell_array *,
+    struct cell_func *);
+int cdf_ptr11048(struct cell_array **,
+    struct cell_array *,
+    struct cell_func *);
+int cdf_ptr11049(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10662(struct cell_array **,
+int cdf_ptr11050(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10663(struct cell_array **,
+int cdf_ptr11051(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10664(struct cell_array **,
+int cdf_ptr11052(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10665(struct cell_array **,
+int cdf_ptr11053(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10666(struct cell_array **,
+int cdf_ptr11054(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10667(struct cell_array **,
+int cdf_ptr11055(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10668(struct cell_array **,
+int cdf_ptr11056(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10669(struct cell_array **,
+int cdf_ptr11057(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10670(struct cell_array **,
+int cdf_ptr11058(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10671(struct cell_array **,
+int cdf_ptr11059(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10672(struct cell_array **,
+int cdf_ptr11060(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10673(struct cell_array **,
+int cdf_ptr11061(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10674(struct cell_array **,
+int cdf_ptr11062(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10675(struct cell_array **,
+int cdf_ptr11063(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10676(struct cell_array **,
+int cdf_ptr11064(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10677(struct cell_array **,
+int cdf_ptr11065(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10678(struct cell_array **,
+int cdf_ptr11066(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10679(struct cell_array **,
+int cdf_ptr11067(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10680(struct cell_array **,
+int cdf_ptr11068(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10681(struct cell_array **,
+int cdf_ptr11069(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10682(struct cell_array **,
+int cdf_ptr11070(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10683(struct cell_array **,
+int cdf_ptr11071(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10684(struct cell_array **,
+int cdf_ptr11072(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10685(struct cell_array **,
+int cdf_ptr11073(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10686(struct cell_array **,
+int cdf_ptr11074(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10687(struct cell_array **,
+int cdf_ptr11075(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10688(struct cell_array **,
+int cdf_ptr11076(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10689(struct cell_array **,
+int cdf_ptr11077(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10690(struct cell_array **,
+int cdf_ptr11078(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10691(struct cell_array **,
+int cdf_ptr11079(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10692(struct cell_array **,
+int cdf_ptr11080(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10693(struct cell_array **,
+int cdf_ptr11081(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10694(struct cell_array **,
+int cdf_ptr11082(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10695(struct cell_array **,
+int cdf_ptr11083(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10696(struct cell_array **,
+int cdf_ptr11084(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10697(struct cell_array **,
+int cdf_ptr11085(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10698(struct cell_array **,
+int cdf_ptr11086(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10699(struct cell_array **,
+int cdf_ptr11087(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10700(struct cell_array **,
+int cdf_ptr11088(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10701(struct cell_array **,
+int cdf_ptr11089(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10702(struct cell_array **,
+int cdf_ptr11090(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10703(struct cell_array **,
+int cdf_ptr11091(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10704(struct cell_array **,
+int cdf_ptr11092(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10705(struct cell_array **,
+int cdf_ptr11093(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10706(struct cell_array **,
+int cdf_ptr11094(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10707(struct cell_array **,
+int cdf_ptr11095(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10708(struct cell_array **,
+int cdf_ptr11096(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10709(struct cell_array **,
+int cdf_ptr11097(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10710(struct cell_array **,
+int cdf_ptr11098(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10711(struct cell_array **,
+int cdf_ptr11099(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10712(struct cell_array **,
+int cdf_ptr11100(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10713(struct cell_array **,
+int cdf_ptr11101(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10714(struct cell_array **,
+int cdf_ptr11102(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10715(struct cell_array **,
+int cdf_ptr11103(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10716(struct cell_array **,
+int cdf_ptr11104(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10717(struct cell_array **,
+int cdf_ptr11105(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10718(struct cell_array **,
+int cdf_ptr11106(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10719(struct cell_array **,
+int cdf_ptr11107(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10720(struct cell_array **,
+int cdf_ptr11108(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10721(struct cell_array **,
+int cdf_ptr11109(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10722(struct cell_array **,
+int cdf_ptr11110(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10723(struct cell_array **,
+int cdf_ptr11111(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10724(struct cell_array **,
+int cdf_ptr11112(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10725(struct cell_array **,
+int cdf_ptr11113(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10726(struct cell_array **,
+int cdf_ptr11114(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10727(struct cell_array **,
+int cdf_ptr11115(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10728(struct cell_array **,
+int cdf_ptr11116(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10729(struct cell_array **,
+int cdf_ptr11117(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10730(struct cell_array **,
+int cdf_ptr11118(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10731(struct cell_array **,
+int cdf_ptr11119(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10732(struct cell_array **,
+int cdf_ptr11120(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10733(struct cell_array **,
+int cdf_ptr11121(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10734(struct cell_array **,
+int cdf_ptr11122(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10735(struct cell_array **,
+int cdf_ptr11123(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10736(struct cell_array **,
+int cdf_ptr11124(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10737(struct cell_array **,
+int cdf_ptr11125(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10738(struct cell_array **,
+int cdf_ptr11126(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10739(struct cell_array **,
+int cdf_ptr11127(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10740(struct cell_array **,
+int cdf_ptr11128(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10741(struct cell_array **,
+int cdf_ptr11129(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10742(struct cell_array **,
+int cdf_ptr11130(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10743(struct cell_array **,
+int cdf_ptr11131(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10744(struct cell_array **,
+int cdf_ptr11132(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10745(struct cell_array **,
+int cdf_ptr11133(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10746(struct cell_array **,
+int cdf_ptr11134(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10747(struct cell_array **,
+int cdf_ptr11135(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10748(struct cell_array **,
+int cdf_ptr11136(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10749(struct cell_array **,
+int cdf_ptr11137(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10750(struct cell_array **,
+int cdf_ptr11138(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
-int cdf_ptr10751(struct cell_array **,
+int cdf_ptr11139(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 
 int cdf_prim_flag = 0;
 
-wchar_t *cdf_prim_names[] = {L"q_signal", L"q_dr", L"spn", L"squeeze", L"is_simple", L"is_numeric", L"is_char", L"is_integer", L"is_bool", L"is_span", L"max_shp", L"has_nat_vals", L"chk_scl", L"both_simple", L"both_numeric", L"both_integer", L"both_char", L"both_bool", L"any", L"numeric", L"ambiv", L"same", L"veach", L"scalar", L"chk_valid_shape", L"reshape", L"rho", L"idx_rnk_check", L"idx_rng_check", L"flatten_idx", L"idx_shp_check", L"set_get_idx", L"set", L"mst_vals", L"mst", L"sqd", L"brk", L"rgt", L"lft", L"cat", L"ctf", L"depth", L"eqv", L"nqv", L"index_gen", L"index_of", L"iot", L"dis", L"enclose", L"par", L"conjugate", L"add", L"sub", L"sign", L"mul", L"div", L"absolute", L"residue", L"res", L"floor_array", L"min", L"ceil_array", L"max", L"exp", L"log", L"pitimes", L"trig", L"cir", L"binomial", L"fac", L"notscl", L"without", L"not", L"logand", L"and", L"logor", L"lor", L"nan", L"nor", L"lessthan", L"lth", L"lesseql", L"lte", L"eql_vec", L"equal", L"eql", L"greatereql", L"gte", L"greaterthan", L"gth", L"firstocc", L"neq_vec", L"noteq", L"neq", L"mix", L"take", L"tke", L"split", L"drop", L"drp", L"rtf", L"reverse_last", L"rotate_last", L"rot", L"trn", L"gdu", L"gdd", L"enc", L"dec", L"mem", L"fnd", L"unq", L"int", L"rol", L"mdv", L"com", L"map", L"reduce", L"nwreduce", L"rdf", L"rpf", L"rep", L"scf", L"xpf", L"xpd", L"dot", L"oup", L"pow", L"jot", L"key"};
+wchar_t *cdf_prim_names[] = {L"q_signal", L"q_dr", L"spn", L"squeeze", L"is_simple", L"is_numeric", L"is_char", L"is_integer", L"is_bool", L"is_span", L"max_shp", L"has_nat_vals", L"chk_scl", L"both_simple", L"both_numeric", L"both_integer", L"both_char", L"both_bool", L"any", L"numeric", L"ambiv", L"same", L"veach", L"scalar", L"chk_valid_shape", L"reshape", L"rho", L"idx_rnk_check", L"idx_rng_check", L"flatten_idx", L"idx_shp_check", L"set_get_idx", L"set", L"mst_vals", L"mst", L"sqd", L"brk", L"rgt", L"lft", L"cat", L"ctf", L"depth", L"eqv", L"nqv", L"index_gen", L"index_of", L"iot", L"dis", L"enclose", L"par", L"conjugate", L"add", L"sub", L"sign", L"mul", L"div", L"absolute", L"residue", L"res", L"floor_array", L"min", L"ceil_array", L"max", L"exp", L"log", L"pitimes", L"trig", L"cir", L"binomial", L"fac", L"notscl", L"without", L"not", L"logand", L"and", L"logor", L"lor", L"nan", L"nor", L"lessthan", L"lth", L"lesseql", L"lte", L"eql_vec", L"equal", L"eql", L"greatereql", L"gte", L"greaterthan", L"gth", L"firstocc", L"neq_vec", L"noteq", L"neq", L"mix", L"take", L"tke", L"split", L"drop", L"drp", L"rtf", L"reverse_last", L"rotate_last", L"rot", L"trn", L"gdu", L"gdd", L"enc", L"dec", L"mem", L"fnd", L"unq", L"int", L"deal", L"roll", L"rol", L"mdv", L"com", L"map", L"reduce", L"nwreduce", L"rdf", L"rpf", L"rep", L"scf", L"xpf", L"xpd", L"dot", L"oup", L"pow", L"jot", L"key"};
 
 EXPORT int
 cdf_prim_init(void)
@@ -1370,7 +1393,7 @@ cdf_prim_init(void)
 	cdf_prim_flag = 1;
 	stkhd = &stk[0];
 	loc = &cdf_prim;
-	loc->__count = 130;
+	loc->__count = 132;
 	loc->__names = cdf_prim_names;
 
 	if (debug_info)
@@ -1493,6 +1516,8 @@ cdf_prim_init(void)
 	loc->cdf_fnd = NULL;
 	loc->cdf_unq = NULL;
 	loc->cdf_int = NULL;
+	loc->cdf_deal = NULL;
+	loc->cdf_roll = NULL;
 	loc->cdf_rol = NULL;
 	loc->cdf_mdv = NULL;
 	loc->cdf_com = NULL;
@@ -1594,7 +1619,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10398, cdf_ptr10399, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10780, cdf_ptr10781, 1), cleanup, 
 		    L"[16] is_bool←╠{11≡⎕DR squeeze ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_squeeze);
@@ -1620,7 +1645,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10400, cdf_ptr10401, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10782, cdf_ptr10783, 0), cleanup, 
 		    L"[18] max_shp←╠{⍺←0 ⋄ ⍺('max_shp_ibeam'⌶)⍵}╣");
 	
 		*stkhd++ = k;
@@ -1644,7 +1669,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10402, cdf_ptr10403, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10784, cdf_ptr10785, 0), cleanup, 
 		    L"[20] chk_scl←╠{⍺←0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}╣");
 	
 		*stkhd++ = k;
@@ -1658,7 +1683,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10404, cdf_ptr10405, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10786, cdf_ptr10787, 1), cleanup, 
 		    L"[21] both_simple←╠{is_simple ⍺:is_simple ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_simple);
@@ -1674,7 +1699,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10406, cdf_ptr10407, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10788, cdf_ptr10789, 1), cleanup, 
 		    L"[22] both_numeric←╠{is_numeric ⍺:is_numeric ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_numeric);
@@ -1690,7 +1715,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10408, cdf_ptr10409, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10790, cdf_ptr10791, 1), cleanup, 
 		    L"[23] both_integer←╠{is_integer ⍺:is_integer ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_integer);
@@ -1706,7 +1731,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10410, cdf_ptr10411, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10792, cdf_ptr10793, 1), cleanup, 
 		    L"[24] both_char←╠{is_char ⍺:is_char ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_char);
@@ -1722,7 +1747,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10412, cdf_ptr10413, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10794, cdf_ptr10795, 1), cleanup, 
 		    L"[25] both_bool←╠{is_bool ⍺:is_bool ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_bool);
@@ -1748,7 +1773,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10414, cdf_ptr10415, cdf_ptr10416, cdf_ptr10417, 1), cleanup, 
+		CHK(mk_moper(&k, cdf_ptr10796, cdf_ptr10797, cdf_ptr10798, cdf_ptr10799, 1), cleanup, 
 		    L"[27] numeric←╠{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_both_numeric);
@@ -1764,7 +1789,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, cdf_ptr10418, cdf_ptr10419, cdf_ptr10420, cdf_ptr10421, cdf_ptr10422, cdf_ptr10423, cdf_ptr10424, cdf_ptr10425, 1), cleanup, 
+		CHK(mk_doper(&k, cdf_ptr10800, cdf_ptr10801, cdf_ptr10802, cdf_ptr10803, cdf_ptr10804, cdf_ptr10805, cdf_ptr10806, cdf_ptr10807, 1), cleanup, 
 		    L"[28] ambiv←╠{⍺←⊢ ⋄ 1 same ⍺ 1:⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_same);
@@ -1790,7 +1815,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10426, cdf_ptr10427, cdf_ptr10428, cdf_ptr10429, 5), cleanup, 
+		CHK(mk_moper(&k, cdf_ptr10808, cdf_ptr10809, cdf_ptr10810, cdf_ptr10811, 5), cleanup, 
 		    L"[30] scalar←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_veach);
@@ -1810,7 +1835,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10430, cdf_ptr10435, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10812, cdf_ptr10817, 1), cleanup, 
 		    L"[40] chk_valid_shape←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_has_nat_vals);
@@ -1826,7 +1851,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10440, cdf_ptr10441, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10822, cdf_ptr10823, 1), cleanup, 
 		    L"[46] reshape←╠{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_chk_valid_shape);
@@ -1879,7 +1904,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10442, cdf_ptr10443, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10824, cdf_ptr10825, 0), cleanup, 
 		    L"[50] idx_rnk_check←╠{(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4 ⋄ 0}╣");
 	
 		*stkhd++ = k;
@@ -1893,7 +1918,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10444, cdf_ptr10445, 3), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10826, cdf_ptr10827, 3), cleanup, 
 		    L"[51] idx_rng_check←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_any);
@@ -1911,7 +1936,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10446, cdf_ptr10451, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10828, cdf_ptr10833, 2), cleanup, 
 		    L"[57] flatten_idx←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_idx_rng_check);
@@ -1928,7 +1953,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10456, cdf_ptr10457, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10838, cdf_ptr10839, 0), cleanup, 
 		    L"[62] idx_shp_check←╠{1≡≢,⍵:0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}╣");
 	
 		*stkhd++ = k;
@@ -1942,7 +1967,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10458, cdf_ptr10461, cdf_ptr10464, cdf_ptr10467, 4), cleanup, 
+		CHK(mk_moper(&k, cdf_ptr10840, cdf_ptr10843, cdf_ptr10846, cdf_ptr10849, 4), cleanup, 
 		    L"[63] set_get_idx←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_idx_shp_check);
@@ -1971,7 +1996,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, cdf_ptr10470, cdf_ptr10473, cdf_ptr10476, cdf_ptr10479, cdf_ptr10482, cdf_ptr10485, cdf_ptr10488, cdf_ptr10491, 2), cleanup, 
+		CHK(mk_doper(&k, cdf_ptr10852, cdf_ptr10855, cdf_ptr10858, cdf_ptr10861, cdf_ptr10864, cdf_ptr10867, cdf_ptr10870, cdf_ptr10873, 2), cleanup, 
 		    L"[73] mst_vals←╠{op←⍵⍵╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_set_get_idx);
@@ -1998,7 +2023,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10494, cdf_ptr10495, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10876, cdf_ptr10877, 2), cleanup, 
 		    L"[82] sqd←╠{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_flatten_idx);
@@ -2015,7 +2040,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10496, cdf_ptr10497, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10878, cdf_ptr10879, 1), cleanup, 
 		    L"[89] brk←╠{⍺ idx_rnk_check ⍵: ⋄ ⍵⌷⍺}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_idx_rnk_check);
@@ -2031,7 +2056,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10498, cdf_ptr10499, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10880, cdf_ptr10881, 0), cleanup, 
 		    L"[92] rgt←╠{⍵}╣");
 	
 		*stkhd++ = k;
@@ -2045,7 +2070,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10502, cdf_ptr10503, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10884, cdf_ptr10885, 0), cleanup, 
 		    L"[95] lft←{⍵} ambiv ╠{⍺}╣");
 	
 		*stkhd++ = k;
@@ -2059,7 +2084,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10500, cdf_ptr10501, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10882, cdf_ptr10883, 0), cleanup, 
 		    L"[95] lft←╠{⍵}╣ ambiv {⍺}");
 	
 		*stkhd++ = k;
@@ -2090,7 +2115,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10504, cdf_ptr10515, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10886, cdf_ptr10897, 1), cleanup, 
 		    L"[98] cat←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_numeric);
@@ -2106,7 +2131,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10526, cdf_ptr10527, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10908, cdf_ptr10909, 0), cleanup, 
 		    L"[126] ctf←╠{⍺,[0]⍵}╣");
 	
 		*stkhd++ = k;
@@ -2120,7 +2145,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10528, cdf_ptr10531, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10910, cdf_ptr10913, 1), cleanup, 
 		    L"[129] depth←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_simple);
@@ -2193,7 +2218,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10534, cdf_ptr10535, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10916, cdf_ptr10917, 0), cleanup, 
 		    L"[140] nqv←╠{⍬≡⍴⍵:1 ⋄ ⊃⍴⍵}╣ ambiv ('nqv_ibeam'⌶)");
 	
 		*stkhd++ = k;
@@ -2224,7 +2249,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10536, cdf_ptr10537, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10918, cdf_ptr10919, 1), cleanup, 
 		    L"[143] index_gen←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_chk_valid_shape);
@@ -2240,7 +2265,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10538, cdf_ptr10539, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10920, cdf_ptr10921, 0), cleanup, 
 		    L"[150] index_of←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -2291,7 +2316,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10540, cdf_ptr10541, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10922, cdf_ptr10923, 0), cleanup, 
 		    L"[154] dis←('disclose_ibeam'⌶) ambiv ╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -2332,7 +2357,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10542, cdf_ptr10543, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10924, cdf_ptr10925, 0), cleanup, 
 		    L"[157] enclose←╠{╣");
 	
 		*stkhd++ = k;
@@ -2346,7 +2371,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10544, cdf_ptr10545, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10926, cdf_ptr10927, 0), cleanup, 
 		    L"[161] par←enclose ambiv ╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -2387,7 +2412,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10546, cdf_ptr10547, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10928, cdf_ptr10929, 1), cleanup, 
 		    L"[164] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_squeeze);
@@ -2530,7 +2555,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10548, cdf_ptr10549, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10930, cdf_ptr10931, 0), cleanup, 
 		    L"[168] sub←╠{0-⍵}╣ ambiv ('sub_vec_ibeam'⌶ numeric scalar)");
 	
 		*stkhd++ = k;
@@ -2561,7 +2586,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10550, cdf_ptr10551, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10932, cdf_ptr10933, 0), cleanup, 
 		    L"[171] sign←╠{╣");
 	
 		*stkhd++ = k;
@@ -2702,7 +2727,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10552, cdf_ptr10553, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10934, cdf_ptr10935, 0), cleanup, 
 		    L"[178] div←╠{1÷⍵}╣ ambiv ('div_vec_ibeam'⌶ numeric scalar)");
 	
 		*stkhd++ = k;
@@ -2733,7 +2758,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10554, cdf_ptr10555, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10936, cdf_ptr10937, 1), cleanup, 
 		    L"[181] absolute←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_numeric);
@@ -2749,7 +2774,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10556, cdf_ptr10557, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10938, cdf_ptr10939, 0), cleanup, 
 		    L"[186] residue←╠{⍵-⍺×⌊⍵÷⍺+0=⍺}╣");
 	
 		*stkhd++ = k;
@@ -2820,7 +2845,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10558, cdf_ptr10559, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10940, cdf_ptr10941, 1), cleanup, 
 		    L"[190] floor_array←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_integer);
@@ -2933,7 +2958,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10560, cdf_ptr10561, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10942, cdf_ptr10943, 1), cleanup, 
 		    L"[198] ceil_array←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_integer);
@@ -3240,7 +3265,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10562, cdf_ptr10563, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10944, cdf_ptr10945, 0), cleanup, 
 		    L"[212] pitimes←╠{3.14159265358979323846×⍵}╣");
 	
 		*stkhd++ = k;
@@ -3254,7 +3279,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10564, cdf_ptr10569, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10946, cdf_ptr10951, 0), cleanup, 
 		    L"[213] trig←╠{╣");
 	
 		*stkhd++ = k;
@@ -3365,7 +3390,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10574, cdf_ptr10575, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10956, cdf_ptr10957, 0), cleanup, 
 		    L"[245] binomial←╠{╣");
 	
 		*stkhd++ = k;
@@ -3476,7 +3501,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10576, cdf_ptr10577, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10958, cdf_ptr10959, 1), cleanup, 
 		    L"[252] notscl←╠{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_bool);
@@ -3492,7 +3517,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10578, cdf_ptr10579, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10960, cdf_ptr10961, 0), cleanup, 
 		    L"[253] without←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -3543,7 +3568,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10580, cdf_ptr10581, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10962, cdf_ptr10963, 1), cleanup, 
 		    L"[257] logand←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_both_bool);
@@ -3609,7 +3634,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10582, cdf_ptr10583, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10964, cdf_ptr10965, 0), cleanup, 
 		    L"[261] and←╠{⎕SIGNAL 2}╣ambiv (logand numeric scalar)");
 	
 		*stkhd++ = k;
@@ -3640,7 +3665,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10584, cdf_ptr10589, 4), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10966, cdf_ptr10971, 4), cleanup, 
 		    L"[264] logor←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_both_bool);
@@ -3709,7 +3734,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10594, cdf_ptr10595, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10976, cdf_ptr10977, 0), cleanup, 
 		    L"[271] lor←╠{⎕SIGNAL 2}╣ambiv (logor numeric scalar)");
 	
 		*stkhd++ = k;
@@ -3740,7 +3765,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10598, cdf_ptr10599, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10980, cdf_ptr10981, 1), cleanup, 
 		    L"[274] nan←{⎕SIGNAL 2}ambiv╠{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_both_bool);
@@ -3756,7 +3781,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10596, cdf_ptr10597, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10978, cdf_ptr10979, 0), cleanup, 
 		    L"[274] nan←╠{⎕SIGNAL 2}╣ambiv{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
 	
 		*stkhd++ = k;
@@ -3787,7 +3812,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10602, cdf_ptr10603, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10984, cdf_ptr10985, 1), cleanup, 
 		    L"[277] nor←{⎕SIGNAL 2}ambiv╠{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_both_bool);
@@ -3803,7 +3828,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10600, cdf_ptr10601, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10982, cdf_ptr10983, 0), cleanup, 
 		    L"[277] nor←╠{⎕SIGNAL 2}╣ambiv{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		*stkhd++ = k;
@@ -3834,7 +3859,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10604, cdf_ptr10605, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10986, cdf_ptr10987, 0), cleanup, 
 		    L"[280] lessthan←╠{╣");
 	
 		*stkhd++ = k;
@@ -3898,7 +3923,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10606, cdf_ptr10607, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10988, cdf_ptr10989, 0), cleanup, 
 		    L"[284] lth←╠{⎕SIGNAL 2}╣ ambiv (lessthan numeric scalar)");
 	
 		*stkhd++ = k;
@@ -3929,7 +3954,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10608, cdf_ptr10609, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10990, cdf_ptr10991, 0), cleanup, 
 		    L"[287] lesseql←╠{╣");
 	
 		*stkhd++ = k;
@@ -3993,7 +4018,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10610, cdf_ptr10611, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10992, cdf_ptr10993, 0), cleanup, 
 		    L"[291] lte←╠{⎕SIGNAL 2}╣ambiv (lesseql numeric scalar)");
 	
 		*stkhd++ = k;
@@ -4034,7 +4059,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10612, cdf_ptr10613, 3), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10994, cdf_ptr10995, 3), cleanup, 
 		    L"[295] equal←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_eql_vec);
@@ -4082,7 +4107,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10614, cdf_ptr10615, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10996, cdf_ptr10997, 0), cleanup, 
 		    L"[300] eql←╠{⎕SIGNAL 2}╣ambiv (equal scalar)");
 	
 		*stkhd++ = k;
@@ -4113,7 +4138,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10616, cdf_ptr10617, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10998, cdf_ptr10999, 0), cleanup, 
 		    L"[303] greatereql←╠{╣");
 	
 		*stkhd++ = k;
@@ -4177,7 +4202,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10618, cdf_ptr10619, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11000, cdf_ptr11001, 0), cleanup, 
 		    L"[307] gte←╠{⎕SIGNAL 2}╣ambiv (greatereql numeric scalar)");
 	
 		*stkhd++ = k;
@@ -4208,7 +4233,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10620, cdf_ptr10621, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11002, cdf_ptr11003, 0), cleanup, 
 		    L"[310] greaterthan←╠{╣");
 	
 		*stkhd++ = k;
@@ -4272,7 +4297,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10622, cdf_ptr10623, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11004, cdf_ptr11005, 0), cleanup, 
 		    L"[314] gth←╠{⎕SIGNAL 2}╣ambiv (greaterthan numeric scalar)");
 	
 		*stkhd++ = k;
@@ -4303,7 +4328,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10624, cdf_ptr10625, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11006, cdf_ptr11007, 0), cleanup, 
 		    L"[317] firstocc←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4327,7 +4352,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10626, cdf_ptr10627, 3), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11008, cdf_ptr11009, 3), cleanup, 
 		    L"[319] noteq←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_neq_vec);
@@ -4402,7 +4427,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10628, cdf_ptr10629, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11010, cdf_ptr11011, 0), cleanup, 
 		    L"[327] mix←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4416,7 +4441,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10630, cdf_ptr10631, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11012, cdf_ptr11013, 0), cleanup, 
 		    L"[328] take←╠{(⊂⍳⍺)⌷⍵}╣");
 	
 		*stkhd++ = k;
@@ -4467,7 +4492,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10632, cdf_ptr10633, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11014, cdf_ptr11015, 0), cleanup, 
 		    L"[332] split←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4481,7 +4506,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10634, cdf_ptr10635, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11016, cdf_ptr11017, 0), cleanup, 
 		    L"[333] drop←╠{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}╣");
 	
 		*stkhd++ = k;
@@ -4532,7 +4557,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10636, cdf_ptr10637, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11018, cdf_ptr11019, 0), cleanup, 
 		    L"[337] rtf←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4546,7 +4571,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10638, cdf_ptr10639, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11020, cdf_ptr11021, 0), cleanup, 
 		    L"[340] reverse_last←╠{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}╣");
 	
 		*stkhd++ = k;
@@ -4560,7 +4585,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10640, cdf_ptr10641, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11022, cdf_ptr11023, 0), cleanup, 
 		    L"[341] rotate_last←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4611,7 +4636,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10642, cdf_ptr10643, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11024, cdf_ptr11025, 0), cleanup, 
 		    L"[345] trn←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4625,7 +4650,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10644, cdf_ptr10645, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11026, cdf_ptr11027, 0), cleanup, 
 		    L"[348] gdu←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4639,7 +4664,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10646, cdf_ptr10647, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11028, cdf_ptr11029, 0), cleanup, 
 		    L"[351] gdd←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4653,7 +4678,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10648, cdf_ptr10649, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11030, cdf_ptr11031, 0), cleanup, 
 		    L"[354] enc←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4667,7 +4692,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10650, cdf_ptr10651, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11032, cdf_ptr11033, 0), cleanup, 
 		    L"[357] dec←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4681,7 +4706,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10652, cdf_ptr10653, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11034, cdf_ptr11035, 0), cleanup, 
 		    L"[360] mem←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4695,7 +4720,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10654, cdf_ptr10655, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11036, cdf_ptr11037, 0), cleanup, 
 		    L"[363] fnd←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4709,7 +4734,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10656, cdf_ptr10657, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11038, cdf_ptr11039, 0), cleanup, 
 		    L"[366] unq←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4723,7 +4748,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10658, cdf_ptr10659, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr11040, cdf_ptr11041, 0), cleanup, 
 		    L"[369] int←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -4737,10 +4762,68 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10660, cdf_ptr10661, 0), cleanup, 
-		    L"[372] rol←╠{⎕SIGNAL 16}╣");
+		CHK(mk_func(&k, cdf_ptr11042, cdf_ptr11045, 2), cleanup, 
+		    L"[372] deal←╠{╣");
+	
+		k->fv[0] = retain_cell(loc->cdf_both_integer);
+		k->fv[1] = retain_cell(loc->cdf_squeeze);
 	
 		*stkhd++ = k;
+	}
+	
+	release_cell(loc->cdf_deal);
+	loc->cdf_deal = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, cdf_ptr11048, cdf_ptr11049, 3), cleanup, 
+		    L"[378] roll←╠{╣");
+	
+		k->fv[0] = retain_cell(loc->cdf_any);
+		k->fv[1] = retain_cell(loc->cdf_is_integer);
+		k->fv[2] = retain_cell(loc->cdf_squeeze);
+	
+		*stkhd++ = k;
+	}
+	
+	release_cell(loc->cdf_roll);
+	loc->cdf_roll = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->cdf_deal)
+		CHK(6, cleanup, L"[384] rol←roll ambiv ╠deal╣");
+	
+	*stkhd++ = retain_cell(loc->cdf_deal);
+	
+	if (!loc->cdf_ambiv)
+		CHK(6, cleanup, L"[384] rol←roll ╠ambiv╣ deal");
+	
+	*stkhd++ = retain_cell(loc->cdf_ambiv);
+	
+	if (!loc->cdf_roll)
+		CHK(6, cleanup, L"[384] rol←╠roll╣ ambiv deal");
+	
+	*stkhd++ = retain_cell(loc->cdf_roll);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_doper *op = stkhd[-2];
+		struct cell_func *y = stkhd[-3];
+		struct cell_func *dst;
+	
+		CHK(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), cleanup,
+		    L"[384] rol←╠roll ambiv deal╣");
+	
+		release_func(x);
+		release_doper(op);
+		release_func(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
 	}
 	
 	release_cell(loc->cdf_rol);
@@ -4751,8 +4834,8 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10662, cdf_ptr10663, 0), cleanup, 
-		    L"[375] mdv←╠{⎕SIGNAL 16}╣");
+		CHK(mk_func(&k, cdf_ptr11050, cdf_ptr11051, 0), cleanup, 
+		    L"[387] mdv←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4765,8 +4848,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10664, cdf_ptr10665, cdf_ptr10666, cdf_ptr10667, 0), cleanup, 
-		    L"[378] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
+		CHK(mk_moper(&k, cdf_ptr11052, cdf_ptr11053, cdf_ptr11054, cdf_ptr11055, 0), cleanup, 
+		    L"[390] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4779,8 +4862,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10668, cdf_ptr10669, cdf_ptr10670, cdf_ptr10671, 4), cleanup, 
-		    L"[381] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
+		CHK(mk_moper(&k, cdf_ptr11056, cdf_ptr11057, cdf_ptr11058, cdf_ptr11059, 4), cleanup, 
+		    L"[393] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_veach);
 		k->fv[1] = retain_cell(loc->cdf_chk_scl);
@@ -4798,8 +4881,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10672, cdf_ptr10675, cdf_ptr10678, cdf_ptr10681, 0), cleanup, 
-		    L"[384] reduce←╠{╣");
+		CHK(mk_moper(&k, cdf_ptr11060, cdf_ptr11063, cdf_ptr11066, cdf_ptr11069, 0), cleanup, 
+		    L"[396] reduce←╠{╣");
 	
 		*stkhd++ = k;
 	}
@@ -4812,8 +4895,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10684, cdf_ptr10687, cdf_ptr10690, cdf_ptr10693, 1), cleanup, 
-		    L"[389] nwreduce←╠{op←⍺⍺¨╣");
+		CHK(mk_moper(&k, cdf_ptr11072, cdf_ptr11075, cdf_ptr11078, cdf_ptr11081, 1), cleanup, 
+		    L"[401] nwreduce←╠{op←⍺⍺¨╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_is_integer);
 	
@@ -4828,8 +4911,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10696, cdf_ptr10697, cdf_ptr10698, cdf_ptr10699, 2), cleanup, 
-		    L"[393] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
+		CHK(mk_moper(&k, cdf_ptr11084, cdf_ptr11085, cdf_ptr11086, cdf_ptr11087, 2), cleanup, 
+		    L"[405] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_nwreduce);
 		k->fv[1] = retain_cell(loc->cdf_reduce);
@@ -4845,8 +4928,8 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10700, cdf_ptr10701, 0), cleanup, 
-		    L"[398] rpf←╠{⎕SIGNAL 16}╣");
+		CHK(mk_func(&k, cdf_ptr11088, cdf_ptr11089, 0), cleanup, 
+		    L"[410] rpf←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4859,8 +4942,8 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10702, cdf_ptr10703, 0), cleanup, 
-		    L"[401] rep←╠{⎕SIGNAL 16}╣");
+		CHK(mk_func(&k, cdf_ptr11090, cdf_ptr11091, 0), cleanup, 
+		    L"[413] rep←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4873,8 +4956,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10704, cdf_ptr10707, cdf_ptr10710, cdf_ptr10713, 1), cleanup, 
-		    L"[404] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
+		CHK(mk_moper(&k, cdf_ptr11092, cdf_ptr11095, cdf_ptr11098, cdf_ptr11101, 1), cleanup, 
+		    L"[416] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->cdf_squeeze);
 	
@@ -4889,8 +4972,8 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10716, cdf_ptr10717, 0), cleanup, 
-		    L"[407] xpf←╠{⎕SIGNAL 16}╣");
+		CHK(mk_func(&k, cdf_ptr11104, cdf_ptr11105, 0), cleanup, 
+		    L"[419] xpf←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4903,8 +4986,8 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10718, cdf_ptr10719, 0), cleanup, 
-		    L"[410] xpd←╠{⎕SIGNAL 16}╣");
+		CHK(mk_func(&k, cdf_ptr11106, cdf_ptr11107, 0), cleanup, 
+		    L"[422] xpd←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4917,8 +5000,8 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, cdf_ptr10720, cdf_ptr10721, cdf_ptr10722, cdf_ptr10723, cdf_ptr10724, cdf_ptr10725, cdf_ptr10726, cdf_ptr10727, 0), cleanup, 
-		    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+		CHK(mk_doper(&k, cdf_ptr11108, cdf_ptr11109, cdf_ptr11110, cdf_ptr11111, cdf_ptr11112, cdf_ptr11113, cdf_ptr11114, cdf_ptr11115, 0), cleanup, 
+		    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4931,8 +5014,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10728, cdf_ptr10729, cdf_ptr10730, cdf_ptr10731, 0), cleanup, 
-		    L"[416] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
+		CHK(mk_moper(&k, cdf_ptr11116, cdf_ptr11117, cdf_ptr11118, cdf_ptr11119, 0), cleanup, 
+		    L"[428] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4945,8 +5028,8 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, cdf_ptr10732, cdf_ptr10733, cdf_ptr10734, cdf_ptr10735, cdf_ptr10736, cdf_ptr10737, cdf_ptr10738, cdf_ptr10739, 0), cleanup, 
-		    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+		CHK(mk_doper(&k, cdf_ptr11120, cdf_ptr11121, cdf_ptr11122, cdf_ptr11123, cdf_ptr11124, cdf_ptr11125, cdf_ptr11126, cdf_ptr11127, 0), cleanup, 
+		    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4959,8 +5042,8 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, cdf_ptr10740, cdf_ptr10741, cdf_ptr10742, cdf_ptr10743, cdf_ptr10744, cdf_ptr10745, cdf_ptr10746, cdf_ptr10747, 0), cleanup, 
-		    L"[422] jot←╠{╣");
+		CHK(mk_doper(&k, cdf_ptr11128, cdf_ptr11129, cdf_ptr11130, cdf_ptr11131, cdf_ptr11132, cdf_ptr11133, cdf_ptr11134, cdf_ptr11135, 0), cleanup, 
+		    L"[434] jot←╠{╣");
 	
 		*stkhd++ = k;
 	}
@@ -4973,8 +5056,8 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, cdf_ptr10748, cdf_ptr10749, cdf_ptr10750, cdf_ptr10751, 0), cleanup, 
-		    L"[432] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
+		CHK(mk_moper(&k, cdf_ptr11136, cdf_ptr11137, cdf_ptr11138, cdf_ptr11139, 0), cleanup, 
+		    L"[444] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
 	}
@@ -4991,7 +5074,7 @@ cleanup:
 }
 
 int
-cdf_ptr10398(struct cell_array **z,
+cdf_ptr10780(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -5110,7 +5193,7 @@ cleanup:
 }
 
 int
-cdf_ptr10399(struct cell_array **z,
+cdf_ptr10781(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -5226,7 +5309,7 @@ cleanup:
 }
 
 int
-cdf_ptr10400(struct cell_array **z,
+cdf_ptr10782(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -5309,7 +5392,7 @@ cleanup:
 }
 
 int
-cdf_ptr10401(struct cell_array **z,
+cdf_ptr10783(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -5370,7 +5453,7 @@ cleanup:
 }
 
 int
-cdf_ptr10402(struct cell_array **z,
+cdf_ptr10784(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -5961,7 +6044,7 @@ cleanup:
 }
 
 int
-cdf_ptr10403(struct cell_array **z,
+cdf_ptr10785(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -6530,7 +6613,7 @@ cleanup:
 }
 
 int
-cdf_ptr10404(struct cell_array **z,
+cdf_ptr10786(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -6653,7 +6736,7 @@ cleanup:
 }
 
 int
-cdf_ptr10405(struct cell_array **z,
+cdf_ptr10787(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -6773,7 +6856,7 @@ cleanup:
 }
 
 int
-cdf_ptr10406(struct cell_array **z,
+cdf_ptr10788(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -6896,7 +6979,7 @@ cleanup:
 }
 
 int
-cdf_ptr10407(struct cell_array **z,
+cdf_ptr10789(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -7016,7 +7099,7 @@ cleanup:
 }
 
 int
-cdf_ptr10408(struct cell_array **z,
+cdf_ptr10790(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -7139,7 +7222,7 @@ cleanup:
 }
 
 int
-cdf_ptr10409(struct cell_array **z,
+cdf_ptr10791(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -7259,7 +7342,7 @@ cleanup:
 }
 
 int
-cdf_ptr10410(struct cell_array **z,
+cdf_ptr10792(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -7382,7 +7465,7 @@ cleanup:
 }
 
 int
-cdf_ptr10411(struct cell_array **z,
+cdf_ptr10793(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -7502,7 +7585,7 @@ cleanup:
 }
 
 int
-cdf_ptr10412(struct cell_array **z,
+cdf_ptr10794(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -7625,7 +7708,7 @@ cleanup:
 }
 
 int
-cdf_ptr10413(struct cell_array **z,
+cdf_ptr10795(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -7745,7 +7828,7 @@ cleanup:
 }
 
 int
-cdf_ptr10414(struct cell_array **z,
+cdf_ptr10796(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -7982,7 +8065,7 @@ cleanup:
 }
 
 int
-cdf_ptr10415(struct cell_array **z,
+cdf_ptr10797(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -8180,7 +8263,7 @@ cleanup:
 }
 
 int
-cdf_ptr10416(struct cell_array **z,
+cdf_ptr10798(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -8413,7 +8496,7 @@ cleanup:
 }
 
 int
-cdf_ptr10417(struct cell_array **z,
+cdf_ptr10799(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -8608,7 +8691,7 @@ cleanup:
 }
 
 int
-cdf_ptr10418(struct cell_array **z,
+cdf_ptr10800(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -8831,7 +8914,7 @@ cleanup:
 }
 
 int
-cdf_ptr10419(struct cell_array **z,
+cdf_ptr10801(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -9032,7 +9115,7 @@ cleanup:
 }
 
 int
-cdf_ptr10420(struct cell_array **z,
+cdf_ptr10802(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -9251,7 +9334,7 @@ cleanup:
 }
 
 int
-cdf_ptr10421(struct cell_array **z,
+cdf_ptr10803(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -9448,7 +9531,7 @@ cleanup:
 }
 
 int
-cdf_ptr10422(struct cell_array **z,
+cdf_ptr10804(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -9667,7 +9750,7 @@ cleanup:
 }
 
 int
-cdf_ptr10423(struct cell_array **z,
+cdf_ptr10805(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -9865,7 +9948,7 @@ cleanup:
 }
 
 int
-cdf_ptr10424(struct cell_array **z,
+cdf_ptr10806(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -10080,7 +10163,7 @@ cleanup:
 }
 
 int
-cdf_ptr10425(struct cell_array **z,
+cdf_ptr10807(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -10274,7 +10357,7 @@ cleanup:
 }
 
 int
-cdf_ptr10426(struct cell_array **z,
+cdf_ptr10808(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -10915,7 +10998,7 @@ cleanup:
 }
 
 int
-cdf_ptr10427(struct cell_array **z,
+cdf_ptr10809(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -11554,7 +11637,7 @@ cleanup:
 }
 
 int
-cdf_ptr10428(struct cell_array **z,
+cdf_ptr10810(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -12192,7 +12275,7 @@ cleanup:
 }
 
 int
-cdf_ptr10429(struct cell_array **z,
+cdf_ptr10811(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -12828,7 +12911,7 @@ cleanup:
 }
 
 int
-cdf_ptr10430(struct cell_array **z,
+cdf_ptr10812(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -12856,7 +12939,7 @@ cdf_ptr10430(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10431, cdf_ptr10432, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10813, cdf_ptr10814, 0), cleanup, 
 		    L"[41] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
 	
 		*stkhd++ = k;
@@ -13056,7 +13139,7 @@ cdf_ptr10430(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10433, cdf_ptr10434, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10815, cdf_ptr10816, 1), cleanup, 
 		    L"[43] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
 	
 		k->fv[0] = retain_cell(lex->cdf_has_nat_vals);
@@ -13166,7 +13249,7 @@ cleanup:
 }
 
 int
-cdf_ptr10431(struct cell_array **z,
+cdf_ptr10813(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -13422,7 +13505,7 @@ cleanup:
 }
 
 int
-cdf_ptr10432(struct cell_array **z,
+cdf_ptr10814(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -13675,7 +13758,7 @@ cleanup:
 }
 
 int
-cdf_ptr10433(struct cell_array **z,
+cdf_ptr10815(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -13787,7 +13870,7 @@ cleanup:
 }
 
 int
-cdf_ptr10434(struct cell_array **z,
+cdf_ptr10816(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -13896,7 +13979,7 @@ cleanup:
 }
 
 int
-cdf_ptr10435(struct cell_array **z,
+cdf_ptr10817(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -13922,7 +14005,7 @@ cdf_ptr10435(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10436, cdf_ptr10437, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10818, cdf_ptr10819, 0), cleanup, 
 		    L"[41] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
 	
 		*stkhd++ = k;
@@ -14122,7 +14205,7 @@ cdf_ptr10435(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10438, cdf_ptr10439, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10820, cdf_ptr10821, 1), cleanup, 
 		    L"[43] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
 	
 		k->fv[0] = retain_cell(lex->cdf_has_nat_vals);
@@ -14231,7 +14314,7 @@ cleanup:
 }
 
 int
-cdf_ptr10436(struct cell_array **z,
+cdf_ptr10818(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -14487,7 +14570,7 @@ cleanup:
 }
 
 int
-cdf_ptr10437(struct cell_array **z,
+cdf_ptr10819(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -14740,7 +14823,7 @@ cleanup:
 }
 
 int
-cdf_ptr10438(struct cell_array **z,
+cdf_ptr10820(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -14852,7 +14935,7 @@ cleanup:
 }
 
 int
-cdf_ptr10439(struct cell_array **z,
+cdf_ptr10821(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -14961,7 +15044,7 @@ cleanup:
 }
 
 int
-cdf_ptr10440(struct cell_array **z,
+cdf_ptr10822(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -15074,7 +15157,7 @@ cleanup:
 }
 
 int
-cdf_ptr10441(struct cell_array **z,
+cdf_ptr10823(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -15184,7 +15267,7 @@ cleanup:
 }
 
 int
-cdf_ptr10442(struct cell_array **z,
+cdf_ptr10824(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -15397,7 +15480,7 @@ cleanup:
 }
 
 int
-cdf_ptr10443(struct cell_array **z,
+cdf_ptr10825(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -15607,7 +15690,7 @@ cleanup:
 }
 
 int
-cdf_ptr10444(struct cell_array **z,
+cdf_ptr10826(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -16114,7 +16197,7 @@ cleanup:
 }
 
 int
-cdf_ptr10445(struct cell_array **z,
+cdf_ptr10827(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -16618,7 +16701,7 @@ cleanup:
 }
 
 int
-cdf_ptr10446(struct cell_array **z,
+cdf_ptr10828(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -16858,7 +16941,7 @@ cdf_ptr10446(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10447, cdf_ptr10448, 2), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10829, cdf_ptr10830, 2), cleanup, 
 				    L"[58] 	(1≡≢⍵)∧1≡≢s←⍴⍺:(⊃s)╠{is_span ⍵:⍵ ⋄ ⍺ idx_rng_check ⍵: ⋄ ⍵}╣⊃⍵");
 			
 				k->fv[0] = retain_cell(lex->cdf_idx_rng_check);
@@ -16982,7 +17065,7 @@ cdf_ptr10446(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10449, cdf_ptr10450, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10831, cdf_ptr10832, 2), cleanup, 
 		    L"[59] 	i←⍵╠{is_span ⍺:⍳⍵ ⋄ ⍵ idx_rng_check ⍺: ⋄ ⍺}╣¨(c←≢⍵)↑s");
 	
 		k->fv[0] = retain_cell(lex->cdf_idx_rng_check);
@@ -17494,7 +17577,7 @@ cleanup:
 }
 
 int
-cdf_ptr10447(struct cell_array **z,
+cdf_ptr10829(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -17639,7 +17722,7 @@ cleanup:
 }
 
 int
-cdf_ptr10448(struct cell_array **z,
+cdf_ptr10830(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -17781,7 +17864,7 @@ cleanup:
 }
 
 int
-cdf_ptr10449(struct cell_array **z,
+cdf_ptr10831(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -17946,7 +18029,7 @@ cleanup:
 }
 
 int
-cdf_ptr10450(struct cell_array **z,
+cdf_ptr10832(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -18108,7 +18191,7 @@ cleanup:
 }
 
 int
-cdf_ptr10451(struct cell_array **z,
+cdf_ptr10833(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -18346,7 +18429,7 @@ cdf_ptr10451(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10452, cdf_ptr10453, 2), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10834, cdf_ptr10835, 2), cleanup, 
 				    L"[58] 	(1≡≢⍵)∧1≡≢s←⍴⍺:(⊃s)╠{is_span ⍵:⍵ ⋄ ⍺ idx_rng_check ⍵: ⋄ ⍵}╣⊃⍵");
 			
 				k->fv[0] = retain_cell(lex->cdf_idx_rng_check);
@@ -18470,7 +18553,7 @@ cdf_ptr10451(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10454, cdf_ptr10455, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10836, cdf_ptr10837, 2), cleanup, 
 		    L"[59] 	i←⍵╠{is_span ⍺:⍳⍵ ⋄ ⍵ idx_rng_check ⍺: ⋄ ⍺}╣¨(c←≢⍵)↑s");
 	
 		k->fv[0] = retain_cell(lex->cdf_idx_rng_check);
@@ -18981,7 +19064,7 @@ cleanup:
 }
 
 int
-cdf_ptr10452(struct cell_array **z,
+cdf_ptr10834(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -19126,7 +19209,7 @@ cleanup:
 }
 
 int
-cdf_ptr10453(struct cell_array **z,
+cdf_ptr10835(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -19268,7 +19351,7 @@ cleanup:
 }
 
 int
-cdf_ptr10454(struct cell_array **z,
+cdf_ptr10836(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -19433,7 +19516,7 @@ cleanup:
 }
 
 int
-cdf_ptr10455(struct cell_array **z,
+cdf_ptr10837(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -19595,7 +19678,7 @@ cleanup:
 }
 
 int
-cdf_ptr10456(struct cell_array **z,
+cdf_ptr10838(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -20051,7 +20134,7 @@ cleanup:
 }
 
 int
-cdf_ptr10457(struct cell_array **z,
+cdf_ptr10839(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -20504,7 +20587,7 @@ cleanup:
 }
 
 int
-cdf_ptr10458(struct cell_array **z,
+cdf_ptr10840(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -20635,7 +20718,7 @@ cdf_ptr10458(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10459, cdf_ptr10460, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10841, cdf_ptr10842, 2), cleanup, 
 		    L"[66] 	proto←⍺╠{is_span idx:⍺ ⋄ idx}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_idx);
@@ -20745,7 +20828,7 @@ cleanup:
 }
 
 int
-cdf_ptr10459(struct cell_array **z,
+cdf_ptr10841(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -20840,7 +20923,7 @@ cleanup:
 }
 
 int
-cdf_ptr10460(struct cell_array **z,
+cdf_ptr10842(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -20932,7 +21015,7 @@ cleanup:
 }
 
 int
-cdf_ptr10461(struct cell_array **z,
+cdf_ptr10843(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -21062,7 +21145,7 @@ cdf_ptr10461(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10462, cdf_ptr10463, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10844, cdf_ptr10845, 2), cleanup, 
 		    L"[66] 	proto←⍺╠{is_span idx:⍺ ⋄ idx}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_idx);
@@ -21171,7 +21254,7 @@ cleanup:
 }
 
 int
-cdf_ptr10462(struct cell_array **z,
+cdf_ptr10844(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -21266,7 +21349,7 @@ cleanup:
 }
 
 int
-cdf_ptr10463(struct cell_array **z,
+cdf_ptr10845(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -21358,7 +21441,7 @@ cleanup:
 }
 
 int
-cdf_ptr10464(struct cell_array **z,
+cdf_ptr10846(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -21427,7 +21510,7 @@ cdf_ptr10464(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10465, cdf_ptr10466, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10847, cdf_ptr10848, 2), cleanup, 
 		    L"[66] 	proto←⍺╠{is_span idx:⍺ ⋄ idx}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_idx);
@@ -21537,7 +21620,7 @@ cleanup:
 }
 
 int
-cdf_ptr10465(struct cell_array **z,
+cdf_ptr10847(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -21608,7 +21691,7 @@ cleanup:
 }
 
 int
-cdf_ptr10466(struct cell_array **z,
+cdf_ptr10848(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -21676,7 +21759,7 @@ cleanup:
 }
 
 int
-cdf_ptr10467(struct cell_array **z,
+cdf_ptr10849(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -21744,7 +21827,7 @@ cdf_ptr10467(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10468, cdf_ptr10469, 2), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10850, cdf_ptr10851, 2), cleanup, 
 		    L"[66] 	proto←⍺╠{is_span idx:⍺ ⋄ idx}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_idx);
@@ -21853,7 +21936,7 @@ cleanup:
 }
 
 int
-cdf_ptr10468(struct cell_array **z,
+cdf_ptr10850(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -21924,7 +22007,7 @@ cleanup:
 }
 
 int
-cdf_ptr10469(struct cell_array **z,
+cdf_ptr10851(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -21992,7 +22075,7 @@ cleanup:
 }
 
 int
-cdf_ptr10470(struct cell_array **z,
+cdf_ptr10852(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -22875,7 +22958,7 @@ cdf_ptr10470(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10471, cdf_ptr10472, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10853, cdf_ptr10854, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -23010,7 +23093,7 @@ cleanup:
 }
 
 int
-cdf_ptr10471(struct cell_array **z,
+cdf_ptr10853(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -23113,7 +23196,7 @@ cleanup:
 }
 
 int
-cdf_ptr10472(struct cell_array **z,
+cdf_ptr10854(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -23213,7 +23296,7 @@ cleanup:
 }
 
 int
-cdf_ptr10473(struct cell_array **z,
+cdf_ptr10855(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -24095,7 +24178,7 @@ cdf_ptr10473(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10474, cdf_ptr10475, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10856, cdf_ptr10857, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -24229,7 +24312,7 @@ cleanup:
 }
 
 int
-cdf_ptr10474(struct cell_array **z,
+cdf_ptr10856(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -24332,7 +24415,7 @@ cleanup:
 }
 
 int
-cdf_ptr10475(struct cell_array **z,
+cdf_ptr10857(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -24432,7 +24515,7 @@ cleanup:
 }
 
 int
-cdf_ptr10476(struct cell_array **z,
+cdf_ptr10858(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -25315,7 +25398,7 @@ cdf_ptr10476(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10477, cdf_ptr10478, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10859, cdf_ptr10860, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -25450,7 +25533,7 @@ cleanup:
 }
 
 int
-cdf_ptr10477(struct cell_array **z,
+cdf_ptr10859(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -25553,7 +25636,7 @@ cleanup:
 }
 
 int
-cdf_ptr10478(struct cell_array **z,
+cdf_ptr10860(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -25653,7 +25736,7 @@ cleanup:
 }
 
 int
-cdf_ptr10479(struct cell_array **z,
+cdf_ptr10861(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -26535,7 +26618,7 @@ cdf_ptr10479(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10480, cdf_ptr10481, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10862, cdf_ptr10863, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -26669,7 +26752,7 @@ cleanup:
 }
 
 int
-cdf_ptr10480(struct cell_array **z,
+cdf_ptr10862(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -26772,7 +26855,7 @@ cleanup:
 }
 
 int
-cdf_ptr10481(struct cell_array **z,
+cdf_ptr10863(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -26872,7 +26955,7 @@ cleanup:
 }
 
 int
-cdf_ptr10482(struct cell_array **z,
+cdf_ptr10864(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -27738,7 +27821,7 @@ cdf_ptr10482(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10483, cdf_ptr10484, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10865, cdf_ptr10866, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -27873,7 +27956,7 @@ cleanup:
 }
 
 int
-cdf_ptr10483(struct cell_array **z,
+cdf_ptr10865(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -27976,7 +28059,7 @@ cleanup:
 }
 
 int
-cdf_ptr10484(struct cell_array **z,
+cdf_ptr10866(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -28076,7 +28159,7 @@ cleanup:
 }
 
 int
-cdf_ptr10485(struct cell_array **z,
+cdf_ptr10867(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -28941,7 +29024,7 @@ cdf_ptr10485(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10486, cdf_ptr10487, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10868, cdf_ptr10869, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -29075,7 +29158,7 @@ cleanup:
 }
 
 int
-cdf_ptr10486(struct cell_array **z,
+cdf_ptr10868(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -29178,7 +29261,7 @@ cleanup:
 }
 
 int
-cdf_ptr10487(struct cell_array **z,
+cdf_ptr10869(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -29278,7 +29361,7 @@ cleanup:
 }
 
 int
-cdf_ptr10488(struct cell_array **z,
+cdf_ptr10870(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -30144,7 +30227,7 @@ cdf_ptr10488(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10489, cdf_ptr10490, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10871, cdf_ptr10872, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -30279,7 +30362,7 @@ cleanup:
 }
 
 int
-cdf_ptr10489(struct cell_array **z,
+cdf_ptr10871(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -30382,7 +30465,7 @@ cleanup:
 }
 
 int
-cdf_ptr10490(struct cell_array **z,
+cdf_ptr10872(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -30482,7 +30565,7 @@ cleanup:
 }
 
 int
-cdf_ptr10491(struct cell_array **z,
+cdf_ptr10873(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -31347,7 +31430,7 @@ cdf_ptr10491(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10492, cdf_ptr10493, 1), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10874, cdf_ptr10875, 1), cleanup, 
 		    L"[77] 	uidx((⌽uidx,idx)╠{op⍨⌿⍵}╣⌸⌽(,⍺)[uidx],⍵)");
 	
 		k->fv[0] = retain_cell(loc->cdf_op);
@@ -31481,7 +31564,7 @@ cleanup:
 }
 
 int
-cdf_ptr10492(struct cell_array **z,
+cdf_ptr10874(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -31584,7 +31667,7 @@ cleanup:
 }
 
 int
-cdf_ptr10493(struct cell_array **z,
+cdf_ptr10875(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -31684,7 +31767,7 @@ cleanup:
 }
 
 int
-cdf_ptr10494(struct cell_array **z,
+cdf_ptr10876(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -32508,7 +32591,7 @@ cleanup:
 }
 
 int
-cdf_ptr10495(struct cell_array **z,
+cdf_ptr10877(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -33310,7 +33393,7 @@ cleanup:
 }
 
 int
-cdf_ptr10496(struct cell_array **z,
+cdf_ptr10878(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -33430,7 +33513,7 @@ cleanup:
 }
 
 int
-cdf_ptr10497(struct cell_array **z,
+cdf_ptr10879(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -33547,7 +33630,7 @@ cleanup:
 }
 
 int
-cdf_ptr10498(struct cell_array **z,
+cdf_ptr10880(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -33584,7 +33667,7 @@ cleanup:
 }
 
 int
-cdf_ptr10499(struct cell_array **z,
+cdf_ptr10881(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -33618,7 +33701,7 @@ cleanup:
 }
 
 int
-cdf_ptr10500(struct cell_array **z,
+cdf_ptr10882(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -33655,7 +33738,7 @@ cleanup:
 }
 
 int
-cdf_ptr10501(struct cell_array **z,
+cdf_ptr10883(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -33689,7 +33772,7 @@ cleanup:
 }
 
 int
-cdf_ptr10502(struct cell_array **z,
+cdf_ptr10884(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -33726,7 +33809,7 @@ cleanup:
 }
 
 int
-cdf_ptr10503(struct cell_array **z,
+cdf_ptr10885(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -33760,7 +33843,7 @@ cleanup:
 }
 
 int
-cdf_ptr10504(struct cell_array **z,
+cdf_ptr10886(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -34024,7 +34107,7 @@ cdf_ptr10504(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10505, cdf_ptr10506, 2), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10887, cdf_ptr10888, 2), cleanup, 
 				    L"[100] 	israv:╠{╣");
 			
 				k->fv[0] = retain_cell(loc->cdf_axis);
@@ -35211,7 +35294,7 @@ cdf_ptr10504(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10507, cdf_ptr10508, 4), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10889, cdf_ptr10890, 4), cleanup, 
 				    L"[111] 	axis≠fx←⌈axis:⍺╠{╣");
 			
 				k->fv[0] = retain_cell(loc->cdf_fx);
@@ -35377,7 +35460,7 @@ cdf_ptr10504(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10509, cdf_ptr10510, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10891, cdf_ptr10892, 0), cleanup, 
 				    L"[115] 	(lr≤1)∧rr≤1:⍺╠{z←((lc←≢⍺)+rc←≢⍵)⍴⍺ ⋄ z[lc+⍳rc]←⍵ ⋄ z}╣⍵");
 			
 				*stkhd++ = k;
@@ -35423,7 +35506,7 @@ cdf_ptr10504(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10511, cdf_ptr10512, 3), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10893, cdf_ptr10894, 3), cleanup, 
 		    L"[116] 	x←⍺╠{lr≡0:s⍴⍺⊣s[fx]←1⊣s←⍴⍵ ⋄ lr<rr:,[fx-.5]⍺ ⋄ ⍺}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_fx);
@@ -35468,7 +35551,7 @@ cdf_ptr10504(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10513, cdf_ptr10514, 3), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10895, cdf_ptr10896, 3), cleanup, 
 		    L"[117] 	y←⍺╠{rr≡0:s⍴⍵⊣s[fx]←1⊣s←⍴⍺ ⋄ rr<lr:,[fx-.5]⍵ ⋄ ⍵}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_fx);
@@ -36823,7 +36906,7 @@ cleanup:
 }
 
 int
-cdf_ptr10505(struct cell_array **z,
+cdf_ptr10887(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -37332,7 +37415,7 @@ cleanup:
 }
 
 int
-cdf_ptr10506(struct cell_array **z,
+cdf_ptr10888(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -37838,7 +37921,7 @@ cleanup:
 }
 
 int
-cdf_ptr10507(struct cell_array **z,
+cdf_ptr10889(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -38393,7 +38476,7 @@ cleanup:
 }
 
 int
-cdf_ptr10508(struct cell_array **z,
+cdf_ptr10890(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -38945,7 +39028,7 @@ cleanup:
 }
 
 int
-cdf_ptr10509(struct cell_array **z,
+cdf_ptr10891(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -39202,7 +39285,7 @@ cleanup:
 }
 
 int
-cdf_ptr10510(struct cell_array **z,
+cdf_ptr10892(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -39456,7 +39539,7 @@ cleanup:
 }
 
 int
-cdf_ptr10511(struct cell_array **z,
+cdf_ptr10893(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -39868,7 +39951,7 @@ cleanup:
 }
 
 int
-cdf_ptr10512(struct cell_array **z,
+cdf_ptr10894(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -40277,7 +40360,7 @@ cleanup:
 }
 
 int
-cdf_ptr10513(struct cell_array **z,
+cdf_ptr10895(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -40689,7 +40772,7 @@ cleanup:
 }
 
 int
-cdf_ptr10514(struct cell_array **z,
+cdf_ptr10896(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -41098,7 +41181,7 @@ cleanup:
 }
 
 int
-cdf_ptr10515(struct cell_array **z,
+cdf_ptr10897(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -41338,7 +41421,7 @@ cdf_ptr10515(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10516, cdf_ptr10517, 2), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10898, cdf_ptr10899, 2), cleanup, 
 				    L"[100] 	israv:╠{╣");
 			
 				k->fv[0] = retain_cell(loc->cdf_axis);
@@ -42525,7 +42608,7 @@ cdf_ptr10515(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10518, cdf_ptr10519, 4), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10900, cdf_ptr10901, 4), cleanup, 
 				    L"[111] 	axis≠fx←⌈axis:⍺╠{╣");
 			
 				k->fv[0] = retain_cell(loc->cdf_fx);
@@ -42691,7 +42774,7 @@ cdf_ptr10515(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10520, cdf_ptr10521, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10902, cdf_ptr10903, 0), cleanup, 
 				    L"[115] 	(lr≤1)∧rr≤1:⍺╠{z←((lc←≢⍺)+rc←≢⍵)⍴⍺ ⋄ z[lc+⍳rc]←⍵ ⋄ z}╣⍵");
 			
 				*stkhd++ = k;
@@ -42737,7 +42820,7 @@ cdf_ptr10515(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10522, cdf_ptr10523, 3), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10904, cdf_ptr10905, 3), cleanup, 
 		    L"[116] 	x←⍺╠{lr≡0:s⍴⍺⊣s[fx]←1⊣s←⍴⍵ ⋄ lr<rr:,[fx-.5]⍺ ⋄ ⍺}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_fx);
@@ -42782,7 +42865,7 @@ cdf_ptr10515(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10524, cdf_ptr10525, 3), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10906, cdf_ptr10907, 3), cleanup, 
 		    L"[117] 	y←⍺╠{rr≡0:s⍴⍵⊣s[fx]←1⊣s←⍴⍺ ⋄ rr<lr:,[fx-.5]⍵ ⋄ ⍵}╣⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_fx);
@@ -44136,7 +44219,7 @@ cleanup:
 }
 
 int
-cdf_ptr10516(struct cell_array **z,
+cdf_ptr10898(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -44645,7 +44728,7 @@ cleanup:
 }
 
 int
-cdf_ptr10517(struct cell_array **z,
+cdf_ptr10899(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -45151,7 +45234,7 @@ cleanup:
 }
 
 int
-cdf_ptr10518(struct cell_array **z,
+cdf_ptr10900(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -45706,7 +45789,7 @@ cleanup:
 }
 
 int
-cdf_ptr10519(struct cell_array **z,
+cdf_ptr10901(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -46258,7 +46341,7 @@ cleanup:
 }
 
 int
-cdf_ptr10520(struct cell_array **z,
+cdf_ptr10902(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -46515,7 +46598,7 @@ cleanup:
 }
 
 int
-cdf_ptr10521(struct cell_array **z,
+cdf_ptr10903(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -46769,7 +46852,7 @@ cleanup:
 }
 
 int
-cdf_ptr10522(struct cell_array **z,
+cdf_ptr10904(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -47181,7 +47264,7 @@ cleanup:
 }
 
 int
-cdf_ptr10523(struct cell_array **z,
+cdf_ptr10905(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -47590,7 +47673,7 @@ cleanup:
 }
 
 int
-cdf_ptr10524(struct cell_array **z,
+cdf_ptr10906(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -48002,7 +48085,7 @@ cleanup:
 }
 
 int
-cdf_ptr10525(struct cell_array **z,
+cdf_ptr10907(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -48411,7 +48494,7 @@ cleanup:
 }
 
 int
-cdf_ptr10526(struct cell_array **z,
+cdf_ptr10908(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -48505,7 +48588,7 @@ cleanup:
 }
 
 int
-cdf_ptr10527(struct cell_array **z,
+cdf_ptr10909(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -48596,7 +48679,7 @@ cleanup:
 }
 
 int
-cdf_ptr10528(struct cell_array **z,
+cdf_ptr10910(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -48673,7 +48756,7 @@ cdf_ptr10528(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10529, cdf_ptr10530, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10911, cdf_ptr10912, 0), cleanup, 
 				    L"[130]    is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}╣⍵");
 			
 				*stkhd++ = k;
@@ -49281,7 +49364,7 @@ cleanup:
 }
 
 int
-cdf_ptr10529(struct cell_array **z,
+cdf_ptr10911(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -49443,7 +49526,7 @@ cleanup:
 }
 
 int
-cdf_ptr10530(struct cell_array **z,
+cdf_ptr10912(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -49602,7 +49685,7 @@ cleanup:
 }
 
 int
-cdf_ptr10531(struct cell_array **z,
+cdf_ptr10913(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -49677,7 +49760,7 @@ cdf_ptr10531(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10532, cdf_ptr10533, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10914, cdf_ptr10915, 0), cleanup, 
 				    L"[130]    is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}╣⍵");
 			
 				*stkhd++ = k;
@@ -50284,7 +50367,7 @@ cleanup:
 }
 
 int
-cdf_ptr10532(struct cell_array **z,
+cdf_ptr10914(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -50446,7 +50529,7 @@ cleanup:
 }
 
 int
-cdf_ptr10533(struct cell_array **z,
+cdf_ptr10915(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -50605,7 +50688,7 @@ cleanup:
 }
 
 int
-cdf_ptr10534(struct cell_array **z,
+cdf_ptr10916(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -50780,7 +50863,7 @@ cleanup:
 }
 
 int
-cdf_ptr10535(struct cell_array **z,
+cdf_ptr10917(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -50952,7 +51035,7 @@ cleanup:
 }
 
 int
-cdf_ptr10536(struct cell_array **z,
+cdf_ptr10918(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -51450,7 +51533,7 @@ cleanup:
 }
 
 int
-cdf_ptr10537(struct cell_array **z,
+cdf_ptr10919(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -51945,7 +52028,7 @@ cleanup:
 }
 
 int
-cdf_ptr10538(struct cell_array **z,
+cdf_ptr10920(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -52011,7 +52094,7 @@ cleanup:
 }
 
 int
-cdf_ptr10539(struct cell_array **z,
+cdf_ptr10921(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -52074,7 +52157,7 @@ cleanup:
 }
 
 int
-cdf_ptr10540(struct cell_array **z,
+cdf_ptr10922(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -52140,7 +52223,7 @@ cleanup:
 }
 
 int
-cdf_ptr10541(struct cell_array **z,
+cdf_ptr10923(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -52203,7 +52286,7 @@ cleanup:
 }
 
 int
-cdf_ptr10542(struct cell_array **z,
+cdf_ptr10924(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -52347,7 +52430,7 @@ cleanup:
 }
 
 int
-cdf_ptr10543(struct cell_array **z,
+cdf_ptr10925(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -52488,7 +52571,7 @@ cleanup:
 }
 
 int
-cdf_ptr10544(struct cell_array **z,
+cdf_ptr10926(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -52554,7 +52637,7 @@ cleanup:
 }
 
 int
-cdf_ptr10545(struct cell_array **z,
+cdf_ptr10927(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -52617,7 +52700,7 @@ cleanup:
 }
 
 int
-cdf_ptr10546(struct cell_array **z,
+cdf_ptr10928(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -52787,7 +52870,7 @@ cleanup:
 }
 
 int
-cdf_ptr10547(struct cell_array **z,
+cdf_ptr10929(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -52954,7 +53037,7 @@ cleanup:
 }
 
 int
-cdf_ptr10548(struct cell_array **z,
+cdf_ptr10930(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -53027,7 +53110,7 @@ cleanup:
 }
 
 int
-cdf_ptr10549(struct cell_array **z,
+cdf_ptr10931(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -53097,7 +53180,7 @@ cleanup:
 }
 
 int
-cdf_ptr10550(struct cell_array **z,
+cdf_ptr10932(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -53387,7 +53470,7 @@ cleanup:
 }
 
 int
-cdf_ptr10551(struct cell_array **z,
+cdf_ptr10933(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -53674,7 +53757,7 @@ cleanup:
 }
 
 int
-cdf_ptr10552(struct cell_array **z,
+cdf_ptr10934(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -53747,7 +53830,7 @@ cleanup:
 }
 
 int
-cdf_ptr10553(struct cell_array **z,
+cdf_ptr10935(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -53817,7 +53900,7 @@ cleanup:
 }
 
 int
-cdf_ptr10554(struct cell_array **z,
+cdf_ptr10936(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -54112,7 +54195,7 @@ cleanup:
 }
 
 int
-cdf_ptr10555(struct cell_array **z,
+cdf_ptr10937(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -54404,7 +54487,7 @@ cleanup:
 }
 
 int
-cdf_ptr10556(struct cell_array **z,
+cdf_ptr10938(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -54605,7 +54688,7 @@ cleanup:
 }
 
 int
-cdf_ptr10557(struct cell_array **z,
+cdf_ptr10939(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -54803,7 +54886,7 @@ cleanup:
 }
 
 int
-cdf_ptr10558(struct cell_array **z,
+cdf_ptr10940(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -55033,7 +55116,7 @@ cleanup:
 }
 
 int
-cdf_ptr10559(struct cell_array **z,
+cdf_ptr10941(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -55260,7 +55343,7 @@ cleanup:
 }
 
 int
-cdf_ptr10560(struct cell_array **z,
+cdf_ptr10942(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -55521,7 +55604,7 @@ cleanup:
 }
 
 int
-cdf_ptr10561(struct cell_array **z,
+cdf_ptr10943(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -55779,7 +55862,7 @@ cleanup:
 }
 
 int
-cdf_ptr10562(struct cell_array **z,
+cdf_ptr10944(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -55852,7 +55935,7 @@ cleanup:
 }
 
 int
-cdf_ptr10563(struct cell_array **z,
+cdf_ptr10945(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -55922,7 +56005,7 @@ cleanup:
 }
 
 int
-cdf_ptr10564(struct cell_array **z,
+cdf_ptr10946(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -58107,7 +58190,7 @@ cdf_ptr10564(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10565, cdf_ptr10566, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10947, cdf_ptr10948, 0), cleanup, 
 				    L"[232] 	9=⍺:╠{1289≡⎕DR ⍵:'realpart_vec_ibeam'⌶ ⍵ ⋄ ⍵}╣⍵");
 			
 				*stkhd++ = k;
@@ -58439,7 +58522,7 @@ cdf_ptr10564(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10567, cdf_ptr10568, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10949, cdf_ptr10950, 0), cleanup, 
 				    L"[236] 	11=⍺:╠{1289≡⎕DR ⍵:'imagpart_vec_ibeam'⌶ ⍵ ⋄ (⍴⍵)⍴0}╣⍵");
 			
 				*stkhd++ = k;
@@ -58862,7 +58945,7 @@ cleanup:
 }
 
 int
-cdf_ptr10565(struct cell_array **z,
+cdf_ptr10947(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -59006,7 +59089,7 @@ cleanup:
 }
 
 int
-cdf_ptr10566(struct cell_array **z,
+cdf_ptr10948(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -59147,7 +59230,7 @@ cleanup:
 }
 
 int
-cdf_ptr10567(struct cell_array **z,
+cdf_ptr10949(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -59347,7 +59430,7 @@ cleanup:
 }
 
 int
-cdf_ptr10568(struct cell_array **z,
+cdf_ptr10950(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -59544,7 +59627,7 @@ cleanup:
 }
 
 int
-cdf_ptr10569(struct cell_array **z,
+cdf_ptr10951(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -61727,7 +61810,7 @@ cdf_ptr10569(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10570, cdf_ptr10571, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10952, cdf_ptr10953, 0), cleanup, 
 				    L"[232] 	9=⍺:╠{1289≡⎕DR ⍵:'realpart_vec_ibeam'⌶ ⍵ ⋄ ⍵}╣⍵");
 			
 				*stkhd++ = k;
@@ -62059,7 +62142,7 @@ cdf_ptr10569(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10572, cdf_ptr10573, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10954, cdf_ptr10955, 0), cleanup, 
 				    L"[236] 	11=⍺:╠{1289≡⎕DR ⍵:'imagpart_vec_ibeam'⌶ ⍵ ⋄ (⍴⍵)⍴0}╣⍵");
 			
 				*stkhd++ = k;
@@ -62481,7 +62564,7 @@ cleanup:
 }
 
 int
-cdf_ptr10570(struct cell_array **z,
+cdf_ptr10952(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -62625,7 +62708,7 @@ cleanup:
 }
 
 int
-cdf_ptr10571(struct cell_array **z,
+cdf_ptr10953(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -62766,7 +62849,7 @@ cleanup:
 }
 
 int
-cdf_ptr10572(struct cell_array **z,
+cdf_ptr10954(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -62966,7 +63049,7 @@ cleanup:
 }
 
 int
-cdf_ptr10573(struct cell_array **z,
+cdf_ptr10955(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -63163,7 +63246,7 @@ cleanup:
 }
 
 int
-cdf_ptr10574(struct cell_array **z,
+cdf_ptr10956(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -63645,7 +63728,7 @@ cleanup:
 }
 
 int
-cdf_ptr10575(struct cell_array **z,
+cdf_ptr10957(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -64124,7 +64207,7 @@ cleanup:
 }
 
 int
-cdf_ptr10576(struct cell_array **z,
+cdf_ptr10958(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -64267,7 +64350,7 @@ cleanup:
 }
 
 int
-cdf_ptr10577(struct cell_array **z,
+cdf_ptr10959(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -64407,7 +64490,7 @@ cleanup:
 }
 
 int
-cdf_ptr10578(struct cell_array **z,
+cdf_ptr10960(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -64473,7 +64556,7 @@ cleanup:
 }
 
 int
-cdf_ptr10579(struct cell_array **z,
+cdf_ptr10961(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -64536,7 +64619,7 @@ cleanup:
 }
 
 int
-cdf_ptr10580(struct cell_array **z,
+cdf_ptr10962(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -64819,7 +64902,7 @@ cleanup:
 }
 
 int
-cdf_ptr10581(struct cell_array **z,
+cdf_ptr10963(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -65099,7 +65182,7 @@ cleanup:
 }
 
 int
-cdf_ptr10582(struct cell_array **z,
+cdf_ptr10964(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -65165,7 +65248,7 @@ cleanup:
 }
 
 int
-cdf_ptr10583(struct cell_array **z,
+cdf_ptr10965(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -65228,7 +65311,7 @@ cleanup:
 }
 
 int
-cdf_ptr10584(struct cell_array **z,
+cdf_ptr10966(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -65791,7 +65874,7 @@ cdf_ptr10584(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10585, cdf_ptr10586, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10967, cdf_ptr10968, 0), cleanup, 
 				    L"[268] 	⍺ both_integer ⍵:(|⍺)╠{~∨⌿m←⍵≠0:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}╣|⍵");
 			
 				*stkhd++ = k;
@@ -65877,7 +65960,7 @@ cdf_ptr10584(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10587, cdf_ptr10588, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10969, cdf_ptr10970, 0), cleanup, 
 		    L"[269] 	(|⍺)╠{~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}╣|⍵");
 	
 		*stkhd++ = k;
@@ -65943,7 +66026,7 @@ cleanup:
 }
 
 int
-cdf_ptr10585(struct cell_array **z,
+cdf_ptr10967(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -66374,7 +66457,7 @@ cleanup:
 }
 
 int
-cdf_ptr10586(struct cell_array **z,
+cdf_ptr10968(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -66802,7 +66885,7 @@ cleanup:
 }
 
 int
-cdf_ptr10587(struct cell_array **z,
+cdf_ptr10969(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -67233,7 +67316,7 @@ cleanup:
 }
 
 int
-cdf_ptr10588(struct cell_array **z,
+cdf_ptr10970(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -67661,7 +67744,7 @@ cleanup:
 }
 
 int
-cdf_ptr10589(struct cell_array **z,
+cdf_ptr10971(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -68222,7 +68305,7 @@ cdf_ptr10589(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, cdf_ptr10590, cdf_ptr10591, 0), cleanup, 
+				CHK(mk_func(&k, cdf_ptr10972, cdf_ptr10973, 0), cleanup, 
 				    L"[268] 	⍺ both_integer ⍵:(|⍺)╠{~∨⌿m←⍵≠0:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}╣|⍵");
 			
 				*stkhd++ = k;
@@ -68308,7 +68391,7 @@ cdf_ptr10589(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10592, cdf_ptr10593, 0), cleanup, 
+		CHK(mk_func(&k, cdf_ptr10974, cdf_ptr10975, 0), cleanup, 
 		    L"[269] 	(|⍺)╠{~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}╣|⍵");
 	
 		*stkhd++ = k;
@@ -68373,7 +68456,7 @@ cleanup:
 }
 
 int
-cdf_ptr10590(struct cell_array **z,
+cdf_ptr10972(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -68804,7 +68887,7 @@ cleanup:
 }
 
 int
-cdf_ptr10591(struct cell_array **z,
+cdf_ptr10973(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -69232,7 +69315,7 @@ cleanup:
 }
 
 int
-cdf_ptr10592(struct cell_array **z,
+cdf_ptr10974(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -69663,7 +69746,7 @@ cleanup:
 }
 
 int
-cdf_ptr10593(struct cell_array **z,
+cdf_ptr10975(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -70091,7 +70174,7 @@ cleanup:
 }
 
 int
-cdf_ptr10594(struct cell_array **z,
+cdf_ptr10976(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -70157,7 +70240,7 @@ cleanup:
 }
 
 int
-cdf_ptr10595(struct cell_array **z,
+cdf_ptr10977(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -70220,7 +70303,7 @@ cleanup:
 }
 
 int
-cdf_ptr10596(struct cell_array **z,
+cdf_ptr10978(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -70286,7 +70369,7 @@ cleanup:
 }
 
 int
-cdf_ptr10597(struct cell_array **z,
+cdf_ptr10979(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -70349,7 +70432,7 @@ cleanup:
 }
 
 int
-cdf_ptr10598(struct cell_array **z,
+cdf_ptr10980(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -70526,7 +70609,7 @@ cleanup:
 }
 
 int
-cdf_ptr10599(struct cell_array **z,
+cdf_ptr10981(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -70700,7 +70783,7 @@ cleanup:
 }
 
 int
-cdf_ptr10600(struct cell_array **z,
+cdf_ptr10982(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -70766,7 +70849,7 @@ cleanup:
 }
 
 int
-cdf_ptr10601(struct cell_array **z,
+cdf_ptr10983(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -70829,7 +70912,7 @@ cleanup:
 }
 
 int
-cdf_ptr10602(struct cell_array **z,
+cdf_ptr10984(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -71006,7 +71089,7 @@ cleanup:
 }
 
 int
-cdf_ptr10603(struct cell_array **z,
+cdf_ptr10985(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -71180,7 +71263,7 @@ cleanup:
 }
 
 int
-cdf_ptr10604(struct cell_array **z,
+cdf_ptr10986(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -71476,7 +71559,7 @@ cleanup:
 }
 
 int
-cdf_ptr10605(struct cell_array **z,
+cdf_ptr10987(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -71769,7 +71852,7 @@ cleanup:
 }
 
 int
-cdf_ptr10606(struct cell_array **z,
+cdf_ptr10988(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -71835,7 +71918,7 @@ cleanup:
 }
 
 int
-cdf_ptr10607(struct cell_array **z,
+cdf_ptr10989(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -71898,7 +71981,7 @@ cleanup:
 }
 
 int
-cdf_ptr10608(struct cell_array **z,
+cdf_ptr10990(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -72194,7 +72277,7 @@ cleanup:
 }
 
 int
-cdf_ptr10609(struct cell_array **z,
+cdf_ptr10991(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -72487,7 +72570,7 @@ cleanup:
 }
 
 int
-cdf_ptr10610(struct cell_array **z,
+cdf_ptr10992(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -72553,7 +72636,7 @@ cleanup:
 }
 
 int
-cdf_ptr10611(struct cell_array **z,
+cdf_ptr10993(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -72616,7 +72699,7 @@ cleanup:
 }
 
 int
-cdf_ptr10612(struct cell_array **z,
+cdf_ptr10994(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -72840,7 +72923,7 @@ cleanup:
 }
 
 int
-cdf_ptr10613(struct cell_array **z,
+cdf_ptr10995(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -73061,7 +73144,7 @@ cleanup:
 }
 
 int
-cdf_ptr10614(struct cell_array **z,
+cdf_ptr10996(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -73127,7 +73210,7 @@ cleanup:
 }
 
 int
-cdf_ptr10615(struct cell_array **z,
+cdf_ptr10997(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -73190,7 +73273,7 @@ cleanup:
 }
 
 int
-cdf_ptr10616(struct cell_array **z,
+cdf_ptr10998(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -73486,7 +73569,7 @@ cleanup:
 }
 
 int
-cdf_ptr10617(struct cell_array **z,
+cdf_ptr10999(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -73779,7 +73862,7 @@ cleanup:
 }
 
 int
-cdf_ptr10618(struct cell_array **z,
+cdf_ptr11000(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -73845,7 +73928,7 @@ cleanup:
 }
 
 int
-cdf_ptr10619(struct cell_array **z,
+cdf_ptr11001(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -73908,7 +73991,7 @@ cleanup:
 }
 
 int
-cdf_ptr10620(struct cell_array **z,
+cdf_ptr11002(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -74204,7 +74287,7 @@ cleanup:
 }
 
 int
-cdf_ptr10621(struct cell_array **z,
+cdf_ptr11003(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -74497,7 +74580,7 @@ cleanup:
 }
 
 int
-cdf_ptr10622(struct cell_array **z,
+cdf_ptr11004(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -74563,7 +74646,7 @@ cleanup:
 }
 
 int
-cdf_ptr10623(struct cell_array **z,
+cdf_ptr11005(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -74626,7 +74709,7 @@ cleanup:
 }
 
 int
-cdf_ptr10624(struct cell_array **z,
+cdf_ptr11006(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -74692,7 +74775,7 @@ cleanup:
 }
 
 int
-cdf_ptr10625(struct cell_array **z,
+cdf_ptr11007(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -74755,7 +74838,7 @@ cleanup:
 }
 
 int
-cdf_ptr10626(struct cell_array **z,
+cdf_ptr11008(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -74979,7 +75062,7 @@ cleanup:
 }
 
 int
-cdf_ptr10627(struct cell_array **z,
+cdf_ptr11009(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -75200,7 +75283,7 @@ cleanup:
 }
 
 int
-cdf_ptr10628(struct cell_array **z,
+cdf_ptr11010(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -75266,7 +75349,7 @@ cleanup:
 }
 
 int
-cdf_ptr10629(struct cell_array **z,
+cdf_ptr11011(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -75329,7 +75412,7 @@ cleanup:
 }
 
 int
-cdf_ptr10630(struct cell_array **z,
+cdf_ptr11012(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -75433,7 +75516,7 @@ cleanup:
 }
 
 int
-cdf_ptr10631(struct cell_array **z,
+cdf_ptr11013(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -75534,7 +75617,7 @@ cleanup:
 }
 
 int
-cdf_ptr10632(struct cell_array **z,
+cdf_ptr11014(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -75600,7 +75683,7 @@ cleanup:
 }
 
 int
-cdf_ptr10633(struct cell_array **z,
+cdf_ptr11015(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -75663,7 +75746,7 @@ cleanup:
 }
 
 int
-cdf_ptr10634(struct cell_array **z,
+cdf_ptr11016(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -75841,7 +75924,7 @@ cleanup:
 }
 
 int
-cdf_ptr10635(struct cell_array **z,
+cdf_ptr11017(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -76016,7 +76099,7 @@ cleanup:
 }
 
 int
-cdf_ptr10636(struct cell_array **z,
+cdf_ptr11018(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -76082,7 +76165,7 @@ cleanup:
 }
 
 int
-cdf_ptr10637(struct cell_array **z,
+cdf_ptr11019(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -76145,7 +76228,7 @@ cleanup:
 }
 
 int
-cdf_ptr10638(struct cell_array **z,
+cdf_ptr11020(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -76352,7 +76435,7 @@ cleanup:
 }
 
 int
-cdf_ptr10639(struct cell_array **z,
+cdf_ptr11021(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -76556,7 +76639,7 @@ cleanup:
 }
 
 int
-cdf_ptr10640(struct cell_array **z,
+cdf_ptr11022(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -76622,7 +76705,7 @@ cleanup:
 }
 
 int
-cdf_ptr10641(struct cell_array **z,
+cdf_ptr11023(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -76685,7 +76768,7 @@ cleanup:
 }
 
 int
-cdf_ptr10642(struct cell_array **z,
+cdf_ptr11024(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -76751,7 +76834,7 @@ cleanup:
 }
 
 int
-cdf_ptr10643(struct cell_array **z,
+cdf_ptr11025(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -76814,7 +76897,7 @@ cleanup:
 }
 
 int
-cdf_ptr10644(struct cell_array **z,
+cdf_ptr11026(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -76880,7 +76963,7 @@ cleanup:
 }
 
 int
-cdf_ptr10645(struct cell_array **z,
+cdf_ptr11027(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -76943,7 +77026,7 @@ cleanup:
 }
 
 int
-cdf_ptr10646(struct cell_array **z,
+cdf_ptr11028(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77009,7 +77092,7 @@ cleanup:
 }
 
 int
-cdf_ptr10647(struct cell_array **z,
+cdf_ptr11029(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77072,7 +77155,7 @@ cleanup:
 }
 
 int
-cdf_ptr10648(struct cell_array **z,
+cdf_ptr11030(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77138,7 +77221,7 @@ cleanup:
 }
 
 int
-cdf_ptr10649(struct cell_array **z,
+cdf_ptr11031(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77201,7 +77284,7 @@ cleanup:
 }
 
 int
-cdf_ptr10650(struct cell_array **z,
+cdf_ptr11032(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77267,7 +77350,7 @@ cleanup:
 }
 
 int
-cdf_ptr10651(struct cell_array **z,
+cdf_ptr11033(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77330,7 +77413,7 @@ cleanup:
 }
 
 int
-cdf_ptr10652(struct cell_array **z,
+cdf_ptr11034(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77396,7 +77479,7 @@ cleanup:
 }
 
 int
-cdf_ptr10653(struct cell_array **z,
+cdf_ptr11035(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77459,7 +77542,7 @@ cleanup:
 }
 
 int
-cdf_ptr10654(struct cell_array **z,
+cdf_ptr11036(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77525,7 +77608,7 @@ cleanup:
 }
 
 int
-cdf_ptr10655(struct cell_array **z,
+cdf_ptr11037(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77588,7 +77671,7 @@ cleanup:
 }
 
 int
-cdf_ptr10656(struct cell_array **z,
+cdf_ptr11038(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77654,7 +77737,7 @@ cleanup:
 }
 
 int
-cdf_ptr10657(struct cell_array **z,
+cdf_ptr11039(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77717,7 +77800,7 @@ cleanup:
 }
 
 int
-cdf_ptr10658(struct cell_array **z,
+cdf_ptr11040(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77783,7 +77866,7 @@ cleanup:
 }
 
 int
-cdf_ptr10659(struct cell_array **z,
+cdf_ptr11041(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77846,7 +77929,7 @@ cleanup:
 }
 
 int
-cdf_ptr10660(struct cell_array **z,
+cdf_ptr11042(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77857,27 +77940,34 @@ cdf_ptr10660(struct cell_array **z,
 
 	cdf_alpha = NULL;
 
+	struct {
+		struct cell_array_box *cdf_d;
+		struct cell_array *cdf_s;
+	} loc_frm, *loc;
+
+	loc = &loc_frm;
+
+	struct lex_vars {
+		struct cell_func_box *cdf_both_integer;
+		struct cell_func_box *cdf_squeeze;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
+	CHK(mk_array_box(&loc->cdf_d, NULL), cleanup, L"Init mutable variable: loc->cdf_d");
+	loc->cdf_s = NULL;
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ╠⍵╣):⎕SIGNAL 5");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+	*stkhd++ = retain_cell(cdf_omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[372] rol←{⎕SIGNAL ╠16╣}");
+	if (!lex->cdf_squeeze->value)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴╠squeeze╣ ⍵):⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[372] rol←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[372] rol←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -77885,7 +77975,1045 @@ cdf_ptr10660(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[372] rol←{╠⎕SIGNAL 16╣}");
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴╠squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢╠⍴╣squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢╠⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢╠≢╣⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢╠≢⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0╠≢╣≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(╠0╣≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(╠0╣≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨╠(0≢≢⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_lor)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)╠∨╣(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lor);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ╠⍺╣)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!lex->cdf_squeeze->value)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴╠squeeze╣ ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴╠squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[373] 	(0≢≢╠⍴╣squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢╠⍴squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0≢╠≢╣⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢╠≢⍴squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0╠≢╣≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[373] 	(╠0╣≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[373] 	(╠0╣≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[373] 	╠(0≢≢⍴squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[373] 	╠(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ╠⍵╣):⎕SIGNAL 5");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL ╠5╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL ╠5╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):╠⎕SIGNAL╣ 5");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):╠⎕SIGNAL 5╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[374] 	~⍺ both_integer ╠⍵╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!lex->cdf_both_integer->value)
+		CHK(6, cleanup, L"[374] 	~⍺ ╠both_integer╣ ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_both_integer->value);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[374] 	~╠⍺╣ both_integer ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[374] 	~╠⍺ both_integer ⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_not)
+		CHK(6, cleanup, L"[374] 	╠~╣⍺ both_integer ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_not);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[374] 	╠~⍺ both_integer ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[374] 	~⍺ both_integer ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[374] 	~⍺ both_integer ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[374] 	~⍺ both_integer ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[374] 	~⍺ both_integer ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[374] 	~⍺ both_integer ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<╠0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<╠0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_lth)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵╠<╣0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨╠⍵╣<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨(⍺<0)∨╠⍵<0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_lor)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)╠∨╣⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lor);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<╠0╣)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<╠0╣)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_lth)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺╠<╣0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(╠⍺╣<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨╠(⍺<0)╣∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨╠(⍺<0)∨⍵<0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_lor)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)╠∨╣(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lor);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[375] 	(⍺>╠⍵╣)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_gth)
+		CHK(6, cleanup, L"[375] 	(⍺╠>╣⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_gth);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[375] 	(╠⍺╣>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	╠(⍺>⍵)╣∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	╠(⍺>⍵)∨(⍺<0)∨⍵<0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<╠0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL ╠11╣ ⋄ 0≡⍺:⍬");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL ╠11╣ ⋄ 0≡⍺:⍬");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:╠⎕SIGNAL╣ 11 ⋄ 0≡⍺:⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:╠⎕SIGNAL 11╣ ⋄ 0≡⍺:⍬");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡╠⍺╣:⍬");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_prim.cdf_eqv)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0╠≡╣⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ ╠0╣≡⍺:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ ╠0╣≡⍺:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ ╠0≡⍺╣:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡╠⍺╣:⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳╠⍵╣ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_iot)
+		CHK(6, cleanup, L"[376] 	d←╠⍳╣⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[376] 	d←╠⍳⍵╣ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	release_cell(loc->cdf_d->value);
+	loc->cdf_d->value = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳╠⍺╣");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_prim.cdf_iot)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←╠⍳╣⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←╠⍳⍺╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	release_cell(loc->cdf_s);
+	loc->cdf_s = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.cdf_sub)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵╠-╣s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?╠⍵╣-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?╠⍵-s←⍳⍺╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rol)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+╠?╣⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rol);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+╠?⍵-s←⍳⍺╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_add)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s╠+╣?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_add);
+	
+	if (!loc->cdf_s)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨╠s╣+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(loc->cdf_s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨╠s+?⍵-s←⍳⍺╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_map)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}╠¨╣s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_map);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, cdf_ptr11043, cdf_ptr11044, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}╣¨s+?⍵-s←⍳⍺");
+	
+		k->fv[0] = retain_cell(loc->cdf_d);
+	
+		*stkhd++ = k;
+	}
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨╣s+?⍵-s←⍳⍺");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!loc->cdf_s)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ ╠s╣{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(loc->cdf_s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ ╠s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+	release_array(cdf_alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[372] deal←╠{╣");
+	return err;
+}
+
+int
+cdf_ptr11043(struct cell_array **z,
+    struct cell_array *cdf_omega,
+    struct cell_func *cdf_self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *cdf_alpha;
+
+	cdf_alpha = NULL;
+
+	struct lex_vars {
+		struct cell_array_box *cdf_d;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ╠⍺╣]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵╣ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_brk)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[╣⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
+	
+	if (!lex->cdf_d->value)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d╣[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(lex->cdf_d->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_set)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]╠←╣d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_set);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ╠⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺╣ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array_box *bx = lex->cdf_d;
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *orig = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃╠d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(orig);
+		release_array(x);
+		release_func(fn);
+		stkhd -= 2;
+	}
+	
+	if (!cdf_prim.cdf_dis)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{╠⊃╣d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{╠⊃d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -77907,12 +79035,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[372] rol←╠{⎕SIGNAL 16}╣");
+	    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}╣¨s+?⍵-s←⍳⍺");
 	return err;
 }
 
 int
-cdf_ptr10661(struct cell_array **z,
+cdf_ptr11044(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -77921,27 +79049,161 @@ cdf_ptr10661(struct cell_array **z,
 	void **stkhd;
 	int err;
 
+	struct lex_vars {
+		struct cell_array_box *cdf_d;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ╠⍺╣]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵╣ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
 	{
-		struct cell_array *arr;
+		struct cell_array *arr, **dat;
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[372] rol←{⎕SIGNAL ╠16╣}");
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[372] rol←{⎕SIGNAL ╠16╣}");
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
 	
 		*stkhd++ = arr;
 	}
 	
-	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[372] rol←{╠⎕SIGNAL╣ 16}");
+	{
+		struct cell_array *arr, **dat;
 	
-	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_brk)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[╣⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
+	
+	if (!lex->cdf_d->value)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d╣[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(lex->cdf_d->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_set)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]╠←╣d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_set);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ╠⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺╣ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array_box *bx = lex->cdf_d;
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *orig = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃╠d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(orig);
+		release_array(x);
+		release_func(fn);
+		stkhd -= 2;
+	}
+	
+	if (!cdf_prim.cdf_dis)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{╠⊃╣d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -77949,7 +79211,7 @@ cdf_ptr10661(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[372] rol←{╠⎕SIGNAL 16╣}");
+		    L"[376] 	d←⍳⍵ ⋄ s{╠⊃d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -77970,12 +79232,920 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[372] rol←╠{⎕SIGNAL 16}╣");
+	    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}╣¨s+?⍵-s←⍳⍺");
 	return err;
 }
 
 int
-cdf_ptr10662(struct cell_array **z,
+cdf_ptr11045(struct cell_array **z,
+    struct cell_array *cdf_alpha,
+    struct cell_array *cdf_omega,
+    struct cell_func *cdf_self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+	struct {
+		struct cell_array_box *cdf_d;
+		struct cell_array *cdf_s;
+	} loc_frm, *loc;
+
+	loc = &loc_frm;
+
+	struct lex_vars {
+		struct cell_func_box *cdf_both_integer;
+		struct cell_func_box *cdf_squeeze;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
+	CHK(mk_array_box(&loc->cdf_d, NULL), cleanup, L"Init mutable variable: loc->cdf_d");
+	loc->cdf_s = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ╠⍵╣):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!lex->cdf_squeeze->value)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴╠squeeze╣ ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴╠squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢╠⍴╣squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢╠⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢╠≢╣⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢╠≢⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0╠≢╣≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(╠0╣≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(╠0╣≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴squeeze ⍺)∨╠(0≢≢⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_lor)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)╠∨╣(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lor);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ╠⍺╣)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!lex->cdf_squeeze->value)
+		CHK(6, cleanup, L"[373] 	(0≢≢⍴╠squeeze╣ ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢⍴╠squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[373] 	(0≢≢╠⍴╣squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢≢╠⍴squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0≢╠≢╣⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[373] 	(0≢╠≢⍴squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[373] 	(0╠≢╣≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[373] 	(╠0╣≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[373] 	(╠0╣≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[373] 	╠(0≢≢⍴squeeze ⍺)╣∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[373] 	╠(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵)╣:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ╠⍵╣):⎕SIGNAL 5");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL ╠5╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL ╠5╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):╠⎕SIGNAL╣ 5");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[373] 	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):╠⎕SIGNAL 5╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[374] 	~⍺ both_integer ╠⍵╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!lex->cdf_both_integer->value)
+		CHK(6, cleanup, L"[374] 	~⍺ ╠both_integer╣ ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_both_integer->value);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[374] 	~╠⍺╣ both_integer ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[374] 	~╠⍺ both_integer ⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_not)
+		CHK(6, cleanup, L"[374] 	╠~╣⍺ both_integer ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_not);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[374] 	╠~⍺ both_integer ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[374] 	~⍺ both_integer ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[374] 	~⍺ both_integer ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[374] 	~⍺ both_integer ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[374] 	~⍺ both_integer ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[374] 	~⍺ both_integer ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<╠0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<╠0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_lth)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵╠<╣0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨╠⍵╣<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨(⍺<0)∨╠⍵<0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_lor)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)╠∨╣⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lor);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<╠0╣)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<╠0╣)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_lth)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺╠<╣0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(╠⍺╣<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨╠(⍺<0)╣∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨╠(⍺<0)∨⍵<0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_lor)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)╠∨╣(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lor);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[375] 	(⍺>╠⍵╣)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_gth)
+		CHK(6, cleanup, L"[375] 	(⍺╠>╣⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_gth);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[375] 	(╠⍺╣>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	╠(⍺>⍵)╣∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	╠(⍺>⍵)∨(⍺<0)∨⍵<0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<╠0╣:⎕SIGNAL 11 ⋄ 0≡⍺:⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL ╠11╣ ⋄ 0≡⍺:⍬");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL ╠11╣ ⋄ 0≡⍺:⍬");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:╠⎕SIGNAL╣ 11 ⋄ 0≡⍺:⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:╠⎕SIGNAL 11╣ ⋄ 0≡⍺:⍬");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡╠⍺╣:⍬");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_prim.cdf_eqv)
+		CHK(6, cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0╠≡╣⍺:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ ╠0╣≡⍺:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ ╠0╣≡⍺:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ ╠0≡⍺╣:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡╠⍺╣:⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[375] 	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳╠⍵╣ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_iot)
+		CHK(6, cleanup, L"[376] 	d←╠⍳╣⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[376] 	d←╠⍳⍵╣ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	release_cell(loc->cdf_d->value);
+	loc->cdf_d->value = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳╠⍺╣");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_prim.cdf_iot)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←╠⍳╣⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←╠⍳⍺╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	release_cell(loc->cdf_s);
+	loc->cdf_s = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.cdf_sub)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵╠-╣s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?╠⍵╣-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?╠⍵-s←⍳⍺╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rol)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+╠?╣⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rol);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+╠?⍵-s←⍳⍺╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_add)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s╠+╣?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_add);
+	
+	if (!loc->cdf_s)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨╠s╣+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(loc->cdf_s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨╠s+?⍵-s←⍳⍺╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_map)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}╠¨╣s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_map);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, cdf_ptr11046, cdf_ptr11047, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}╣¨s+?⍵-s←⍳⍺");
+	
+		k->fv[0] = retain_cell(loc->cdf_d);
+	
+		*stkhd++ = k;
+	}
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨╣s+?⍵-s←⍳⍺");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!loc->cdf_s)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ ╠s╣{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(loc->cdf_s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ ╠s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[372] deal←╠{╣");
+	return err;
+}
+
+int
+cdf_ptr11046(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -77986,27 +80156,161 @@ cdf_ptr10662(struct cell_array **z,
 
 	cdf_alpha = NULL;
 
+	struct lex_vars {
+		struct cell_array_box *cdf_d;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ╠⍺╣]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵╣ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
 	{
-		struct cell_array *arr;
+		struct cell_array *arr, **dat;
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] mdv←{⎕SIGNAL ╠16╣}");
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[375] mdv←{⎕SIGNAL ╠16╣}");
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
 	
 		*stkhd++ = arr;
 	}
 	
-	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[375] mdv←{╠⎕SIGNAL╣ 16}");
+	{
+		struct cell_array *arr, **dat;
 	
-	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_brk)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[╣⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
+	
+	if (!lex->cdf_d->value)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d╣[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(lex->cdf_d->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_set)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]╠←╣d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_set);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ╠⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺╣ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array_box *bx = lex->cdf_d;
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *orig = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃╠d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(orig);
+		release_array(x);
+		release_func(fn);
+		stkhd -= 2;
+	}
+	
+	if (!cdf_prim.cdf_dis)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{╠⊃╣d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -78014,7 +80318,7 @@ cdf_ptr10662(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[375] mdv←{╠⎕SIGNAL 16╣}");
+		    L"[376] 	d←⍳⍵ ⋄ s{╠⊃d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -78036,12 +80340,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[375] mdv←╠{⎕SIGNAL 16}╣");
+	    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}╣¨s+?⍵-s←⍳⍺");
 	return err;
 }
 
 int
-cdf_ptr10663(struct cell_array **z,
+cdf_ptr11047(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -78050,27 +80354,161 @@ cdf_ptr10663(struct cell_array **z,
 	void **stkhd;
 	int err;
 
+	struct lex_vars {
+		struct cell_array_box *cdf_d;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ╠⍺╣]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵╣ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
 	{
-		struct cell_array *arr;
+		struct cell_array *arr, **dat;
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[375] mdv←{⎕SIGNAL ╠16╣}");
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[375] mdv←{⎕SIGNAL ╠16╣}");
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[╠⍵ ⍺╣]}¨s+?⍵-s←⍳⍺");
 	
 		*stkhd++ = arr;
 	}
 	
-	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[375] mdv←{╠⎕SIGNAL╣ 16}");
+	{
+		struct cell_array *arr, **dat;
 	
-	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_brk)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d╠[╣⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
+	
+	if (!lex->cdf_d->value)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d╣[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(lex->cdf_d->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←╠d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_set)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]╠←╣d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_set);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[⍺ ╠⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_alpha)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺╣ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 2;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d[╠⍺ ⍵╣]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		arr->shape[0] = 1;
+		CHK(alloc_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+	
+		CHK(squeeze_array(arr), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃d╠[⍺ ⍵]╣←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array_box *bx = lex->cdf_d;
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *orig = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[376] 	d←⍳⍵ ⋄ s{⊃╠d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
+	
+		release_array(orig);
+		release_array(x);
+		release_func(fn);
+		stkhd -= 2;
+	}
+	
+	if (!cdf_prim.cdf_dis)
+		CHK(6, cleanup, L"[376] 	d←⍳⍵ ⋄ s{╠⊃╣d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -78078,7 +80516,7 @@ cdf_ptr10663(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[375] mdv←{╠⎕SIGNAL 16╣}");
+		    L"[376] 	d←⍳⍵ ⋄ s{╠⊃d[⍺ ⍵]←d[⍵ ⍺]╣}¨s+?⍵-s←⍳⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -78099,12 +80537,1460 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[375] mdv←╠{⎕SIGNAL 16}╣");
+	    L"[376] 	d←⍳⍵ ⋄ s╠{⊃d[⍺ ⍵]←d[⍵ ⍺]}╣¨s+?⍵-s←⍳⍺");
 	return err;
 }
 
 int
-cdf_ptr10664(struct cell_array **z,
+cdf_ptr11048(struct cell_array **z,
+    struct cell_array *cdf_omega,
+    struct cell_func *cdf_self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *cdf_alpha;
+
+	cdf_alpha = NULL;
+
+	struct {
+		struct cell_array *cdf_rnd;
+	} loc_frm, *loc;
+
+	loc = &loc_frm;
+
+	struct lex_vars {
+		struct cell_func_box *cdf_any;
+		struct cell_func_box *cdf_is_integer;
+		struct cell_func_box *cdf_squeeze;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
+	loc->cdf_rnd = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[379] 	~is_integer squeeze ╠⍵╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!lex->cdf_squeeze->value)
+		CHK(6, cleanup, L"[379] 	~is_integer ╠squeeze╣ ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[379] 	~is_integer ╠squeeze ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!lex->cdf_is_integer->value)
+		CHK(6, cleanup, L"[379] 	~╠is_integer╣ squeeze ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_is_integer->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[379] 	~╠is_integer squeeze ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_not)
+		CHK(6, cleanup, L"[379] 	╠~╣is_integer squeeze ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_not);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[379] 	╠~is_integer squeeze ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[379] 	~is_integer squeeze ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[379] 	~is_integer squeeze ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[379] 	~is_integer squeeze ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[379] 	~is_integer squeeze ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[379] 	~is_integer squeeze ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[380] 	0≡≢,╠⍵╣:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_cat)
+		CHK(6, cleanup, L"[380] 	0≡≢╠,╣⍵:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[380] 	0≡≢╠,⍵╣:(⍴⍵)⍴⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[380] 	0≡╠≢╣,⍵:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[380] 	0≡╠≢,⍵╣:(⍴⍵)⍴⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_eqv)
+		CHK(6, cleanup, L"[380] 	0╠≡╣≢,⍵:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[380] 	╠0╣≡≢,⍵:(⍴⍵)⍴⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[380] 	╠0╣≡≢,⍵:(⍴⍵)⍴⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[380] 	╠0≡≢,⍵╣:(⍴⍵)⍴⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[380] 	0≡≢,╠⍵╣:(⍴⍵)⍴⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[380] 	0≡≢,⍵:(⍴⍵)⍴╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[380] 	0≡≢,⍵:(⍴⍵)⍴╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_rho)
+				CHK(6, cleanup, L"[380] 	0≡≢,⍵:(⍴⍵)╠⍴╣⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+			
+			if (!cdf_omega)
+				CHK(6, cleanup, L"[380] 	0≡≢,⍵:(⍴╠⍵╣)⍴⍬");
+			
+			*stkhd++ = retain_cell(cdf_omega);
+			
+			if (!cdf_prim.cdf_rho)
+				CHK(6, cleanup, L"[380] 	0≡≢,⍵:(╠⍴╣⍵)⍴⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[380] 	0≡≢,⍵:╠(⍴⍵)╣⍴⍬");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[380] 	0≡≢,⍵:╠(⍴⍵)⍴⍬╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[381] 	any ⍵<╠0╣:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[381] 	any ⍵<╠0╣:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_lth)
+		CHK(6, cleanup, L"[381] 	any ⍵╠<╣0:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[381] 	any ╠⍵╣<0:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[381] 	any ╠⍵<0╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!lex->cdf_any->value)
+		CHK(6, cleanup, L"[381] 	╠any╣ ⍵<0:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_any->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[381] 	╠any ⍵<0╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[381] 	any ⍵<╠0╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[381] 	any ⍵<0:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[381] 	any ⍵<0:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[381] 	any ⍵<0:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[381] 	any ⍵<0:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ╠⍵╣");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_roll_ibeam)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴╠'roll_ibeam'⌶╣ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_roll_ibeam);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴╠'roll_ibeam'⌶ ⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)╠⍴╣'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴╠⍵╣)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(╠⍴╣⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←╠(⍴⍵)╣⍴'roll_ibeam'⌶ ⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←╠(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	release_cell(loc->cdf_rnd);
+	loc->cdf_rnd = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.cdf_mul)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵╠×╣rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊╠⍵╣×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊╠⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_min)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+╠⌊╣⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_min);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+╠⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_add)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)╠+╣⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_add);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[382] 	(rnd×⍵=╠0╣)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[382] 	(rnd×⍵=╠0╣)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_eql)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵╠=╣0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_eql);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×╠⍵╣=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	(rnd×╠⍵=0)╣+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_mul)
+		CHK(6, cleanup, L"[382] 	(rnd╠×╣⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
+	
+	if (!loc->cdf_rnd)
+		CHK(6, cleanup, L"[382] 	(╠rnd╣×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(loc->cdf_rnd);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	╠(rnd×⍵=0)╣+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	╠(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+	release_array(cdf_alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[378] roll←╠{╣");
+	return err;
+}
+
+int
+cdf_ptr11049(struct cell_array **z,
+    struct cell_array *cdf_alpha,
+    struct cell_array *cdf_omega,
+    struct cell_func *cdf_self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+	struct {
+		struct cell_array *cdf_rnd;
+	} loc_frm, *loc;
+
+	loc = &loc_frm;
+
+	struct lex_vars {
+		struct cell_func_box *cdf_any;
+		struct cell_func_box *cdf_is_integer;
+		struct cell_func_box *cdf_squeeze;
+	} *lex;
+
+	lex = (struct lex_vars *)cdf_self->fv;
+
+	loc->cdf_rnd = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[379] 	~is_integer squeeze ╠⍵╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!lex->cdf_squeeze->value)
+		CHK(6, cleanup, L"[379] 	~is_integer ╠squeeze╣ ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[379] 	~is_integer ╠squeeze ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!lex->cdf_is_integer->value)
+		CHK(6, cleanup, L"[379] 	~╠is_integer╣ squeeze ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_is_integer->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[379] 	~╠is_integer squeeze ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_not)
+		CHK(6, cleanup, L"[379] 	╠~╣is_integer squeeze ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_not);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[379] 	╠~is_integer squeeze ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[379] 	~is_integer squeeze ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[379] 	~is_integer squeeze ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[379] 	~is_integer squeeze ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[379] 	~is_integer squeeze ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[379] 	~is_integer squeeze ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[380] 	0≡≢,╠⍵╣:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_cat)
+		CHK(6, cleanup, L"[380] 	0≡≢╠,╣⍵:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[380] 	0≡≢╠,⍵╣:(⍴⍵)⍴⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_nqv)
+		CHK(6, cleanup, L"[380] 	0≡╠≢╣,⍵:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[380] 	0≡╠≢,⍵╣:(⍴⍵)⍴⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_eqv)
+		CHK(6, cleanup, L"[380] 	0╠≡╣≢,⍵:(⍴⍵)⍴⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[380] 	╠0╣≡≢,⍵:(⍴⍵)⍴⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[380] 	╠0╣≡≢,⍵:(⍴⍵)⍴⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[380] 	╠0≡≢,⍵╣:(⍴⍵)⍴⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[380] 	0≡≢,╠⍵╣:(⍴⍵)⍴⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[380] 	0≡≢,⍵:(⍴⍵)⍴╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[380] 	0≡≢,⍵:(⍴⍵)⍴╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_rho)
+				CHK(6, cleanup, L"[380] 	0≡≢,⍵:(⍴⍵)╠⍴╣⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+			
+			if (!cdf_omega)
+				CHK(6, cleanup, L"[380] 	0≡≢,⍵:(⍴╠⍵╣)⍴⍬");
+			
+			*stkhd++ = retain_cell(cdf_omega);
+			
+			if (!cdf_prim.cdf_rho)
+				CHK(6, cleanup, L"[380] 	0≡≢,⍵:(╠⍴╣⍵)⍴⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[380] 	0≡≢,⍵:╠(⍴⍵)╣⍴⍬");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[380] 	0≡≢,⍵:╠(⍴⍵)⍴⍬╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[381] 	any ⍵<╠0╣:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[381] 	any ⍵<╠0╣:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_lth)
+		CHK(6, cleanup, L"[381] 	any ⍵╠<╣0:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[381] 	any ╠⍵╣<0:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[381] 	any ╠⍵<0╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!lex->cdf_any->value)
+		CHK(6, cleanup, L"[381] 	╠any╣ ⍵<0:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->cdf_any->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[381] 	╠any ⍵<0╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[381] 	any ⍵<╠0╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[381] 	any ⍵<0:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[381] 	any ⍵<0:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.cdf_q_signal)
+				CHK(6, cleanup, L"[381] 	any ⍵<0:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[381] 	any ⍵<0:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ╠⍵╣");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_roll_ibeam)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴╠'roll_ibeam'⌶╣ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_roll_ibeam);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴╠'roll_ibeam'⌶ ⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)╠⍴╣'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(⍴╠⍵╣)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	if (!cdf_prim.cdf_rho)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←(╠⍴╣⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←╠(⍴⍵)╣⍴'roll_ibeam'⌶ ⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊⍵×rnd←╠(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	release_cell(loc->cdf_rnd);
+	loc->cdf_rnd = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.cdf_mul)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊⍵╠×╣rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+⌊╠⍵╣×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+⌊╠⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_min)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)+╠⌊╣⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_min);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[382] 	(rnd×⍵=0)+╠⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_add)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵=0)╠+╣⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_add);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[382] 	(rnd×⍵=╠0╣)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[382] 	(rnd×⍵=╠0╣)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_eql)
+		CHK(6, cleanup, L"[382] 	(rnd×⍵╠=╣0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_eql);
+	
+	if (!cdf_omega)
+		CHK(6, cleanup, L"[382] 	(rnd×╠⍵╣=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	(rnd×╠⍵=0)╣+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cdf_mul)
+		CHK(6, cleanup, L"[382] 	(rnd╠×╣⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
+	
+	if (!loc->cdf_rnd)
+		CHK(6, cleanup, L"[382] 	(╠rnd╣×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(loc->cdf_rnd);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	╠(rnd×⍵=0)╣+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[382] 	╠(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[378] roll←╠{╣");
+	return err;
+}
+
+int
+cdf_ptr11050(struct cell_array **z,
+    struct cell_array *cdf_omega,
+    struct cell_func *cdf_self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *cdf_alpha;
+
+	cdf_alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] mdv←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[387] mdv←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_q_signal)
+		CHK(6, cleanup, L"[387] mdv←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[387] mdv←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(cdf_alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[387] mdv←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+cdf_ptr11051(struct cell_array **z,
+    struct cell_array *cdf_alpha,
+    struct cell_array *cdf_omega,
+    struct cell_func *cdf_self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] mdv←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[387] mdv←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cdf_q_signal)
+		CHK(6, cleanup, L"[387] mdv←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[387] mdv←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[387] mdv←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+cdf_ptr11052(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -78129,17 +82015,17 @@ cdf_ptr10664(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		arr->shape[0] = 1;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eql)
-		CHK(6, cleanup, L"[378] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eql);
 	
@@ -78150,9 +82036,9 @@ cdf_ptr10664(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
@@ -78164,7 +82050,7 @@ cdf_ptr10664(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[378] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		    L"[390] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 		release_func(fn);
@@ -78177,7 +82063,7 @@ cdf_ptr10664(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		TRC(guard_check(x), L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 	
@@ -78186,7 +82072,7 @@ cdf_ptr10664(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+				CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -78201,7 +82087,7 @@ cdf_ptr10664(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←╠⍵╣ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←╠⍵╣ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -78211,17 +82097,17 @@ cdf_ptr10664(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -78229,10 +82115,10 @@ cdf_ptr10664(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 		arr->shape[0] = 3;
 		CHK(alloc_array(arr), cleanup,
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
@@ -78240,7 +82126,7 @@ cdf_ptr10664(struct cell_array **z,
 		dat[2] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -78258,12 +82144,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[378] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
+	    L"[390] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
 	return err;
 }
 
 int
-cdf_ptr10665(struct cell_array **z,
+cdf_ptr11053(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -78287,17 +82173,17 @@ cdf_ptr10665(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		arr->shape[0] = 1;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eql)
-		CHK(6, cleanup, L"[378] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eql);
 	
@@ -78308,9 +82194,9 @@ cdf_ptr10665(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
@@ -78322,7 +82208,7 @@ cdf_ptr10665(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[378] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		    L"[390] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 		release_func(fn);
@@ -78335,7 +82221,7 @@ cdf_ptr10665(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		TRC(guard_check(x), L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 	
@@ -78344,7 +82230,7 @@ cdf_ptr10665(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+				CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -78359,17 +82245,17 @@ cdf_ptr10665(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -78377,10 +82263,10 @@ cdf_ptr10665(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 		arr->shape[0] = 3;
 		CHK(alloc_array(arr), cleanup,
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
@@ -78388,7 +82274,7 @@ cdf_ptr10665(struct cell_array **z,
 		dat[2] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -78405,12 +82291,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[378] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
+	    L"[390] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
 	return err;
 }
 
 int
-cdf_ptr10666(struct cell_array **z,
+cdf_ptr11054(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -78435,17 +82321,17 @@ cdf_ptr10666(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		arr->shape[0] = 1;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eql)
-		CHK(6, cleanup, L"[378] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eql);
 	
@@ -78456,9 +82342,9 @@ cdf_ptr10666(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
@@ -78470,7 +82356,7 @@ cdf_ptr10666(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[378] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		    L"[390] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 		release_func(fn);
@@ -78483,7 +82369,7 @@ cdf_ptr10666(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		TRC(guard_check(x), L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 	
@@ -78492,7 +82378,7 @@ cdf_ptr10666(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+				CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -78507,7 +82393,7 @@ cdf_ptr10666(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←╠⍵╣ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←╠⍵╣ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -78517,17 +82403,17 @@ cdf_ptr10666(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -78538,7 +82424,7 @@ cdf_ptr10666(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -78561,12 +82447,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[378] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
+	    L"[390] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
 	return err;
 }
 
 int
-cdf_ptr10667(struct cell_array **z,
+cdf_ptr11055(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -78590,17 +82476,17 @@ cdf_ptr10667(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		arr->shape[0] = 1;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eql)
-		CHK(6, cleanup, L"[378] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2╠=╣⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eql);
 	
@@ -78611,9 +82497,9 @@ cdf_ptr10667(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[378] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		CHK(fill_array(arr, dat), cleanup, L"[390] com←{╠2╣=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		*stkhd++ = arr;
 	}
@@ -78625,7 +82511,7 @@ cdf_ptr10667(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[378] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		    L"[390] com←{╠2=⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 		release_func(fn);
@@ -78638,7 +82524,7 @@ cdf_ptr10667(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[378] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+		TRC(guard_check(x), L"[390] com←{2=╠⎕NC'⍺⍺'╣:⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 	
 		release_array(x);
 	
@@ -78647,7 +82533,7 @@ cdf_ptr10667(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
+				CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':╠⍺⍺╣ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -78662,17 +82548,17 @@ cdf_ptr10667(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ╠⍺╣}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ╠⍺⍺╣ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
+		CHK(6, cleanup, L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵╣ ⍺⍺ ⍺}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -78683,7 +82569,7 @@ cdf_ptr10667(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[378] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
+		    L"[390] com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ╠⍵ ⍺⍺ ⍺╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -78705,12 +82591,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[378] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
+	    L"[390] com←╠{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}╣");
 	return err;
 }
 
 int
-cdf_ptr10668(struct cell_array **z,
+cdf_ptr11056(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -78745,7 +82631,7 @@ cdf_ptr10668(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[381] map←{⍺←╠⊢╣ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←╠⊢╣ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -78755,12 +82641,12 @@ cdf_ptr10668(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_chk_scl->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_chk_scl->value);
 	
@@ -78770,7 +82656,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -78780,7 +82666,7 @@ cdf_ptr10668(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -78790,7 +82676,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -78802,7 +82688,7 @@ cdf_ptr10668(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		TRC(guard_check(x), L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 	
@@ -78818,12 +82704,12 @@ cdf_ptr10668(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_max_shp->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_max_shp->value);
 	
@@ -78833,7 +82719,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -78843,7 +82729,7 @@ cdf_ptr10668(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -78853,7 +82739,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -78868,17 +82754,17 @@ cdf_ptr10668(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_veach->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_veach->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -78888,7 +82774,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach╣ ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach╣ ⍵}");
 	
 		release_array(x);
 		release_moper(op);
@@ -78903,7 +82789,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -78913,7 +82799,7 @@ cdf_ptr10668(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -78923,7 +82809,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -78933,7 +82819,7 @@ cdf_ptr10668(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -78943,7 +82829,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -78953,12 +82839,12 @@ cdf_ptr10668(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
@@ -78969,7 +82855,7 @@ cdf_ptr10668(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -78993,12 +82879,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[381] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
+	    L"[393] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10669(struct cell_array **z,
+cdf_ptr11057(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -79032,17 +82918,17 @@ cdf_ptr10669(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_chk_scl->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_chk_scl->value);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79053,7 +82939,7 @@ cdf_ptr10669(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79066,7 +82952,7 @@ cdf_ptr10669(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		TRC(guard_check(x), L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 	
@@ -79082,17 +82968,17 @@ cdf_ptr10669(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_max_shp->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_max_shp->value);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79103,7 +82989,7 @@ cdf_ptr10669(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79119,22 +83005,22 @@ cdf_ptr10669(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_veach->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_veach->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79142,17 +83028,17 @@ cdf_ptr10669(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺╣ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺╣ veach ⍵}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺╣ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺╣ veach ⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺╣ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺╣ veach ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -79163,7 +83049,7 @@ cdf_ptr10669(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach╣ ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach╣ ⍵}");
 	
 		release_array(x);
 		release_moper(op);
@@ -79178,7 +83064,7 @@ cdf_ptr10669(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79188,7 +83074,7 @@ cdf_ptr10669(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -79198,7 +83084,7 @@ cdf_ptr10669(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79208,12 +83094,12 @@ cdf_ptr10669(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
@@ -79224,7 +83110,7 @@ cdf_ptr10669(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79247,12 +83133,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[381] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
+	    L"[393] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10670(struct cell_array **z,
+cdf_ptr11058(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -79287,7 +83173,7 @@ cdf_ptr10670(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[381] map←{⍺←╠⊢╣ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←╠⊢╣ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -79297,12 +83183,12 @@ cdf_ptr10670(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_chk_scl->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_chk_scl->value);
 	
@@ -79312,7 +83198,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79322,7 +83208,7 @@ cdf_ptr10670(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79332,7 +83218,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79344,7 +83230,7 @@ cdf_ptr10670(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		TRC(guard_check(x), L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 	
@@ -79360,12 +83246,12 @@ cdf_ptr10670(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_max_shp->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_max_shp->value);
 	
@@ -79375,7 +83261,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79385,7 +83271,7 @@ cdf_ptr10670(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79395,7 +83281,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79410,17 +83296,17 @@ cdf_ptr10670(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_veach->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_veach->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -79430,7 +83316,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach╣ ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach╣ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -79445,7 +83331,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79455,7 +83341,7 @@ cdf_ptr10670(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79465,7 +83351,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79475,7 +83361,7 @@ cdf_ptr10670(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -79485,7 +83371,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79495,12 +83381,12 @@ cdf_ptr10670(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
@@ -79511,7 +83397,7 @@ cdf_ptr10670(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79535,12 +83421,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[381] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
+	    L"[393] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10671(struct cell_array **z,
+cdf_ptr11059(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -79574,17 +83460,17 @@ cdf_ptr10671(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_chk_scl->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_chk_scl->value);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79595,7 +83481,7 @@ cdf_ptr10671(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79608,7 +83494,7 @@ cdf_ptr10671(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		TRC(guard_check(x), L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 	
@@ -79624,17 +83510,17 @@ cdf_ptr10671(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_max_shp->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_max_shp->value);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79645,7 +83531,7 @@ cdf_ptr10671(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79661,17 +83547,17 @@ cdf_ptr10671(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_veach->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ ╠veach╣ ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_veach->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺╣ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -79681,7 +83567,7 @@ cdf_ptr10671(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach╣ ⍵}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ╠⍺⍺ veach╣ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -79691,7 +83577,7 @@ cdf_ptr10671(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺╣ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -79702,7 +83588,7 @@ cdf_ptr10671(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ╠⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79713,7 +83599,7 @@ cdf_ptr10671(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze╣ ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -79723,7 +83609,7 @@ cdf_ptr10671(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -79733,12 +83619,12 @@ cdf_ptr10671(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
+		CHK(6, cleanup, L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴squeeze ⍺ ⍺⍺ veach ⍵}");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
@@ -79749,7 +83635,7 @@ cdf_ptr10671(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[381] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
+		    L"[393] map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴squeeze ⍺ ⍺⍺ veach ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -79772,12 +83658,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[381] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
+	    L"[393] map←╠{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10672(struct cell_array **z,
+cdf_ptr11060(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -79811,12 +83697,12 @@ cdf_ptr10672(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -79826,7 +83712,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -79836,7 +83722,7 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[385] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -79846,7 +83732,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -79856,7 +83742,7 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[385] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -79867,9 +83753,9 @@ cdf_ptr10672(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -79881,7 +83767,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 		release_func(fn);
@@ -79894,7 +83780,7 @@ cdf_ptr10672(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		TRC(guard_check(x), L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 	
@@ -79903,12 +83789,12 @@ cdf_ptr10672(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_cat)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 			
@@ -79918,7 +83804,7 @@ cdf_ptr10672(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -79928,7 +83814,7 @@ cdf_ptr10672(struct cell_array **z,
 			}
 			
 			if (!cdf_self)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_self);
 			
@@ -79938,7 +83824,7 @@ cdf_ptr10672(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -79958,12 +83844,12 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -79973,7 +83859,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -79988,12 +83874,12 @@ cdf_ptr10672(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_dis)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
 	
@@ -80003,7 +83889,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -80018,12 +83904,12 @@ cdf_ptr10672(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -80034,9 +83920,9 @@ cdf_ptr10672(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -80048,7 +83934,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -80064,12 +83950,12 @@ cdf_ptr10672(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -80080,9 +83966,9 @@ cdf_ptr10672(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -80094,7 +83980,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -80107,7 +83993,7 @@ cdf_ptr10672(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -80122,22 +84008,22 @@ cdf_ptr10672(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_identity_ibeam)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_identity_ibeam);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -80147,7 +84033,7 @@ cdf_ptr10672(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_moper(op);
@@ -80162,7 +84048,7 @@ cdf_ptr10672(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_func(fn);
 				release_array(y);
@@ -80172,12 +84058,12 @@ cdf_ptr10672(struct cell_array **z,
 			}
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -80188,7 +84074,7 @@ cdf_ptr10672(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -80209,12 +84095,12 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -80225,9 +84111,9 @@ cdf_ptr10672(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -80239,7 +84125,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -80252,7 +84138,7 @@ cdf_ptr10672(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -80261,17 +84147,17 @@ cdf_ptr10672(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -80282,7 +84168,7 @@ cdf_ptr10672(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -80303,12 +84189,12 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -80318,7 +84204,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
 	
 		release_array(x);
 		release_moper(op);
@@ -80333,12 +84219,12 @@ cdf_ptr10672(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
@@ -80349,20 +84235,20 @@ cdf_ptr10672(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -80373,7 +84259,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80390,7 +84276,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -80404,12 +84290,12 @@ cdf_ptr10672(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -80420,7 +84306,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -80431,7 +84317,7 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -80441,7 +84327,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -80451,15 +84337,15 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10673, cdf_ptr10674, 2), cleanup, 
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_func(&k, cdf_ptr11061, cdf_ptr11062, 2), cleanup, 
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_z);
 		k->fv[1] = retain_cell(loc->cdf_op);
@@ -80473,7 +84359,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -80489,20 +84375,20 @@ cdf_ptr10672(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -80513,7 +84399,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80524,7 +84410,7 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -80534,7 +84420,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -80544,7 +84430,7 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[387] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -80554,7 +84440,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -80570,7 +84456,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -80581,12 +84467,12 @@ cdf_ptr10672(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -80597,7 +84483,7 @@ cdf_ptr10672(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -80621,12 +84507,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[384] reduce←╠{╣");
+	    L"[396] reduce←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10673(struct cell_array **z,
+cdf_ptr11061(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -80648,27 +84534,27 @@ cdf_ptr10673(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -80679,7 +84565,7 @@ cdf_ptr10673(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80696,7 +84582,7 @@ cdf_ptr10673(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80707,12 +84593,12 @@ cdf_ptr10673(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -80724,7 +84610,7 @@ cdf_ptr10673(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -80733,7 +84619,7 @@ cdf_ptr10673(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -80744,11 +84630,11 @@ cdf_ptr10673(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -80760,7 +84646,7 @@ cdf_ptr10673(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80783,12 +84669,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10674(struct cell_array **z,
+cdf_ptr11062(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -80808,27 +84694,27 @@ cdf_ptr10674(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -80839,7 +84725,7 @@ cdf_ptr10674(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80856,7 +84742,7 @@ cdf_ptr10674(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80867,12 +84753,12 @@ cdf_ptr10674(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -80884,7 +84770,7 @@ cdf_ptr10674(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -80893,7 +84779,7 @@ cdf_ptr10674(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -80904,11 +84790,11 @@ cdf_ptr10674(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -80920,7 +84806,7 @@ cdf_ptr10674(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -80942,12 +84828,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10675(struct cell_array **z,
+cdf_ptr11063(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -80980,12 +84866,12 @@ cdf_ptr10675(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -80995,7 +84881,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -81005,7 +84891,7 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[385] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -81015,7 +84901,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -81025,7 +84911,7 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[385] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -81036,9 +84922,9 @@ cdf_ptr10675(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -81050,7 +84936,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 		release_func(fn);
@@ -81063,7 +84949,7 @@ cdf_ptr10675(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		TRC(guard_check(x), L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 	
@@ -81072,12 +84958,12 @@ cdf_ptr10675(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_cat)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 			
@@ -81087,7 +84973,7 @@ cdf_ptr10675(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -81097,7 +84983,7 @@ cdf_ptr10675(struct cell_array **z,
 			}
 			
 			if (!cdf_self)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_self);
 			
@@ -81107,7 +84993,7 @@ cdf_ptr10675(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -81127,12 +85013,12 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -81142,7 +85028,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -81157,12 +85043,12 @@ cdf_ptr10675(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_dis)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
 	
@@ -81172,7 +85058,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -81187,12 +85073,12 @@ cdf_ptr10675(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -81203,9 +85089,9 @@ cdf_ptr10675(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -81217,7 +85103,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -81233,12 +85119,12 @@ cdf_ptr10675(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -81249,9 +85135,9 @@ cdf_ptr10675(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -81263,7 +85149,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -81276,7 +85162,7 @@ cdf_ptr10675(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -81291,22 +85177,22 @@ cdf_ptr10675(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_identity_ibeam)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_identity_ibeam);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -81316,7 +85202,7 @@ cdf_ptr10675(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_moper(op);
@@ -81331,7 +85217,7 @@ cdf_ptr10675(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_func(fn);
 				release_array(y);
@@ -81341,12 +85227,12 @@ cdf_ptr10675(struct cell_array **z,
 			}
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -81357,7 +85243,7 @@ cdf_ptr10675(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -81378,12 +85264,12 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -81394,9 +85280,9 @@ cdf_ptr10675(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -81408,7 +85294,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -81421,7 +85307,7 @@ cdf_ptr10675(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -81430,17 +85316,17 @@ cdf_ptr10675(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -81451,7 +85337,7 @@ cdf_ptr10675(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -81472,12 +85358,12 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -81487,7 +85373,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
 	
 		release_array(x);
 		release_moper(op);
@@ -81502,12 +85388,12 @@ cdf_ptr10675(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
@@ -81518,20 +85404,20 @@ cdf_ptr10675(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -81542,7 +85428,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -81559,7 +85445,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -81573,12 +85459,12 @@ cdf_ptr10675(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -81589,7 +85475,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -81600,7 +85486,7 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -81610,7 +85496,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -81620,15 +85506,15 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10676, cdf_ptr10677, 2), cleanup, 
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_func(&k, cdf_ptr11064, cdf_ptr11065, 2), cleanup, 
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_z);
 		k->fv[1] = retain_cell(loc->cdf_op);
@@ -81642,7 +85528,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -81658,20 +85544,20 @@ cdf_ptr10675(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -81682,7 +85568,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -81693,7 +85579,7 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -81703,7 +85589,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -81713,7 +85599,7 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[387] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -81723,7 +85609,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -81739,7 +85625,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -81750,12 +85636,12 @@ cdf_ptr10675(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -81766,7 +85652,7 @@ cdf_ptr10675(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -81789,12 +85675,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[384] reduce←╠{╣");
+	    L"[396] reduce←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10676(struct cell_array **z,
+cdf_ptr11064(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -81816,27 +85702,27 @@ cdf_ptr10676(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -81847,7 +85733,7 @@ cdf_ptr10676(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -81864,7 +85750,7 @@ cdf_ptr10676(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -81875,12 +85761,12 @@ cdf_ptr10676(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -81892,7 +85778,7 @@ cdf_ptr10676(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -81901,7 +85787,7 @@ cdf_ptr10676(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -81912,11 +85798,11 @@ cdf_ptr10676(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -81928,7 +85814,7 @@ cdf_ptr10676(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -81951,12 +85837,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10677(struct cell_array **z,
+cdf_ptr11065(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -81976,27 +85862,27 @@ cdf_ptr10677(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -82007,7 +85893,7 @@ cdf_ptr10677(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -82024,7 +85910,7 @@ cdf_ptr10677(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -82035,12 +85921,12 @@ cdf_ptr10677(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -82052,7 +85938,7 @@ cdf_ptr10677(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -82061,7 +85947,7 @@ cdf_ptr10677(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -82072,11 +85958,11 @@ cdf_ptr10677(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -82088,7 +85974,7 @@ cdf_ptr10677(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -82110,12 +85996,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10678(struct cell_array **z,
+cdf_ptr11066(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -82149,12 +86035,12 @@ cdf_ptr10678(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -82164,7 +86050,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -82174,7 +86060,7 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[385] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -82184,7 +86070,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -82194,7 +86080,7 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[385] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -82205,9 +86091,9 @@ cdf_ptr10678(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -82219,7 +86105,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 		release_func(fn);
@@ -82232,7 +86118,7 @@ cdf_ptr10678(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		TRC(guard_check(x), L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 	
@@ -82241,12 +86127,12 @@ cdf_ptr10678(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_cat)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 			
@@ -82256,7 +86142,7 @@ cdf_ptr10678(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -82266,7 +86152,7 @@ cdf_ptr10678(struct cell_array **z,
 			}
 			
 			if (!cdf_self)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_self);
 			
@@ -82276,7 +86162,7 @@ cdf_ptr10678(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -82296,12 +86182,12 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -82311,7 +86197,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -82326,12 +86212,12 @@ cdf_ptr10678(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_dis)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
 	
@@ -82341,7 +86227,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -82356,12 +86242,12 @@ cdf_ptr10678(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -82372,9 +86258,9 @@ cdf_ptr10678(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -82386,7 +86272,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -82402,12 +86288,12 @@ cdf_ptr10678(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -82418,9 +86304,9 @@ cdf_ptr10678(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -82432,7 +86318,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -82445,7 +86331,7 @@ cdf_ptr10678(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -82460,22 +86346,22 @@ cdf_ptr10678(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_identity_ibeam)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_identity_ibeam);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -82485,7 +86371,7 @@ cdf_ptr10678(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_func(x);
 				release_moper(op);
@@ -82500,7 +86386,7 @@ cdf_ptr10678(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_func(fn);
 				release_array(y);
@@ -82510,12 +86396,12 @@ cdf_ptr10678(struct cell_array **z,
 			}
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -82526,7 +86412,7 @@ cdf_ptr10678(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -82547,12 +86433,12 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -82563,9 +86449,9 @@ cdf_ptr10678(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -82577,7 +86463,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -82590,7 +86476,7 @@ cdf_ptr10678(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -82599,17 +86485,17 @@ cdf_ptr10678(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -82620,7 +86506,7 @@ cdf_ptr10678(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -82641,12 +86527,12 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -82656,7 +86542,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
 	
 		release_func(x);
 		release_moper(op);
@@ -82671,12 +86557,12 @@ cdf_ptr10678(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
@@ -82687,20 +86573,20 @@ cdf_ptr10678(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -82711,7 +86597,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -82728,7 +86614,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -82742,12 +86628,12 @@ cdf_ptr10678(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -82758,7 +86644,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -82769,7 +86655,7 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -82779,7 +86665,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -82789,15 +86675,15 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10679, cdf_ptr10680, 2), cleanup, 
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_func(&k, cdf_ptr11067, cdf_ptr11068, 2), cleanup, 
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_z);
 		k->fv[1] = retain_cell(loc->cdf_op);
@@ -82811,7 +86697,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -82827,20 +86713,20 @@ cdf_ptr10678(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -82851,7 +86737,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -82862,7 +86748,7 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -82872,7 +86758,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -82882,7 +86768,7 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[387] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -82892,7 +86778,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -82908,7 +86794,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -82919,12 +86805,12 @@ cdf_ptr10678(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -82935,7 +86821,7 @@ cdf_ptr10678(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -82959,12 +86845,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[384] reduce←╠{╣");
+	    L"[396] reduce←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10679(struct cell_array **z,
+cdf_ptr11067(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -82986,27 +86872,27 @@ cdf_ptr10679(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -83017,7 +86903,7 @@ cdf_ptr10679(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -83034,7 +86920,7 @@ cdf_ptr10679(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -83045,12 +86931,12 @@ cdf_ptr10679(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -83062,7 +86948,7 @@ cdf_ptr10679(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -83071,7 +86957,7 @@ cdf_ptr10679(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -83082,11 +86968,11 @@ cdf_ptr10679(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -83098,7 +86984,7 @@ cdf_ptr10679(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -83121,12 +87007,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10680(struct cell_array **z,
+cdf_ptr11068(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -83146,27 +87032,27 @@ cdf_ptr10680(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -83177,7 +87063,7 @@ cdf_ptr10680(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -83194,7 +87080,7 @@ cdf_ptr10680(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -83205,12 +87091,12 @@ cdf_ptr10680(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -83222,7 +87108,7 @@ cdf_ptr10680(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -83231,7 +87117,7 @@ cdf_ptr10680(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -83242,11 +87128,11 @@ cdf_ptr10680(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -83258,7 +87144,7 @@ cdf_ptr10680(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -83280,12 +87166,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10681(struct cell_array **z,
+cdf_ptr11069(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -83318,12 +87204,12 @@ cdf_ptr10681(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -83333,7 +87219,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -83343,7 +87229,7 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[385] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -83353,7 +87239,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -83363,7 +87249,7 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[385] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -83374,9 +87260,9 @@ cdf_ptr10681(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -83388,7 +87274,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 		release_func(fn);
@@ -83401,7 +87287,7 @@ cdf_ptr10681(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[385] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		TRC(guard_check(x), L"[397] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_array(x);
 	
@@ -83410,12 +87296,12 @@ cdf_ptr10681(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_cat)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 			
@@ -83425,7 +87311,7 @@ cdf_ptr10681(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -83435,7 +87321,7 @@ cdf_ptr10681(struct cell_array **z,
 			}
 			
 			if (!cdf_self)
-				CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 			*stkhd++ = retain_cell(cdf_self);
 			
@@ -83445,7 +87331,7 @@ cdf_ptr10681(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[385] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+				    L"[397] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 			
 				release_func(fn);
 				release_array(y);
@@ -83465,12 +87351,12 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -83480,7 +87366,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -83495,12 +87381,12 @@ cdf_ptr10681(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_dis)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_dis);
 	
@@ -83510,7 +87396,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
 	
 		release_func(fn);
 		release_array(y);
@@ -83525,12 +87411,12 @@ cdf_ptr10681(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_s)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
 	
 	*stkhd++ = retain_cell(loc->cdf_s);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
+		CHK(6, cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -83541,9 +87427,9 @@ cdf_ptr10681(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+		CHK(fill_array(arr, dat), cleanup, L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -83555,7 +87441,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[385] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
+		    L"[397] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -83571,12 +87457,12 @@ cdf_ptr10681(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0╠≡╣c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -83587,9 +87473,9 @@ cdf_ptr10681(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	╠0╣≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -83601,7 +87487,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	╠0≡c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -83614,7 +87500,7 @@ cdf_ptr10681(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡╠c╣:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -83629,22 +87515,22 @@ cdf_ptr10681(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)╠⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_identity_ibeam)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺╠('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_identity_ibeam);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴╠⍺⍺╣('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -83654,7 +87540,7 @@ cdf_ptr10681(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)╣⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_func(x);
 				release_moper(op);
@@ -83669,7 +87555,7 @@ cdf_ptr10681(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴╠⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_func(fn);
 				release_array(y);
@@ -83679,12 +87565,12 @@ cdf_ptr10681(struct cell_array **z,
 			}
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs╠⍴╣⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:╠zs╣⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -83695,7 +87581,7 @@ cdf_ptr10681(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:╠zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -83716,12 +87602,12 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -83732,9 +87618,9 @@ cdf_ptr10681(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+		CHK(fill_array(arr, dat), cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		*stkhd++ = arr;
 	}
@@ -83746,7 +87632,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 		release_func(fn);
@@ -83759,7 +87645,7 @@ cdf_ptr10681(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+		TRC(guard_check(x), L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
 	
 		release_array(x);
 	
@@ -83768,17 +87654,17 @@ cdf_ptr10681(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_prim.cdf_rho)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 			
 			if (!loc->cdf_zs)
-				CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
+				CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
 			
 			*stkhd++ = retain_cell(loc->cdf_zs);
 			
@@ -83789,7 +87675,7 @@ cdf_ptr10681(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
+				    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
 			
 				release_array(x);
 				release_func(fn);
@@ -83810,12 +87696,12 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -83825,7 +87711,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[386] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
+		    L"[398] 	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
 	
 		release_func(x);
 		release_moper(op);
@@ -83840,12 +87726,12 @@ cdf_ptr10681(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
@@ -83856,20 +87742,20 @@ cdf_ptr10681(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -83880,7 +87766,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -83897,7 +87783,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -83911,12 +87797,12 @@ cdf_ptr10681(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -83927,7 +87813,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -83938,7 +87824,7 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -83948,7 +87834,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -83958,15 +87844,15 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10682, cdf_ptr10683, 2), cleanup, 
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_func(&k, cdf_ptr11070, cdf_ptr11071, 2), cleanup, 
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_z);
 		k->fv[1] = retain_cell(loc->cdf_op);
@@ -83980,7 +87866,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -83996,20 +87882,20 @@ cdf_ptr10681(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_c)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_c);
 	
@@ -84020,7 +87906,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84031,7 +87917,7 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -84041,7 +87927,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -84051,7 +87937,7 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[387] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -84061,7 +87947,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -84077,7 +87963,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -84088,12 +87974,12 @@ cdf_ptr10681(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -84104,7 +87990,7 @@ cdf_ptr10681(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+		    L"[399] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -84127,12 +88013,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[384] reduce←╠{╣");
+	    L"[396] reduce←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10682(struct cell_array **z,
+cdf_ptr11070(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -84154,27 +88040,27 @@ cdf_ptr10682(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -84185,7 +88071,7 @@ cdf_ptr10682(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84202,7 +88088,7 @@ cdf_ptr10682(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84213,12 +88099,12 @@ cdf_ptr10682(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -84230,7 +88116,7 @@ cdf_ptr10682(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -84239,7 +88125,7 @@ cdf_ptr10682(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -84250,11 +88136,11 @@ cdf_ptr10682(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -84266,7 +88152,7 @@ cdf_ptr10682(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84289,12 +88175,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10683(struct cell_array **z,
+cdf_ptr11071(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -84314,27 +88200,27 @@ cdf_ptr10683(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -84345,7 +88231,7 @@ cdf_ptr10683(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84362,7 +88248,7 @@ cdf_ptr10683(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84373,12 +88259,12 @@ cdf_ptr10683(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z╣⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -84390,7 +88276,7 @@ cdf_ptr10683(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -84399,7 +88285,7 @@ cdf_ptr10683(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[387] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[399] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -84410,11 +88296,11 @@ cdf_ptr10683(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		arr->shape[0] = 0;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[387] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[399] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -84426,7 +88312,7 @@ cdf_ptr10683(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[387] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[399] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84448,12 +88334,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[387] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[399] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
-cdf_ptr10684(struct cell_array **z,
+cdf_ptr11072(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -84489,12 +88375,12 @@ cdf_ptr10684(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[389] nwreduce←{op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[401] nwreduce←{op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[389] nwreduce←{op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[401] nwreduce←{op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -84504,7 +88390,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[389] nwreduce←{op←╠⍺⍺¨╣");
+		    L"[401] nwreduce←{op←╠⍺⍺¨╣");
 	
 		release_array(x);
 		release_moper(op);
@@ -84519,12 +88405,12 @@ cdf_ptr10684(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!lex->cdf_is_integer->value)
-		CHK(6, cleanup, L"[390] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(lex->cdf_is_integer->value);
 	
@@ -84534,7 +88420,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -84544,7 +88430,7 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[390] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -84555,9 +88441,9 @@ cdf_ptr10684(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -84569,7 +88455,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -84582,7 +88468,7 @@ cdf_ptr10684(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -84597,15 +88483,15 @@ cdf_ptr10684(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -84615,7 +88501,7 @@ cdf_ptr10684(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -84635,12 +88521,12 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -84650,7 +88536,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -84660,7 +88546,7 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -84671,9 +88557,9 @@ cdf_ptr10684(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -84685,7 +88571,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -84701,17 +88587,17 @@ cdf_ptr10684(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -84722,7 +88608,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -84735,7 +88621,7 @@ cdf_ptr10684(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -84750,15 +88636,15 @@ cdf_ptr10684(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -84768,7 +88654,7 @@ cdf_ptr10684(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -84788,12 +88674,12 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
@@ -84803,7 +88689,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -84813,12 +88699,12 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -84830,7 +88716,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
 	
 		release_array(orig);
 		release_array(x);
@@ -84841,12 +88727,12 @@ cdf_ptr10684(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -84857,20 +88743,20 @@ cdf_ptr10684(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -84881,7 +88767,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -84898,7 +88784,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -84912,12 +88798,12 @@ cdf_ptr10684(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -84928,7 +88814,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -84939,7 +88825,7 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -84949,7 +88835,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -84959,15 +88845,15 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10685, cdf_ptr10686, 3), cleanup, 
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_func(&k, cdf_ptr11073, cdf_ptr11074, 3), cleanup, 
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_rc);
 		k->fv[1] = retain_cell(loc->cdf_z);
@@ -84982,7 +88868,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -84998,20 +88884,20 @@ cdf_ptr10684(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -85022,7 +88908,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85033,7 +88919,7 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -85043,7 +88929,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -85053,7 +88939,7 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[391] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -85063,7 +88949,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -85079,7 +88965,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -85090,12 +88976,12 @@ cdf_ptr10684(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -85106,7 +88992,7 @@ cdf_ptr10684(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -85130,12 +89016,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[389] nwreduce←╠{op←⍺⍺¨╣");
+	    L"[401] nwreduce←╠{op←⍺⍺¨╣");
 	return err;
 }
 
 int
-cdf_ptr10685(struct cell_array **z,
+cdf_ptr11073(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -85158,32 +89044,32 @@ cdf_ptr10685(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -85193,7 +89079,7 @@ cdf_ptr10685(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -85203,12 +89089,12 @@ cdf_ptr10685(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -85219,7 +89105,7 @@ cdf_ptr10685(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85230,7 +89116,7 @@ cdf_ptr10685(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -85240,7 +89126,7 @@ cdf_ptr10685(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -85256,7 +89142,7 @@ cdf_ptr10685(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85273,7 +89159,7 @@ cdf_ptr10685(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85284,12 +89170,12 @@ cdf_ptr10685(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -85301,7 +89187,7 @@ cdf_ptr10685(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -85322,12 +89208,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10686(struct cell_array **z,
+cdf_ptr11074(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -85348,32 +89234,32 @@ cdf_ptr10686(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -85383,7 +89269,7 @@ cdf_ptr10686(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -85393,12 +89279,12 @@ cdf_ptr10686(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -85409,7 +89295,7 @@ cdf_ptr10686(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85420,7 +89306,7 @@ cdf_ptr10686(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -85430,7 +89316,7 @@ cdf_ptr10686(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -85446,7 +89332,7 @@ cdf_ptr10686(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85463,7 +89349,7 @@ cdf_ptr10686(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85474,12 +89360,12 @@ cdf_ptr10686(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -85491,7 +89377,7 @@ cdf_ptr10686(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -85511,12 +89397,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10687(struct cell_array **z,
+cdf_ptr11075(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -85551,12 +89437,12 @@ cdf_ptr10687(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[389] nwreduce←{op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[401] nwreduce←{op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[389] nwreduce←{op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[401] nwreduce←{op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -85566,7 +89452,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[389] nwreduce←{op←╠⍺⍺¨╣");
+		    L"[401] nwreduce←{op←╠⍺⍺¨╣");
 	
 		release_array(x);
 		release_moper(op);
@@ -85581,12 +89467,12 @@ cdf_ptr10687(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!lex->cdf_is_integer->value)
-		CHK(6, cleanup, L"[390] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(lex->cdf_is_integer->value);
 	
@@ -85596,7 +89482,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -85606,7 +89492,7 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[390] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -85617,9 +89503,9 @@ cdf_ptr10687(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -85631,7 +89517,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -85644,7 +89530,7 @@ cdf_ptr10687(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -85659,15 +89545,15 @@ cdf_ptr10687(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -85677,7 +89563,7 @@ cdf_ptr10687(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -85697,12 +89583,12 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -85712,7 +89598,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -85722,7 +89608,7 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -85733,9 +89619,9 @@ cdf_ptr10687(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -85747,7 +89633,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -85763,17 +89649,17 @@ cdf_ptr10687(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -85784,7 +89670,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -85797,7 +89683,7 @@ cdf_ptr10687(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -85812,15 +89698,15 @@ cdf_ptr10687(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -85830,7 +89716,7 @@ cdf_ptr10687(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -85850,12 +89736,12 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
@@ -85865,7 +89751,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -85875,12 +89761,12 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -85892,7 +89778,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
 	
 		release_array(orig);
 		release_array(x);
@@ -85903,12 +89789,12 @@ cdf_ptr10687(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -85919,20 +89805,20 @@ cdf_ptr10687(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -85943,7 +89829,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -85960,7 +89846,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -85974,12 +89860,12 @@ cdf_ptr10687(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -85990,7 +89876,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -86001,7 +89887,7 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -86011,7 +89897,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -86021,15 +89907,15 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10688, cdf_ptr10689, 3), cleanup, 
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_func(&k, cdf_ptr11076, cdf_ptr11077, 3), cleanup, 
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_rc);
 		k->fv[1] = retain_cell(loc->cdf_z);
@@ -86044,7 +89930,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -86060,20 +89946,20 @@ cdf_ptr10687(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -86084,7 +89970,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -86095,7 +89981,7 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -86105,7 +89991,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -86115,7 +90001,7 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[391] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -86125,7 +90011,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -86141,7 +90027,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -86152,12 +90038,12 @@ cdf_ptr10687(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -86168,7 +90054,7 @@ cdf_ptr10687(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -86191,12 +90077,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[389] nwreduce←╠{op←⍺⍺¨╣");
+	    L"[401] nwreduce←╠{op←⍺⍺¨╣");
 	return err;
 }
 
 int
-cdf_ptr10688(struct cell_array **z,
+cdf_ptr11076(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -86219,32 +90105,32 @@ cdf_ptr10688(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -86254,7 +90140,7 @@ cdf_ptr10688(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -86264,12 +90150,12 @@ cdf_ptr10688(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -86280,7 +90166,7 @@ cdf_ptr10688(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -86291,7 +90177,7 @@ cdf_ptr10688(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -86301,7 +90187,7 @@ cdf_ptr10688(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -86317,7 +90203,7 @@ cdf_ptr10688(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -86334,7 +90220,7 @@ cdf_ptr10688(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -86345,12 +90231,12 @@ cdf_ptr10688(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -86362,7 +90248,7 @@ cdf_ptr10688(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -86383,12 +90269,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10689(struct cell_array **z,
+cdf_ptr11077(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -86409,32 +90295,32 @@ cdf_ptr10689(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -86444,7 +90330,7 @@ cdf_ptr10689(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -86454,12 +90340,12 @@ cdf_ptr10689(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -86470,7 +90356,7 @@ cdf_ptr10689(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -86481,7 +90367,7 @@ cdf_ptr10689(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -86491,7 +90377,7 @@ cdf_ptr10689(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -86507,7 +90393,7 @@ cdf_ptr10689(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -86524,7 +90410,7 @@ cdf_ptr10689(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -86535,12 +90421,12 @@ cdf_ptr10689(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -86552,7 +90438,7 @@ cdf_ptr10689(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -86572,12 +90458,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10690(struct cell_array **z,
+cdf_ptr11078(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -86613,12 +90499,12 @@ cdf_ptr10690(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[389] nwreduce←{op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[401] nwreduce←{op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[389] nwreduce←{op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[401] nwreduce←{op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -86628,7 +90514,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[389] nwreduce←{op←╠⍺⍺¨╣");
+		    L"[401] nwreduce←{op←╠⍺⍺¨╣");
 	
 		release_func(x);
 		release_moper(op);
@@ -86643,12 +90529,12 @@ cdf_ptr10690(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!lex->cdf_is_integer->value)
-		CHK(6, cleanup, L"[390] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(lex->cdf_is_integer->value);
 	
@@ -86658,7 +90544,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -86668,7 +90554,7 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[390] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -86679,9 +90565,9 @@ cdf_ptr10690(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -86693,7 +90579,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -86706,7 +90592,7 @@ cdf_ptr10690(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -86721,15 +90607,15 @@ cdf_ptr10690(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -86739,7 +90625,7 @@ cdf_ptr10690(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -86759,12 +90645,12 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -86774,7 +90660,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -86784,7 +90670,7 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -86795,9 +90681,9 @@ cdf_ptr10690(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -86809,7 +90695,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -86825,17 +90711,17 @@ cdf_ptr10690(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -86846,7 +90732,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -86859,7 +90745,7 @@ cdf_ptr10690(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -86874,15 +90760,15 @@ cdf_ptr10690(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -86892,7 +90778,7 @@ cdf_ptr10690(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -86912,12 +90798,12 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
@@ -86927,7 +90813,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -86937,12 +90823,12 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -86954,7 +90840,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
 	
 		release_array(orig);
 		release_array(x);
@@ -86965,12 +90851,12 @@ cdf_ptr10690(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -86981,20 +90867,20 @@ cdf_ptr10690(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -87005,7 +90891,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87022,7 +90908,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -87036,12 +90922,12 @@ cdf_ptr10690(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -87052,7 +90938,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -87063,7 +90949,7 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -87073,7 +90959,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -87083,15 +90969,15 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10691, cdf_ptr10692, 3), cleanup, 
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_func(&k, cdf_ptr11079, cdf_ptr11080, 3), cleanup, 
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_rc);
 		k->fv[1] = retain_cell(loc->cdf_z);
@@ -87106,7 +90992,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -87122,20 +91008,20 @@ cdf_ptr10690(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -87146,7 +91032,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87157,7 +91043,7 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -87167,7 +91053,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -87177,7 +91063,7 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[391] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -87187,7 +91073,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -87203,7 +91089,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -87214,12 +91100,12 @@ cdf_ptr10690(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -87230,7 +91116,7 @@ cdf_ptr10690(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -87254,12 +91140,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[389] nwreduce←╠{op←⍺⍺¨╣");
+	    L"[401] nwreduce←╠{op←⍺⍺¨╣");
 	return err;
 }
 
 int
-cdf_ptr10691(struct cell_array **z,
+cdf_ptr11079(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -87282,32 +91168,32 @@ cdf_ptr10691(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -87317,7 +91203,7 @@ cdf_ptr10691(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -87327,12 +91213,12 @@ cdf_ptr10691(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -87343,7 +91229,7 @@ cdf_ptr10691(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87354,7 +91240,7 @@ cdf_ptr10691(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -87364,7 +91250,7 @@ cdf_ptr10691(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -87380,7 +91266,7 @@ cdf_ptr10691(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87397,7 +91283,7 @@ cdf_ptr10691(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87408,12 +91294,12 @@ cdf_ptr10691(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -87425,7 +91311,7 @@ cdf_ptr10691(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -87446,12 +91332,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10692(struct cell_array **z,
+cdf_ptr11080(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -87472,32 +91358,32 @@ cdf_ptr10692(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -87507,7 +91393,7 @@ cdf_ptr10692(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -87517,12 +91403,12 @@ cdf_ptr10692(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -87533,7 +91419,7 @@ cdf_ptr10692(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87544,7 +91430,7 @@ cdf_ptr10692(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -87554,7 +91440,7 @@ cdf_ptr10692(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -87570,7 +91456,7 @@ cdf_ptr10692(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87587,7 +91473,7 @@ cdf_ptr10692(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -87598,12 +91484,12 @@ cdf_ptr10692(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -87615,7 +91501,7 @@ cdf_ptr10692(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -87635,12 +91521,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10693(struct cell_array **z,
+cdf_ptr11081(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -87675,12 +91561,12 @@ cdf_ptr10693(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[389] nwreduce←{op←⍺⍺╠¨╣");
+		CHK(6, cleanup, L"[401] nwreduce←{op←⍺⍺╠¨╣");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[389] nwreduce←{op←╠⍺⍺╣¨");
+		CHK(6, cleanup, L"[401] nwreduce←{op←╠⍺⍺╣¨");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -87690,7 +91576,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[389] nwreduce←{op←╠⍺⍺¨╣");
+		    L"[401] nwreduce←{op←╠⍺⍺¨╣");
 	
 		release_func(x);
 		release_moper(op);
@@ -87705,12 +91591,12 @@ cdf_ptr10693(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!lex->cdf_is_integer->value)
-		CHK(6, cleanup, L"[390] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(lex->cdf_is_integer->value);
 	
@@ -87720,7 +91606,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -87730,7 +91616,7 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[390] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -87741,9 +91627,9 @@ cdf_ptr10693(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -87755,7 +91641,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -87768,7 +91654,7 @@ cdf_ptr10693(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -87783,15 +91669,15 @@ cdf_ptr10693(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -87801,7 +91687,7 @@ cdf_ptr10693(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -87821,12 +91707,12 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -87836,7 +91722,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -87846,7 +91732,7 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -87857,9 +91743,9 @@ cdf_ptr10693(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		*stkhd++ = arr;
 	}
@@ -87871,7 +91757,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -87887,17 +91773,17 @@ cdf_ptr10693(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -87908,7 +91794,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 		release_func(fn);
@@ -87921,7 +91807,7 @@ cdf_ptr10693(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+		TRC(guard_check(x), L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_array(x);
 	
@@ -87936,15 +91822,15 @@ cdf_ptr10693(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+				CHK(fill_array(arr, dat), cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
+				CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -87954,7 +91840,7 @@ cdf_ptr10693(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
+				    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
 			
 				release_func(fn);
 				release_array(y);
@@ -87974,12 +91860,12 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
@@ -87989,7 +91875,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -87999,12 +91885,12 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!loc->cdf_rc->value)
-		CHK(6, cleanup, L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
+		CHK(6, cleanup, L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc╣-←|⍺");
 	
 	*stkhd++ = retain_cell(loc->cdf_rc->value);
 	
@@ -88016,7 +91902,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[390] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
+		    L"[402] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
 	
 		release_array(orig);
 		release_array(x);
@@ -88027,12 +91913,12 @@ cdf_ptr10693(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_drp)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_drp);
 	
@@ -88043,20 +91929,20 @@ cdf_ptr10693(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -88067,7 +91953,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88084,7 +91970,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -88098,12 +91984,12 @@ cdf_ptr10693(struct cell_array **z,
 	loc->cdf_z->value = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
@@ -88114,7 +92000,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -88125,7 +92011,7 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -88135,7 +92021,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -88145,15 +92031,15 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10694, cdf_ptr10695, 3), cleanup, 
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_func(&k, cdf_ptr11082, cdf_ptr11083, 3), cleanup, 
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		k->fv[0] = retain_cell(loc->cdf_rc);
 		k->fv[1] = retain_cell(loc->cdf_z);
@@ -88168,7 +92054,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -88184,20 +92070,20 @@ cdf_ptr10693(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[391] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[403] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -88208,7 +92094,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88219,7 +92105,7 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -88229,7 +92115,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -88239,7 +92125,7 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rot)
-		CHK(6, cleanup, L"[391] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rot);
 	
@@ -88249,7 +92135,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -88265,7 +92151,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -88276,12 +92162,12 @@ cdf_ptr10693(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[391] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!loc->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_z->value);
 	
@@ -88292,7 +92178,7 @@ cdf_ptr10693(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+		    L"[403] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -88315,12 +92201,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[389] nwreduce←╠{op←⍺⍺¨╣");
+	    L"[401] nwreduce←╠{op←⍺⍺¨╣");
 	return err;
 }
 
 int
-cdf_ptr10694(struct cell_array **z,
+cdf_ptr11082(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -88343,32 +92229,32 @@ cdf_ptr10694(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -88378,7 +92264,7 @@ cdf_ptr10694(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -88388,12 +92274,12 @@ cdf_ptr10694(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -88404,7 +92290,7 @@ cdf_ptr10694(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88415,7 +92301,7 @@ cdf_ptr10694(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -88425,7 +92311,7 @@ cdf_ptr10694(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -88441,7 +92327,7 @@ cdf_ptr10694(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88458,7 +92344,7 @@ cdf_ptr10694(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88469,12 +92355,12 @@ cdf_ptr10694(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -88486,7 +92372,7 @@ cdf_ptr10694(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -88507,12 +92393,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10695(struct cell_array **z,
+cdf_ptr11083(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -88533,32 +92419,32 @@ cdf_ptr10695(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
 	if (!lex->cdf_op->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_op->value);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_sqd)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sqd);
 	
 	if (!lex->cdf_rc->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_rc->value);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -88568,7 +92454,7 @@ cdf_ptr10695(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -88578,12 +92464,12 @@ cdf_ptr10695(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -88594,7 +92480,7 @@ cdf_ptr10695(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88605,7 +92491,7 @@ cdf_ptr10695(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_par)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_par);
 	
@@ -88615,7 +92501,7 @@ cdf_ptr10695(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -88631,7 +92517,7 @@ cdf_ptr10695(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88648,7 +92534,7 @@ cdf_ptr10695(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -88659,12 +92545,12 @@ cdf_ptr10695(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
 	if (!lex->cdf_z->value)
-		CHK(6, cleanup, L"[391] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[403] 	z⊣(⌽⍳⍺-1){╠z╣⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_z->value);
 	
@@ -88676,7 +92562,7 @@ cdf_ptr10695(struct cell_array **z,
 		struct cell_array *orig = bx->value;
 	
 		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[391] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[403] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_array(orig);
 		release_array(x);
@@ -88696,12 +92582,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[391] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[403] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
-cdf_ptr10696(struct cell_array **z,
+cdf_ptr11084(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -88727,7 +92613,7 @@ cdf_ptr10696(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[393] rdf←{⍺←╠⊢╣ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←╠⊢╣ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -88743,15 +92629,15 @@ cdf_ptr10696(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -88761,7 +92647,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -88771,7 +92657,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -88781,7 +92667,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -88791,7 +92677,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -88801,7 +92687,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -88811,7 +92697,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -88821,7 +92707,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -88831,7 +92717,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
@@ -88842,9 +92728,9 @@ cdf_ptr10696(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -88856,7 +92742,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -88869,7 +92755,7 @@ cdf_ptr10696(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -88884,15 +92770,15 @@ cdf_ptr10696(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {4};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -88902,7 +92788,7 @@ cdf_ptr10696(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				release_func(fn);
 				release_array(y);
@@ -88928,15 +92814,15 @@ cdf_ptr10696(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -88946,7 +92832,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -88956,7 +92842,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -88966,7 +92852,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -88976,7 +92862,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -88986,7 +92872,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -88996,7 +92882,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -89006,7 +92892,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -89016,7 +92902,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -89027,9 +92913,9 @@ cdf_ptr10696(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -89041,7 +92927,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -89054,7 +92940,7 @@ cdf_ptr10696(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -89069,15 +92955,15 @@ cdf_ptr10696(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -89087,7 +92973,7 @@ cdf_ptr10696(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -89113,15 +92999,15 @@ cdf_ptr10696(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -89131,7 +93017,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -89141,7 +93027,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[394] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -89152,9 +93038,9 @@ cdf_ptr10696(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -89166,7 +93052,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[394] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -89179,7 +93065,7 @@ cdf_ptr10696(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		TRC(guard_check(x), L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 	
@@ -89188,17 +93074,17 @@ cdf_ptr10696(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!lex->cdf_reduce->value)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(lex->cdf_reduce->value);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -89208,7 +93094,7 @@ cdf_ptr10696(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_array(x);
 				release_moper(op);
@@ -89223,7 +93109,7 @@ cdf_ptr10696(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_func(fn);
 				release_array(y);
@@ -89243,17 +93129,17 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_nwreduce->value)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_nwreduce->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -89263,7 +93149,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
 	
 		release_array(x);
 		release_moper(op);
@@ -89278,7 +93164,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)⍵╣");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -89288,7 +93174,7 @@ cdf_ptr10696(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -89298,7 +93184,7 @@ cdf_ptr10696(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -89320,12 +93206,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[393] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
+	    L"[405] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
 	return err;
 }
 
 int
-cdf_ptr10697(struct cell_array **z,
+cdf_ptr11085(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -89356,20 +93242,20 @@ cdf_ptr10697(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -89380,7 +93266,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -89391,7 +93277,7 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -89401,7 +93287,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -89411,7 +93297,7 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -89421,7 +93307,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -89431,7 +93317,7 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
@@ -89442,9 +93328,9 @@ cdf_ptr10697(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -89456,7 +93342,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -89469,7 +93355,7 @@ cdf_ptr10697(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -89484,15 +93370,15 @@ cdf_ptr10697(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {4};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -89502,7 +93388,7 @@ cdf_ptr10697(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				release_func(fn);
 				release_array(y);
@@ -89528,20 +93414,20 @@ cdf_ptr10697(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -89552,7 +93438,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -89563,7 +93449,7 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -89573,7 +93459,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -89583,7 +93469,7 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -89593,7 +93479,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -89603,7 +93489,7 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -89614,9 +93500,9 @@ cdf_ptr10697(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -89628,7 +93514,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -89641,7 +93527,7 @@ cdf_ptr10697(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -89656,15 +93542,15 @@ cdf_ptr10697(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -89674,7 +93560,7 @@ cdf_ptr10697(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -89700,15 +93586,15 @@ cdf_ptr10697(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -89716,23 +93602,23 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[394] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -89743,9 +93629,9 @@ cdf_ptr10697(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -89757,7 +93643,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[394] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -89770,7 +93656,7 @@ cdf_ptr10697(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		TRC(guard_check(x), L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 	
@@ -89779,17 +93665,17 @@ cdf_ptr10697(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!lex->cdf_reduce->value)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(lex->cdf_reduce->value);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -89799,7 +93685,7 @@ cdf_ptr10697(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_array(x);
 				release_moper(op);
@@ -89814,7 +93700,7 @@ cdf_ptr10697(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_func(fn);
 				release_array(y);
@@ -89834,17 +93720,17 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_nwreduce->value)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_nwreduce->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -89854,7 +93740,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
 	
 		release_array(x);
 		release_moper(op);
@@ -89864,7 +93750,7 @@ cdf_ptr10697(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -89875,7 +93761,7 @@ cdf_ptr10697(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -89897,12 +93783,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[393] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
+	    L"[405] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
 	return err;
 }
 
 int
-cdf_ptr10698(struct cell_array **z,
+cdf_ptr11086(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -89928,7 +93814,7 @@ cdf_ptr10698(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[393] rdf←{⍺←╠⊢╣ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←╠⊢╣ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -89944,15 +93830,15 @@ cdf_ptr10698(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -89962,7 +93848,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -89972,7 +93858,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -89982,7 +93868,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -89992,7 +93878,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -90002,7 +93888,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90012,7 +93898,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -90022,7 +93908,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90032,7 +93918,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
@@ -90043,9 +93929,9 @@ cdf_ptr10698(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -90057,7 +93943,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -90070,7 +93956,7 @@ cdf_ptr10698(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -90085,15 +93971,15 @@ cdf_ptr10698(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {4};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -90103,7 +93989,7 @@ cdf_ptr10698(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				release_func(fn);
 				release_array(y);
@@ -90129,15 +94015,15 @@ cdf_ptr10698(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
@@ -90147,7 +94033,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90157,7 +94043,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -90167,7 +94053,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90177,7 +94063,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -90187,7 +94073,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90197,7 +94083,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -90207,7 +94093,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90217,7 +94103,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -90228,9 +94114,9 @@ cdf_ptr10698(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -90242,7 +94128,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -90255,7 +94141,7 @@ cdf_ptr10698(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -90270,15 +94156,15 @@ cdf_ptr10698(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -90288,7 +94174,7 @@ cdf_ptr10698(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -90314,15 +94200,15 @@ cdf_ptr10698(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -90332,7 +94218,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -90342,7 +94228,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[394] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -90353,9 +94239,9 @@ cdf_ptr10698(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -90367,7 +94253,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[394] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -90380,7 +94266,7 @@ cdf_ptr10698(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		TRC(guard_check(x), L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 	
@@ -90389,17 +94275,17 @@ cdf_ptr10698(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!lex->cdf_reduce->value)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(lex->cdf_reduce->value);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -90409,7 +94295,7 @@ cdf_ptr10698(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_func(x);
 				release_moper(op);
@@ -90424,7 +94310,7 @@ cdf_ptr10698(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_func(fn);
 				release_array(y);
@@ -90444,17 +94330,17 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_nwreduce->value)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_nwreduce->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -90464,7 +94350,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -90479,7 +94365,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)⍵╣");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -90489,7 +94375,7 @@ cdf_ptr10698(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -90499,7 +94385,7 @@ cdf_ptr10698(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -90521,12 +94407,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[393] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
+	    L"[405] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
 	return err;
 }
 
 int
-cdf_ptr10699(struct cell_array **z,
+cdf_ptr11087(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -90557,20 +94443,20 @@ cdf_ptr10699(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -90581,7 +94467,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -90592,7 +94478,7 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -90602,7 +94488,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90612,7 +94498,7 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -90622,7 +94508,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90632,7 +94518,7 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_lth)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lth);
 	
@@ -90643,9 +94529,9 @@ cdf_ptr10699(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -90657,7 +94543,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -90670,7 +94556,7 @@ cdf_ptr10699(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -90685,15 +94571,15 @@ cdf_ptr10699(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {4};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -90703,7 +94589,7 @@ cdf_ptr10699(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
 			
 				release_func(fn);
 				release_array(y);
@@ -90729,20 +94615,20 @@ cdf_ptr10699(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_lft)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_lft);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -90753,7 +94639,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -90764,7 +94650,7 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -90774,7 +94660,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90784,7 +94670,7 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -90794,7 +94680,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_func(fn);
 		release_array(y);
@@ -90804,7 +94690,7 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -90815,9 +94701,9 @@ cdf_ptr10699(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+		CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
 	
 		*stkhd++ = arr;
 	}
@@ -90829,7 +94715,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
+		    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 		release_func(fn);
@@ -90842,7 +94728,7 @@ cdf_ptr10699(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+		TRC(guard_check(x), L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
 	
 		release_array(x);
 	
@@ -90857,15 +94743,15 @@ cdf_ptr10699(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+				CHK(fill_array(arr, dat), cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.cdf_q_signal)
-				CHK(6, cleanup, L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
+				CHK(6, cleanup, L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
 			
 			*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 			
@@ -90875,7 +94761,7 @@ cdf_ptr10699(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[393] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
+				    L"[405] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -90901,15 +94787,15 @@ cdf_ptr10699(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡╠⍺╣ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -90917,23 +94803,23 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[394] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	1≡╠⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[394] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1╠≡╣⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -90944,9 +94830,9 @@ cdf_ptr10699(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[394] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[406] 	╠1╣≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -90958,7 +94844,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[394] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		    L"[406] 	╠1≡⍺ 1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -90971,7 +94857,7 @@ cdf_ptr10699(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[394] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+		TRC(guard_check(x), L"[406] 	1≡⍺ ╠1╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 	
 		release_array(x);
 	
@@ -90980,17 +94866,17 @@ cdf_ptr10699(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!lex->cdf_reduce->value)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(lex->cdf_reduce->value);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[394] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				CHK(6, cleanup, L"[406] 	1≡⍺ 1:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -91000,7 +94886,7 @@ cdf_ptr10699(struct cell_array **z,
 				struct cell_func *dst;
 			
 				CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_func(x);
 				release_moper(op);
@@ -91015,7 +94901,7 @@ cdf_ptr10699(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[394] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+				    L"[406] 	1≡⍺ 1:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
 				release_func(fn);
 				release_array(y);
@@ -91035,17 +94921,17 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!lex->cdf_nwreduce->value)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
 	
 	*stkhd++ = retain_cell(lex->cdf_nwreduce->value);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -91055,7 +94941,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
 	
 		release_func(x);
 		release_moper(op);
@@ -91065,7 +94951,7 @@ cdf_ptr10699(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
+		CHK(6, cleanup, L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -91076,7 +94962,7 @@ cdf_ptr10699(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[394] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
+		    L"[406] 	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -91098,12 +94984,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[393] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
+	    L"[405] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
 	return err;
 }
 
 int
-cdf_ptr10700(struct cell_array **z,
+cdf_ptr11088(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -91124,15 +95010,15 @@ cdf_ptr10700(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[410] rpf←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[398] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[410] rpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[398] rpf←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[410] rpf←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -91142,7 +95028,7 @@ cdf_ptr10700(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[398] rpf←{╠⎕SIGNAL 16╣}");
+		    L"[410] rpf←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91164,12 +95050,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[398] rpf←╠{⎕SIGNAL 16}╣");
+	    L"[410] rpf←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10701(struct cell_array **z,
+cdf_ptr11089(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -91188,15 +95074,15 @@ cdf_ptr10701(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[398] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[410] rpf←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[398] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[410] rpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[398] rpf←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[410] rpf←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -91206,7 +95092,7 @@ cdf_ptr10701(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[398] rpf←{╠⎕SIGNAL 16╣}");
+		    L"[410] rpf←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91227,12 +95113,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[398] rpf←╠{⎕SIGNAL 16}╣");
+	    L"[410] rpf←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10702(struct cell_array **z,
+cdf_ptr11090(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -91253,15 +95139,15 @@ cdf_ptr10702(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[401] rep←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[413] rep←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[401] rep←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[413] rep←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[401] rep←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[413] rep←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -91271,7 +95157,7 @@ cdf_ptr10702(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[401] rep←{╠⎕SIGNAL 16╣}");
+		    L"[413] rep←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91293,12 +95179,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[401] rep←╠{⎕SIGNAL 16}╣");
+	    L"[413] rep←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10703(struct cell_array **z,
+cdf_ptr11091(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -91317,15 +95203,15 @@ cdf_ptr10703(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[401] rep←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[413] rep←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[401] rep←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[413] rep←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[401] rep←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[413] rep←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -91335,7 +95221,7 @@ cdf_ptr10703(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[401] rep←{╠⎕SIGNAL 16╣}");
+		    L"[413] rep←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91356,12 +95242,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[401] rep←╠{⎕SIGNAL 16}╣");
+	    L"[413] rep←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10704(struct cell_array **z,
+cdf_ptr11092(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -91395,12 +95281,12 @@ cdf_ptr10704(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[404] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -91410,7 +95296,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91425,7 +95311,7 @@ cdf_ptr10704(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -91435,12 +95321,12 @@ cdf_ptr10704(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -91450,7 +95336,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91460,7 +95346,7 @@ cdf_ptr10704(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -91470,7 +95356,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91480,7 +95366,7 @@ cdf_ptr10704(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -91491,9 +95377,9 @@ cdf_ptr10704(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -91505,7 +95391,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -91516,15 +95402,15 @@ cdf_ptr10704(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10705, cdf_ptr10706, 2), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+		CHK(mk_func(&k, cdf_ptr11093, cdf_ptr11094, 2), cleanup, 
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	
 		k->fv[0] = retain_cell(loc->cdf_fn);
 		k->fv[1] = retain_cell(loc->cdf_X);
@@ -91538,7 +95424,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -91553,7 +95439,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91563,17 +95449,17 @@ cdf_ptr10704(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -91583,7 +95469,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91599,7 +95485,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -91610,7 +95496,7 @@ cdf_ptr10704(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -91620,7 +95506,7 @@ cdf_ptr10704(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91643,12 +95529,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
+	    L"[416] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10705(struct cell_array **z,
+cdf_ptr11093(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -91670,12 +95556,12 @@ cdf_ptr10705(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -91685,7 +95571,7 @@ cdf_ptr10705(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91698,27 +95584,27 @@ cdf_ptr10705(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -91729,7 +95615,7 @@ cdf_ptr10705(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -91740,12 +95626,12 @@ cdf_ptr10705(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -91756,7 +95642,7 @@ cdf_ptr10705(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -91779,12 +95665,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10706(struct cell_array **z,
+cdf_ptr11094(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -91804,12 +95690,12 @@ cdf_ptr10706(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -91819,7 +95705,7 @@ cdf_ptr10706(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91832,27 +95718,27 @@ cdf_ptr10706(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -91863,7 +95749,7 @@ cdf_ptr10706(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -91874,12 +95760,12 @@ cdf_ptr10706(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -91890,7 +95776,7 @@ cdf_ptr10706(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -91912,12 +95798,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10707(struct cell_array **z,
+cdf_ptr11095(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -91950,12 +95836,12 @@ cdf_ptr10707(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[404] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -91965,7 +95851,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -91980,7 +95866,7 @@ cdf_ptr10707(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -91990,12 +95876,12 @@ cdf_ptr10707(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -92005,7 +95891,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92015,7 +95901,7 @@ cdf_ptr10707(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -92025,7 +95911,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92035,7 +95921,7 @@ cdf_ptr10707(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -92046,9 +95932,9 @@ cdf_ptr10707(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -92060,7 +95946,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92071,15 +95957,15 @@ cdf_ptr10707(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10708, cdf_ptr10709, 2), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+		CHK(mk_func(&k, cdf_ptr11096, cdf_ptr11097, 2), cleanup, 
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	
 		k->fv[0] = retain_cell(loc->cdf_fn);
 		k->fv[1] = retain_cell(loc->cdf_X);
@@ -92093,7 +95979,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -92108,7 +95994,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92118,17 +96004,17 @@ cdf_ptr10707(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -92138,7 +96024,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92154,7 +96040,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92165,7 +96051,7 @@ cdf_ptr10707(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -92175,7 +96061,7 @@ cdf_ptr10707(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92197,12 +96083,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
+	    L"[416] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10708(struct cell_array **z,
+cdf_ptr11096(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -92224,12 +96110,12 @@ cdf_ptr10708(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -92239,7 +96125,7 @@ cdf_ptr10708(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92252,27 +96138,27 @@ cdf_ptr10708(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -92283,7 +96169,7 @@ cdf_ptr10708(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92294,12 +96180,12 @@ cdf_ptr10708(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -92310,7 +96196,7 @@ cdf_ptr10708(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92333,12 +96219,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10709(struct cell_array **z,
+cdf_ptr11097(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -92358,12 +96244,12 @@ cdf_ptr10709(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -92373,7 +96259,7 @@ cdf_ptr10709(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92386,27 +96272,27 @@ cdf_ptr10709(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -92417,7 +96303,7 @@ cdf_ptr10709(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92428,12 +96314,12 @@ cdf_ptr10709(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -92444,7 +96330,7 @@ cdf_ptr10709(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92466,12 +96352,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10710(struct cell_array **z,
+cdf_ptr11098(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -92505,12 +96391,12 @@ cdf_ptr10710(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[404] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -92520,7 +96406,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92535,7 +96421,7 @@ cdf_ptr10710(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -92545,12 +96431,12 @@ cdf_ptr10710(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -92560,7 +96446,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92570,7 +96456,7 @@ cdf_ptr10710(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -92580,7 +96466,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92590,7 +96476,7 @@ cdf_ptr10710(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -92601,9 +96487,9 @@ cdf_ptr10710(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -92615,7 +96501,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92626,15 +96512,15 @@ cdf_ptr10710(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10711, cdf_ptr10712, 2), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+		CHK(mk_func(&k, cdf_ptr11099, cdf_ptr11100, 2), cleanup, 
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	
 		k->fv[0] = retain_cell(loc->cdf_fn);
 		k->fv[1] = retain_cell(loc->cdf_X);
@@ -92648,7 +96534,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -92663,7 +96549,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92673,17 +96559,17 @@ cdf_ptr10710(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -92693,7 +96579,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92709,7 +96595,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92720,7 +96606,7 @@ cdf_ptr10710(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -92730,7 +96616,7 @@ cdf_ptr10710(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92753,12 +96639,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
+	    L"[416] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10711(struct cell_array **z,
+cdf_ptr11099(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -92780,12 +96666,12 @@ cdf_ptr10711(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -92795,7 +96681,7 @@ cdf_ptr10711(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92808,27 +96694,27 @@ cdf_ptr10711(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -92839,7 +96725,7 @@ cdf_ptr10711(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92850,12 +96736,12 @@ cdf_ptr10711(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -92865,7 +96751,7 @@ cdf_ptr10711(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -92880,7 +96766,7 @@ cdf_ptr10711(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92902,12 +96788,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10712(struct cell_array **z,
+cdf_ptr11100(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -92927,12 +96813,12 @@ cdf_ptr10712(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -92942,7 +96828,7 @@ cdf_ptr10712(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -92955,27 +96841,27 @@ cdf_ptr10712(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -92986,7 +96872,7 @@ cdf_ptr10712(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -92997,12 +96883,12 @@ cdf_ptr10712(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -93012,7 +96898,7 @@ cdf_ptr10712(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -93027,7 +96913,7 @@ cdf_ptr10712(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93048,12 +96934,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10713(struct cell_array **z,
+cdf_ptr11101(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -93086,12 +96972,12 @@ cdf_ptr10713(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,╠⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[404] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←╠,╣⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -93101,7 +96987,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←╠,⍵╣ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93116,7 +97002,7 @@ cdf_ptr10713(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←╠⍺⍺╣ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -93126,12 +97012,12 @@ cdf_ptr10713(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢╣⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -93141,7 +97027,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳╠≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93151,7 +97037,7 @@ cdf_ptr10713(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳╣≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -93161,7 +97047,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+╠⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93171,7 +97057,7 @@ cdf_ptr10713(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_add)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1╠+╣⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_add);
 	
@@ -93182,9 +97068,9 @@ cdf_ptr10713(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1╣+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -93196,7 +97082,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨╠1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -93207,15 +97093,15 @@ cdf_ptr10713(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}╠¨╣1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, cdf_ptr10714, cdf_ptr10715, 2), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+		CHK(mk_func(&k, cdf_ptr11102, cdf_ptr11103, 2), cleanup, 
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	
 		k->fv[0] = retain_cell(loc->cdf_fn);
 		k->fv[1] = retain_cell(loc->cdf_X);
@@ -93229,7 +97115,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨╣1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -93244,7 +97130,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93254,17 +97140,17 @@ cdf_ptr10713(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)╠⍴╣{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴╠⍵╣)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (╠⍴╣⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -93274,7 +97160,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)╣⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93290,7 +97176,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze ╠(⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -93301,7 +97187,7 @@ cdf_ptr10713(struct cell_array **z,
 	}
 	
 	if (!lex->cdf_squeeze->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze╣ (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_squeeze->value);
 	
@@ -93311,7 +97197,7 @@ cdf_ptr10713(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ ╠squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93333,12 +97219,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
+	    L"[416] scf←╠{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10714(struct cell_array **z,
+cdf_ptr11102(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -93360,12 +97246,12 @@ cdf_ptr10714(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -93375,7 +97261,7 @@ cdf_ptr10714(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93388,27 +97274,27 @@ cdf_ptr10714(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -93419,7 +97305,7 @@ cdf_ptr10714(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -93430,12 +97316,12 @@ cdf_ptr10714(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -93445,7 +97331,7 @@ cdf_ptr10714(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -93460,7 +97346,7 @@ cdf_ptr10714(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93482,12 +97368,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10715(struct cell_array **z,
+cdf_ptr11103(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -93507,12 +97393,12 @@ cdf_ptr10715(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳╠⍵╣]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳╣⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -93522,7 +97408,7 @@ cdf_ptr10715(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[╠⍳⍵╣]}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93535,27 +97421,27 @@ cdf_ptr10715(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X╠[╣⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!lex->cdf_X->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X╣[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_X->value);
 	
@@ -93566,7 +97452,7 @@ cdf_ptr10715(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿╠X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -93577,12 +97463,12 @@ cdf_ptr10715(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn╠⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!lex->cdf_fn->value)
-		CHK(6, cleanup, L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
+		CHK(6, cleanup, L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn╣⌿X[⍳⍵]}¨1+⍳≢⍵}");
 	
 	*stkhd++ = retain_cell(lex->cdf_fn->value);
 	
@@ -93592,7 +97478,7 @@ cdf_ptr10715(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿╣X[⍳⍵]}¨1+⍳≢⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -93607,7 +97493,7 @@ cdf_ptr10715(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
+		    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{╠fn⌿X[⍳⍵]╣}¨1+⍳≢⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93628,12 +97514,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[404] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
+	    L"[416] scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴╠{fn⌿X[⍳⍵]}╣¨1+⍳≢⍵}");
 	return err;
 }
 
 int
-cdf_ptr10716(struct cell_array **z,
+cdf_ptr11104(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -93654,15 +97540,15 @@ cdf_ptr10716(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[407] xpf←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] xpf←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[407] xpf←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[419] xpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[407] xpf←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[419] xpf←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -93672,7 +97558,7 @@ cdf_ptr10716(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[407] xpf←{╠⎕SIGNAL 16╣}");
+		    L"[419] xpf←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93694,12 +97580,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[407] xpf←╠{⎕SIGNAL 16}╣");
+	    L"[419] xpf←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10717(struct cell_array **z,
+cdf_ptr11105(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -93718,15 +97604,15 @@ cdf_ptr10717(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[407] xpf←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] xpf←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[407] xpf←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[419] xpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[407] xpf←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[419] xpf←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -93736,7 +97622,7 @@ cdf_ptr10717(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[407] xpf←{╠⎕SIGNAL 16╣}");
+		    L"[419] xpf←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93757,12 +97643,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[407] xpf←╠{⎕SIGNAL 16}╣");
+	    L"[419] xpf←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10718(struct cell_array **z,
+cdf_ptr11106(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -93783,15 +97669,15 @@ cdf_ptr10718(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[410] xpd←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[422] xpd←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[410] xpd←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[422] xpd←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[410] xpd←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[422] xpd←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -93801,7 +97687,7 @@ cdf_ptr10718(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[410] xpd←{╠⎕SIGNAL 16╣}");
+		    L"[422] xpd←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93823,12 +97709,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[410] xpd←╠{⎕SIGNAL 16}╣");
+	    L"[422] xpd←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10719(struct cell_array **z,
+cdf_ptr11107(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -93847,15 +97733,15 @@ cdf_ptr10719(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[410] xpd←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[422] xpd←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[410] xpd←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[422] xpd←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[410] xpd←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[422] xpd←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -93865,7 +97751,7 @@ cdf_ptr10719(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[410] xpd←{╠⎕SIGNAL 16╣}");
+		    L"[422] xpd←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93886,12 +97772,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[410] xpd←╠{⎕SIGNAL 16}╣");
+	    L"[422] xpd←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10720(struct cell_array **z,
+cdf_ptr11108(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -93912,22 +97798,22 @@ cdf_ptr10720(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -93935,17 +97821,17 @@ cdf_ptr10720(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -93956,7 +97842,7 @@ cdf_ptr10720(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 		release_moper(op);
@@ -93971,7 +97857,7 @@ cdf_ptr10720(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -93981,12 +97867,12 @@ cdf_ptr10720(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -93997,7 +97883,7 @@ cdf_ptr10720(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94020,12 +97906,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10721(struct cell_array **z,
+cdf_ptr11109(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -94045,22 +97931,22 @@ cdf_ptr10721(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -94068,17 +97954,17 @@ cdf_ptr10721(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -94089,7 +97975,7 @@ cdf_ptr10721(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 		release_moper(op);
@@ -94104,7 +97990,7 @@ cdf_ptr10721(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94114,12 +98000,12 @@ cdf_ptr10721(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -94130,7 +98016,7 @@ cdf_ptr10721(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94152,12 +98038,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10722(struct cell_array **z,
+cdf_ptr11110(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -94178,22 +98064,22 @@ cdf_ptr10722(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -94201,17 +98087,17 @@ cdf_ptr10722(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -94222,7 +98108,7 @@ cdf_ptr10722(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 		release_moper(op);
@@ -94237,7 +98123,7 @@ cdf_ptr10722(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94247,12 +98133,12 @@ cdf_ptr10722(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -94262,7 +98148,7 @@ cdf_ptr10722(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		    L"[425] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94277,7 +98163,7 @@ cdf_ptr10722(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94299,12 +98185,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10723(struct cell_array **z,
+cdf_ptr11111(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -94324,22 +98210,22 @@ cdf_ptr10723(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -94347,17 +98233,17 @@ cdf_ptr10723(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -94368,7 +98254,7 @@ cdf_ptr10723(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 		release_moper(op);
@@ -94383,7 +98269,7 @@ cdf_ptr10723(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94393,12 +98279,12 @@ cdf_ptr10723(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -94408,7 +98294,7 @@ cdf_ptr10723(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		    L"[425] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94423,7 +98309,7 @@ cdf_ptr10723(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94444,12 +98330,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10724(struct cell_array **z,
+cdf_ptr11112(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -94470,17 +98356,17 @@ cdf_ptr10724(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -94490,7 +98376,7 @@ cdf_ptr10724(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94500,7 +98386,7 @@ cdf_ptr10724(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -94511,7 +98397,7 @@ cdf_ptr10724(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94522,12 +98408,12 @@ cdf_ptr10724(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -94538,7 +98424,7 @@ cdf_ptr10724(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94561,12 +98447,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10725(struct cell_array **z,
+cdf_ptr11113(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -94586,17 +98472,17 @@ cdf_ptr10725(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -94606,7 +98492,7 @@ cdf_ptr10725(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94616,7 +98502,7 @@ cdf_ptr10725(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -94627,7 +98513,7 @@ cdf_ptr10725(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94638,12 +98524,12 @@ cdf_ptr10725(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rpf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rpf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -94654,7 +98540,7 @@ cdf_ptr10725(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94676,12 +98562,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10726(struct cell_array **z,
+cdf_ptr11114(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -94702,17 +98588,17 @@ cdf_ptr10726(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -94722,7 +98608,7 @@ cdf_ptr10726(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94732,7 +98618,7 @@ cdf_ptr10726(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -94743,7 +98629,7 @@ cdf_ptr10726(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94754,12 +98640,12 @@ cdf_ptr10726(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -94769,7 +98655,7 @@ cdf_ptr10726(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		    L"[425] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94784,7 +98670,7 @@ cdf_ptr10726(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94806,12 +98692,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10727(struct cell_array **z,
+cdf_ptr11115(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -94831,17 +98717,17 @@ cdf_ptr10727(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -94851,7 +98737,7 @@ cdf_ptr10727(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		    L"[425] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94861,7 +98747,7 @@ cdf_ptr10727(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -94872,7 +98758,7 @@ cdf_ptr10727(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[413] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -94883,12 +98769,12 @@ cdf_ptr10727(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rdf)
-		CHK(6, cleanup, L"[413] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rdf);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[413] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+		CHK(6, cleanup, L"[425] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -94898,7 +98784,7 @@ cdf_ptr10727(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		    L"[425] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 		release_func(x);
 		release_moper(op);
@@ -94913,7 +98799,7 @@ cdf_ptr10727(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[413] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		    L"[425] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94934,12 +98820,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[413] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[425] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10728(struct cell_array **z,
+cdf_ptr11116(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -94967,12 +98853,12 @@ cdf_ptr10728(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -94982,7 +98868,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -94992,7 +98878,7 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -95002,7 +98888,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95015,17 +98901,17 @@ cdf_ptr10728(struct cell_array **z,
 	loc->cdf_y = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_mul)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -95035,7 +98921,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95045,7 +98931,7 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -95055,7 +98941,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95071,7 +98957,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95082,7 +98968,7 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[416] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -95092,7 +98978,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95107,17 +98993,17 @@ cdf_ptr10728(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
@@ -95128,7 +99014,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95142,32 +99028,32 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -95177,7 +99063,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95193,7 +99079,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95204,12 +99090,12 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -95219,7 +99105,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_moper(op);
@@ -95229,17 +99115,17 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
 	if (!cdf_prim.cdf_div)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_div);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
@@ -95250,7 +99136,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95261,7 +99147,7 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_min)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_min);
 	
@@ -95271,7 +99157,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95284,32 +99170,32 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -95319,7 +99205,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95335,7 +99221,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95352,7 +99238,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95363,17 +99249,17 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -95383,7 +99269,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95393,17 +99279,17 @@ cdf_ptr10728(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -95413,7 +99299,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95429,7 +99315,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95446,7 +99332,7 @@ cdf_ptr10728(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95470,12 +99356,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[416] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
+	    L"[428] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
 	return err;
 }
 
 int
-cdf_ptr10729(struct cell_array **z,
+cdf_ptr11117(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -95502,12 +99388,12 @@ cdf_ptr10729(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -95517,7 +99403,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95527,7 +99413,7 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -95537,7 +99423,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95550,17 +99436,17 @@ cdf_ptr10729(struct cell_array **z,
 	loc->cdf_y = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_mul)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -95570,7 +99456,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95580,7 +99466,7 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -95590,7 +99476,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95606,7 +99492,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95617,7 +99503,7 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[416] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -95627,7 +99513,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95642,17 +99528,17 @@ cdf_ptr10729(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
@@ -95663,7 +99549,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95677,32 +99563,32 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -95712,7 +99598,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95728,7 +99614,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95739,12 +99625,12 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -95754,7 +99640,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_moper(op);
@@ -95764,17 +99650,17 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
 	if (!cdf_prim.cdf_div)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_div);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
@@ -95785,7 +99671,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95796,7 +99682,7 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_min)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_min);
 	
@@ -95806,7 +99692,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95819,32 +99705,32 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -95854,7 +99740,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95870,7 +99756,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95887,7 +99773,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95898,17 +99784,17 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -95918,7 +99804,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95928,17 +99814,17 @@ cdf_ptr10729(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -95948,7 +99834,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -95964,7 +99850,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -95981,7 +99867,7 @@ cdf_ptr10729(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96004,12 +99890,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[416] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
+	    L"[428] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
 	return err;
 }
 
 int
-cdf_ptr10730(struct cell_array **z,
+cdf_ptr11118(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -96037,12 +99923,12 @@ cdf_ptr10730(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96052,7 +99938,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96062,7 +99948,7 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -96072,7 +99958,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96085,17 +99971,17 @@ cdf_ptr10730(struct cell_array **z,
 	loc->cdf_y = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_mul)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96105,7 +99991,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96115,7 +100001,7 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -96125,7 +100011,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96141,7 +100027,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96152,7 +100038,7 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[416] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -96162,7 +100048,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96177,17 +100063,17 @@ cdf_ptr10730(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
@@ -96198,7 +100084,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96212,32 +100098,32 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96247,7 +100133,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96263,7 +100149,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96274,12 +100160,12 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -96289,7 +100175,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
 	
 		release_func(x);
 		release_moper(op);
@@ -96299,17 +100185,17 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
 	if (!cdf_prim.cdf_div)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_div);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
@@ -96320,7 +100206,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96331,7 +100217,7 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_min)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_min);
 	
@@ -96341,7 +100227,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96354,32 +100240,32 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96389,7 +100275,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96405,7 +100291,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96422,7 +100308,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96433,17 +100319,17 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -96453,7 +100339,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96463,17 +100349,17 @@ cdf_ptr10730(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -96483,7 +100369,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96499,7 +100385,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96516,7 +100402,7 @@ cdf_ptr10730(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96540,12 +100426,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[416] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
+	    L"[428] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
 	return err;
 }
 
 int
-cdf_ptr10731(struct cell_array **z,
+cdf_ptr11119(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -96572,12 +100458,12 @@ cdf_ptr10731(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,╠⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,╣⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96587,7 +100473,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢╠,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96597,7 +100483,7 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←╠≢╣,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -96607,7 +100493,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←╠≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96620,17 +100506,17 @@ cdf_ptr10731(struct cell_array **z,
 	loc->cdf_y = retain_cell(stkhd[-1]);
 	
 	if (!cdf_prim.cdf_mul)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)╠×╣y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_mul);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,╠⍺╣)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢╠,╣⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96640,7 +100526,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢╠,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96650,7 +100536,7 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_nqv)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(╠≢╣,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_nqv);
 	
@@ -96660,7 +100546,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)╣×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96676,7 +100562,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳╠(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96687,7 +100573,7 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_iot)
-		CHK(6, cleanup, L"[416] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←╠⍳╣(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_iot);
 	
@@ -96697,7 +100583,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←╠⍳(≢,⍺)×y←≢,⍵╣ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96712,17 +100598,17 @@ cdf_ptr10731(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|╠i╣]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
 	if (!cdf_prim.cdf_res)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y╠|╣i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_res);
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y╣|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
@@ -96733,7 +100619,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[╠y|i╣]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96747,32 +100633,32 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[y|i]╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)╠[╣y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,╠⍵╣)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(╠,╣⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96782,7 +100668,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)╣[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96798,7 +100684,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨╠(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96809,12 +100695,12 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_map)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺╠¨╣(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_map);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺╣¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -96824,7 +100710,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]╠⍺⍺¨╣(,⍵)[y|i]}");
 	
 		release_func(x);
 		release_moper(op);
@@ -96834,17 +100720,17 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!loc->cdf_y)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷╠y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_y);
 	
 	if (!cdf_prim.cdf_div)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i╠÷╣y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_div);
 	
 	if (!loc->cdf_i)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i╣÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(loc->cdf_i);
 	
@@ -96855,7 +100741,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊╠i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96866,7 +100752,7 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_min)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊╣i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_min);
 	
@@ -96876,7 +100762,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[╠⌊i÷y╣]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96889,32 +100775,32 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		arr->shape[0] = 1;
 		CHK(alloc_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_brk)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[╣⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_brk);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,╠⍺╣)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(╠,╣⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
@@ -96924,7 +100810,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)╣[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96940,7 +100826,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴╠(,⍺)[⌊i÷y]╣⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96957,7 +100843,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)╠[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -96968,17 +100854,17 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)╠⍴╣(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴╠⍵╣)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴╣⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -96988,7 +100874,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),╠⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -96998,17 +100884,17 @@ cdf_ptr10731(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_cat)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺)╠,╣⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_cat);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴╠⍺╣),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
 	if (!cdf_prim.cdf_rho)
-		CHK(6, cleanup, L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		CHK(6, cleanup, L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((╠⍴╣⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rho);
 	
@@ -97018,7 +100904,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ (╠(⍴⍺)╣,⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97034,7 +100920,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)╣⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97051,7 +100937,7 @@ cdf_ptr10731(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[416] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
+		    L"[428] oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ╠((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97074,12 +100960,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[416] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
+	    L"[428] oup←╠{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}╣");
 	return err;
 }
 
 int
-cdf_ptr10732(struct cell_array **z,
+cdf_ptr11120(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -97100,12 +100986,12 @@ cdf_ptr10732(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[419] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -97116,9 +101002,9 @@ cdf_ptr10732(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -97130,7 +101016,7 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97143,7 +101029,7 @@ cdf_ptr10732(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -97152,7 +101038,7 @@ cdf_ptr10732(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -97167,7 +101053,7 @@ cdf_ptr10732(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -97177,12 +101063,12 @@ cdf_ptr10732(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -97190,23 +101076,23 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -97216,7 +101102,7 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97226,7 +101112,7 @@ cdf_ptr10732(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -97236,7 +101122,7 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97252,20 +101138,20 @@ cdf_ptr10732(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -97276,7 +101162,7 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97287,12 +101173,12 @@ cdf_ptr10732(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -97303,7 +101189,7 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_doper(op);
@@ -97319,7 +101205,7 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97329,7 +101215,7 @@ cdf_ptr10732(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -97339,7 +101225,7 @@ cdf_ptr10732(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97361,12 +101247,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10733(struct cell_array **z,
+cdf_ptr11121(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -97386,12 +101272,12 @@ cdf_ptr10733(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[419] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -97402,9 +101288,9 @@ cdf_ptr10733(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -97416,7 +101302,7 @@ cdf_ptr10733(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97429,7 +101315,7 @@ cdf_ptr10733(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -97438,7 +101324,7 @@ cdf_ptr10733(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -97453,17 +101339,17 @@ cdf_ptr10733(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -97471,10 +101357,10 @@ cdf_ptr10733(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 		arr->shape[0] = 3;
 		CHK(alloc_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
@@ -97482,13 +101368,13 @@ cdf_ptr10733(struct cell_array **z,
 		dat[2] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -97498,7 +101384,7 @@ cdf_ptr10733(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97514,20 +101400,20 @@ cdf_ptr10733(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -97538,7 +101424,7 @@ cdf_ptr10733(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97549,17 +101435,17 @@ cdf_ptr10733(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -97567,17 +101453,17 @@ cdf_ptr10733(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -97589,7 +101475,7 @@ cdf_ptr10733(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_doper(op);
@@ -97605,7 +101491,7 @@ cdf_ptr10733(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97626,12 +101512,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10734(struct cell_array **z,
+cdf_ptr11122(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -97652,12 +101538,12 @@ cdf_ptr10734(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[419] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -97668,9 +101554,9 @@ cdf_ptr10734(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -97682,7 +101568,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97695,7 +101581,7 @@ cdf_ptr10734(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -97704,7 +101590,7 @@ cdf_ptr10734(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -97719,7 +101605,7 @@ cdf_ptr10734(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -97729,12 +101615,12 @@ cdf_ptr10734(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -97744,7 +101630,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97754,7 +101640,7 @@ cdf_ptr10734(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -97764,7 +101650,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97774,7 +101660,7 @@ cdf_ptr10734(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -97784,7 +101670,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97800,20 +101686,20 @@ cdf_ptr10734(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -97824,7 +101710,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97835,12 +101721,12 @@ cdf_ptr10734(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -97851,7 +101737,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_afm, op->fptr_afd, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(x);
 		release_doper(op);
@@ -97867,7 +101753,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97877,7 +101763,7 @@ cdf_ptr10734(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -97887,7 +101773,7 @@ cdf_ptr10734(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -97909,12 +101795,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10735(struct cell_array **z,
+cdf_ptr11123(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -97934,12 +101820,12 @@ cdf_ptr10735(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[419] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
@@ -97950,9 +101836,9 @@ cdf_ptr10735(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -97964,7 +101850,7 @@ cdf_ptr10735(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -97977,7 +101863,7 @@ cdf_ptr10735(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -97986,7 +101872,7 @@ cdf_ptr10735(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -98001,17 +101887,17 @@ cdf_ptr10735(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98022,7 +101908,7 @@ cdf_ptr10735(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -98033,7 +101919,7 @@ cdf_ptr10735(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -98043,7 +101929,7 @@ cdf_ptr10735(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98059,20 +101945,20 @@ cdf_ptr10735(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -98083,7 +101969,7 @@ cdf_ptr10735(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -98094,12 +101980,12 @@ cdf_ptr10735(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -98110,7 +101996,7 @@ cdf_ptr10735(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_afm, op->fptr_afd, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(x);
 		release_doper(op);
@@ -98121,7 +102007,7 @@ cdf_ptr10735(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98132,7 +102018,7 @@ cdf_ptr10735(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -98154,12 +102040,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10736(struct cell_array **z,
+cdf_ptr11124(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -98179,12 +102065,12 @@ cdf_ptr10736(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -98193,7 +102079,7 @@ cdf_ptr10736(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -98208,7 +102094,7 @@ cdf_ptr10736(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -98218,12 +102104,12 @@ cdf_ptr10736(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -98231,23 +102117,23 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98257,7 +102143,7 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98267,7 +102153,7 @@ cdf_ptr10736(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -98277,7 +102163,7 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98293,15 +102179,15 @@ cdf_ptr10736(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
@@ -98311,7 +102197,7 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98321,7 +102207,7 @@ cdf_ptr10736(struct cell_array **z,
 	}
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -98331,7 +102217,7 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98341,12 +102227,12 @@ cdf_ptr10736(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -98357,7 +102243,7 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_doper(op);
@@ -98373,7 +102259,7 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98383,7 +102269,7 @@ cdf_ptr10736(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98393,7 +102279,7 @@ cdf_ptr10736(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98415,12 +102301,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10737(struct cell_array **z,
+cdf_ptr11125(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -98439,12 +102325,12 @@ cdf_ptr10737(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -98453,7 +102339,7 @@ cdf_ptr10737(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -98468,17 +102354,17 @@ cdf_ptr10737(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98486,10 +102372,10 @@ cdf_ptr10737(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 		arr->shape[0] = 3;
 		CHK(alloc_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
@@ -98497,13 +102383,13 @@ cdf_ptr10737(struct cell_array **z,
 		dat[2] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -98513,7 +102399,7 @@ cdf_ptr10737(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98529,15 +102415,15 @@ cdf_ptr10737(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
@@ -98547,7 +102433,7 @@ cdf_ptr10737(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98557,7 +102443,7 @@ cdf_ptr10737(struct cell_array **z,
 	}
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -98567,7 +102453,7 @@ cdf_ptr10737(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98577,17 +102463,17 @@ cdf_ptr10737(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98595,17 +102481,17 @@ cdf_ptr10737(struct cell_array **z,
 		struct cell_array *arr, **dat;
 	
 		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 		arr->shape[0] = 2;
 		CHK(alloc_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 		dat = arr->values;
 	
 		dat[0] = *--stkhd;
 		dat[1] = *--stkhd;
 	
 		CHK(squeeze_array(arr), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -98617,7 +102503,7 @@ cdf_ptr10737(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 		release_doper(op);
@@ -98633,7 +102519,7 @@ cdf_ptr10737(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98654,12 +102540,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10738(struct cell_array **z,
+cdf_ptr11126(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -98679,12 +102565,12 @@ cdf_ptr10738(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -98693,7 +102579,7 @@ cdf_ptr10738(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -98708,7 +102594,7 @@ cdf_ptr10738(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -98718,12 +102604,12 @@ cdf_ptr10738(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -98733,7 +102619,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98743,7 +102629,7 @@ cdf_ptr10738(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98753,7 +102639,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98763,7 +102649,7 @@ cdf_ptr10738(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -98773,7 +102659,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98789,15 +102675,15 @@ cdf_ptr10738(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
@@ -98807,7 +102693,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98817,7 +102703,7 @@ cdf_ptr10738(struct cell_array **z,
 	}
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -98827,7 +102713,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98837,12 +102723,12 @@ cdf_ptr10738(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -98853,7 +102739,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_afm, op->fptr_afd, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(x);
 		release_doper(op);
@@ -98869,7 +102755,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98879,7 +102765,7 @@ cdf_ptr10738(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98889,7 +102775,7 @@ cdf_ptr10738(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -98911,12 +102797,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10739(struct cell_array **z,
+cdf_ptr11127(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -98935,12 +102821,12 @@ cdf_ptr10739(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[419] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[431] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -98949,7 +102835,7 @@ cdf_ptr10739(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+				CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -98964,17 +102850,17 @@ cdf_ptr10739(struct cell_array **z,
 	}
 	
 	if (!cdf_omega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(cdf_omega);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -98985,7 +102871,7 @@ cdf_ptr10739(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -98996,7 +102882,7 @@ cdf_ptr10739(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.cdf_rgt)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_rgt);
 	
@@ -99006,7 +102892,7 @@ cdf_ptr10739(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -99022,15 +102908,15 @@ cdf_ptr10739(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_sub)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_sub);
 	
@@ -99040,7 +102926,7 @@ cdf_ptr10739(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -99050,7 +102936,7 @@ cdf_ptr10739(struct cell_array **z,
 	}
 	
 	if (!cdf_omegaomega)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_omegaomega);
 	
@@ -99060,7 +102946,7 @@ cdf_ptr10739(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -99070,12 +102956,12 @@ cdf_ptr10739(struct cell_array **z,
 	}
 	
 	if (!cdf_deldel)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_deldel);
 	
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -99086,7 +102972,7 @@ cdf_ptr10739(struct cell_array **z,
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_afm, op->fptr_afd, x, y), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_func(x);
 		release_doper(op);
@@ -99097,7 +102983,7 @@ cdf_ptr10739(struct cell_array **z,
 	}
 	
 	if (!cdf_alpha)
-		CHK(6, cleanup, L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(6, cleanup, L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_alpha);
 	
@@ -99108,7 +102994,7 @@ cdf_ptr10739(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[419] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		    L"[431] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -99130,12 +103016,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[419] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	    L"[431] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	return err;
 }
 
 int
-cdf_ptr10740(struct cell_array **z,
+cdf_ptr11128(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -99169,11 +103055,11 @@ cdf_ptr10740(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -99190,22 +103076,22 @@ cdf_ptr10740(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -99216,7 +103102,7 @@ cdf_ptr10740(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -99229,7 +103115,7 @@ cdf_ptr10740(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -99238,22 +103124,22 @@ cdf_ptr10740(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -99261,10 +103147,10 @@ cdf_ptr10740(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 				arr->shape[0] = 4;
 				CHK(alloc_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -99273,7 +103159,7 @@ cdf_ptr10740(struct cell_array **z,
 				dat[3] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -99295,22 +103181,22 @@ cdf_ptr10740(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -99321,7 +103207,7 @@ cdf_ptr10740(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -99334,7 +103220,7 @@ cdf_ptr10740(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -99343,17 +103229,17 @@ cdf_ptr10740(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -99361,10 +103247,10 @@ cdf_ptr10740(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				arr->shape[0] = 3;
 				CHK(alloc_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -99372,7 +103258,7 @@ cdf_ptr10740(struct cell_array **z,
 				dat[2] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -99394,22 +103280,22 @@ cdf_ptr10740(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -99420,7 +103306,7 @@ cdf_ptr10740(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -99433,7 +103319,7 @@ cdf_ptr10740(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -99442,17 +103328,17 @@ cdf_ptr10740(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -99460,10 +103346,10 @@ cdf_ptr10740(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				arr->shape[0] = 3;
 				CHK(alloc_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -99471,7 +103357,7 @@ cdf_ptr10740(struct cell_array **z,
 				dat[2] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -99493,22 +103379,22 @@ cdf_ptr10740(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -99519,7 +103405,7 @@ cdf_ptr10740(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -99532,7 +103418,7 @@ cdf_ptr10740(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -99541,17 +103427,17 @@ cdf_ptr10740(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -99559,10 +103445,10 @@ cdf_ptr10740(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 				arr->shape[0] = 3;
 				CHK(alloc_array(arr), cleanup,
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -99570,7 +103456,7 @@ cdf_ptr10740(struct cell_array **z,
 				dat[2] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -99592,15 +103478,15 @@ cdf_ptr10740(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -99610,7 +103496,7 @@ cdf_ptr10740(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -99633,12 +103519,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10741(struct cell_array **z,
+cdf_ptr11129(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -99671,11 +103557,11 @@ cdf_ptr10741(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 2, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -99692,22 +103578,22 @@ cdf_ptr10741(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -99718,7 +103604,7 @@ cdf_ptr10741(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -99731,7 +103617,7 @@ cdf_ptr10741(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -99740,22 +103626,22 @@ cdf_ptr10741(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -99763,10 +103649,10 @@ cdf_ptr10741(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 				arr->shape[0] = 4;
 				CHK(alloc_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -99775,7 +103661,7 @@ cdf_ptr10741(struct cell_array **z,
 				dat[3] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -99797,22 +103683,22 @@ cdf_ptr10741(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -99823,7 +103709,7 @@ cdf_ptr10741(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -99836,7 +103722,7 @@ cdf_ptr10741(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -99845,17 +103731,17 @@ cdf_ptr10741(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -99863,10 +103749,10 @@ cdf_ptr10741(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				arr->shape[0] = 3;
 				CHK(alloc_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -99874,7 +103760,7 @@ cdf_ptr10741(struct cell_array **z,
 				dat[2] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -99896,22 +103782,22 @@ cdf_ptr10741(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -99922,7 +103808,7 @@ cdf_ptr10741(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -99935,7 +103821,7 @@ cdf_ptr10741(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -99944,17 +103830,17 @@ cdf_ptr10741(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -99962,10 +103848,10 @@ cdf_ptr10741(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				arr->shape[0] = 3;
 				CHK(alloc_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -99973,7 +103859,7 @@ cdf_ptr10741(struct cell_array **z,
 				dat[2] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -99995,22 +103881,22 @@ cdf_ptr10741(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100021,7 +103907,7 @@ cdf_ptr10741(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -100034,7 +103920,7 @@ cdf_ptr10741(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -100043,17 +103929,17 @@ cdf_ptr10741(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -100061,10 +103947,10 @@ cdf_ptr10741(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 				arr->shape[0] = 3;
 				CHK(alloc_array(arr), cleanup,
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
@@ -100072,7 +103958,7 @@ cdf_ptr10741(struct cell_array **z,
 				dat[2] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 				*stkhd++ = arr;
 			}
@@ -100094,15 +103980,15 @@ cdf_ptr10741(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -100112,7 +103998,7 @@ cdf_ptr10741(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -100134,12 +104020,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10742(struct cell_array **z,
+cdf_ptr11130(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -100173,11 +104059,11 @@ cdf_ptr10742(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -100194,22 +104080,22 @@ cdf_ptr10742(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100220,7 +104106,7 @@ cdf_ptr10742(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -100233,7 +104119,7 @@ cdf_ptr10742(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -100242,12 +104128,12 @@ cdf_ptr10742(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -100255,28 +104141,28 @@ cdf_ptr10742(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -100287,7 +104173,7 @@ cdf_ptr10742(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -100314,22 +104200,22 @@ cdf_ptr10742(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100340,7 +104226,7 @@ cdf_ptr10742(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -100353,7 +104239,7 @@ cdf_ptr10742(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -100362,12 +104248,12 @@ cdf_ptr10742(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -100375,23 +104261,23 @@ cdf_ptr10742(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -100401,7 +104287,7 @@ cdf_ptr10742(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -100427,22 +104313,22 @@ cdf_ptr10742(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100453,7 +104339,7 @@ cdf_ptr10742(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -100466,7 +104352,7 @@ cdf_ptr10742(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -100475,12 +104361,12 @@ cdf_ptr10742(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -100488,23 +104374,23 @@ cdf_ptr10742(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -100514,7 +104400,7 @@ cdf_ptr10742(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -100540,22 +104426,22 @@ cdf_ptr10742(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100566,7 +104452,7 @@ cdf_ptr10742(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -100579,7 +104465,7 @@ cdf_ptr10742(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -100588,17 +104474,17 @@ cdf_ptr10742(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -100609,7 +104495,7 @@ cdf_ptr10742(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -100636,15 +104522,15 @@ cdf_ptr10742(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -100654,7 +104540,7 @@ cdf_ptr10742(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -100677,12 +104563,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10743(struct cell_array **z,
+cdf_ptr11131(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -100715,11 +104601,11 @@ cdf_ptr10743(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -100736,22 +104622,22 @@ cdf_ptr10743(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100762,7 +104648,7 @@ cdf_ptr10743(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -100775,7 +104661,7 @@ cdf_ptr10743(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -100784,12 +104670,12 @@ cdf_ptr10743(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -100797,28 +104683,28 @@ cdf_ptr10743(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -100829,7 +104715,7 @@ cdf_ptr10743(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -100856,22 +104742,22 @@ cdf_ptr10743(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100882,7 +104768,7 @@ cdf_ptr10743(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -100895,7 +104781,7 @@ cdf_ptr10743(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -100904,12 +104790,12 @@ cdf_ptr10743(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -100917,23 +104803,23 @@ cdf_ptr10743(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -100943,7 +104829,7 @@ cdf_ptr10743(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -100969,22 +104855,22 @@ cdf_ptr10743(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -100995,7 +104881,7 @@ cdf_ptr10743(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101008,7 +104894,7 @@ cdf_ptr10743(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -101017,12 +104903,12 @@ cdf_ptr10743(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -101030,23 +104916,23 @@ cdf_ptr10743(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				*stkhd++ = arr;
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -101056,7 +104942,7 @@ cdf_ptr10743(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -101082,22 +104968,22 @@ cdf_ptr10743(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101108,7 +104994,7 @@ cdf_ptr10743(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101121,7 +105007,7 @@ cdf_ptr10743(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -101130,17 +105016,17 @@ cdf_ptr10743(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ⍺⍺ ╠⍵⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:⍵ ╠⍺⍺╣ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[427] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
+				CHK(6, cleanup, L"[439] 	type≡0 3 2:╠⍵╣ ⍺⍺ ⍵⍵");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
@@ -101151,7 +105037,7 @@ cdf_ptr10743(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+				    L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -101178,15 +105064,15 @@ cdf_ptr10743(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -101196,7 +105082,7 @@ cdf_ptr10743(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -101218,12 +105104,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10744(struct cell_array **z,
+cdf_ptr11132(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -101257,11 +105143,11 @@ cdf_ptr10744(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -101278,22 +105164,22 @@ cdf_ptr10744(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101304,7 +105190,7 @@ cdf_ptr10744(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101317,7 +105203,7 @@ cdf_ptr10744(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -101326,22 +105212,22 @@ cdf_ptr10744(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -101349,17 +105235,17 @@ cdf_ptr10744(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
 			
 				*stkhd++ = arr;
 			}
@@ -101371,7 +105257,7 @@ cdf_ptr10744(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -101398,22 +105284,22 @@ cdf_ptr10744(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101424,7 +105310,7 @@ cdf_ptr10744(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101437,7 +105323,7 @@ cdf_ptr10744(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -101446,17 +105332,17 @@ cdf_ptr10744(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -101467,7 +105353,7 @@ cdf_ptr10744(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -101494,22 +105380,22 @@ cdf_ptr10744(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101520,7 +105406,7 @@ cdf_ptr10744(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101533,7 +105419,7 @@ cdf_ptr10744(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -101542,17 +105428,17 @@ cdf_ptr10744(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -101563,7 +105449,7 @@ cdf_ptr10744(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -101590,22 +105476,22 @@ cdf_ptr10744(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101616,7 +105502,7 @@ cdf_ptr10744(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101629,7 +105515,7 @@ cdf_ptr10744(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -101637,7 +105523,7 @@ cdf_ptr10744(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
-			CHK(2, cleanup, L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+			CHK(2, cleanup, L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 			*z = *--stkhd;
 			goto cleanup;
@@ -101656,15 +105542,15 @@ cdf_ptr10744(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -101674,7 +105560,7 @@ cdf_ptr10744(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -101697,12 +105583,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10745(struct cell_array **z,
+cdf_ptr11133(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -101735,11 +105621,11 @@ cdf_ptr10745(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -101756,22 +105642,22 @@ cdf_ptr10745(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101782,7 +105668,7 @@ cdf_ptr10745(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101795,7 +105681,7 @@ cdf_ptr10745(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -101804,22 +105690,22 @@ cdf_ptr10745(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -101827,17 +105713,17 @@ cdf_ptr10745(struct cell_array **z,
 				struct cell_array *arr, **dat;
 			
 				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
 				arr->shape[0] = 2;
 				CHK(alloc_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
 				dat = arr->values;
 			
 				dat[0] = *--stkhd;
 				dat[1] = *--stkhd;
 			
 				CHK(squeeze_array(arr), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺╣ ⍵⍵ ⍵");
 			
 				*stkhd++ = arr;
 			}
@@ -101849,7 +105735,7 @@ cdf_ptr10745(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -101876,22 +105762,22 @@ cdf_ptr10745(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101902,7 +105788,7 @@ cdf_ptr10745(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -101915,7 +105801,7 @@ cdf_ptr10745(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -101924,17 +105810,17 @@ cdf_ptr10745(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -101945,7 +105831,7 @@ cdf_ptr10745(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -101972,22 +105858,22 @@ cdf_ptr10745(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -101998,7 +105884,7 @@ cdf_ptr10745(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102011,7 +105897,7 @@ cdf_ptr10745(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -102020,17 +105906,17 @@ cdf_ptr10745(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -102041,7 +105927,7 @@ cdf_ptr10745(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -102068,22 +105954,22 @@ cdf_ptr10745(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102094,7 +105980,7 @@ cdf_ptr10745(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102107,7 +105993,7 @@ cdf_ptr10745(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -102115,7 +106001,7 @@ cdf_ptr10745(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
-			CHK(2, cleanup, L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+			CHK(2, cleanup, L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 			*z = *--stkhd;
 			goto cleanup;
@@ -102134,15 +106020,15 @@ cdf_ptr10745(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -102152,7 +106038,7 @@ cdf_ptr10745(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -102174,12 +106060,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10746(struct cell_array **z,
+cdf_ptr11134(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -102213,11 +106099,11 @@ cdf_ptr10746(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -102234,22 +106120,22 @@ cdf_ptr10746(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102260,7 +106146,7 @@ cdf_ptr10746(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102273,7 +106159,7 @@ cdf_ptr10746(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -102282,12 +106168,12 @@ cdf_ptr10746(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -102297,7 +106183,7 @@ cdf_ptr10746(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102307,12 +106193,12 @@ cdf_ptr10746(struct cell_array **z,
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -102323,7 +106209,7 @@ cdf_ptr10746(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -102350,22 +106236,22 @@ cdf_ptr10746(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102376,7 +106262,7 @@ cdf_ptr10746(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102389,7 +106275,7 @@ cdf_ptr10746(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -102398,12 +106284,12 @@ cdf_ptr10746(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -102413,7 +106299,7 @@ cdf_ptr10746(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102423,7 +106309,7 @@ cdf_ptr10746(struct cell_array **z,
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -102433,7 +106319,7 @@ cdf_ptr10746(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102459,22 +106345,22 @@ cdf_ptr10746(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102485,7 +106371,7 @@ cdf_ptr10746(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102498,7 +106384,7 @@ cdf_ptr10746(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -102507,12 +106393,12 @@ cdf_ptr10746(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -102522,7 +106408,7 @@ cdf_ptr10746(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102532,7 +106418,7 @@ cdf_ptr10746(struct cell_array **z,
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -102542,7 +106428,7 @@ cdf_ptr10746(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102568,22 +106454,22 @@ cdf_ptr10746(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102594,7 +106480,7 @@ cdf_ptr10746(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102607,7 +106493,7 @@ cdf_ptr10746(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -102615,7 +106501,7 @@ cdf_ptr10746(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
-			CHK(2, cleanup, L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+			CHK(2, cleanup, L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 			*z = *--stkhd;
 			goto cleanup;
@@ -102634,15 +106520,15 @@ cdf_ptr10746(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -102652,7 +106538,7 @@ cdf_ptr10746(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -102675,12 +106561,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10747(struct cell_array **z,
+cdf_ptr11135(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -102713,11 +106599,11 @@ cdf_ptr10747(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[423] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
+		CHK(fill_array(arr, dat), cleanup, L"[435] 	type←╠⎕NC'⍺' '⍺⍺' '⍵⍵'╣");
 	
 		*stkhd++ = arr;
 	}
@@ -102734,22 +106620,22 @@ cdf_ptr10747(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {2, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[424] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	type╠≡╣2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[424] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[436] 	╠type╣≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102760,7 +106646,7 @@ cdf_ptr10747(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[424] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		    L"[436] 	╠type≡2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102773,7 +106659,7 @@ cdf_ptr10747(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[424] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[436] 	type≡╠2 3 3╣:⍺ ⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -102782,12 +106668,12 @@ cdf_ptr10747(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -102797,7 +106683,7 @@ cdf_ptr10747(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:⍺ ⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102807,12 +106693,12 @@ cdf_ptr10747(struct cell_array **z,
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:⍺ ╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
 			if (!cdf_alpha)
-				CHK(6, cleanup, L"[424] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[436] 	type≡2 3 3:╠⍺╣ ⍺⍺ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alpha);
 			
@@ -102823,7 +106709,7 @@ cdf_ptr10747(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[424] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
+				    L"[436] 	type≡2 3 3:╠⍺ ⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_array(x);
 				release_func(fn);
@@ -102850,22 +106736,22 @@ cdf_ptr10747(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[425] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	type╠≡╣0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[425] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[437] 	╠type╣≡0 3 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102876,7 +106762,7 @@ cdf_ptr10747(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[425] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[437] 	╠type≡0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102889,7 +106775,7 @@ cdf_ptr10747(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[425] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[437] 	type≡╠0 3 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -102898,12 +106784,12 @@ cdf_ptr10747(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -102913,7 +106799,7 @@ cdf_ptr10747(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102923,7 +106809,7 @@ cdf_ptr10747(struct cell_array **z,
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[425] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[437] 	type≡0 3 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -102933,7 +106819,7 @@ cdf_ptr10747(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[425] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[437] 	type≡0 3 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -102959,22 +106845,22 @@ cdf_ptr10747(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 2, 3};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[426] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	type╠≡╣0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[426] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
+		CHK(6, cleanup, L"[438] 	╠type╣≡0 2 3:⍺⍺ ⍵⍵ ⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -102985,7 +106871,7 @@ cdf_ptr10747(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[426] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		    L"[438] 	╠type≡0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -102998,7 +106884,7 @@ cdf_ptr10747(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[426] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
+		TRC(guard_check(x), L"[438] 	type≡╠0 2 3╣:⍺⍺ ⍵⍵ ⍵");
 	
 		release_array(x);
 	
@@ -103007,12 +106893,12 @@ cdf_ptr10747(struct cell_array **z,
 	
 		if (!err) {
 			if (!cdf_omega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ⍵⍵ ╠⍵╣");
 			
 			*stkhd++ = retain_cell(cdf_omega);
 			
 			if (!cdf_omegaomega)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵╣ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_omegaomega);
 			
@@ -103022,7 +106908,7 @@ cdf_ptr10747(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:⍺⍺ ╠⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -103032,7 +106918,7 @@ cdf_ptr10747(struct cell_array **z,
 			}
 			
 			if (!cdf_alphaalpha)
-				CHK(6, cleanup, L"[426] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
+				CHK(6, cleanup, L"[438] 	type≡0 2 3:╠⍺⍺╣ ⍵⍵ ⍵");
 			
 			*stkhd++ = retain_cell(cdf_alphaalpha);
 			
@@ -103042,7 +106928,7 @@ cdf_ptr10747(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[426] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
+				    L"[438] 	type≡0 2 3:╠⍺⍺ ⍵⍵ ⍵╣");
 			
 				release_func(fn);
 				release_array(y);
@@ -103068,22 +106954,22 @@ cdf_ptr10747(struct cell_array **z,
 		unsigned int rnk = 1;
 		int16_t dat[] = {0, 3, 2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		arr->shape[0] = 3;
 	
-		CHK(fill_array(arr, dat), cleanup, L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_eqv)
-		CHK(6, cleanup, L"[427] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	type╠≡╣0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_eqv);
 	
 	if (!loc->cdf_type)
-		CHK(6, cleanup, L"[427] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
+		CHK(6, cleanup, L"[439] 	╠type╣≡0 3 2:⍵ ⍺⍺ ⍵⍵");
 	
 	*stkhd++ = retain_cell(loc->cdf_type);
 	
@@ -103094,7 +106980,7 @@ cdf_ptr10747(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[427] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		    L"[439] 	╠type≡0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 		release_func(fn);
@@ -103107,7 +106993,7 @@ cdf_ptr10747(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[427] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
+		TRC(guard_check(x), L"[439] 	type≡╠0 3 2╣:⍵ ⍺⍺ ⍵⍵");
 	
 		release_array(x);
 	
@@ -103115,7 +107001,7 @@ cdf_ptr10747(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
-			CHK(2, cleanup, L"[427] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
+			CHK(2, cleanup, L"[439] 	type≡0 3 2:╠⍵ ⍺⍺ ⍵⍵╣");
 			
 			*z = *--stkhd;
 			goto cleanup;
@@ -103134,15 +107020,15 @@ cdf_ptr10747(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[428] 	⎕SIGNAL ╠2╣");
+		CHK(fill_array(arr, dat), cleanup, L"[440] 	⎕SIGNAL ╠2╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[428] 	╠⎕SIGNAL╣ 2");
+		CHK(6, cleanup, L"[440] 	╠⎕SIGNAL╣ 2");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -103152,7 +107038,7 @@ cdf_ptr10747(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[428] 	╠⎕SIGNAL 2╣");
+		    L"[440] 	╠⎕SIGNAL 2╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -103174,12 +107060,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[422] jot←╠{╣");
+	    L"[434] jot←╠{╣");
 	return err;
 }
 
 int
-cdf_ptr10748(struct cell_array **z,
+cdf_ptr11136(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -103205,7 +107091,7 @@ cdf_ptr10748(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[432] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
+		CHK(6, cleanup, L"[444] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -103221,15 +107107,15 @@ cdf_ptr10748(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -103239,7 +107125,7 @@ cdf_ptr10748(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
+		    L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -103262,12 +107148,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[432] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
+	    L"[444] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10749(struct cell_array **z,
+cdf_ptr11137(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -103292,7 +107178,7 @@ cdf_ptr10749(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[432] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
+		CHK(6, cleanup, L"[444] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -103308,15 +107194,15 @@ cdf_ptr10749(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -103326,7 +107212,7 @@ cdf_ptr10749(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
+		    L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -103348,12 +107234,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[432] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
+	    L"[444] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10750(struct cell_array **z,
+cdf_ptr11138(struct cell_array **z,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
 {
@@ -103379,7 +107265,7 @@ cdf_ptr10750(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[432] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
+		CHK(6, cleanup, L"[444] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -103395,15 +107281,15 @@ cdf_ptr10750(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -103413,7 +107299,7 @@ cdf_ptr10750(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
+		    L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -103436,12 +107322,12 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[432] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
+	    L"[444] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
 	return err;
 }
 
 int
-cdf_ptr10751(struct cell_array **z,
+cdf_ptr11139(struct cell_array **z,
     struct cell_array *cdf_alpha,
     struct cell_array *cdf_omega,
     struct cell_func *cdf_self)
@@ -103466,7 +107352,7 @@ cdf_ptr10751(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!cdf_alphaalpha)
-		CHK(6, cleanup, L"[432] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
+		CHK(6, cleanup, L"[444] key←{fn←╠⍺⍺╣ ⋄ ⎕SIGNAL 16}");
 	
 	*stkhd++ = retain_cell(cdf_alphaalpha);
 	
@@ -103482,15 +107368,15 @@ cdf_ptr10751(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[432] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[444] key←{fn←⍺⍺ ⋄ ⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.cdf_q_signal)
-		CHK(6, cleanup, L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.cdf_q_signal);
 	
@@ -103500,7 +107386,7 @@ cdf_ptr10751(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[432] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
+		    L"[444] key←{fn←⍺⍺ ⋄ ╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -103522,7 +107408,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[432] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
+	    L"[444] key←╠{fn←⍺⍺ ⋄ ⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -106464,6 +110350,62 @@ EXPORT int
 cdf_int_dwa(void *z, void *l, void *r)
 {
 	return call_dwa(cdf_int, z, l, r, L"cdf_int");
+}
+
+EXPORT int
+cdf_deal(struct cell_array **z, struct cell_array *l, struct cell_array *r)
+{
+	struct cell_func *self;
+	struct cdf_prim_loc *loc;
+	int err;
+
+	CHKFN(cdf_prim_init(), fail);
+
+	loc = &cdf_prim;
+	self = loc->cdf_deal;
+
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
+}
+
+EXPORT int
+cdf_deal_dwa(void *z, void *l, void *r)
+{
+	return call_dwa(cdf_deal, z, l, r, L"cdf_deal");
+}
+
+EXPORT int
+cdf_roll(struct cell_array **z, struct cell_array *l, struct cell_array *r)
+{
+	struct cell_func *self;
+	struct cdf_prim_loc *loc;
+	int err;
+
+	CHKFN(cdf_prim_init(), fail);
+
+	loc = &cdf_prim;
+	self = loc->cdf_roll;
+
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
+}
+
+EXPORT int
+cdf_roll_dwa(void *z, void *l, void *r)
+{
+	return call_dwa(cdf_roll, z, l, r, L"cdf_roll");
 }
 
 EXPORT int

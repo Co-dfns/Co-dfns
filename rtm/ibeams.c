@@ -1955,7 +1955,7 @@ name##_func(struct cell_array **z, struct cell_array *r,		\
 	return monadic_scalar_apply(z, r, name##_values);		\
 }									\
 									\
-DECL_FUNC(name##_vec_ibeam, name##_func, error_dya_syntax)			\
+DECL_FUNC(name##_vec_ibeam, name##_func, error_dya_syntax)		\
 
 DEF_TRIG(arctanh, af_atanh, atanh);
 DEF_TRIG(tanh, af_tanh, tanh);
@@ -1970,3 +1970,31 @@ DEF_TRIG(cos, af_cos, cos);
 DEF_TRIG(arcsin, af_asin, asin);
 DEF_TRIG(sin, af_sin, sin);
 
+int
+roll_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *arr;
+	af_random_engine engine;
+	dim_t count;
+	int err;
+	
+	CHKFN(mk_array(&arr, ARR_DBL, STG_DEVICE, r->rank), fail);
+	
+	for (unsigned int i = 0; i < r->rank; i++)
+		arr->shape[i] = r->shape[i];
+	
+	count = array_values_count(arr);
+	
+	CHKAF(af_get_default_random_engine(&engine), fail);
+	CHKAF(af_random_uniform(&arr->values, 1, &count, f64, engine), fail);
+
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(roll_ibeam, roll_func, error_dya_syntax)

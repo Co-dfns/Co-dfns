@@ -369,7 +369,19 @@ unq←{⎕SIGNAL 16}
 int←{⎕SIGNAL 16}
 
 ⍝ ?: Roll | Deal
-rol←{⎕SIGNAL 16}
+deal←{
+	(0≢≢⍴squeeze ⍺)∨(0≢≢⍴squeeze ⍵):⎕SIGNAL 5
+	~⍺ both_integer ⍵:⎕SIGNAL 11
+	(⍺>⍵)∨(⍺<0)∨⍵<0:⎕SIGNAL 11 ⋄ 0≡⍺:⍬
+	d←⍳⍵ ⋄ s{⊃d[⍺ ⍵]←d[⍵ ⍺]}¨s+?⍵-s←⍳⍺
+}
+roll←{
+	~is_integer squeeze ⍵:⎕SIGNAL 11
+	0≡≢,⍵:(⍴⍵)⍴⍬
+	any ⍵<0:⎕SIGNAL 11
+	(rnd×⍵=0)+⌊⍵×rnd←(⍴⍵)⍴'roll_ibeam'⌶ ⍵
+}
+rol←roll ambiv deal
 
 ⍝ ⌹: Matrix Division
 mdv←{⎕SIGNAL 16}
