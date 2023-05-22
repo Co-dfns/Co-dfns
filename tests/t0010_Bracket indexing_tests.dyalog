@@ -43,6 +43,7 @@
  ∆28_TEST←{#.UT.expect←⍳5 ⋄ cd.R11⍬}
  ∆29_TEST←{#.UT.expect←1 ⋄ 4::1 ⋄ 0⊣cd.R12⍬}
  ∆30_TEST←'R13'MK∆T1 (⍬)
+ ∆31_TEST←'Run'MK∆T2 (⍳10)(⍬)
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

@@ -27,6 +27,8 @@
  ∆18_TEST←{#.UT.expect←dy.f18⍬ ⋄ cd.f18⍬}
  ∆19_TEST←{#.UT.expect←dy.f19⍬ ⋄ cd.f19⍬}
  ∆20_TEST←{#.UT.expect←dy.f20⍬ ⋄ cd.f20⍬}
+ ∆21_TEST←{#.UT.expect←dy.f21⍬ ⋄ cd.f21⍬}
+ ∆22_TEST←{#.UT.expect←dy.f22⍬ ⋄ cd.f22⍬}
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

@@ -323,6 +323,7 @@ set_idx_val(struct cell_array **z, struct cell_array *idx,
 {
 	struct cell_array *tgt, *tmp, *val;
 	enum array_type mtype;
+	size_t count;
 	int err;
 	
 	tgt = *z;
@@ -337,6 +338,11 @@ set_idx_val(struct cell_array **z, struct cell_array *idx,
 		CHKFN(cdf_rho(z, tmp, val), done);
 		
 		goto done;
+	}
+	
+	if (!(count = array_count(idx))) {
+		retain_cell(tgt);
+		return 0;
 	}
 	    
 	if (tgt->refc > 1) {
@@ -382,9 +388,8 @@ dev_fail:
 		break;
 	}
 	case STG_HOST:{
-		size_t count, rc;
+		size_t rc;
 		
-		count = array_count(idx);
 		rc = array_count(r);
 		
 		if (*tgt->vrefc > 1) {
