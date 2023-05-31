@@ -19,7 +19,8 @@ GC←{
 
 	⍝ Variable generation utilities
 	var_ckinds←{
-		('' 'array' 'func' 'moper' 'doper' 'env' 'void' 'array')[k[⍵]]
+		types←'' 'array' 'func' 'moper' 'doper' 'env' 'void' 'array'
+		types[1@(⍸t[⍵]=E)⊢k[⍵]]
 	}
 
 	var_names←{
