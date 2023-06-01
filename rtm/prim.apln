@@ -80,9 +80,13 @@ mst←'mst_ibeam'⌶⌶
 
 ⍝ ⌷: Materialize | Squad indexing
 sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5
-	is_span⊢idx←⍵ flatten_idx i:⍵
-	0≡≢,idx:(⍴idx)⍴⍵
-	(⍴idx)⍴idx('index_ibeam'⌶)⍵
+	axis⍠←0
+	axis≡0:⍺{
+		is_span⊢idx←⍵ flatten_idx i:⍵
+		0≡≢,idx:(⍴idx)⍴⍵
+		(⍴idx)⍴idx('index_ibeam'⌶)⍵
+	}⍵
+	i←⍳¨⍴⍵ ⋄ i[axis]←⍺ ⋄ i⌷⍵
 }
 
 ⍝ X[]: Bracket Indexing
@@ -329,9 +333,12 @@ take←{(⊂⍳⍺)⌷⍵}
 tke←mix ambiv take
 
 ⍝ ↓: Split | Drop
-split←{⎕SIGNAL 16}
-drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}
-drp←split ambiv drop
+drp←{⍺←⊢
+	1≡⍺ 1:⎕SIGNAL 16
+	axis⍠←0
+	axis≡0:(⊂⍺+⍳(≢⍵)-⍺)⌷⍵
+	(⊂⍺+⍳(≢⍵)-⍺)⌷[axis]⍵	
+}
 
 ⍝ ⊖: Rerverse First | Rotate First
 rtf←{⎕SIGNAL 16}
