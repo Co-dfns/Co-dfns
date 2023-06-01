@@ -447,6 +447,9 @@ jot←{
 	⎕SIGNAL 2
 }
 
+⍝ ⍤: Rank operator
+rnk←{fn←⍺⍺ ⋄ rk←⍵⍵ ⋄ ⎕SIGNAL 16}
+
 ⍝ ⌸: Key operator
 key←{fn←⍺⍺ ⋄ ⎕SIGNAL 16}
 
