@@ -436,6 +436,14 @@ rep←{⎕SIGNAL 16}
 ⍝ ⍀: Scan First
 scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}
 
+⍝ \: Scan
+scn←{
+	axis←0⌈¯1+≢⍴⍵ ⋄ fn←⍺⍺
+	1>≢⍴⍵:squeeze (⍴⍵)⍴{fn⌿x[⍳⍵]}¨1+⍳≢⍵⊣x←,⍵
+	c←×⌿axis↑⍴⍵ ⋄ la←axis⌷⍴⍵ ⋄ x←c la⍴⍵
+	squeeze (⍴⍵)⍴z⊣{z[;⍵]←fn/x[;⍳1+⍵]}¨⍳la⊣z←c la⍴0
+}
+
 ⍝ ⍀⍀: Expand First
 xpf←{⎕SIGNAL 16}
 
