@@ -413,12 +413,18 @@ reduce←{axis←⍵⍵
 	0≡c:zs⍴⍺⍺ identity ⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨
 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
 }
-nwreduce←{op←⍺⍺¨
+nwreduce←{op←⍺⍺¨ ⋄ axis←⍵⍵
 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵
 }
-rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5
-	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵
+red_check←{⍺←0 ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5 ⋄ 0}
+rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ axis←0
+	1≡⍺ 1:⍺⍺ reduce axis⊢⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
+}
+
+⍝ /: Reduce | N-wise Reduce
+red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ axis←0⌈¯1+≢⍴⍵
+	1≡⍺ 1:⍺⍺ reduce axis⊢⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
 }
 
 ⍝ ⌿⌿: Replicate First
