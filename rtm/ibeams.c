@@ -308,6 +308,7 @@ identity_func(struct cell_array **z,
 	
 	ID_CASE(cdf_lor, 0)
 	ID_CASE(cdf_mul, 1)
+	ID_CASE(cdf_add, 0)
 	
 	CHK(16, done, L"Unknown primitive identity");
 	
