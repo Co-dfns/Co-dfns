@@ -132,6 +132,23 @@ struct cell_array span_array_value = {
 };
 struct cell_array *cdf_span_array = &span_array_value;
 
+int
+eq_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	void *aa, *ww;
+	
+	aa = self->fv[1];
+	ww = self->fv[2];
+	
+	return mk_array_int8(z, aa == ww);
+}
+
+DECL_DOPER(eq_ibeam, 
+    eq_func, error_dya_syntax, eq_func, error_dya_syntax,
+    eq_func, error_dya_syntax, eq_func, error_dya_syntax
+)
+
 #define DEFN_PRED_IBEAM(name, expr)				\
 int								\
 name##_func(struct cell_array **z, struct cell_array *r,	\
