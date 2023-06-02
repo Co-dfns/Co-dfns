@@ -4,6 +4,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_q_signal;
 	struct cell_func *cdf_q_dr;
 	struct cell_array *cdf_spn;
+	struct cell_doper_box *cdf_eq;
 	struct cell_func_box *cdf_squeeze;
 	struct cell_func_box *cdf_is_simple;
 	struct cell_func_box *cdf_is_numeric;
@@ -98,8 +99,6 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_mix;
 	struct cell_func *cdf_take;
 	struct cell_func *cdf_tke;
-	struct cell_func *cdf_split;
-	struct cell_func *cdf_drop;
 	struct cell_func *cdf_drp;
 	struct cell_func *cdf_rtf;
 	struct cell_func *cdf_reverse_last;
@@ -120,18 +119,23 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_mdv;
 	struct cell_moper *cdf_com;
 	struct cell_moper *cdf_map;
-	struct cell_moper_box *cdf_reduce;
-	struct cell_moper_box *cdf_nwreduce;
+	struct cell_moper_box *cdf_identity;
+	struct cell_doper_box *cdf_reduce;
+	struct cell_doper_box *cdf_nwreduce;
+	struct cell_func_box *cdf_red_check;
 	struct cell_moper *cdf_rdf;
+	struct cell_moper *cdf_red;
 	struct cell_func *cdf_rpf;
 	struct cell_func *cdf_rep;
 	struct cell_moper *cdf_scf;
+	struct cell_moper *cdf_scn;
 	struct cell_func *cdf_xpf;
 	struct cell_func *cdf_xpd;
 	struct cell_doper *cdf_dot;
 	struct cell_moper *cdf_oup;
 	struct cell_doper *cdf_pow;
 	struct cell_doper *cdf_jot;
+	struct cell_doper *cdf_rnk;
 	struct cell_moper *cdf_key;
 } cdf_prim;
 
