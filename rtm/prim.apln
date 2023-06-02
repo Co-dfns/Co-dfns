@@ -362,7 +362,15 @@ gdd←{⎕SIGNAL 16}
 enc←{⎕SIGNAL 16}
 
 ⍝ ⊥: Decode
-dec←{⎕SIGNAL 16}
+dec←{
+	(0≢≢⍴⍺)∧(0≢≢⍴⍵)∧(1≢lc)∧(1≢rc)∧(rc←≢⍵)≢lc←1⌈⊃⌽⍴⍺:⎕SIGNAL 5
+	s←(¯1↓⍴⍺),1↓⍴⍵
+	(0≡≢,⍺)∨0≡≢,⍵:s⍴0
+	~(squeeze ⍺)both_numeric squeeze ⍵:⎕SIGNAL 11
+	lv←⍺{1≡lc:rc/⍺ ⋄ ⍺}⍵
+	rv←⍺{1≡rc:lc⌿⍵ ⋄ ⍵}⍵
+	rv+.×⍨⌽×\1,⌽1↓[¯1+≢⍴lv]lv
+}
 
 ⍝ ∊: Membership
 mem←{⎕SIGNAL 16}
