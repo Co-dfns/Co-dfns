@@ -306,36 +306,6 @@ done:
 DECL_FUNC(any_ibeam, any_monadic, error_dya_nonce)
 
 int
-identity_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	struct cell_func *oper;
-	int err;
-	
-	err = 0;
-	
-	oper = self->fv[1];
-	
-	#define ID_CASE(prim, id)			\
-	if (oper == cdf_prim.prim) {			\
-		CHKFN(mk_array_int8(z, id), done);	\
-							\
-		goto done;				\
-	}						\
-	
-	ID_CASE(cdf_lor, 0)
-	ID_CASE(cdf_mul, 1)
-	ID_CASE(cdf_add, 0)
-	
-	CHK(16, done, L"Unknown primitive identity");
-	
-done:
-	return err;
-}
-
-DECL_MOPER(identity_ibeam, error_mon_syntax, error_dya_syntax, identity_func, error_dya_syntax)
-
-int
 set_idx_val(struct cell_array **z, struct cell_array *idx,
     struct cell_array *r)
 {
