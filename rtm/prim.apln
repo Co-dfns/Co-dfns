@@ -8,6 +8,7 @@ q_dr←'q_dr_ibeam'⌶
 spn←'span_array'⌶⌶⌶⌶
 
 ⍝ Utilities
+eq←'eq_ibeam'⌶⌶⌶
 squeeze←'squeeze_ibeam'⌶
 is_simple←'is_simple_ibeam'⌶
 is_numeric←'is_numeric_ibeam'⌶
@@ -400,9 +401,16 @@ com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
-reduce←{
+identity←{
+	⍺⍺ eq + ⍬:0
+	⍺⍺ eq × ⍬:1
+	⍺⍺ eq ∨ ⍬:0
+	⍺⍺ eq ∧ ⍬:1
+	⎕SIGNAL 16
+}
+reduce←{axis←⍵⍵
 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s
-	0≡c:zs⍴⍺⍺('identity_ibeam'⌶⌶)⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨
+	0≡c:zs⍴⍺⍺ identity ⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨
 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
 }
 nwreduce←{op←⍺⍺¨
