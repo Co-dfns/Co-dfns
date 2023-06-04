@@ -131,8 +131,8 @@ EXPORT struct cdf_prim_loc {
 	struct cell_moper *cdf_scn;
 	struct cell_func *cdf_xpf;
 	struct cell_func *cdf_xpd;
-	struct cell_doper *cdf_dot;
 	struct cell_moper *cdf_oup;
+	struct cell_doper *cdf_dot;
 	struct cell_doper *cdf_pow;
 	struct cell_doper *cdf_jot;
 	struct cell_doper *cdf_rnk;
