@@ -343,8 +343,7 @@ tke←mix ambiv take
 drp←{⍺←⊢
 	1≡⍺ 1:⎕SIGNAL 16
 	axis⍠←0
-	axis≡0:(⊂⍺+⍳(≢⍵)-⍺)⌷⍵
-	(⊂⍺+⍳(≢⍵)-⍺)⌷[axis]⍵	
+	(⊂(0⌈⍺)+⍳0⌈(axis⌷⍴⍵)-|⍺)⌷[axis]⍵
 }
 
 ⍝ ⊖: Rerverse First | Rotate First
