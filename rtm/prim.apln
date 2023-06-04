@@ -102,11 +102,17 @@ lft←{⍵} ambiv {⍺}
 ⍝ ,: Ravel / Catenate
 cat←{
 	israv←noax←0 ⋄ ⍺←israv←1 ⋄ lr←≢⍴⍺ ⋄ rr←≢⍴⍵ ⋄ axis⍠←noax←1
-	israv:{
+	israv:⍺{
 		noax:'ravel_ibeam'⌶ ⍵
-		1≢≢,axis:⎕SIGNAL 16
-		axis=⌈axis:⍵
-		((pr↑s),1,(pr←⌈axis)↓s←⍴⍵)⍴⍵
+		1≡≢,axis:⍺{
+			is_integer squeeze axis:⍵
+			((pr↑s),1,(pr←⌈axis)↓s←⍴⍵)⍴⍵
+		}⍵
+		0≡≢,axis:((⍴⍵),1)⍴⍵
+		~is_integer squeeze axis:⎕SIGNAL 11
+		1≢≢⍴axis:⎕SIGNAL 4
+		axis≢(⍳c←≢axis)+b←⊃axis:⎕SIGNAL 11
+		((b↑s),(×⌿c↑b↓s),(b+c)↓s←⍴⍵)⍴⍵
 	}⍵
 	rk←lr⌈rr ⋄ axis⍠←¯1+rk
 	(0≡lr)∧(0≡rr):(,⍺),,⍵
