@@ -1137,20 +1137,12 @@ fail:
 }
 
 int
-max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+add_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = l->type > r->type ? l->type : r->type;
 	
-	return 0;
-}
-
-int
-int16_max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
-{
-	max_type(type, l, r);
-	
-	if (*type == ARR_BOOL)
-		*type = ARR_SINT;
+	if (*type < ARR_DBL)
+		(*type)++;
 	
 	return 0;
 }
@@ -1171,7 +1163,18 @@ add_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define ADD_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define ADD_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-DEFN_DYADIC_SCALAR(add, ADD, int16_max_type)
+DEFN_DYADIC_SCALAR(add, ADD, add_type)
+
+int
+mul_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = l->type > r->type ? l->type : r->type;
+	
+	if (*type < ARR_DBL && r->type != ARR_BOOL && l->type != ARR_BOOL)
+		(*type)++;
+	
+	return 0;
+}
 
 struct apl_cmpx
 mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
@@ -1192,7 +1195,7 @@ mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define MUL_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define MUL_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-DEFN_DYADIC_SCALAR(mul, MUL, max_type)
+DEFN_DYADIC_SCALAR(mul, MUL, mul_type)
 
 int
 div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
@@ -1258,7 +1261,7 @@ sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define SUB_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define SUB_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-DEFN_DYADIC_SCALAR(sub, SUB, int16_max_type)
+DEFN_DYADIC_SCALAR(sub, SUB, add_type)
 
 int
 dbl_cmpx_type(enum array_type *type, 
@@ -1356,7 +1359,7 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	b.imag = cimag(tz);
 	
 	return div_cmpx(a, b);
-}				
+}
 
 #define log_real(x, y) (log(x) / log(y))
 
@@ -1366,6 +1369,14 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define LOG_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
 DEFN_DYADIC_SCALAR(log, LOG, dbl_cmpx_type)
+
+int
+max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = l->type > r->type ? l->type : r->type;
+	
+	return 0;
+}
 
 #define min_real(x, y) ((x) < (y) ? (x) : (y))
 #define min_af(z, l, r) af_minof(z, l, r, 0)
