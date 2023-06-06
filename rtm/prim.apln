@@ -475,7 +475,11 @@ dot←{
 }
 
 ⍝ ⍣: Power Operator
-pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}
+pow←{
+	⍺←⊢ ⋄ l←⍺ ⋄ f←⍺⍺ ⋄ g←⍵⍵
+	3=⎕NC'⍵⍵':{(z←l f ⍵)g ⍵:z ⋄ ∇z}⍵
+	g{0≡⍺:⍵ ⋄ (⍺-1)∇l f ⍵}⍵
+}
 
 ⍝ ∘: Compose Operator
 jot←{
