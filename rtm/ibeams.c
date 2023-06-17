@@ -366,6 +366,9 @@ set_idx_val(struct cell_array **z, struct cell_array *idx,
 		CHKAF(af_create_indexers(&idxs), done);
 		CHKAF(af_set_array_indexer(idxs, idx_d, 0), dev_fail);		
 		CHKAF(af_assign_gen(&out, tgt_d, 1, idxs, val_d), dev_fail);
+		
+		CHKAF(af_sync(-1), dev_fail);
+
 		CHKAF(af_release_array(tgt_d), dev_fail);
 		
 		tgt->values = out;
