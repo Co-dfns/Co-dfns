@@ -335,7 +335,11 @@ noteq←{
 neq←firstocc ambiv (noteq scalar)
 
 ⍝ ↑: Mix | Take
-mix←{⎕SIGNAL 16}
+mix←{
+	1≥≡squeeze ⍵:⍵
+	k←≢s←⊃{(k↑(⍴⍺),k⍴1)⌈k↑⍵,k⍴1⊣k←(≢⍴⍺)⌈≢⍵}⌿(,⍵),⊂⍬
+	((⍴⍵),s)⍴z⊣(⍳≢,⍵){z[⍺;]←,s↑(k↑(⍴⍵),k⍴1)⍴⍵}¨,⍵⊣z←((≢,⍵),×⌿s)⍴0
+}
 take←{(⊂⍳⍺)⌷⍵}
 tke←mix ambiv take
 
@@ -350,8 +354,8 @@ drp←{⍺←⊢
 rtf←{⎕SIGNAL 16}
 
 ⍝ ⌽: Reverse Last | Rotate Last
-reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
-rotate_last←{⎕SIGNAL 16}
+reverse_last←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
+rotate_last←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)|⍺+⍳≢⍵)⌷⍵}
 rot←reverse_last ambiv rotate_last
 
 ⍝ ⍉: Transpose
@@ -492,7 +496,18 @@ jot←{
 }
 
 ⍝ ⍤: Rank operator
-rnk←{fn←⍺⍺ ⋄ rk←⍵⍵ ⋄ ⎕SIGNAL 16}
+rnk←{fn←⍺⍺ ⋄ spec←⍵⍵ ⋄ ⍺←⊢
+	1<≡spec:⎕SIGNAL 11 ⋄ 1<≢⍴spec:⎕SIGNAL 4 ⋄ 3<≢spec:⎕SIGNAL 5
+	spec←3⍴(¯1×2≡≢spec)⌽spec ⋄ p←spec[0] ⋄ q←spec[1] ⋄ r←spec[2]
+	1≡⍺ 1:{p≥k←≢⍴⍵:fn ⍵ ⋄ k≤|p:↑fn¨⍵ ⋄ ↑(d↑⍴⍵)⍴{fn ⍵⌷z}¨⍳≢z←,[⍳d←k-k|p]⍵}⍵
+	dx←⍺{q≥k←≢⍴⍺:0 ⋄ k≤|q:k ⋄ k-k|q}⍵ ⋄ dy←⍺{r≥k←≢⍴⍵:0 ⋄ k≤|r:k ⋄ k-k|r}⍵
+	s←⍺{
+		dx∧dy∧dx≢dy:⎕SIGNAL 4 ⋄ dx∧dy∧(dx↑⍴⍺)≢dy↑⍴⍵:⎕SIGNAL 5
+		dx≢0:dx↑⍴⍺ ⋄ dy≢0:dy↑⍴⍵ ⋄ ⍬
+	}⍵
+	x←⍺{dx≡0:(1,⍴⍺)⍴⍺ ⋄ ,[⍳dx]⍺}⍵ ⋄ y←⍺{dy≡0:(1,⍴⍵)⍴⍵ ⋄ ,[⍳dy]⍵}⍵
+	↑s⍴((≢x)|⍳c){(⍺⌷x) fn ⍵⌷y}¨(≢y)|⍳c←(≢x)⌈≢y
+}
 
 ⍝ ⌸: Key operator
 key←{fn←⍺⍺ ⋄ ⎕SIGNAL 16}
