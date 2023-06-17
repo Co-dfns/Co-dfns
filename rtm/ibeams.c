@@ -314,10 +314,11 @@ set_idx_val(struct cell_array **z, struct cell_array *idx,
 	size_t count;
 	int err;
 	
+	err = 0;
 	tgt = *z;
 	tmp = NULL;
 	val = r;
-
+	
 	if (idx->type == ARR_SPAN) {
 		EXPORT int cdf_rho(struct cell_array **,
 		    struct cell_array *, struct cell_array *);
@@ -422,7 +423,8 @@ dev_fail:
 		CHK(99, done, L"Unknown storage type");
 	}
 	
-	*z = tgt;
+	if (!err)
+		*z = tgt;
 	
 done:
 	release_array(tmp);
