@@ -50,4 +50,6 @@
 ∆reducenwisefirst∆31_TEST←'reducenwisefirst∆R3' MK∆T2 (¯5)(⍳4)
 ∆reducenwisefirst∆32_TEST←'reducenwisefirst∆R3' MK∆T2 (¯2)(3 3⍴⍳4)
 
+∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
+
 :EndNamespace
