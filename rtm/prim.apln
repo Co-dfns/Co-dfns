@@ -437,9 +437,10 @@ reduce←{axis←⍵⍵
 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ axis←⍵⍵
-	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
-	0=⍺:((⍴⍵)+(≢⍴⍵)↑1)⍴⍺⍺ identity ⍬
-	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵
+	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc←1+≢⍵:⎕SIGNAL 5
+	0=⍺:((⍴⍵)+(≢⍴⍵)↑1)⍴⍺⍺ identity ⍬ ⋄ 1=|⍺:⍵
+	rc-←|⍺ ⋄ stp←{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}
+	⍺<0:z⊣(1+⍳¯1+|⍺)stp¨⊂⍵⊣z←rc↑⍵ ⋄ z⊣(⌽⍳⍺-1)stp¨⊂⍵⊣z←(⍺-1)↓⍵
 }
 red_check←{⍺←0 ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5 ⋄ 0}
 rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ axis←0
