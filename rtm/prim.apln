@@ -438,6 +438,7 @@ reduce←{axis←⍵⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ axis←⍵⍵
 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
+	0=⍺:((⍴⍵)+(≢⍴⍵)↑1)⍴⍺⍺ identity ⍬
 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵
 }
 red_check←{⍺←0 ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5 ⋄ 0}
