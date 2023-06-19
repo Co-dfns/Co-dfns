@@ -335,19 +335,22 @@ noteq←{
 neq←firstocc ambiv (noteq scalar)
 
 ⍝ ↑: Mix | Take
-mix←{
-	1≥≡squeeze ⍵:⍵
-	k←≢s←⊃{(k↑(⍴⍺),k⍴1)⌈k↑⍵,k⍴1⊣k←(≢⍴⍺)⌈≢⍵}⌿(,⍵),⊂⍬
-	((⍴⍵),s)⍴z⊣(⍳≢,⍵){z[⍺;]←,s↑(k↑(⍴⍵),k⍴1)⍴⍵}¨,⍵⊣z←((≢,⍵),×⌿s)⍴0
+tke←{⍺←⊢ ⋄ axis⍠←0
+	1≡⍺ 1:{
+		1≥≡squeeze ⍵:⍵
+		k←≢s←⊃{(k↑(⍴⍺),k⍴1)⌈k↑⍵,k⍴1⊣k←(≢⍴⍺)⌈≢⍵}⌿(,⍵),⊂⍬
+		((⍴⍵),s)⍴z⊣(⍳≢,⍵){z[⍺;]←,s↑(k↑(⍴⍵),k⍴1)⍴⍵}¨,⍵⊣z←((≢,⍵),×⌿s)⍴0
+	}⍵
+	1<≢⍴axis:⎕SIGNAL 11
+	(≢,⍺)≢≢,axis:⎕SIGNAL 5
+	~is_integer axis:⎕SIGNAL 11
+	any(axis<0)∨(axis≥≢⍴⍵)∧1≤≢⍴⍵:⎕SIGNAL 4
+	x←⍺ ⋄ y←{0≡≢⍴⍵:,⍵ ⋄ ⍵}⍵
+	(|x)<(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
+	s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s ⋄ z←s⍴⊃y
+	i←,z flatten_idx (wi←⍳¨w)+m×s-w←s⌊⍴y
+	s⍴z⊣z[i]←,(wi+m×(⍴y)-w)⌷y⊣z←,z
 }
-take←{
-	x←{0≡≢⍴⍵:,⍵ ⋄ ⍵}⍵ ⋄ (≢,⍺)>≢⍴x:⎕SIGNAL 4
-	⍺{1≡≢,⍺:(|⍺)≤≢x ⋄ 0}⍵:(⊂(⍳|⍺)+(⍺<0)×(≢x)-|⍺)⌷x
-	z←(s←(≢⍴x)↑(|⍺),⍴x)⍴⊃x ⋄ wi←⍳¨w←s⌊⍴x ⋄ m←(≢⍴x)↑(⍺<0),(≢⍴x)⍴0
-	i←,z flatten_idx wi+m×s-w
-	s⍴z⊣z[i]←,(wi+m×(⍴x)-w)⌷x⊣z←,z
-}
-tke←mix ambiv take
 
 ⍝ ↓: Split | Drop
 drp←{⍺←⊢
@@ -436,11 +439,12 @@ reduce←{axis←⍵⍵
 	0≡c:zs⍴⍺⍺ identity ⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨
 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
 }
-nwreduce←{op←⍺⍺¨ ⋄ axis←⍵⍵
-	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc←1+≢⍵:⎕SIGNAL 5
-	0=⍺:((⍴⍵)+(≢⍴⍵)↑1)⍴⍺⍺ identity ⍬ ⋄ 1=|⍺:⍵
-	rc-←|⍺ ⋄ stp←{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}
-	⍺<0:z⊣(1+⍳¯1+|⍺)stp¨⊂⍵⊣z←rc↑⍵ ⋄ z⊣(⌽⍳⍺-1)stp¨⊂⍵⊣z←(⍺-1)↓⍵
+nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
+	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc:⎕SIGNAL 5
+	0=⍺:(s⊣s[axis]+←1⊣s←⍴⍵)⍴⍺⍺ identity ⍬ ⋄ 1=|⍺:⍵
+	rc-←|⍺ ⋄ stp←{z⊢←((⊂⍺+⍳rc)⌷[axis]⍵)op z}
+	⍺<0:z⊣(1+⍳¯1+|⍺)stp¨⊂⍵⊣z←rc↑[axis]⍵
+	z⊣(⌽⍳⍺-1)stp¨⊂⍵⊣z←(⍺-1)↓[axis]⍵
 }
 red_check←{⍺←0 ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5 ⋄ 0}
 rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ axis←0

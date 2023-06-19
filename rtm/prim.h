@@ -96,8 +96,6 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *cdf_neq_vec;
 	struct cell_func *cdf_noteq;
 	struct cell_func *cdf_neq;
-	struct cell_func *cdf_mix;
-	struct cell_func *cdf_take;
 	struct cell_func *cdf_tke;
 	struct cell_func *cdf_drp;
 	struct cell_func *cdf_rtf;
