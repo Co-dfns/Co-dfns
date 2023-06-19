@@ -12,7 +12,7 @@ The Co-dfns compiler is designed to enable you as an APL programmer to use Dyalo
 
 **Will Co-dfns compile my code?**
 
-That depends. Please check out the limitations file for information about what Co-dfns does not support right now. If you have some code that Co-dfns cannot currently compile, that you'd really like it to compile, talk to me and let's see if we can't make that happen. 
+That depends. Please check out the [limitations](https://github.com/Co-dfns/Co-dfns/blob/master/docs/MANUAL.md#known-limitations) file for information about what Co-dfns does not support right now. If you have some code that Co-dfns cannot currently compile, that you'd really like it to compile, talk to me and let's see if we can't make that happen. 
 
 Keep in mind that some code that people write will simply not perform well on a GPU, even if the compiler did compile that code.
 
