@@ -44,7 +44,7 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
-[U-Net CNN in APL: Exploring Zero-Framework, Zero-Library Machine Learning](https://dl.acm.org/doi/10.1145/3589246.3595371)
+[U-Net CNN in APL: Exploring Zero-Framework, Zero-Library Machine Learning. ARRAY 2023.](https://dl.acm.org/doi/10.1145/3589246.3595371)
 
 [Implementing the Convolutional Neural Network U-Net in APL, Dyalog User Meeting 2022](https://dyalog.tv/Dyalog22/?v=LQz1b14YYiI)
 
