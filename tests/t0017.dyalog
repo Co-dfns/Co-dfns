@@ -1,9 +1,6 @@
 ﻿:Namespace t0017
 
 circumference∆Run←{○⍵×2}
-outerproduct∆R1←{⍺∘.×⍵} ⋄ outerproduct∆R2←{⍺∘.{⍺×⍵}⍵}
-outerproduct∆R3←{⍺∘.=⍵} ⋄ outerproduct∆R4←{⍺∘.+⍵}
-outerproduct∆R5←{X←0⌷⍵ ⋄ ⍺∘.×X}
 power∆R01←{(×⍣⍺)⍵} ⋄ power∆R02←{×⍣⍺⊢⍵} ⋄ power∆R03←{⍺×⍣5⊢⍵}
 power∆R04←{⍺(×⍣5)⍵} ⋄ power∆R05←{({×⍵}⍣⍺)⍵} ⋄ power∆R06←{{×⍵}⍣⍺⊢⍵}
 power∆R07←{⍺{⍺×⍵}⍣5⊢⍵} ⋄ power∆R08←{⍺({⍺×⍵}⍣5)⍵} ⋄ power∆R09←{○⍣{∨/,100<⍺}⍵}
