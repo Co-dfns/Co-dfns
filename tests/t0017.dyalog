@@ -1,8 +1,6 @@
 ﻿:Namespace t0017
 
 circumference∆Run←{○⍵×2}
-rank∆R1←{(×⍤⍺)⍵} ⋄ rank∆R2←{(≢⍤⍺)⍵} ⋄ rank∆R3←{⍺×⍤1⍤1 2⊢⍵}
-rank∆R4←{⍺(≠⍤2)⍵}
 redfirst∆R1←{+⌿⍵} ⋄ redfirst∆R2←{×⌿⍵}
 redfirst∆R3←{{⍺+⍵}⌿⍵} ⋄ redfirst∆R4←{X←0⌷⍵ ⋄ {⍺+⍵}⌿⍵}
 reduce∆R01←{+/⍵} ⋄ reduce∆R02←{×/⍵} ⋄ reduce∆R03←{{⍺+⍵}/⍵}
