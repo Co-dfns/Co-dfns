@@ -889,12 +889,12 @@ squeeze_func(struct cell_array **z,
 {
 	int err;
 	
-	if (err = squeeze_array(r))
-		return err;
+	CHKFN(squeeze_array(r), done);
 	
 	*z = retain_cell(r);
 	
-	return 0;
+done:	
+	return err;
 }
 
 DECL_FUNC(squeeze_ibeam, squeeze_func, error_dya_syntax)
