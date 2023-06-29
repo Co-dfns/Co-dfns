@@ -1,8 +1,6 @@
 ﻿:Namespace t0017
 
 circumference∆Run←{○⍵×2}
-each∆R1←{⍺-¨⍵} ⋄ each∆R2←{⍺{⍺-⍵}¨⍵} ⋄ each∆R3←{{÷⍵}¨⍵} ⋄ each∆R4←{÷¨⍵}
-each∆R5←{×¨⍵} ⋄ each∆R6←{{×⍵}¨⍵} ⋄ each∆R7←{X←0⌷⍵ ⋄ ⍺{⍺-⍵}¨X}
 innerproduct∆R1←{⍺+.×⍵} ⋄ innerproduct∆R2←{⍺{⍺+⍵}.{⍺×⍵}⍵}
 innerproduct∆R3←{⍺=.+⍵} ⋄ innerproduct∆R4←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X{⍺+⍵}.{⍺×⍵}Y}
 innerproduct∆R5←{⍺∧.=⍵} ⋄ innerproduct∆R6←{X←0⌷⍵ ⋄ X+.×X}

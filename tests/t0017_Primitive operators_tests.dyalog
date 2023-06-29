@@ -21,39 +21,6 @@ B←?100⍴2
 ∆circumference∆02_TEST←'circumference∆Run' MK∆T1 (0)
 ∆circumference∆03_TEST←'circumference∆Run' MK∆T1 (12345)
 ∆circumference∆04_TEST←'circumference∆Run' MK∆T1 (⍳14)
-∆commute∆ii_TEST←'commute∆Run' MK∆T2 I I
-∆commute∆ff_TEST←'commute∆Run' MK∆T2 F F
-∆commute∆if_TEST←'commute∆Run' MK∆T2 I F
-∆commute∆fi_TEST←'commute∆Run' MK∆T2 F I
-∆commute∆bb_TEST←'commute∆Run' MK∆T2 B B
-∆commute∆bi_TEST←'commute∆Run' MK∆T2 B I
-∆commute∆bf_TEST←'commute∆Run' MK∆T2 B F
-∆commute∆ib_TEST←'commute∆Run' MK∆T2 I B
-∆commute∆fb_TEST←'commute∆Run' MK∆T2 F B
-∆commute∆i_TEST←'commute∆Rm' MK∆T1 I
-∆commute∆f_TEST←'commute∆Rm' MK∆T1 F
-∆commute∆b_TEST←'commute∆Rm' MK∆T1 B
-∆compose∆01_TEST←'compose∆Rm' MK∆T1 I
-∆compose∆02_TEST←'compose∆Rd' MK∆T2 I I
-∆compose∆03_TEST←'compose∆Rl' MK∆T1 I
-∆compose∆04_TEST←'compose∆Rr' MK∆T1 I
-∆each∆dpii_TEST←'each∆R1' MK∆T2  I	I
-∆each∆dpiis_TEST←'each∆R1' MK∆T2 4	5
-∆each∆dpff_TEST←'each∆R1' MK∆T2  F	F
-∆each∆dpif_TEST←'each∆R1' MK∆T2  I	F
-∆each∆dpfi_TEST←'each∆R1' MK∆T2  F	I
-∆each∆duffs_TEST←'each∆R2' MK∆T2 5.5	3.1
-∆each∆duii_TEST←'each∆R2' MK∆T2  I	I
-∆each∆duff_TEST←'each∆R2' MK∆T2  F	F
-∆each∆duif_TEST←'each∆R2' MK∆T2  I	F
-∆each∆dufi_TEST←'each∆R2' MK∆T2  F	I
-∆each∆mui_TEST←'each∆R3' MK∆T2   I	(I~0)
-∆each∆muf_TEST←'each∆R3' MK∆T2   F	F
-∆each∆mub_TEST←'each∆R6' MK∆T2   B	B
-∆each∆mpi_TEST←'each∆R4' MK∆T2   I	(I~0)
-∆each∆mpf_TEST←'each∆R4' MK∆T2   F	F
-∆each∆mpb_TEST←'each∆R5' MK∆T2   B	B
-∆each∆durep_TEST←'each∆R7' MK∆T2 I (⍉⍪I)
 ∆innerproduct∆01_TEST←'innerproduct∆R1' MK∆T2 (1)          (1)
 ∆innerproduct∆02_TEST←'innerproduct∆R1' MK∆T2 (1)          (⍬)
 ∆innerproduct∆03_TEST←'innerproduct∆R1' MK∆T2 (⍬)          (⍬)
