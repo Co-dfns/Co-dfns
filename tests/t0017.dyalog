@@ -1,9 +1,6 @@
 ﻿:Namespace t0017
 
 circumference∆Run←{○⍵×2}
-innerproduct∆R1←{⍺+.×⍵} ⋄ innerproduct∆R2←{⍺{⍺+⍵}.{⍺×⍵}⍵}
-innerproduct∆R3←{⍺=.+⍵} ⋄ innerproduct∆R4←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X{⍺+⍵}.{⍺×⍵}Y}
-innerproduct∆R5←{⍺∧.=⍵} ⋄ innerproduct∆R6←{X←0⌷⍵ ⋄ X+.×X}
 laminate∆R1←{⍺,[0.5]⍵} ⋄ laminate∆R2←{⍺,[0]⍵} ⋄ laminate∆R3←{⍺,[1]⍵}
 laminate∆R4←{⍺,[2]⍵} ⋄ laminate∆R5←{⍺,[¯0.5]⍵}
 outerproduct∆R1←{⍺∘.×⍵} ⋄ outerproduct∆R2←{⍺∘.{⍺×⍵}⍵}
