@@ -220,18 +220,19 @@ guard_check(struct cell_array *x)
 	int err, val;
 	
 	if (array_count(x) != 1)
-		return 5;
+		CHK(5, fail, L"Non-singleton test expression.");
 	
-	if (err = squeeze_array(x))
-		return err;
+	CHKFN(squeeze_array(x), fail);
 	
 	if (x->type != ARR_BOOL)
-		return 11;
-	
-	if (err = get_scalar_int32(&val, x))
-		return err;
-	
+		CHK(11, fail, L"Test expression is not Boolean.");
+
+	CHKFN(get_scalar_int32(&val, x), fail);
+
 	return val - 1;
+
+fail:
+	return err;
 }
 
 DECLSPEC void
