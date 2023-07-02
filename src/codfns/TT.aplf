@@ -50,7 +50,7 @@ TT←{
 	⍝ Delete ⍺← forms for dyadic specializations
 	msk←p(⊢∧I⍨)⍣≡~(t=B)∧(n=¯2)∧k[r]∊3+2×⍳7
 	p t k n lx mu r pos end⌿⍨←⊂msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸~msk
-	
+
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V
@@ -76,8 +76,10 @@ TT←{
 	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⊢⍳≢p)[p]
 
 	⍝ Compute a function's local and free variables
-	lv←(≢p)⍴⊂⍬ ⋄ lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B V)∧(lx=0)∧n<0;]
-	fv←(≢p)⍴⊂⍬ ⋄ fv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸((t=V)∨(t=E)∧k=4)∧(lx=1)∧n<0;]
+	lv←(≢p)⍴⊂⍬ ⋄ fv←(≢p)⍴⊂⍬
+	lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B V)∧(lx=0)∧n<0;]
+	fv[p[i]],←i←⍸(t=V)∧(t[p]=C)∧n<0
+	fv[n[i]]←fv[p[i←⍸(t=V)∧(t[p]=C)∧n≥0]]
 
 	⍝ Mark functions with their internal ⍺ type
 	⍝    0 1 2 3 4 5 6  7  8  9 10 11 12 13 14 15
