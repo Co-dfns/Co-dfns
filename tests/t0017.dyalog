@@ -11,10 +11,6 @@ reduce∆R19←{≥/⍵} ⋄ reduce∆R20←{>/⍵} ⋄ reduce∆R21←{≠/⍵}
 reduce∆R22←{⊤/⍵} ⋄ reduce∆R23←{∪/⍵} ⋄ reduce∆R24←{//⍵}
 reduce∆R25←{⌿/⍵} ⋄ reduce∆R26←{\/⍵} ⋄ reduce∆R27←{⍀/⍵}
 reduce∆R28←{⌽/⍵} ⋄ reduce∆R29←{⊖/⍵} ⋄ reduce∆R30←{X←0⌷⍵ ⋄ {⍺≠⍵}/X}
-reducenwise∆R1←{⍺+/⍵} ⋄ reducenwise∆R2←{⍺×/⍵} ⋄ reducenwise∆R3←{⍺{⍺+⍵}/⍵}
-reducenwisefirst∆R1←{⍺+⌿⍵}
-reducenwisefirst∆R2←{⍺×⌿⍵}
-reducenwisefirst∆R3←{⍺{⍺+⍵}⌿⍵}
 scan∆R1←{+\⍵} ⋄ scan∆R2←{×\⍵} ⋄ scan∆R3←{{⍺+⍵}\⍵} ⋄ scan∆R4←{<\⍵}
 scanfirst∆R1←{+⍀⍵} ⋄ scanfirst∆R2←{×⍀⍵}
 scanfirst∆R3←{{⍺+⍵}⍀⍵} ⋄ scanfirst∆R4←{<⍀⍵}
