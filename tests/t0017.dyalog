@@ -1,8 +1,6 @@
 ﻿:Namespace t0017
 
 circumference∆Run←{○⍵×2}
-redfirst∆R1←{+⌿⍵} ⋄ redfirst∆R2←{×⌿⍵}
-redfirst∆R3←{{⍺+⍵}⌿⍵} ⋄ redfirst∆R4←{X←0⌷⍵ ⋄ {⍺+⍵}⌿⍵}
 reduce∆R01←{+/⍵} ⋄ reduce∆R02←{×/⍵} ⋄ reduce∆R03←{{⍺+⍵}/⍵}
 reduce∆R04←{≠/⍵} ⋄ reduce∆R05←{{⍺≠⍵}/⍵} ⋄ reduce∆R06←{∧/⍵}
 reduce∆R07←{-/⍵} ⋄ reduce∆R08←{÷/⍵} ⋄ reduce∆R09←{|/⍵}
