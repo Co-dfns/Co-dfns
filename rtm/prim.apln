@@ -52,7 +52,7 @@ idx_rnk_check←{(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4 ⋄ 0}
 idx_rng_check←{
 	0≡≢,⍵:0
 	0≡is_integer⊢idx←squeeze ⍵:⎕SIGNAL 11
-	any(idx<0)∨⍺<idx:⎕SIGNAL 3
+	any(idx<0)∨⍺≤idx:⎕SIGNAL 3
 	0
 }
 flatten_idx←{
