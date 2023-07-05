@@ -436,10 +436,11 @@ identity←{
 	⍺⍺ eq ∧ ⍬:1
 	⎕SIGNAL 16
 }
-reduce←{axis←⍵⍵
-	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s
-	0≡c:zs⍴⍺⍺ identity ⍬ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨
-	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
+reduce←{axis←⍵⍵ ⋄ op←⍺⍺¨
+	⍺∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:0∇,⍵
+	c←(s←⍴⍵)[axis] ⋄ zs←(axis↑s),(axis+1)↓s
+	0≡c:zs⍴⍺⍺ identity ⍬ ⋄ 1≡c:zs⍴⍵
+	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷[axis]⍵)op z}¨⊂⍵⊣z←(c-1)⌷[axis]⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
 	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc:⎕SIGNAL 5
@@ -449,13 +450,13 @@ nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴�
 	z⊣(⌽⍳⍺-1)stp¨⊂⍵⊣z←(⍺-1)↓[axis]⍵
 }
 red_check←{⍺←0 ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5 ⋄ 0}
-rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ axis←0
-	1≡⍺ 1:⍺⍺ reduce axis⊢⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
+rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⊣hax←0
+	1≡⍺ 1:hax(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
 }
 
 ⍝ /: Reduce | N-wise Reduce
-red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ axis←0⌈¯1+≢⍴⍵
-	1≡⍺ 1:⍺⍺ reduce axis⊢⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
+red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0
+	1≡⍺ 1:hax(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
 }
 
 ⍝ ⌿⌿: Replicate First
