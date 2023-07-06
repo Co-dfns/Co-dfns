@@ -56,7 +56,7 @@
 ∆reduce∆37_TEST←'reduce∆R20' MK∆T1 (⍬)
 ∆reduce∆38_TEST←'reduce∆R21' MK∆T1 (⍬)
 ∆reduce∆39_TEST←'reduce∆R22' MK∆T1 (⍬)
-∆reduce∆40_TEST←{#.UT.expect←'NONCE' ⋄ 16::'NONCE' ⋄ cd.reduce∆R23 ⍬}
+∆reduce∆40_TEST←'reduce∆R23' MK∆T1 (⍬)
 ∆reduce∆41_TEST←'reduce∆R24' MK∆T1 (⍬)
 ∆reduce∆42_TEST←'reduce∆R25' MK∆T1 (⍬)
 ∆reduce∆43_TEST←'reduce∆R26' MK∆T1 (⍬)
