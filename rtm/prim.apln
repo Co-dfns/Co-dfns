@@ -487,15 +487,19 @@ rpf←{⎕SIGNAL 16}
 rep←{⎕SIGNAL 16}
 
 ⍝ ⍀: Scan First
-scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}
-
-⍝ \: Scan
-scn←{
-	axis←0⌈¯1+≢⍴⍵ ⋄ fn←⍺⍺
-	1>≢⍴⍵:squeeze (⍴⍵)⍴{fn⌿x[⍳⍵]}¨1+⍳≢⍵⊣x←,⍵
-	c←×⌿axis↑⍴⍵ ⋄ la←axis⌷⍴⍵ ⋄ x←c la⍴⍵
-	squeeze (⍴⍵)⍴z⊣{z[;⍵]←fn/x[;⍳1+⍵]}¨⍳la⊣z←c la⍴0
+scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
+	hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:⍵
+	1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5 ⋄ (axis<0)∨axis≥≢⍴⍵:⎕SIGNAL 4
+	1≡≢,⍵:⍵ ⋄ (0≡≢,⍵)∨1≡(⍴⍵)[axis]:⍵
+	1≥≢⍴⍵:squeeze (⍴⍵)⍴{fn⌿x[⍳⍵]}¨1+⍳≢x←⍵
+	c←(⍴⍵)[axis] ⋄ ls←×⌿axis↑⍴⍵ ⋄ rs←×⌿(axis+1)↓⍴⍵
+	z←ls c rs⍴⊃⍵ ⋄ x←ls c rs⍴⍵
+	squeeze(⍴⍵)⍴z⊣{z[;⍵;]←fn⌿[1]x[;⍳1+⍵;]}¨⍳c
 }
+scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
+	
+⍝ \: Scan
+scn←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ axis ⍺⍺ scan axis⊢⍵}
 
 ⍝ ⍀⍀: Expand First
 xpf←{⎕SIGNAL 16}

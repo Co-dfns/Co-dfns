@@ -339,6 +339,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_moper *cdf_red;
 	struct cell_func *cdf_rpf;
 	struct cell_func *cdf_rep;
+	struct cell_doper_box *cdf_scan;
 	struct cell_moper *cdf_scf;
 	struct cell_moper *cdf_scn;
 	struct cell_func *cdf_xpf;
