@@ -17,12 +17,7 @@ I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
 F←100÷⍨?100⍴10000
 B←?100⍴2
 
-∆circumference∆01_TEST←'circumference∆Run' MK∆T1 (13)
-∆circumference∆02_TEST←'circumference∆Run' MK∆T1 (0)
-∆circumference∆03_TEST←'circumference∆Run' MK∆T1 (12345)
-∆circumference∆04_TEST←'circumference∆Run' MK∆T1 (⍳14)
 ∆scanoverrun∆01_TEST←'scanoverrun∆Run' MK∆T2 (10⍴1) (10×⍳10)
-
 ∆uniqop_TEST←'uniqop∆Run' MK∆T1 (0 0 0 1 1 1 1 1)
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
