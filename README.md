@@ -58,13 +58,17 @@ The following publications are either directly related to Co-dfns or talk about 
 
 [Modern APL in the Real World: Theory, Practice, Case Studies - λC 20 Global Edition](https://www.youtube.com/watch?v=2FMBf6A2eAA)
 
-[Programming Obesity: A Code Health Epidemic](https://youtu.be/UDqx1afGtQc)
+[Programming Obesity: A Code Health Epidemic - FnConf 2019](https://youtu.be/UDqx1afGtQc)
+
+[Program Obesity: A Code Health Epidemic - λC 2019 Unconference](https://www.youtube.com/watch?v=Oj_xgO2uKJM)
 
 [A Data Parallel Compiler Hosted on the GPU](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C26&q=%22A+data+parallel+compiler+hosted+on+the+gpu%22+Aaron+Hsu&btnG=)
 
 [Pragmatic Array Oriented Functional Programming @ JIO Talks](https://jiotalks.com/watch/204/home/Morten_Kromberg_&_Aaron_Hsu/Pragmatic_Array_Oriented_Functional_Programming)
 
 [Live Reading/Writing Co-dfns, The Way of APL](https://www.youtube.com/watch?v=ABG5eSCZPrE)
+
+Parallel-by-construction Tree Manipulation with APL - λC 2018 (Part [1](https://www.youtube.com/watch?v=lc4IjR1iJTg) [2](https://www.youtube.com/watch?v=X5_5MtOYNos))
 
 [Does APL Need a Type System? (FnConf '18)](https://youtu.be/z8MVKianh54)
 
@@ -73,6 +77,8 @@ The following publications are either directly related to Co-dfns or talk about 
 [Tree Manipulation Workshop and Dyalog '18 Talk](https://www.sacrideo.us/lambdaconf-tree-manipulation-workshop-videos/)
 
 [User Command for Co-dfns](https://youtu.be/BBaCKf7Od6I)
+
+Functional Array Funhouse Intensive - λC 2017 (Part [1](https://www.youtube.com/watch?v=_3CkcoTqxfg) [2](https://www.youtube.com/watch?v=4-KLpGq6Aj8) [3](https://www.youtube.com/watch?v=8lw062D34N0) [4](https://www.youtube.com/watch?v=0S28dfQBUDg) [5](https://www.youtube.com/watch?v=j2Jyoel_myo))
 
 [APL Patterns vs. Anti-Patterns @ FunctionalConf 2017](https://youtu.be/v7Mt0GYHU9A)
 
