@@ -56,6 +56,8 @@ The following publications are either directly related to Co-dfns or talk about 
 
 [A Taste of GPU Compute, mentions Co-dfns](https://www.youtube.com/watch?v=eqkAaplKBc4)
 
+[Modern APL in the Real World: Theory, Practice, Case Studies - λC 20 Global Edition](https://www.youtube.com/watch?v=2FMBf6A2eAA)
+
 [Programming Obesity: A Code Health Epidemic](https://youtu.be/UDqx1afGtQc)
 
 [A Data Parallel Compiler Hosted on the GPU](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C26&q=%22A+data+parallel+compiler+hosted+on+the+gpu%22+Aaron+Hsu&btnG=)
