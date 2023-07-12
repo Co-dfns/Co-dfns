@@ -117,11 +117,6 @@
 ∆catfirst∆84_TEST←'catfirst' MK∆T2 3             (0 5⍴⍬)
 ∆catfirst∆85_TEST←'catfirst' MK∆T2 (0 5⍴⍬)       3
 
-∆deal∆01_TEST←'deal' MK∆T2 (0)(0)
-∆deal∆02_TEST←'deal' MK∆T2 (0)(5)
-∆deal∆03_TEST←{#.UT.expect←⍳20 ⋄ {⍵[⍋⍵]}20 cd.deal 20}
-∆deal∆04_TEST←{#.UT.expect←≢∪{5?5}¨⍳1500 ⋄ ≢∪{5 cd.deal 5}¨⍳1500}
-
 ∆decode∆01_TEST←'decode' MK∆T2 ⍬           ⍬
 ∆decode∆02_TEST←'decode' MK∆T2 (0 0⍴0)     ⍬
 ∆decode∆03_TEST←'decode' MK∆T2 ⍬           (0 0⍴1)

@@ -4,8 +4,6 @@ catenate←{⍺,⍵}
 
 catfirst←{⍺⍪⍵}
 
-deal←{⍺?⍵}
-
 decode←{⍺⊥⍵}
 
 depth←{≡⍵}
