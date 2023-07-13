@@ -123,6 +123,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *cdf_red_check;
 	struct cell_moper *cdf_rdf;
 	struct cell_moper *cdf_red;
+	struct cell_func *cdf_iou;
 	struct cell_func *cdf_rpf;
 	struct cell_func *cdf_rep;
 	struct cell_doper_box *cdf_scan;

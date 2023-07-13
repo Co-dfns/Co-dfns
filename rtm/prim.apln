@@ -480,11 +480,26 @@ red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴
 	1≡⍺ 1:hax(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
 }
 
+⍝ ⍸: Where/Interval Index
+iou←{⎕SIGNAL 16}
+
 ⍝ ⌿⌿: Replicate First
-rpf←{⎕SIGNAL 16}
+rpf←{
+	hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4
+	noscl←{0≡≢⍴⍵:,⍵ ⋄ ⍵} ⋄ x←noscl ⍺ ⋄ y←x{1≡≢,⍵:(⍴⍺)⍴⍵ ⋄ ⍵}noscl ⍵
+	(1<≢⍴axis)∨1≢≢,axis:⎕SIGNAL 5 ⋄ axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴y:⎕SIGNAL 4
+	1<≢⍴⍺:⎕SIGNAL 4 ⋄ (≢x)≢(⍴y)[axis]:⎕SIGNAL 5 ⋄ ~is_integer x:⎕SIGNAL 11
+	z←(⊂i←⍸|x)⌷[axis]y
+	is_numeric y:z×[axis]x[i]>0
+	z←,[⍳axis],[axis+1+⍳(≢⍴y)-axis+1]y ⋄ z[;⍸x[i]<0;]←⊃0⍴,y ⋄ z
+}
 
 ⍝ //: Replicate
-rep←{⎕SIGNAL 16}
+rep←{
+	hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4
+	noscl←{0≡≢⍴⍵:,⍵ ⋄ ⍵} ⋄ x←noscl ⍺ ⋄ y←x{1≡≢,⍵:(⍴⍺)⍴⍵ ⋄ ⍵}noscl ⍵
+	x⌿[axis]y	
+}
 
 ⍝ ⍀: Scan First
 scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
