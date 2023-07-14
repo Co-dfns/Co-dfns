@@ -2002,3 +2002,61 @@ fail:
 }
 
 DECL_FUNC(roll_ibeam, roll_func, error_dya_syntax)
+
+int
+where_nz_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		af_array res, res32;
+		dim_t elems;
+		
+		CHKAF(af_where(&res, r->values), done);
+		CHKAF(af_cast(&res32, res, s32), af_done);
+		CHKAF(af_get_elements(&elems, res32), af_done);		
+		CHKFN(mk_array(&arr, ARR_INT, STG_DEVICE, 1), af_done);
+		
+		arr->shape[0] = elems;
+		arr->values = res32;
+		
+		if (!elems) {
+			dim_t sp[1] = {1};
+			
+			CHKAF(af_release_array(res32), af_done);
+			CHKAF(af_constant(&arr->values, 0, 1, sp, s32), af_done);
+		}
+		
+af_done:
+		int err2 = err;
+		
+		TRCAF(af_release_array(res));
+		
+		err = err2;
+		
+		break;
+	}
+	case STG_HOST:{
+		CHK(16, done, L"Host storage type not supported, yet.");
+		
+		break;
+	}
+	default:
+		CHK(99, done, L"Unknown storage type");
+	}
+	
+	if (!err)
+		*z = arr;
+
+done:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(where_nz_ibeam, where_nz_func, error_dya_syntax)
