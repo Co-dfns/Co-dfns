@@ -484,8 +484,9 @@ red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴
 where_nz←'where_nz_ibeam'⌶
 iou←{⍺←⊢
 	1≡⍺ 1:{
-		~is_numeric ⍵:⎕SIGNAL 11 ⋄ any ⍵<0:⎕SIGNAL 11
 		1<≢⍴⍵:⎕SIGNAL 16
+		0≡≢,⍵:⍬
+		~is_numeric ⍵:⎕SIGNAL 11 ⋄ any ⍵<0:⎕SIGNAL 11
 		sx←+⍀x←(,⍵)[i←where_nz ⍵] ⋄ (≢i)≡c←sx[0⌈¯1+≢i]:i
 		+⍀z⊣z[0,¯1↓sx]←i-0,¯1↓i⊣z←c⍴0
 	}⍵
