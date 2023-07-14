@@ -22,6 +22,7 @@ I16←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)163)⎕DR ⍵}
 I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 
 ∆replicate∆01_TEST←'where' MK∆T1 ⍬
+∆replicate∆02_TEST←'where' MK∆T1 0 0 0 0 0
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
