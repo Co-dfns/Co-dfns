@@ -2041,7 +2041,50 @@ af_done:
 		break;
 	}
 	case STG_HOST:{
-		CHK(16, done, L"Host storage type not supported, yet.");
+		size_t nzcnt, count;
+		int32_t *tv;
+		
+		count = array_count(r);
+		nzcnt = 0;
+		
+		#define WHRCNT_SWITCH_real(typ, sfx, fail) {	\
+			typ *rv = r->values;			\
+								\
+			for (size_t i = 0; i < count; i++)	\
+				if (rv[i])			\
+					nzcnt += 1;		\
+		}
+		#define WHRCNT_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
+		#define WHRCNT_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+		#define WHRCNT_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
+		
+		MONADIC_TYPE_SWITCH(r->type, HOST_SWITCH, WHRCNT, done);
+		
+		CHKFN(mk_array(&arr, ARR_INT, STG_HOST, 1), done);
+		
+		arr->shape[0] = nzcnt;
+		
+		CHKFN(alloc_array(arr), done);
+		
+		tv = arr->values;
+		
+		if (!nzcnt) {
+			*tv = 0;
+			break;
+		}
+		
+		#define WHERE_SWITCH_real(typ, sfx, fail) {	\
+			typ *rv = r->values;			\
+								\
+			for (size_t i = 0; i < count; i++)	\
+				if (rv[i])			\
+					*tv++ = (int32_t)i;	\
+		}
+		#define WHERE_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
+		#define WHERE_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+		#define WHERE_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
+		
+		MONADIC_TYPE_SWITCH(r->type, HOST_SWITCH, WHERE, done);
 		
 		break;
 	}
