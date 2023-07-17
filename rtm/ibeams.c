@@ -664,8 +664,6 @@ reshape_func(struct cell_array **z,
 		goto done;
 	}
 	
-	CHK(alloc_array(t), fail, L"alloc_array(t)");
-	
 	if (t->storage == STG_DEVICE) {
 		if (t->type == ARR_NESTED)
 			CHK(99, fail, L"Unexpected nested array");
@@ -687,6 +685,8 @@ reshape_func(struct cell_array **z,
 
 		goto done;
 	}
+
+	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
 	if (t->storage != STG_HOST)
 		CHK(99, fail, L"Unexpected storage type");
