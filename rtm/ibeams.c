@@ -651,6 +651,25 @@ reshape_func(struct cell_array **z,
 		}
 	}
 	
+	if (!array_count(t)) {
+		if (t->type == ARR_NESTED)
+			CHK(16, fail, L"Empty nested arrays not supported");
+		
+		t->storage = STG_HOST;
+		t->type = ARR_BOOL;
+		
+		CHKFN(alloc_array(t), fail);
+		
+		if (is_char_array(r)) {
+			uint8_t *val = t->values;
+			
+			t->type = ARR_CHAR8;
+			*val = ' ';
+		}
+		
+		goto done;
+	}
+	
 	tc = array_values_count(t);
 	rc = array_values_count(r);
 	

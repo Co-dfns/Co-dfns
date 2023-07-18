@@ -50,6 +50,10 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆reshape∆27_TEST←'reshape∆Rs' MK∆T2 (⍉⍪1 2 3) (5 5⍴⍳10)
 ∆reshape∆28_TEST←'reshape∆Rv' MK∆T2 ⍬         (1 2 3)
 ∆reshape∆29_TEST←'reshape∆R0' MK∆T2 ⍬         ⍬
+∆reshape∆30_TEST←'reshape∆Pr' MK∆T1 0 0 0
+∆reshape∆31_TEST←'reshape∆Pr' MK∆T1 5 5 5
+⍝ ∆reshape∆32_TEST←'reshape∆Pr' MK∆T1 '   '
+⍝ ∆reshape∆33_TEST←'reshape∆Pr' MK∆T1 'abc'
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
