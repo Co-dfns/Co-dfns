@@ -72,8 +72,6 @@ split←{↓⍵}
 
 table←{⍪⍵} ⋄ table∆R2←{⍪0⌷⍵}
 
-take∆R1←{⍺↑⍵} ⋄ take∆R2←{(1⌷⍺)↑⍵}
-
 tally←{≢⍵}
 
 transpose∆R1←{⍉⍵} ⋄ transpose∆R2←{⍺⍉⍵}
