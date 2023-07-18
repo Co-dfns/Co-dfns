@@ -350,7 +350,7 @@ tke←{⍺←⊢
 	x←⍺ ⋄ y←⍺{(~hax)∧0≡≢⍴⍵:((≢⍺)⍴1)⍴⍵ ⋄ ⍵}⍵ 
 	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
 	~any(|x)≥(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
-	s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s ⋄ z←s⍴⊃y
+	s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s ⋄ z←s⍴0⍴y
 	i←,z flatten_idx (wi←⍳¨w)+m×s-w←s⌊⍴y
 	s⍴z⊣z[i]←,(wi+m×(⍴y)-w)⌷y⊣z←,z
 }
