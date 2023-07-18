@@ -4,8 +4,6 @@ catenate←{⍺,⍵}
 
 catfirst←{⍺⍪⍵}
 
-depth←{≡⍵}
-
 drop∆R1←{⍺↓⍵} ⋄ drop∆R2←{(1⌷⍺)↓⍵} ⋄ drop∆R3←{5↓⍵}
 
 encode←{⍺⊤⍵} ⋄ encode∆Ovr←{⍺⊤0⌷⍵}

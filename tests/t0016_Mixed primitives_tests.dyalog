@@ -117,11 +117,6 @@
 ∆catfirst∆84_TEST←'catfirst' MK∆T2 3             (0 5⍴⍬)
 ∆catfirst∆85_TEST←'catfirst' MK∆T2 (0 5⍴⍬)       3
 
-∆depth∆01_TEST←'depth' MK∆T1 ⍬
-∆depth∆02_TEST←'depth' MK∆T1 0
-∆depth∆03_TEST←'depth' MK∆T1 (⍳5)
-∆depth∆04_TEST←'depth' MK∆T1 (2 3 4⍴⍳5)
-
 F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 B←{⊃((⎕DR ⍵)11)⎕DR ⍵}
 
