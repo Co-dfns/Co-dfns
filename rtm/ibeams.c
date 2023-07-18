@@ -652,9 +652,6 @@ reshape_func(struct cell_array **z,
 	}
 	
 	if (!array_count(t)) {
-		if (t->type == ARR_NESTED)
-			CHK(16, fail, L"Empty nested arrays not supported");
-		
 		t->storage = STG_HOST;
 		t->type = ARR_BOOL;
 		
