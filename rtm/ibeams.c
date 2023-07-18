@@ -613,8 +613,7 @@ reshape_func(struct cell_array **z,
 		rank = (unsigned int)l->shape[0];
 	}
 	
-	CHK(mk_array(&t, r->type, r->storage, rank), fail,
-	    L"mk_array(&t, r->type, r->storage, rank)");
+	CHKFN(mk_array(&t, r->type, r->storage, rank), fail);
 	
 	if (rank) {
 		switch (l->storage) {
@@ -686,7 +685,7 @@ reshape_func(struct cell_array **z,
 		goto done;
 	}
 
-	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	CHKFN(alloc_array(t), fail);
 	
 	if (t->storage != STG_HOST)
 		CHK(99, fail, L"Unexpected storage type");
