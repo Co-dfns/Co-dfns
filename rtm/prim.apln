@@ -83,6 +83,7 @@ mst←'mst_ibeam'⌶⌶
 sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5
 	axis⍠←0
 	axis≡0:⍺{
+		0≡≢i:⍵
 		is_span⊢idx←⍵ flatten_idx i:⍵
 		0≡≢,idx:(⍴idx)⍴⍵
 		(⍴idx)⍴idx('index_ibeam'⌶)⍵
@@ -342,12 +343,12 @@ tke←{⍺←⊢
 		((⍴⍵),s)⍴z⊣(⍳≢,⍵){z[⍺;]←,s↑(k↑(⍴⍵),k⍴1)⍴⍵}¨,⍵⊣z←((≢,⍵),×⌿s)⍴0
 	}⍵
 	1<≢⍴⍺:⎕SIGNAL 4
-	axis⍠←⍳≢⍺
+	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0
 	1<≢⍴axis:⎕SIGNAL 11
 	(≢,⍺)≢≢,axis:⎕SIGNAL 5
 	~is_integer axis:⎕SIGNAL 11
-	any(axis<0)∨(axis≥≢⍴⍵)∧1≤≢⍴⍵:⎕SIGNAL 4
-	x←⍺ ⋄ y←{0≡≢⍴⍵:,⍵ ⋄ ⍵}⍵
+	x←⍺ ⋄ y←⍺{(~hax)∧0≡≢⍴⍵:((≢⍺)⍴1)⍴⍵ ⋄ ⍵}⍵ 
+	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
 	~any(|x)≥(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
 	s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s ⋄ z←s⍴⊃y
 	i←,z flatten_idx (wi←⍳¨w)+m×s-w←s⌊⍴y
@@ -357,8 +358,14 @@ tke←{⍺←⊢
 ⍝ ↓: Split | Drop
 drp←{⍺←⊢
 	1≡⍺ 1:⎕SIGNAL 16
-	axis⍠←0
-	(⊂(0⌈⍺)+⍳0⌈(axis⌷⍴⍵)-|⍺)⌷[axis]⍵
+	1<≢⍴⍺:⎕SIGNAL 4
+	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0
+	1<≢⍴axis:⎕SIGNAL 11
+	(≢,⍺)≢≢,axis:⎕SIGNAL 5
+	~is_integer axis:⎕SIGNAL 11
+	x←⍺ ⋄ y←⍺{(~hax)∧0≡≢⍴⍵:((≢⍺)⍴1)⍴⍵ ⋄ ⍵}⍵ 
+	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
+	((0⌈x)+⍳¨0⌈(⍴y)[axis]-|x)⌷[axis]y
 }
 
 ⍝ ⊖: Rerverse First | Rotate First
