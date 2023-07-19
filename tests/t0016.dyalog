@@ -4,8 +4,6 @@ catenate←{⍺,⍵}
 
 catfirst←{⍺⍪⍵}
 
-encode←{⍺⊤⍵} ⋄ encode∆Ovr←{⍺⊤0⌷⍵}
-
 enlist←{∊⍵}
 
 expand←{⍺\⍵}
