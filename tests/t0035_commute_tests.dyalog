@@ -29,6 +29,7 @@
 ∆commute∆i_TEST←'commute∆Rm' MK∆T1 I
 ∆commute∆f_TEST←'commute∆Rm' MK∆T1 F
 ∆commute∆b_TEST←'commute∆Rm' MK∆T1 B
+∆commute∆zz_TEST←'commute∆Run' MK∆T2 ⍬ ⍬
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
