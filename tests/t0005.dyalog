@@ -5,5 +5,7 @@ dmop←{⍺+⌿⍵}
 dop←{⍺+.×⍵}
 mdop←{*⍣2⊢⍵}
 umop←{{5+⍺+⍵}⌿⍵}
+nmop←{∘.(+⍨)⌿⍵}
+ndop←{⍺∘.(+⍨).×⍵}
 
 :EndNamespace

@@ -277,27 +277,27 @@ PS←{
 	⍝ Refine schizophrenic types
 	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽(~km)∨(~dm)∧k[i]∊1 6]←2 ⋄ k[i⌿⍨k[i]=5]←3
 
-	⍝ Rationalize ∘.
-	jm←(t[i]=P)∧n[i]∊-sym⍳⊂,'∘.'
-	jm∨.∧1⌽(~km)∨k[i]∊3 4:'MISSING OPERAND TO ∘.'⎕SIGNAL 2
-	p←((ji←jm⌿i)@(jj←i⌿⍨¯1⌽jm)⍳≢p)[p] ⋄ t[ji,jj]←t[jj,ji] ⋄ k[ji,jj]←k[jj,ji]
-	n[ji,jj]←n[jj,ji] ⋄ lx[ji,jj]←lx[jj,ji]
-	pos[ji,jj]←pos[ji,ji] ⋄ end[ji,jj]←end[jj,jj]
-
 	⍝ Mask and verify monadic and dyadic operator left operands
-	∨⌿msk←(dm∧¯2⌽~km)∨(¯1⌽~km)∧mm←(k[i]=3)∧t[i]∊C P V Z:{
-		2'MISSING LEFT OPERAND'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
-	}i⌿⍨msk
-	msk←dm∨mm
+	jm←(t[i]=P)∧n[i]∊-sym⍳⊂,'∘.'
+	∨⌿msk←jm∧1⌽(~km)∨k[i]∊3 4:{
+		'MISSING OPERAND TO ∘.'SIGNAL SELECT msk⌿i
+	}⍬
+	∨⌿msk←jm∧1⌽k[i]≠2:{
+		'∘. REQUIRES FUNCTION OPERAND'SIGNAL SELECT msk⌿i
+	}⍬
+	∨⌿msk←(dm∧¯2⌽~km)∨(¯1⌽~km)∧mm←(~jm)∧(k[i]=3)∧t[i]∊C P V Z:{
+		'MISSING LEFT OPERAND'SIGNAL SELECT msk⌿i
+	}⍬
 
 	⍝ Parse function expressions
-	np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p]
+	msk←jm∨dm∨mm ⋄ np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p]
 	p,←oi ⋄ t k n lx pos end(⊣,I)←⊂oi
-	p[g⌿i]←oi[(g←(~msk)∧(1⌽msk)∨2⌽dm)⌿xc-⌽+⍀⌽msk]
-	p[g⌿oi]←(g←msk⌿(1⌽mm)∨2⌽dm)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←0
-	pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←(~msk)∧(1⌽mm)∨2⌽dm]
-	ol←1+(k[i⌿⍨(2⌽mm)∨3⌽dm]=4)∨k[i⌿⍨(1⌽mm)∨2⌽dm]∊2 3
-	or←(msk⌿dm)⍀1+k[dm⌿i]=2
+	
+	jl←¯1⌽jm ⋄ ml←(jm∧2⌽mm)∨(~jl)∧1⌽mm ⋄ dl←(jm∧3⌽dm)∨(~jl)∧2⌽dm
+	p[g⌿i]←oi[(g←(~msk)∧(1⌽dm)∨om←jl∨ml∨dl)⌿(xc-⌽+⍀⌽msk)-jl]
+	p[g⌿oi]←(g←msk⌿om)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←0
+	pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←jm∨(~msk)∧ml∨dl] ⋄ end[jm⌿i]←end[jl⌿i]
+	ol←1+(k[i⌿⍨1⌽om]=4)∨k[i⌿⍨om]∊2 3 ⋄ or←(msk⌿dm)⍀1+k[dm⌿i]=2
 	k[oi]←3 3⊥↑or ol
 
 	⍝ Wrap all assignment values as Z nodes
