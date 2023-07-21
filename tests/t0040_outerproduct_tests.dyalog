@@ -47,6 +47,7 @@
 ∆outerproduct∆27_TEST←'outerproduct∆R4' MK∆T2 (0 0 0 1 1 5 1 1)(0 0 0 1 5 1 1 1)
 ∆outerproduct∆28_TEST←'outerproduct∆R3' MK∆T2 (0 1)(0 0 0 1 1 1 1 1)
 ∆outerproduct∆29_TEST←'outerproduct∆R5' MK∆T2 (2 2⍴1+⍳4) (1 2 2⍴÷1+⍳4)
+∆outerproduct∆30_TEST←'outerproduct∆R6' MK∆T2 ⍬ ⍬
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
