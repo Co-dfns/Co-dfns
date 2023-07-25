@@ -26,10 +26,14 @@ both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 any←'any_ibeam'⌶
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
-ambiv←{⍺←⊢ ⋄ 1 same ⍺ 1:⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵}
+ambiv←{
+	⍺←⊢ ⋄ hax←1 ⋄ axis⍠←hax←0 ⋄ mon←1 same ⍺ 1 ⋄ lop←⍺⍺ ⋄ rop←⍵⍵
+	hax:⍺{mon:lop[axis] ⍵ ⋄ ⍺ rop[axis] ⍵}⍵
+	mon:⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵
+}
 veach←'veach_ibeam'⌶⌶
 scalar←{
-	⍺ chk_scl ⍵: 
+	hax←1 ⋄ axis⍠←hax←0
 	s←⍺ max_shp ⍵
 	0≡≢,⍺:s⍴0
 	0≡≢,⍵:s⍴0
@@ -80,7 +84,9 @@ mst_vals←{op←⍵⍵
 mst←'mst_ibeam'⌶⌶
 
 ⍝ ⌷: Materialize | Squad indexing
-sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5
+materialize←{⍵}
+sqd_idx←{
+	1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5
 	axis⍠←0
 	axis≡0:⍺{
 		0≡≢i:⍵
@@ -90,6 +96,7 @@ sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢�
 	}⍵
 	i←⍳¨⍴⍵ ⋄ i[axis]←⍺ ⋄ i⌷⍵
 }
+sqd←materialize ambiv sqd_idx
 
 ⍝ X[]: Bracket Indexing
 brk←{⍺ idx_rnk_check ⍵: ⋄ ⍵⌷⍺}
@@ -101,21 +108,21 @@ rgt←{⍵}
 lft←{⍵} ambiv {⍺}
 
 ⍝ ,: Ravel / Catenate
-cat←{
-	israv←noax←0 ⋄ ⍺←israv←1 ⋄ lr←≢⍴⍺ ⋄ rr←≢⍴⍵ ⋄ axis⍠←noax←1
-	israv:⍺{
-		noax:'ravel_ibeam'⌶ ⍵
-		1≡≢,axis:⍺{
-			is_integer squeeze axis:⍵
-			((pr↑s),1,(pr←⌈axis)↓s←⍴⍵)⍴⍵
-		}⍵
-		0≡≢,axis:((⍴⍵),1)⍴⍵
-		~is_integer squeeze axis:⎕SIGNAL 11
-		1≢≢⍴axis:⎕SIGNAL 4
-		axis≢(⍳c←≢axis)+b←⊃axis:⎕SIGNAL 11
-		((b↑s),(×⌿c↑b↓s),(b+c)↓s←⍴⍵)⍴⍵
+ravel←{
+	noax←0 ⋄ rr←≢⍴⍵ ⋄ axis⍠←noax←1
+	noax:'ravel_ibeam'⌶ ⍵
+	1≡≢,axis:{
+		is_integer squeeze axis:⍵
+		((pr↑s),1,(pr←⌈axis)↓s←⍴⍵)⍴⍵
 	}⍵
-	rk←lr⌈rr ⋄ axis⍠←¯1+rk
+	0≡≢,axis:((⍴⍵),1)⍴⍵
+	~is_integer squeeze axis:⎕SIGNAL 11
+	1≢≢⍴axis:⎕SIGNAL 4
+	axis≢(⍳c←≢axis)+b←⊃axis:⎕SIGNAL 11
+	((b↑s),(×⌿c↑b↓s),(b+c)↓s←⍴⍵)⍴⍵
+}
+catenate←{
+	lr←≢⍴⍺ ⋄ rr←≢⍴⍵ ⋄ rk←lr⌈rr ⋄ axis⍠←¯1+rk
 	(0≡lr)∧(0≡rr):(,⍺),,⍵
 	ar←≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5 
 	~is_numeric axis:⎕SIGNAL 11 ⋄ axis≤¯1:⎕SIGNAL 11
@@ -133,17 +140,18 @@ cat←{
 	z←ca cb cc⍴0 ⋄ z[;⍳lx;]←ca lx cc⍴x ⋄ z[;lx+⍳rx;]←ca rx cc⍴y
 	s⍴z
 }
+cat←ravel ambiv catenate
 
 ⍝ Table / Catenate First
 ctf←{⍺,[0]⍵}
 
 ⍝ ≡: Depth / Same
 depth←{
-   is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
-   0≡≢,⍵:(×d)+d←∇⊃⍵
-   nd←1+mx←⌈⌿pd←|d←∇¨,⍵
-   ∨⌿(d<0)∨pd≠mx:-nd
-   nd
+	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
+	0≡≢,⍵:(×d)+d←∇⊃⍵
+	nd←1+mx←⌈⌿pd←|d←∇¨,⍵
+	∨⌿(d<0)∨pd≠mx:-nd
+	nd
 }
 same←'same_ibeam'⌶
 eqv←depth ambiv same
@@ -336,12 +344,12 @@ noteq←{
 neq←firstocc ambiv (noteq scalar)
 
 ⍝ ↑: Mix | Take
-tke←{⍺←⊢
-	1≡⍺ 1:{
-		1≥≡squeeze ⍵:⍵
-		k←≢s←⊃{(k↑(⍴⍺),k⍴1)⌈k↑⍵,k⍴1⊣k←(≢⍴⍺)⌈≢⍵}⌿(,⍵),⊂⍬
-		((⍴⍵),s)⍴z⊣(⍳≢,⍵){z[⍺;]←,s↑(k↑(⍴⍵),k⍴1)⍴⍵}¨,⍵⊣z←((≢,⍵),×⌿s)⍴0
-	}⍵
+mix←{
+	1≥≡squeeze ⍵:⍵
+	k←≢s←⊃{(k↑(⍴⍺),k⍴1)⌈k↑⍵,k⍴1⊣k←(≢⍴⍺)⌈≢⍵}⌿(,⍵),⊂⍬
+	((⍴⍵),s)⍴z⊣(⍳≢,⍵){z[⍺;]←,s↑(k↑(⍴⍵),k⍴1)⍴⍵}¨,⍵⊣z←((≢,⍵),×⌿s)⍴0
+}
+take←{
 	1<≢⍴⍺:⎕SIGNAL 4
 	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0
 	1<≢⍴axis:⎕SIGNAL 11
@@ -354,10 +362,11 @@ tke←{⍺←⊢
 	i←,z flatten_idx (wi←⍳¨w)+m×s-w←s⌊⍴y
 	s⍴z⊣z[i]←,(wi+m×(⍴y)-w)⌷y⊣z←,z
 }
+tke←mix ambiv take
 
 ⍝ ↓: Split | Drop
-drp←{⍺←⊢
-	1≡⍺ 1:⎕SIGNAL 16
+split←{⎕SIGNAL 16}
+drop←{
 	1<≢⍴⍺:⎕SIGNAL 4
 	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0
 	1<≢⍴axis:⎕SIGNAL 11
@@ -367,6 +376,7 @@ drp←{⍺←⊢
 	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
 	((0⌈x)+⍳¨0⌈(⍴y)[axis]-|x)⌷[axis]y
 }
+drp←split ambiv drop
 
 ⍝ ⊖: Rerverse First | Rotate First
 rtf←{⎕SIGNAL 16}
@@ -386,7 +396,11 @@ gdu←{⎕SIGNAL 16}
 gdd←{⎕SIGNAL 16}
 
 ⍝ ⊤: Encode
-enc←{⎕SIGNAL 16}
+enc←{
+	~is_numeric ⍺:⎕SIGNAL 11 ⋄ ~is_numeric ⍵:⎕SIGNAL 11
+	d←⌽×\⌽⍺+⍺=0 ⋄ z←d∘.{⍵-⍺×⌊⍵÷⍺+⍺=0}⍵
+	d←1↓⍤1⊢d,1  ⋄ (d≠0)×⍤0 rr⌊z÷⍤rr 0⊢d+d=0⊣rr←≢⍴⍵
+}
 
 ⍝ ⊥: Decode
 dec←{
@@ -489,17 +503,16 @@ red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴
 
 ⍝ ⍸: Where/Interval Index
 where_nz←'where_nz_ibeam'⌶
-iou←{⍺←⊢
-	1≡⍺ 1:{
-		1<≢⍴⍵:⎕SIGNAL 16
-		0≡≢,⍵:⍬
-		~is_numeric ⍵:⎕SIGNAL 11 ⋄ any ⍵<0:⎕SIGNAL 11
-		0≡≢i←where_nz ⍵:⍬
-		sx←+⍀x←(,⍵)[i] ⋄ (≢i)≡c←sx[0⌈¯1+≢i]:i
-		+⍀z⊣z[0,¯1↓sx]←i-0,¯1↓i⊣z←c⍴0
-	}⍵
-	⎕SIGNAL 16
+where←{
+	1<≢⍴⍵:⎕SIGNAL 16
+	0≡≢,⍵:⍬
+	~is_numeric ⍵:⎕SIGNAL 11 ⋄ any ⍵<0:⎕SIGNAL 11
+	0≡≢i←where_nz ⍵:⍬
+	sx←+⍀x←(,⍵)[i] ⋄ (≢i)≡c←sx[0⌈¯1+≢i]:i
+	+⍀z⊣z[0,¯1↓sx]←i-0,¯1↓i⊣z←c⍴0
 }
+interval_idx←{⎕SIGNAL 16}
+iou←where ambiv interval_idx
 
 ⍝ ⌿⌿: Replicate First
 rpf←{

@@ -37,10 +37,14 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_set;
 	struct cell_doper *cdf_mst_vals;
 	struct cell_moper *cdf_mst;
+	struct cell_func *cdf_materialize;
+	struct cell_func *cdf_sqd_idx;
 	struct cell_func *cdf_sqd;
 	struct cell_func *cdf_brk;
 	struct cell_func *cdf_rgt;
 	struct cell_func *cdf_lft;
+	struct cell_func *cdf_ravel;
+	struct cell_func *cdf_catenate;
 	struct cell_func *cdf_cat;
 	struct cell_func *cdf_ctf;
 	struct cell_func *cdf_depth;
@@ -96,7 +100,11 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *cdf_neq_vec;
 	struct cell_func *cdf_noteq;
 	struct cell_func *cdf_neq;
+	struct cell_func *cdf_mix;
+	struct cell_func *cdf_take;
 	struct cell_func *cdf_tke;
+	struct cell_func *cdf_split;
+	struct cell_func *cdf_drop;
 	struct cell_func *cdf_drp;
 	struct cell_func *cdf_rtf;
 	struct cell_func *cdf_reverse_last;
@@ -124,6 +132,8 @@ EXPORT struct cdf_prim_loc {
 	struct cell_moper *cdf_rdf;
 	struct cell_moper *cdf_red;
 	struct cell_func_box *cdf_where_nz;
+	struct cell_func *cdf_where;
+	struct cell_func *cdf_interval_idx;
 	struct cell_func *cdf_iou;
 	struct cell_func *cdf_rpf;
 	struct cell_func *cdf_rep;
