@@ -862,7 +862,7 @@ veach_dyadic(struct cell_array **z,
 	
 	tvals = t->values;
 	
-#define VEACH_DYA_LOOP(op, lk, lt, ls, rk, rt, rs, fail) {			\
+#define VEACH_DYA_LOOP(op, lk, lt, ls, rk, rt, rs, fail) {		\
 	lt *lvals = lbuf;						\
 	rt *rvals = rbuf;						\
 									\
