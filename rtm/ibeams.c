@@ -1121,8 +1121,7 @@ dyadic_scalar_apply(struct cell_array **z,
 		CHKAF(af_tile(&rtile, r->values, rtc, 1, 1, 1), device_done);
 		CHKAF(af_cast(&lcast, ltile, type), device_done);
 		CHKAF(af_cast(&rcast, rtile, type), device_done);
-		CHK(scl_device(&za, lcast, rcast), device_done,
-		    L"scl_device(&za, lcast, rcast)");
+		CHKFN(scl_device(&za, lcast, rcast), device_done);
 		
 		t->values = za;
 
