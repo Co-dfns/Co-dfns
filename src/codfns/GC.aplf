@@ -368,7 +368,6 @@ GC←{
 		z,←⊂'	*stkhd++ = dst;'
 		z,←⊂'}'
 		z,⊂''
-		'AXIS OPERATOR NOT IMPLEMENTED YET'SIGNAL 16
 	}¨i
 
 	⍝ B7: Option bindings
