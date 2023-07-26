@@ -34,7 +34,7 @@ ambiv←{
 veach←'veach_ibeam'⌶⌶
 scalar←{op←⍺⍺
 	hax←1 ⋄ axis⍠←hax←0 ⋄ hax:⍺{
-		hl←(≢⍴⍺)>≢⍴⍵ ⋄ l←⍺{hl:⍵ ⋄ ⍺}⍵ ⋄ h←{hl:⍺ ⋄ ⍵}⍵ ⋄ s←⍴h
+		hl←(≢⍴⍺)>≢⍴⍵ ⋄ l←⍺{hl:⍵ ⋄ ⍺}⍵ ⋄ h←⍺{hl:⍺ ⋄ ⍵}⍵ ⋄ s←⍴h
 		1<≢⍴axis:⎕SIGNAL 4 ⋄ (≢⍴l)≢≢axis:⎕SIGNAL 4 ⋄ axis←,axis
 		(⍴l)≢s[axis]:⎕SIGNAL 5
 		zs←(≢s)⍴1 ⋄ zs[axis]←⍴l
