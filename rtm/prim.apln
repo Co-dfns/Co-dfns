@@ -527,11 +527,12 @@ iou←where ambiv interval_idx
 rpf←{
 	hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4
 	noscl←{0≡≢⍴⍵:,⍵ ⋄ ⍵} ⋄ x←noscl ⍺ ⋄ y←noscl ⍵
-	(1<≢⍴axis)∨1≢≢,axis:⎕SIGNAL 5 ⋄ axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴y:⎕SIGNAL 4
-	1<≢⍴⍺:⎕SIGNAL 4
-	x←{1≡≢,x:(⍴y)[axis]⍴x ⋄ x}⍬ ⋄ y←{1≡≢,y:(⍴x)⍴y ⋄ y}⍬
-	(≢x)≢(⍴y)[axis]:⎕SIGNAL 5 ⋄ ~is_integer x:⎕SIGNAL 11
-	s←⍴z←(⊂i←⍸|x)⌷[axis]y ⋄ ls←×⌿axis↑s ⋄ rs←×⌿(axis+1)↓s
+	1<≢⍴axis:⎕SIGNAL 5 ⋄ 1≢≢,axis:⎕SIGNAL 5
+	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴y:⎕SIGNAL 4 ⋄ 1<≢⍴⍺:⎕SIGNAL 4
+	(0≢≢x)∧~is_integer x:⎕SIGNAL 11
+	(ya≢≢x)∧(1≢≢x)⍱1≢ya←(⍴y)[axis]:⎕SIGNAL 5
+	ac←ya{(⍺⌈⍵)×⍺ ⍵∧.≠0}≢x ⋄ x←ac⍴x
+	s←⍴z←(⊂(ya≠1)×i←⍸|x)⌷[axis]y ⋄ ls←×⌿axis↑s ⋄ rs←×⌿(axis+1)↓s
 	z←ls(s[axis])rs⍴z ⋄ z[;⍸x[i]<0;]←⊃0⍴,y ⋄ s⍴z
 }
 
