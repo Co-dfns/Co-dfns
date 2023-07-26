@@ -5,7 +5,7 @@
  cd←⎕NS⍬ ⋄ dy←#.⍎tn
 
  EXEC←{0::⊃⎕DM ⋄ ⍺ ⍺⍺ ⍵}
- TEST←{X Y←⍵⍵ ⋄ #.UT.expect←X dy.(⍎⍺⍺)EXEC Y ⋄ X cd.(⍎⍺⍺)EXEC Y}
+ TEST←{X Y←⍵⍵ ⋄ #.UT.expect←X dy.(⍎⍺⍺) Y ⋄ X cd.(⍎⍺⍺) Y}
 
  ∆0000_TEST←{#.UT.expect←'Successful compile'
   _←#.⎕EX cn ⋄ 'Successful compile'⊣cd∘←#.c0026←tn #.codfns.Fix ⎕SRC dy}
