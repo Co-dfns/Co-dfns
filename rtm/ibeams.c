@@ -179,25 +179,19 @@ shape_func(struct cell_array **z,
 	for (size_t i = 0; i < r->rank; i++) {
 		size_t dim = r->shape[i];
 		
-		if (dim <= 1)
-			continue;
-		
-		if (dim <= INT16_MAX && type < ARR_SINT) {
-			type = ARR_SINT;
-			continue;
+		if (dim <= 1) {
+		} else if (dim <= INT16_MAX) {
+			if (type < ARR_SINT) 
+				type = ARR_SINT;
+		} else if (dim <= INT32_MAX) {
+			if (type < ARR_INT)
+				type = ARR_INT;
+		} else if (dim <= DBL_MAX) {
+			if (type < ARR_DBL) 
+				type = ARR_DBL;
+		} else {
+			CHK(10, fail, L"Shape exceeds DBL range");
 		}
-		
-		if (dim <= INT32_MAX && type < ARR_INT) {
-			type = ARR_INT;
-			continue;
-		}
-		
-		if (dim <= DBL_MAX && type < ARR_DBL) {
-			type = ARR_DBL;
-			continue;
-		}
-		
-		CHK(10, fail, L"Shape exceeds DBL range");
 	}
 	
 	CHK(mk_array(&t, type, STG_HOST, 1), fail,
