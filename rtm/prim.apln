@@ -407,7 +407,8 @@ gdd←{⎕SIGNAL 16}
 enc←{
 	~is_numeric ⍺:⎕SIGNAL 11 ⋄ ~is_numeric ⍵:⎕SIGNAL 11
 	d←⌽×\⌽⍺+⍺=0 ⋄ z←d∘.{⍵-⍺×⌊⍵÷⍺+⍺=0}⍵
-	d←1↓⍤1⊢d,1  ⋄ (d≠0)×⍤0 rr⌊z÷⍤rr 0⊢d+d=0⊣rr←≢⍴⍵
+	d←(⍴d)⍴1↓[0⌈¯1+≢⍴d]d,1
+	(d≠0)×[⍳≢⍴d]⌊z÷[⍳≢⍴d]d+d=0
 }
 
 ⍝ ⊥: Decode
