@@ -785,28 +785,22 @@ veach_monadic(struct cell_array **z,
 	if (r->type == ARR_SPAN || r->type == ARR_MIXED)
 		CHK(99, fail, L"Unexpected (SPAN | MIXED) type array");
 	
-	CHK(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail, 
-	    L"mk_array(&t, ARR_NESTED, STG_HOST, 1)");
+	CHKFN(array_get_host_buffer(&buf, &fb, r), fail);
+	CHKFN(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail);
 	
 	t->shape[0] = count = array_values_count(r);
 	
-	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	CHKFN(alloc_array(t), fail);
 	
 	tv	= t->values;
-	
-	CHK(array_get_host_buffer(&buf, &fb, r), fail,
-	    L"array_get_host_buffer(&buf, &fb, r)");
 	
 	#define VEACH_MON_LOOP(op, kd, tp, sfx, fail) {			\
 		tp *rv = buf;						\
 									\
 		for (size_t i = 0; i < count; i++) {			\
-			CHK(mk_array_##sfx(&x, rv[i]), fail,		\
-			    L"mk_array_" #sfx L"(&x, rv[i])");	\
-			CHK((oper->fptr_mon)(tv + i, x, oper), fail,	\
-			    L"(oper->fptr_mon)(tv + i, x, oper)");	\
-			CHK(release_array(x), fail,			\
-			    L"release_array(x)");			\
+			CHKFN(mk_array_##sfx(&x, rv[i]), fail);		\
+			CHKFN((oper->fptr_mon)(tv + i, x, oper), fail);	\
+			CHKFN(release_array(x), fail);			\
 		}							\
 	}								\
 	
@@ -852,7 +846,7 @@ veach_dyadic(struct cell_array **z,
 	rc = array_values_count(r);
 	t->shape[0] = count = lc > rc ? lc : rc;
 	
-	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	CHKFN(alloc_array(t), fail);
 	
 	tvals = t->values;
 	
@@ -861,14 +855,11 @@ veach_dyadic(struct cell_array **z,
 	rt *rvals = rbuf;						\
 									\
 	for (size_t i = 0; i < count; i++) {				\
-		CHK(mk_array_##ls(&x, lvals[i % lc]), fail,		\
-		    L"mk_array_" #ls L"(&x, lvals[i % lc])");		\
-		CHK(mk_array_##rs(&y, rvals[i % rc]), fail,		\
-		    L"mk_array_" #rs L"(&y, rvals[i % rc])");		\
-		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
-		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " #ls L"/" #rs);	\
-		CHK(release_array(x), fail, L"release_array(x)");	\
-		CHK(release_array(y), fail, L"release_array(y)");	\
+		CHKFN(mk_array_##ls(&x, lvals[i % lc]), fail);		\
+		CHKFN(mk_array_##rs(&y, rvals[i % rc]), fail);		\
+		CHKFN((oper->fptr_dya)(tvals + i, x, y, oper), fail);	\
+		CHKFN(release_array(x), fail);				\
+		CHKFN(release_array(y), fail);				\
 	}								\
 }									\
 
