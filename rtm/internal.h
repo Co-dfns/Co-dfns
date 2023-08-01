@@ -194,7 +194,7 @@ default:																\
 	CHK(99, fail, L"Unknown type pair.");												\
 }																	\
 
-#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " sfx)
+#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
 
 #define MONADIC_SCALAR_LOOP(rt, expr) {		\
 	rt *rv = r->values;			\
@@ -224,16 +224,22 @@ default:																\
 	MONADIC_SCALAR_LOOP(rt, oper(x));	\
 }						\
 
-#define HOST_SWITCH(oper, zk, zt, zs, fail) oper##_##SWITCH##_##zk(zt, #zs, fail)
+#define HOST_SWITCH(oper, zk, zt, zs, fail) oper##_##SWITCH##_##zk(zt, zs, fail)
 
-#define SCALAR_SWITCH(knd, typ, oper, fail) {					\
+#define SCALAR_SWITCH(sfx, typ, oper, fail) {					\
 	typ *tv = t->values;							\
 										\
-	DYADIC_TYPE_SWITCH(l->type, r->type, SCALAR_LOOP_##knd, oper, fail);	\
+	DYADIC_TYPE_SWITCH(l->type, r->type, SCALAR_LOOP_##sfx, oper, fail);	\
 }										\
 
-#define SCALAR_LOOP_real(oper, lk, lt, ls, rk, rt, rs, fail) \
-	DYADIC_SCALAR_LOOP(lt, rt, oper(cast_real_##lk(x), cast_real_##rk(y)))
+#define SCALAR_LOOP_int8(oper, lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, (int8_t)oper((int8_t)cast_real_##lk(x), (int8_t)cast_real_##rk(y)))
+#define SCALAR_LOOP_int16(oper, lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, (int16_t)oper((int16_t)cast_real_##lk(x), (int16_t)cast_real_##rk(y)))
+#define SCALAR_LOOP_int32(oper, lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, (int32_t)oper((int32_t)cast_real_##lk(x), (int32_t)cast_real_##rk(y)))
+#define SCALAR_LOOP_dbl(oper, lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, (double)oper((double)cast_real_##lk(x), (double)cast_real_##rk(y)))
 #define SCALAR_LOOP_cmpx(oper, lk, lt, ls, rk, rt, rs, fail) \
 	DYADIC_SCALAR_LOOP(lt, rt, oper(cast_cmpx_##lk(x), cast_cmpx_##rk(y)))
 
