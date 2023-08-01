@@ -7,7 +7,7 @@
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0016←tn #.codfns.Fix ⎕SRC dy}
 
- _← 'catenate' 'catfirst' 'deal' 'decode' 'depth' 'drop∆R1' 'drop∆R2'
+ _← 'catfirst' 'deal' 'decode' 'depth' 'drop∆R1' 'drop∆R2'
  _,←'drop∆R3' 'encode' 'encode∆Ovr' 'enlist' 'expand' 'expandfirst'
  _,←'find' 'first' 'gradedown' 'gradeup' 'identity' 'index∆R1' 'index∆R2'
  _,←'index∆R3' 'index∆R4'
@@ -119,13 +119,6 @@
 
 F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 B←{⊃((⎕DR ⍵)11)⎕DR ⍵}
-
-∆enlist∆1_TEST←'enlist' MK∆T1 (⍳5)
-∆enlist∆2_TEST←'enlist' MK∆T1 (0)
-∆enlist∆3_TEST←'enlist' MK∆T1 (⍬)
-∆enlist∆4_TEST←'enlist' MK∆T1 (÷2 2⍴1+⍳5)
-∆enlist∆5_TEST←'enlist' MK∆T1 (3 7⍴1 0)
-∆enlist∆6_TEST←'enlist' MK∆T1 (3 7⍴⍳21)
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 

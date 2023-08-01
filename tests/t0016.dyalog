@@ -1,10 +1,6 @@
 ﻿:Namespace t0016
 
-catenate←{⍺,⍵}
-
 catfirst←{⍺⍪⍵}
-
-enlist←{∊⍵}
 
 expand←{⍺\⍵}
 
