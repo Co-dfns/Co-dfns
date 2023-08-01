@@ -2,8 +2,6 @@
 
 catfirst←{⍺⍪⍵}
 
-expand←{⍺\⍵}
-
 expandfirst←{⍺⍀⍵}
 
 find←{⍺⍷⍵}
