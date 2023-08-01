@@ -387,7 +387,7 @@ drop←{
 drp←split ambiv drop
 
 ⍝ ⊖: Rerverse First | Rotate First
-rtf←{⎕SIGNAL 16}
+rtf←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
 
 ⍝ ⌽: Reverse Last | Rotate Last
 reverse_last←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
@@ -406,8 +406,8 @@ gdd←{⎕SIGNAL 16}
 ⍝ ⊤: Encode
 enc←{
 	~is_numeric ⍺:⎕SIGNAL 11 ⋄ ~is_numeric ⍵:⎕SIGNAL 11
-	d←⌽×\⌽⍺+⍺=0 ⋄ z←d∘.{⍵-⍺×⌊⍵÷⍺+⍺=0}⍵
-	d←(⍴d)⍴1↓[0⌈¯1+≢⍴d]d,1
+	d←⊖×⍀⊖⍺ ⋄ z←d∘.{⍵-⍺×⌊⍵÷⍺+⍺=0}⍵
+	d←(⍴d)⍴1↓d⍪1
 	(d≠0)×[⍳≢⍴d]⌊z÷[⍳≢⍴d]d+d=0
 }
 
