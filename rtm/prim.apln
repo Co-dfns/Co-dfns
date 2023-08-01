@@ -423,7 +423,11 @@ dec←{
 }
 
 ⍝ ∊: Membership
-mem←{⎕SIGNAL 16}
+enlist←{
+	1≥≡⍵:,⍵
+	⊃⍪⌿∇¨⍵
+}
+mem←enlist ambiv {⎕SIGNAL 16}
 
 ⍝ ⍷: Find
 fnd←{⎕SIGNAL 16}
