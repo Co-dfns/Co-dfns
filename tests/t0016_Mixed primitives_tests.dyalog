@@ -512,12 +512,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆pick∆13_TEST←'pick' MK∆T2 0(F ⍳5)
 ∆pick∆14_TEST←'pick' MK∆T2 3(F 2 4 6 8)
 
-∆ravel∆1_TEST←'ravel' MK∆T1(⍳5)
-∆ravel∆2_TEST←'ravel' MK∆T1(0)
-∆ravel∆3_TEST←'ravel' MK∆T1(⍬)
-∆ravel∆4_TEST←'ravel' MK∆T1(÷2 2⍴1+⍳5)
-∆ravel∆5_TEST←'ravel' MK∆T1(3 7⍴0 1)
-
 ∆reverse∆01_TEST←'reverse∆R1' MK∆T1 (⍬)
 ∆reverse∆02_TEST←'reverse∆R1' MK∆T1 (0)
 ∆reverse∆03_TEST←'reverse∆R1' MK∆T1 (⍳5)

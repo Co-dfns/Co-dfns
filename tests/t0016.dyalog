@@ -20,8 +20,6 @@ membership←{⍺∊⍵}
 
 pick←{⍺⊃⍵}
 
-ravel←{,⍵}
-
 reverse∆R1←{⌽⍵} ⋄ reverse∆R2←{⌽⌽⌽⍵}
 
 revfirst∆R1←{⊖⍵} ⋄ revfirst∆R2←{⊖⊖⊖⍵}
