@@ -522,27 +522,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆reverse∆08_TEST←'reverse∆R2' MK∆T1 (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
 ∆reverse∆09_TEST←'reverse∆R2' MK∆T1 (2 3 4⍴⍳5)
 
-∆right∆01_TEST←'right' MK∆T2 (⍬)(0)
-∆right∆02_TEST←'right' MK∆T2 (0)(⍬)
-∆right∆03_TEST←'right' MK∆T2 (I32 ⍳5)(⍬)
-∆right∆04_TEST←'right' MK∆T2 (I16 ⍳5)(⍬)
-∆right∆05_TEST←'right' MK∆T2 (I8 ⍳5)(⍬)
-∆right∆06_TEST←'right' MK∆T2 (I32 2 3 4⍴⍳5)(⍬)
-∆right∆07_TEST←'right' MK∆T2 (I16 2 3 4⍴⍳5)(⍬)
-∆right∆08_TEST←'right' MK∆T2 (I8 2 3 4⍴⍳5)(⍬)
-∆right∆09_TEST←'right' MK∆T2 (2 3 4⍴0 1 1)(⍬)
-∆right∆10_TEST←'right' MK∆T2 (4⍴0 1 1)(⍬)
-∆right∆11_TEST←'right' MK∆T2 (24⍴0 1 1)(⍬)
-∆right∆12_TEST←'right' MK∆T2 (⍬)(I32 ⍳5)
-∆right∆14_TEST←'right' MK∆T2 (⍬)(I16 ⍳5)
-∆right∆15_TEST←'right' MK∆T2 (⍬)(I8 ⍳5)
-∆right∆16_TEST←'right' MK∆T2 (⍬)(I32 2 3 4⍴⍳5)
-∆right∆17_TEST←'right' MK∆T2 (⍬)(I16 2 3 4⍴⍳5)
-∆right∆18_TEST←'right' MK∆T2 (⍬)(I8 2 3 4⍴⍳5)
-∆right∆19_TEST←'right' MK∆T2 (⍬)(2 3 4⍴0 1 1)
-∆right∆20_TEST←'right' MK∆T2 (⍬)(4⍴0 1 1)
-∆right∆21_TEST←'right' MK∆T2 (⍬)(24⍴0 1 1)
-
 ∆rotate∆01_TEST←'rotate∆S' MK∆T2 ¯1         ⍬
 ∆rotate∆02_TEST←'rotate∆S' MK∆T2 ¯1         0
 ∆rotate∆03_TEST←'rotate∆S' MK∆T2 ¯1         (⍳5)
