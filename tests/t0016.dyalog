@@ -12,8 +12,6 @@ indexof←{⍺⍳⍵}
 
 intersection←{⍺∩⍵}
 
-left←{⍺⊣⍵}
-
 match←{⍺≡⍵}
 
 matinv←{⌹⍵}

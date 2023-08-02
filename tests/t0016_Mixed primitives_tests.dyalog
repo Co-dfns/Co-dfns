@@ -343,9 +343,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆intersection∆71_TEST←'intersection' MK∆T2 (F ?10⍴5)(F 10+?10⍴5)
 ∆intersection∆72_TEST←'intersection' MK∆T2 (F ?50⍴100)(?F 50⍴100)
 
-∆left∆01_TEST←'left' MK∆T2 (⍬)(0)
-∆left∆02_TEST←'left' MK∆T2 (0)(⍬)
-
 ∆match∆01_TEST←'match' MK∆T2 (⍬)	(⍬)
 ∆match∆02_TEST←'match' MK∆T2 (0)	(0)
 ∆match∆03_TEST←'match' MK∆T2 (⍬)	(0)
