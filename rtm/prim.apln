@@ -563,10 +563,19 @@ scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
 scn←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ axis ⍺⍺ scan axis⊢⍵}
 
 ⍝ ⍀⍀: Expand First
-xpf←{⎕SIGNAL 16}
+xpf←{
+	0≡≢⍴⍵:⍺∇,⍵ ⋄ axis⍠←0
+	1<≢⍴axis:⎕SIGNAL 5 ⋄ 1≢≢,axis:⎕SIGNAL 5 ⋄ ~is_integer axis:⎕SIGNAL 11
+	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4 ⋄ 1<≢⍴⍺:⎕SIGNAL 4
+	as←(⍴⍵)[axis]
+	0≡≢⍺:⍺{0≡as:⍵ ⋄ 1≡as:s⍴⍵⊣s[axis]←0⊣s←⍴⍵ ⋄ ⎕SIGNAL 5}⍵
+	1≡as:(⊂(1⌈|⍺)⌿⍺>0)⌷[axis]¯2↑[axis]⍵
+	as≢z[¯1+≢z←+⍀m←⍺>0]:⎕SIGNAL 5
+	(⊂(1⌈|⍺)⌿m×z)⌷[axis](-1+as)↑[axis]⍵
+}
 
 ⍝ \\: Expand Last
-xpd←{⎕SIGNAL 16}
+xpd←{0≡≢⍴⍵:⍺∇,⍵ ⋄ axis⍠←0⌈¯1+≢⍴⍵ ⋄ ⍺⍀[axis]⍵}
 
 ⍝ ∘.: Outer Product
 oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}
