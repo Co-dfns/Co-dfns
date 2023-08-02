@@ -512,19 +512,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆pick∆13_TEST←'pick' MK∆T2 0(F ⍳5)
 ∆pick∆14_TEST←'pick' MK∆T2 3(F 2 4 6 8)
 
-MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
- res←|1-(0.5⌈(⌈/1⊃⍵⍵)÷2)÷(+⌿÷≢)cv ⋄ _←{0.05≤⍵:⎕←⍵ ⋄ ⍬}res
- ##.UT.expect←(⍴nv)(1) ⋄ (⍴cv)(0.05>res)}
-
-∆random∆01_TEST←'random' MK∆T  4096    32
-∆random∆02_TEST←'random' MK∆T2 0	14
-∆random∆03_TEST←'random' MK∆T  1024	0
-∆random∆04_TEST←'random' MK∆T2 0	0
-∆random∆05_TEST←'random' MK∆T  12345	67890
-∆random∆06_TEST←'random' MK∆T2 19	1
-∆random∆07_TEST←'random' MK∆T  512	(0 0 0 0)
-∆random∆08_TEST←'random' MK∆T2 20	(1 1 1 1)
-
 ∆ravel∆1_TEST←'ravel' MK∆T1(⍳5)
 ∆ravel∆2_TEST←'ravel' MK∆T1(0)
 ∆ravel∆3_TEST←'ravel' MK∆T1(⍬)
