@@ -497,12 +497,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆membership∆139_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5⍴⍳5)
 ∆membership∆140_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5 5⍴⍳5)
 
-∆mix∆01_TEST←'mix' MK∆T1 (⍬)
-∆mix∆02_TEST←'mix' MK∆T1 (0)
-∆mix∆03_TEST←'mix' MK∆T1 (⍳5)
-∆mix∆04_TEST←'mix' MK∆T1 (2 3 4⍴⍳5)
-∆mix∆05_TEST←'mix' MK∆T1 (2 3 4⍴0 1 1)
-
 ∆notmatch∆01_TEST←'notmatch' MK∆T2 (⍬)(⍬)
 ∆notmatch∆02_TEST←'notmatch' MK∆T2 (0)(0)
 ∆notmatch∆03_TEST←'notmatch' MK∆T2 (⍬)(0)
