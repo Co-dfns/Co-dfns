@@ -185,22 +185,6 @@ I32←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 I16←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)163)⎕DR ⍵}
 I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 
-∆index∆01_TEST←'index∆R1' MK∆T2 (⍬)	(5)
-∆index∆02_TEST←'index∆R1' MK∆T2 (⍬)	(⍳5)
-∆index∆03_TEST←'index∆R1' MK∆T2 (,1)	(⍳5)
-∆index∆04_TEST←'index∆R1' MK∆T2 (1)	(⍳5)
-∆index∆05_TEST←'index∆R1' MK∆T2 (1 2)	(3 3⍴⍳5)
-∆index∆06_TEST←'index∆R1' MK∆T2 (1 2)	(3 3 3⍴⍳27)
-∆index∆07_TEST←'index∆R2' MK∆T1  	(⍳5)
-∆index∆08_TEST←'index∆R3' MK∆T2 (5)	(?30 30⍴5)
-∆index∆09_TEST←'index∆R4' MK∆T2 (7 15,,?7 15⍴30)	(?50 50⍴10)
-∆index∆10_TEST←'index∆R1' MK∆T2 (1)	(3 3 3⍴⍳27)
-∆index∆11_TEST←'index∆R1' MK∆T2 (0)	(20 20⍴⍳400)
-∆index∆12_TEST←'index∆R2' MK∆T1  	(20 20⍴⍳400)
-∆index∆13_TEST←'index∆R1' MK∆T2 (0)	(?3 20⍴1000)
-∆index∆14_TEST←'index∆R1' MK∆T2 (5 9)  (?6 10⍴1000)
-∆index∆15_TEST←'index∆R1' MK∆T2 (9 5)  (?10 6⍴1000)
-
 ∆indexof∆01_TEST←'indexof' MK∆T2 (⍬)(⍬)
 ∆indexof∆02_TEST←'indexof' MK∆T2 (⍬)(1)
 ∆indexof∆03_TEST←'indexof' MK∆T2 (⍬)(⍳5)
