@@ -12,8 +12,6 @@ indexof←{⍺⍳⍵}
 
 intersection←{⍺∩⍵}
 
-match←{⍺≡⍵}
-
 matinv←{⌹⍵}
 
 matdiv←{⍺⌹⍵}
