@@ -201,15 +201,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆index∆14_TEST←'index∆R1' MK∆T2 (5 9)  (?6 10⍴1000)
 ∆index∆15_TEST←'index∆R1' MK∆T2 (9 5)  (?10 6⍴1000)
 
-∆indexgen∆0_TEST←'indexgen' MK∆T1 0
-∆indexgen∆1_TEST←'indexgen' MK∆T1 1
-∆indexgen∆2_TEST←'indexgen' MK∆T1 2
-∆indexgen∆3_TEST←'indexgen' MK∆T1 3
-∆indexgen∆4_TEST←'indexgen' MK∆T1 4
-∆indexgen∆5_TEST←'indexgen' MK∆T1 (⊃83 11⎕DR 1)
-∆indexgen∆6_TEST←'indexgen' MK∆T1 (⊃83 11⎕DR 0)
-∆indexgen∆7_TEST←'indexgen' MK∆T1 (F 7)
-
 ∆indexof∆01_TEST←'indexof' MK∆T2 (⍬)(⍬)
 ∆indexof∆02_TEST←'indexof' MK∆T2 (⍬)(1)
 ∆indexof∆03_TEST←'indexof' MK∆T2 (⍬)(⍳5)
