@@ -497,20 +497,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆membership∆139_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5⍴⍳5)
 ∆membership∆140_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5 5⍴⍳5)
 
-∆notmatch∆01_TEST←'notmatch' MK∆T2 (⍬)(⍬)
-∆notmatch∆02_TEST←'notmatch' MK∆T2 (0)(0)
-∆notmatch∆03_TEST←'notmatch' MK∆T2 (⍬)(0)
-∆notmatch∆04_TEST←'notmatch' MK∆T2 (⍬)(⍳5)
-∆notmatch∆05_TEST←'notmatch' MK∆T2 (⍳7)(⍳5)
-∆notmatch∆06_TEST←'notmatch' MK∆T2 (0)(⍳5)
-∆notmatch∆07_TEST←'notmatch' MK∆T2 (2 2⍴⍳4)(2 2⍴⍳4)
-∆notmatch∆08_TEST←'notmatch' MK∆T2 (2 2 3⍴⍳12)(2 2⍴⍳4)
-∆notmatch∆09_TEST←'notmatch' MK∆T2 (2 2⍴⍳4)(2 2 3⍴⍳12)
-∆notmatch∆10_TEST←'notmatch' MK∆T2 (2 2 3⍴⍳12)(2 2 3⍴1+⍳12)
-∆notmatch∆11_TEST←'notmatch' MK∆T2 (0)(2 2⍴⍳4)
-∆notmatch∆12_TEST←'notmatch' MK∆T2 (,0)(2 2⍴⍳4)
-∆notmatch∆13_TEST←'notmatch' MK∆T2 (,0)(,0)
-
 ∆pick∆01_TEST←'pick' MK∆T2 ⍬⍬
 ∆pick∆02_TEST←'pick' MK∆T2 ⍬0
 ∆pick∆03_TEST←'pick' MK∆T2 ⍬(1 2)

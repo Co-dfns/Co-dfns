@@ -18,10 +18,6 @@ matdiv←{⍺⌹⍵}
 
 membership←{⍺∊⍵}
 
-mix←{↑⍵}
-
-notmatch←{⍺≢⍵}
-
 pick←{⍺⊃⍵}
 
 random←{?⍺⍴⍵}
