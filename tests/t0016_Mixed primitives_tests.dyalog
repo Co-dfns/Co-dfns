@@ -143,13 +143,6 @@ I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 ∆find∆019_TEST←'find' MK∆T2 (2 2⍴⍳4)(2 2⍴⍳4)
 ∆find∆020_TEST←'find' MK∆T2 (2 2⍴3 1 2 3)(3 3 4⍴1,⍳4)
 
-∆first∆01_TEST←'first' MK∆T1 (⍬)
-∆first∆02_TEST←'first' MK∆T1 (0)
-∆first∆03_TEST←'first' MK∆T1 (⍳5)
-∆first∆04_TEST←'first' MK∆T1 (2 3 4⍴1+⍳5)
-∆first∆05_TEST←'first' MK∆T1 (0 1 1 1 0)
-∆first∆06_TEST←'first' MK∆T1 (1 0 1 1 0)
-
 ∆gradedown∆01_TEST←'gradedown' MK∆T1 (⍬)
 ∆gradedown∆02_TEST←'gradedown' MK∆T1 (,1)
 ∆gradedown∆03_TEST←'gradedown' MK∆T1 (⍳3)

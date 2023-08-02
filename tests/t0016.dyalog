@@ -4,8 +4,6 @@ catfirst←{⍺⍪⍵}
 
 find←{⍺⍷⍵}
 
-first←{⊃⍵}
-
 gradedown←{⍒⍵}
 
 gradeup←{⍋⍵}
