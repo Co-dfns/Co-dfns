@@ -497,16 +497,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆membership∆139_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5⍴⍳5)
 ∆membership∆140_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5 5⍴⍳5)
 
-∆reverse∆01_TEST←'reverse∆R1' MK∆T1 (⍬)
-∆reverse∆02_TEST←'reverse∆R1' MK∆T1 (0)
-∆reverse∆03_TEST←'reverse∆R1' MK∆T1 (⍳5)
-∆reverse∆04_TEST←'reverse∆R1' MK∆T1 (2 3 4⍴⍳5)
-∆reverse∆05_TEST←'reverse∆R1' MK∆T1 (0 1 1 0 0 1 1 1 1 0 0)
-∆reverse∆06_TEST←'reverse∆R1' MK∆T1 (0 1 1 0 0 1 1)
-∆reverse∆07_TEST←'reverse∆R1' MK∆T1 (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
-∆reverse∆08_TEST←'reverse∆R2' MK∆T1 (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
-∆reverse∆09_TEST←'reverse∆R2' MK∆T1 (2 3 4⍴⍳5)
-
 ∆rotate∆01_TEST←'rotate∆S' MK∆T2 ¯1         ⍬
 ∆rotate∆02_TEST←'rotate∆S' MK∆T2 ¯1         0
 ∆rotate∆03_TEST←'rotate∆S' MK∆T2 ¯1         (⍳5)

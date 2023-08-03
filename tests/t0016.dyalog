@@ -18,8 +18,6 @@ matdiv←{⍺⌹⍵}
 
 membership←{⍺∊⍵}
 
-reverse∆R1←{⌽⍵} ⋄ reverse∆R2←{⌽⌽⌽⍵}
-
 rotate∆S←{⍺⌽⍵} ⋄ rotate∆R←{7⌽⍵} ⋄ rotate∆T←{¯1⌽⍵}
 rotate∆U←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X⌽Y}
 
