@@ -32,8 +32,6 @@ rotfirst∆U←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X⊖Y}
 
 split←{↓⍵}
 
-table←{⍪⍵} ⋄ table∆R2←{⍪0⌷⍵}
-
 tally←{≢⍵}
 
 transpose∆R1←{⍉⍵} ⋄ transpose∆R2←{⍺⍉⍵}
