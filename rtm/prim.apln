@@ -399,7 +399,7 @@ drp←split ambiv drop
 rtf←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
 
 ⍝ ⌽: Reverse Last | Rotate Last
-reverse_last←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
+reverse_last←{0≡≢⍴⍵:⍵ ⋄ 1≡≢,⍵:⍵ ⋄ s←(⍴⍵)[ax←0⌈¯1+≢⍴⍵] ⋄ (⊂s-1+⍳s)⌷[ax]⍵}
 rotate_last←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)|⍺+⍳≢⍵)⌷⍵}
 rot←reverse_last ambiv rotate_last
 
