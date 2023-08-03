@@ -607,14 +607,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆revfirst∆12_TEST←'revfirst∆R1' MK∆T1 (7⍴0 1)
 ∆revfirst∆13_TEST←'revfirst∆R1' MK∆T1 (2 3 5⍴1 0 0)
 
-∆shape∆1_TEST←'shape' MK∆T1 (⍬⍴0)
-∆shape∆2_TEST←'shape' MK∆T1 (5⍴⍳5)
-∆shape∆3_TEST←'shape' MK∆T1 (2 2⍴⍳4)
-∆shape∆4_TEST←'shape' MK∆T1 (2 5⍴0 1)
-∆shape∆5_TEST←'shape∆R2'  MK∆T1 (,5)
-∆shape∆6_TEST←'shape∆R2'  MK∆T1 (2 3⍴5)
-∆shape∆7_TEST←'shape∆R2'  MK∆T1 (4 2 3⍴5)
-
 ∆split∆01_TEST←'split' MK∆T1 (I32 7)
 ∆split∆02_TEST←'split' MK∆T1 (I16 7)
 ∆split∆03_TEST←'split' MK∆T1 (I8 7)

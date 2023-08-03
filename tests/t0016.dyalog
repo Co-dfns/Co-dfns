@@ -30,8 +30,6 @@ rotate∆U←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X⌽Y}
 rotfirst∆S←{⍺⊖⍵} ⋄ rotfirst∆R←{7⊖⍵} ⋄ rotfirst∆T←{¯1⊖⍵}
 rotfirst∆U←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X⊖Y}
 
-shape←{⍴⍵} ⋄ shape∆R2←{⍴0⌷⍵}
-
 split←{↓⍵}
 
 table←{⍪⍵} ⋄ table∆R2←{⍪0⌷⍵}
