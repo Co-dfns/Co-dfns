@@ -151,7 +151,9 @@ catenate←{
 cat←ravel ambiv catenate
 
 ⍝ Table / Catenate First
-ctf←{⍺,[0]⍵}
+table←{((≢⍵),×⌿1↓⍴⍵)⍴⍵}
+catenatefirst←{⍺,[0]⍵}
+ctf←table ambiv catenatefirst
 
 ⍝ ≡: Depth / Same
 depth←{

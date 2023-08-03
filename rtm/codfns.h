@@ -260,6 +260,8 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *cdf_ravel;
 	struct cell_func *cdf_catenate;
 	struct cell_func *cdf_cat;
+	struct cell_func *cdf_table;
+	struct cell_func *cdf_catenatefirst;
 	struct cell_func *cdf_ctf;
 	struct cell_func *cdf_depth;
 	struct cell_func *cdf_eqv;
