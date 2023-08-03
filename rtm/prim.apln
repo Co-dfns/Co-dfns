@@ -396,11 +396,22 @@ drop←{
 drp←split ambiv drop
 
 ⍝ ⊖: Rerverse First | Rotate First
-rtf←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
+reverse_axis←{
+	0≡≢⍴⍵:⍵
+	axis⍠←0 ⋄ 1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 4
+	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4
+	1≡≢,⍵:⍵ ⋄ s←(⍴⍵)[axis] ⋄ (⊂s-1+⍳s)⌷[axis]⍵
+}
+rotate_axis←{
+	0≡≢⍴⍵:⍵ ⋄ 1≡≢,⍵:⍵ ⋄ axis⍠←0 ⋄ (⊂(≢⍵)|⍺+⍳≢⍵)⌷[axis]⍵
+}
+reverse_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ reverse_axis[axis] ⍵}
+rotate_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺ rotate_axis[axis] ⍵}
+rtf←reverse_first ambiv rotate_first
 
 ⍝ ⌽: Reverse Last | Rotate Last
-reverse_last←{0≡≢⍴⍵:⍵ ⋄ 1≡≢,⍵:⍵ ⋄ s←(⍴⍵)[ax←0⌈¯1+≢⍴⍵] ⋄ (⊂s-1+⍳s)⌷[ax]⍵}
-rotate_last←{0≡≢⍴⍵:⍵ ⋄ (⊂(≢⍵)|⍺+⍳≢⍵)⌷⍵}
+reverse_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ reverse_axis[axis] ⍵}
+rotate_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺ rotate_axis[axis] ⍵}
 rot←reverse_last ambiv rotate_last
 
 ⍝ ⍉: Transpose

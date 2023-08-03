@@ -324,6 +324,10 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *cdf_split;
 	struct cell_func *cdf_drop;
 	struct cell_func *cdf_drp;
+	struct cell_func_box *cdf_reverse_axis;
+	struct cell_func_box *cdf_rotate_axis;
+	struct cell_func *cdf_reverse_first;
+	struct cell_func *cdf_rotate_first;
 	struct cell_func *cdf_rtf;
 	struct cell_func *cdf_reverse_last;
 	struct cell_func *cdf_rotate_last;
