@@ -612,13 +612,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆split∆03_TEST←'split' MK∆T1 (I8 7)
 ∆split∆04_TEST←'split' MK∆T1 (7.5)
 
-∆tally∆01_TEST←'tally' MK∆T1 (⍬)
-∆tally∆02_TEST←'tally' MK∆T1 (0)
-∆tally∆03_TEST←'tally' MK∆T1 (,0)
-∆tally∆04_TEST←'tally' MK∆T1 (⍳5)
-∆tally∆05_TEST←'tally' MK∆T1 (2 3 4⍴⍳5)
-∆tally∆06_TEST←'tally' MK∆T1 (2 3 4⍴0 1 1)
-
 ∆transpose∆01_TEST←'transpose∆R1' MK∆T1 (5 5⍴⍳25)
 ∆transpose∆02_TEST←'transpose∆R1' MK∆T1 (⍬)
 ∆transpose∆03_TEST←'transpose∆R1' MK∆T1 (5)

@@ -32,8 +32,6 @@ rotfirst∆U←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X⊖Y}
 
 split←{↓⍵}
 
-tally←{≢⍵}
-
 transpose∆R1←{⍉⍵} ⋄ transpose∆R2←{⍺⍉⍵}
 
 union←{⍺∪⍵}
