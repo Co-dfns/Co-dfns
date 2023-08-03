@@ -55,6 +55,8 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_index_gen;
 	struct cell_func *cdf_index_of;
 	struct cell_func *cdf_iot;
+	struct cell_func *cdf_disclose;
+	struct cell_func *cdf_pick;
 	struct cell_func *cdf_dis;
 	struct cell_func *cdf_enclose;
 	struct cell_func *cdf_par;
