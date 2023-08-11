@@ -403,7 +403,14 @@ reverse_axis←{
 	1≡≢,⍵:⍵ ⋄ s←(⍴⍵)[axis] ⋄ (⊂s-1+⍳s)⌷[axis]⍵
 }
 rotate_axis←{
-	0≡≢⍴⍵:⍵ ⋄ 1≡≢,⍵:⍵ ⋄ axis⍠←0 ⋄ (⊂(≢⍵)|⍺+⍳≢⍵)⌷[axis]⍵
+	0≡≢⍴⍵:⍵
+	axis⍠←0 ⋄ 1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 4
+	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4
+	(1≢≢,⍺)∧(⍴⍺)≢(axis≠⍳≢⍴⍵)⌿⍴⍵:⎕SIGNAL 4
+	1≡≢,⍵:⍵ ⋄ 1≡≢,⍺:(⊂(≢⍵)|⍺+⍳≢⍵)⌷[axis]⍵
+	ac←(⍴⍵)[axis] ⋄ lc←×⌿(axis+1)↓⍴⍵ ⋄ ix←⍳≢,⍵
+	si←(lc|ix)+lc×(ac|(⌊ix÷lc)+,ac⌿[axis],[axis-.5]⍺)+ac×⌊ix÷lc×ac	
+	(⍴⍵)⍴(,⍵)[si]
 }
 reverse_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ reverse_axis[axis] ⍵}
 rotate_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺ rotate_axis[axis] ⍵}
