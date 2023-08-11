@@ -407,8 +407,8 @@ rotate_axis←{
 	axis⍠←0 ⋄ 1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 4
 	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4
 	(1≢≢,⍺)∧(⍴⍺)≢(axis≠⍳≢⍴⍵)⌿⍴⍵:⎕SIGNAL 4
-	1≡≢,⍵:⍵ ⋄ 1≡≢,⍺:(⊂(≢⍵)|⍺+⍳≢⍵)⌷[axis]⍵
 	ac←(⍴⍵)[axis] ⋄ lc←×⌿(axis+1)↓⍴⍵ ⋄ ix←⍳≢,⍵
+	1≡≢,⍵:⍵ ⋄ 1≡≢,⍺:(⊂ac|⍺+⍳ac)⌷[axis]⍵
 	si←(lc|ix)+lc×(ac|(⌊ix÷lc)+,ac⌿[axis],[axis-.5]⍺)+ac×⌊ix÷lc×ac	
 	(⍴⍵)⍴(,⍵)[si]
 }
