@@ -20,8 +20,6 @@ membership←{⍺∊⍵}
 
 split←{↓⍵}
 
-transpose∆R1←{⍉⍵} ⋄ transpose∆R2←{⍺⍉⍵}
-
 union←{⍺∪⍵}
 
 unique←{∪⍵}
