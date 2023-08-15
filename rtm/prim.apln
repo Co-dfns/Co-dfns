@@ -382,7 +382,10 @@ take←{
 tke←mix ambiv take
 
 ⍝ ↓: Split | Drop
-split←{⎕SIGNAL 16}
+split←{
+	0≡≡⍵:⍵
+	⎕SIGNAL 16
+}
 drop←{
 	1<≢⍴⍺:⎕SIGNAL 4
 	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0
