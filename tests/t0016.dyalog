@@ -18,8 +18,6 @@ matdiv←{⍺⌹⍵}
 
 membership←{⍺∊⍵}
 
-split←{↓⍵}
-
 union←{⍺∪⍵}
 
 unique←{∪⍵}

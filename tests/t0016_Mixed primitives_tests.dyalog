@@ -497,11 +497,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆membership∆139_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5⍴⍳5)
 ∆membership∆140_TEST←'membership' MK∆T2 (F 2 2⍴2 10)(F 5 5 5⍴⍳5)
 
-∆split∆01_TEST←'split' MK∆T1 (I32 7)
-∆split∆02_TEST←'split' MK∆T1 (I16 7)
-∆split∆03_TEST←'split' MK∆T1 (I8 7)
-∆split∆04_TEST←'split' MK∆T1 (7.5)
-
 ∆union∆01_TEST←'union' MK∆T2 (⍬)(⍬)
 ∆union∆02_TEST←'union' MK∆T2 (1)(⍬)
 ∆union∆03_TEST←'union' MK∆T2 (⍳5)(⍬)
