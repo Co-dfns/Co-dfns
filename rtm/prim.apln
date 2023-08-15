@@ -422,7 +422,16 @@ rotate_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax∧0≡�
 rot←reverse_last ambiv rotate_last
 
 ⍝ ⍉: Transpose
-trn←{⎕SIGNAL 16}
+transpose←{s←⌽⍴⍵ ⋄ 1≥≢⍴⍵:⍵ ⋄ s⍴(,⍵)[(⍴⍵)⊥⊖s⊤⍳≢,⍵]}
+transpose_target←{
+	1<≢⍴⍺:⎕SIGNAL 5 ⋄ (≢⍴⍵)≢≢,⍺:⎕SIGNAL 5 ⋄ ~is_integer ⍺:⎕SIGNAL 11
+	any 0>⍺:⎕SIGNAL 4 ⋄ tr←0⌈1+⌈⌿⍺ ⋄ tr>≢⍴⍵:⎕SIGNAL 4 
+	ts←tr⍴1 ⋄ ts[⍺]←0 ⋄ any 0≠ts:⎕SIGNAL 5
+	1≥≢⍴⍵:⍵
+	ts[⍺]←⍴⍵ ⋄ _←⍺{ts[⍺]⌊←⍵}¨⍴⍵
+	ts⍴(,⍵)[(⍴⍵)⊥(⊂⍺)⌷ts⊤⍳×⌿ts]
+}
+trn←transpose ambiv transpose_target
 
 ⍝ ⍋: Grade Up
 gdu←{⎕SIGNAL 16}
