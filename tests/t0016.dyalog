@@ -8,8 +8,6 @@ gradedown←{⍒⍵}
 
 gradeup←{⍋⍵}
 
-indexof←{⍺⍳⍵}
-
 intersection←{⍺∩⍵}
 
 matinv←{⌹⍵}
