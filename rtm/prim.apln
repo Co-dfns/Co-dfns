@@ -177,7 +177,11 @@ index_gen←{
 	1≡≢,⍵:'index_gen_vec'⌶ ⍵
 	⎕SIGNAL 16
 }
-index_of←{⎕SIGNAL 16}
+index_of←{
+	1<≢⍴⍺:⎕SIGNAL 16 ⋄ 1<≡⍺:⎕SIGNAL 16 ⋄ 1<≡⍵:⎕SIGNAL 16
+	0≡≢,⍵:(⍴⍵)⍴⍬ ⋄ 0≡≢,⍺:(⍴⍵)⍴⍬
+	⎕SIGNAL 16
+}
 iot←index_gen ambiv index_of
 
 ⍝ ⊃: First / Pick
