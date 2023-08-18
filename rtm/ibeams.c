@@ -2102,3 +2102,42 @@ done:
 }
 
 DECL_FUNC(where_nz_ibeam, where_nz_func, error_dya_syntax)
+
+int
+gradedown_vec_func(struct cell_array **z, 
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *arr;
+	af_array iv, mt, lv, rv;
+	int err;
+
+	err = 0;
+	arr = NULL;
+	mt = lv = rv = iv = NULL;
+	
+	CHKFN(array_migrate_storage(l, STG_DEVICE), fail);
+	CHKFN(array_migrate_storage(r, STG_DEVICE), fail);
+
+	lv = l->values;
+	rv = r->values;
+
+	CHKAF(af_sort_by_key(&mt, &iv, lv, rv, 0, false), fail);
+	
+	CHKFN(mk_array(&arr, r->type, STG_DEVICE, 1), fail);
+	
+	arr->shape[0] = r->shape[0];
+	arr->values = iv;
+	*z = arr;
+	
+fail:
+	af_release_array(mt);
+
+	if (err) {
+		release_array(arr);
+		af_release_array(iv);
+	}
+
+	return err;
+}
+
+DECL_FUNC(gradedown_vec_ibeam, error_mon_syntax, gradedown_vec_func)

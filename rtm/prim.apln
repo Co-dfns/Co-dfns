@@ -441,10 +441,19 @@ transpose_target←{
 trn←transpose ambiv transpose_target
 
 ⍝ ⍋: Grade Up
+⍝ Q ← {1≥≢⍵:⍵ ⋄ s←⍵ ⍺⍺ ⍵⌷⍨⊂?≢⍵ ⋄ (∇ ⍵⌿⍨0>s)⍪(⍵⌿⍨0=s)⍪(∇ ⍵⌿⍨0<s)}      ⍝ (RKWH)
+⍝ qsort ← {⍺⍺{(⍵ ⍺⍺ ⍺)-(⍺ ⍺⍺ ⍵)}⍤¯1 999 Q ⍵}
+⍝ grade←{| ⊢/↑ ⍺⍺ qsort ⍵ {⍺ ⍵}¨ ⍵⍵ ⍳⍴⍵}  
+⍝ gu ← le grade +                             ⍝ grade-up   ⍋
+⍝ gd ← ge grade - 
+
 gdu←{⎕SIGNAL 16}
 
 ⍝ ⍒: Grade Down
-gdd←{⎕SIGNAL 16}
+gdd←{
+	1>≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢,⍵:⍬ ⋄ 1≢≡⍵:⎕SIGNAL 16
+	z⊣{z⊢←a[z;⍵]('gradedown_vec_ibeam'⌶)z}¨⌽⍳1⌷⍴a←⍪⍵⊣z←⍳≢⍵
+}
 
 ⍝ ⊤: Encode
 enc←{
