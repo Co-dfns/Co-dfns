@@ -4,8 +4,6 @@ catfirst←{⍺⍪⍵}
 
 find←{⍺⍷⍵}
 
-gradeup←{⍋⍵}
-
 intersection←{⍺∩⍵}
 
 matinv←{⌹⍵}

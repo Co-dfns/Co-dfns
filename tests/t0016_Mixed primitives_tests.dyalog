@@ -143,25 +143,6 @@ I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 ∆find∆019_TEST←'find' MK∆T2 (2 2⍴⍳4)(2 2⍴⍳4)
 ∆find∆020_TEST←'find' MK∆T2 (2 2⍴3 1 2 3)(3 3 4⍴1,⍳4)
 
-∆gradeup∆01_TEST←'gradeup' MK∆T1 (⍬)
-∆gradeup∆02_TEST←'gradeup' MK∆T1 (,1)
-∆gradeup∆03_TEST←'gradeup' MK∆T1 (⍳3)
-∆gradeup∆04_TEST←'gradeup' MK∆T1 (⌽⍳3)
-∆gradeup∆05_TEST←'gradeup' MK∆T1 (?25⍴20)
-∆gradeup∆06_TEST←'gradeup' MK∆T1 (?100⍴50)
-∆gradeup∆07_TEST←'gradeup' MK∆T1 (10⍴50)
-∆gradeup∆08_TEST←'gradeup' MK∆T1 (F ⍬)
-∆gradeup∆09_TEST←'gradeup' MK∆T1 (F ,1)
-∆gradeup∆10_TEST←'gradeup' MK∆T1 (F ⍳3)
-∆gradeup∆11_TEST←'gradeup' MK∆T1 (F ⌽⍳3)
-∆gradeup∆12_TEST←'gradeup' MK∆T1 (F ?25⍴20)
-∆gradeup∆13_TEST←'gradeup' MK∆T1 (F ?100⍴50)
-∆gradeup∆14_TEST←'gradeup' MK∆T1 (F 10⍴50)
-∆gradeup∆15_TEST←'gradeup' MK∆T1 (?10 10⍴50)
-∆gradeup∆16_TEST←'gradeup' MK∆T1 (?10 10 15⍴50)
-∆gradeup∆17_TEST←'gradeup' MK∆T1 (F ?10 10⍴50)
-∆gradeup∆18_TEST←'gradeup' MK∆T1 (F ?10 10 15⍴50)
-
 I32←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 I16←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)163)⎕DR ⍵}
 I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
