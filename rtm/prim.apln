@@ -447,7 +447,10 @@ trn←transpose ambiv transpose_target
 ⍝ gu ← le grade +                             ⍝ grade-up   ⍋
 ⍝ gd ← ge grade - 
 
-gdu←{⎕SIGNAL 16}
+gdu←{
+	1>≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢,⍵:⍬ ⋄ 1≢≡⍵:⎕SIGNAL 16
+	z⊣{z⊢←a[z;⍵]('gradeup_vec_ibeam'⌶)z}¨⌽⍳1⌷⍴a←⍪⍵⊣z←⍳≢⍵
+}
 
 ⍝ ⍒: Grade Down
 gdd←{

@@ -2104,7 +2104,7 @@ done:
 DECL_FUNC(where_nz_ibeam, where_nz_func, error_dya_syntax)
 
 int
-gradedown_vec_func(struct cell_array **z, 
+grade_vec(int up, struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *arr;
@@ -2121,7 +2121,7 @@ gradedown_vec_func(struct cell_array **z,
 	lv = l->values;
 	rv = r->values;
 
-	CHKAF(af_sort_by_key(&mt, &iv, lv, rv, 0, false), fail);
+	CHKAF(af_sort_by_key(&mt, &iv, lv, rv, 0, up), fail);
 	
 	CHKFN(mk_array(&arr, r->type, STG_DEVICE, 1), fail);
 	
@@ -2140,4 +2140,20 @@ fail:
 	return err;
 }
 
+int
+gradedown_vec_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return grade_vec(0, z, l, r, self);
+}
+
 DECL_FUNC(gradedown_vec_ibeam, error_mon_syntax, gradedown_vec_func)
+
+int
+gradeup_vec_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return grade_vec(1, z, l, r, self);
+}
+
+DECL_FUNC(gradeup_vec_ibeam, error_mon_syntax, gradeup_vec_func)
