@@ -1362,10 +1362,10 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	b.real = creal(tz);
 	b.imag = cimag(tz);
 	
-	return div_cmpx(a, b);
+	return div_cmpx(b, a);
 }
 
-#define log_real(x, y) (log(x) / log(y))
+#define log_real(x, y) (log(y) / log(x))
 
 #define LOG_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(sfx, typ, log_real, fail)
 #define LOG_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, log_cmpx, fail)
