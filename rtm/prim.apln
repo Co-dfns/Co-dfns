@@ -493,7 +493,8 @@ fnd←{⎕SIGNAL 16}
 ⍝ ∪: Unique | Union
 unique←{0≡≢⍴⍵:,⍵ ⋄ 1≡≢⍵:⍵ ⋄ ⍵⌿⍨(⍳≢⍵)=⍵⍳⍵}
 union←{
-	⎕SIGNAL 16
+	1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1<≢⍴⍵:⎕SIGNAL 4
+	⍺⍪⍵⌿⍨(≢⍺)=(,⍺)⍳⍵
 }
 unq←unique ambiv union
 
