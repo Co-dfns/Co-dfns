@@ -10,8 +10,6 @@ matinv←{⌹⍵}
 
 matdiv←{⍺⌹⍵}
 
-membership←{⍺∊⍵}
-
 union←{⍺∪⍵}
 
 unique←{∪⍵}
