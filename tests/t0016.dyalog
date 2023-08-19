@@ -12,6 +12,4 @@ matdiv←{⍺⌹⍵}
 
 union←{⍺∪⍵}
 
-unique←{∪⍵}
-
 :EndNamespace
