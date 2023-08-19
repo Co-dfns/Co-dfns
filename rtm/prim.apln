@@ -491,7 +491,11 @@ mem←enlist ambiv member
 fnd←{⎕SIGNAL 16}
 
 ⍝ ∪: Unique | Union
-unq←{⎕SIGNAL 16}
+unique←{0≡≢⍴⍵:,⍵ ⋄ 1≡≢⍵:⍵ ⋄ ⍵⌿⍨(⍳≢⍵)=⍵⍳⍵}
+union←{
+	⎕SIGNAL 16
+}
+unq←unique ambiv union
 
 ⍝ ∩: Intersection
 int←{⎕SIGNAL 16}
