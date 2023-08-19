@@ -10,6 +10,4 @@ matinv←{⌹⍵}
 
 matdiv←{⍺⌹⍵}
 
-union←{⍺∪⍵}
-
 :EndNamespace
