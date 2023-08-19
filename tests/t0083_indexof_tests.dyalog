@@ -109,6 +109,8 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆indexof∆82_TEST←'indexof' MK∆T2 (F ⌽⍳2)(F 5 5⍴⍳5)
 ∆indexof∆83_TEST←'indexof' MK∆T2 (F ⌽⍳2)(F 5 5 5⍴⍳5)
 ∆indexof∆84_TEST←'indexof' MK∆T2 (F ?1024⍴2*19)(F ?1024⍴2*19)
+∆indexof∆85_TEST←'indexof' MK∆T2 (3⌿⍳10) (3⌿⍳10)
+∆indexof∆86_TEST←'indexof' MK∆T2 (25⍴⍳10) (25⍴⍳10)
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
