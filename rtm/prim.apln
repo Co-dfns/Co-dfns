@@ -180,7 +180,9 @@ index_gen←{
 index_of←{
 	1<≢⍴⍺:⎕SIGNAL 16 ⋄ 1<≡⍺:⎕SIGNAL 16 ⋄ 1<≡⍵:⎕SIGNAL 16
 	0≡≢,⍵:(⍴⍵)⍴⍬ ⋄ 0≡≢,⍺:(⍴⍵)⍴⍬
-	⎕SIGNAL 16
+	lv←⍺[ix←⍋⍺] ⋄ rv←,⍵ ⋄ zv←(≢,⍵)⍴⍬
+	_←{⍵-h⊣zv[i]←t[i←⍸lv[t←zv+h]≤rv]⊣h←⌊⍵÷2}⍣(⌈2⍟lc)⊢lc←≢,⍺
+	(⍴⍵)⍴ix⊣ix[⍸lv[zv]≠rv]←≢,⍺⊣ix←ix[zv]
 }
 iot←index_gen ambiv index_of
 
