@@ -340,6 +340,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *cdf_enc;
 	struct cell_func *cdf_dec;
 	struct cell_func *cdf_enlist;
+	struct cell_func *cdf_member;
 	struct cell_func *cdf_mem;
 	struct cell_func *cdf_fnd;
 	struct cell_func *cdf_unq;

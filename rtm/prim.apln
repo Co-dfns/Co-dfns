@@ -484,7 +484,8 @@ enlist←{
 	1≥≡⍵:,⍵
 	⊃⍪⌿∇¨⍵
 }
-mem←enlist ambiv {⎕SIGNAL 16}
+member←{(≢,⍵)≠(,⍵)⍳⍺}
+mem←enlist ambiv member
 
 ⍝ ⍷: Find
 fnd←{⎕SIGNAL 16}
