@@ -122,27 +122,6 @@ B←{⊃((⎕DR ⍵)11)⎕DR ⍵}
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 
-∆find∆001_TEST←'find' MK∆T2 (⍬)(⍬)
-∆find∆002_TEST←'find' MK∆T2 (⍬)(5)
-∆find∆003_TEST←'find' MK∆T2 (⍬)(⍳5)
-∆find∆004_TEST←'find' MK∆T2 (⍬)(2 2⍴⍳4)
-∆find∆005_TEST←'find' MK∆T2 (⍬)(3 3 3⍴⍳9)
-∆find∆006_TEST←'find' MK∆T2 (1)(⍬)
-∆find∆007_TEST←'find' MK∆T2 (2)(5)
-∆find∆008_TEST←'find' MK∆T2 (3)(⍳5)
-∆find∆009_TEST←'find' MK∆T2 (4)(2 2⍴⍳4)
-∆find∆010_TEST←'find' MK∆T2 (5)(3 3 3⍴⍳9)
-∆find∆011_TEST←'find' MK∆T2 (⍳3)(⍬)
-∆find∆012_TEST←'find' MK∆T2 (⍳3)(0)
-∆find∆013_TEST←'find' MK∆T2 (⍳3)(⍳5)
-∆find∆014_TEST←'find' MK∆T2 (⍳3)(2 2⍴⍳4)
-∆find∆015_TEST←'find' MK∆T2 (⍳4)(3 3 4⍴1,⍳4)
-∆find∆016_TEST←'find' MK∆T2 (2 2⍴⍳4)(⍬)
-∆find∆017_TEST←'find' MK∆T2 (2 2⍴⍳4)(0)
-∆find∆018_TEST←'find' MK∆T2 (2 2⍴⍳4)(⍳5)
-∆find∆019_TEST←'find' MK∆T2 (2 2⍴⍳4)(2 2⍴⍳4)
-∆find∆020_TEST←'find' MK∆T2 (2 2⍴3 1 2 3)(3 3 4⍴1,⍳4)
-
 I32←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 I16←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)163)⎕DR ⍵}
 I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}

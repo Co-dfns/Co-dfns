@@ -2,6 +2,4 @@
 
 catfirst←{⍺⍪⍵}
 
-find←{⍺⍷⍵}
-
 :EndNamespace
