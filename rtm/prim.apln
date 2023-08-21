@@ -519,8 +519,10 @@ matinv←{
 	(⍴x)[0]≡(⍴x)[1]:(⍴⍵)⍴'matrix_inverse_ibeam'⌶ x
 	(⌹tx+.×⍵)+.×tx←⍉x
 }
-matdiv←{
-	⎕SIGNAL 16
+matdiv←{x←⍪⍺ ⋄ y←⍪⍵
+	2<≢⍴⍵:⎕SIGNAL 4 ⋄ 2<≢⍴⍺:⎕SIGNAL 4 ⋄ (⍴y)[0]<(⍴y)[1]:⎕SIGNAL 5
+	0≡≢,⍵:⎕SIGNAL 5 ⋄ 0≡≢,⍺:⎕SIGNAL 5 ⋄ (0<≢⍴⍵)∧(0<≢⍴⍺)∧(≢⍵)≢≢⍺:⎕SIGNAL 5
+	((1↓⍴⍵)⍪1↓⍴⍺)⍴(⌹(+⍉y)+.×y)+.×(+⍉y)+.×x
 }
 mdv←matinv ambiv matdiv
 
