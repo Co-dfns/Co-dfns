@@ -2157,3 +2157,45 @@ gradeup_vec_func(struct cell_array **z,
 }
 
 DECL_FUNC(gradeup_vec_ibeam, error_mon_syntax, gradeup_vec_func)
+
+int
+matrix_inverse_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *tgt;
+	af_array arr;
+	dim_t shp[2];
+	int err;
+	
+	arr = NULL;
+	tgt = NULL;
+	
+	shp[0] = r->shape[1];
+	shp[1] = r->shape[0];
+	
+	CHKFN(array_migrate_storage(r, STG_DEVICE), fail);
+	
+	CHKAF(af_moddims(&arr, r->values, 2, shp), fail);
+	CHKAF(af_inverse(&arr, arr, AF_MAT_NONE), fail);
+	/* CHKAF(af_release_array(arr), fail); */
+	CHKAF(af_flat(&arr, arr), fail);
+	/* CHKAF(af_release_array(arr), fail); */
+	
+	CHKFN(mk_array(&tgt, ARR_DBL, STG_DEVICE, 2), fail);
+	
+	tgt->shape[0] = r->shape[0];
+	tgt->shape[1] = r->shape[1];
+	tgt->values = arr;
+	
+	*z = tgt;
+	
+fail:
+	if (err) {
+		af_release_array(arr);
+		release_array(tgt);
+	}
+	
+	return err;
+}
+
+DECL_FUNC(matrix_inverse_ibeam, matrix_inverse_func, error_dya_syntax)

@@ -513,8 +513,16 @@ roll←{
 }
 rol←roll ambiv deal
 
-⍝ ⌹: Matrix Division
-mdv←{⎕SIGNAL 16}
+⍝ ⌹: Matrix Division  (ATA)−1 AT
+matinv←{
+	2<≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢,⍵:⎕SIGNAL 5 ⋄ x←⍪⍵ ⋄ (⍴x)[0]<(⍴x)[1]:⎕SIGNAL 5
+	(⍴x)[0]≡(⍴x)[1]:(⍴⍵)⍴'matrix_inverse_ibeam'⌶ x
+	(⌹tx+.×⍵)+.×tx←⍉x
+}
+matdiv←{
+	⎕SIGNAL 16
+}
+mdv←matinv ambiv matdiv
 
 ⍝ ⍨: Commute
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
