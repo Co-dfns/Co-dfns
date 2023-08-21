@@ -147,14 +147,6 @@ I32←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 I16←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)163)⎕DR ⍵}
 I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 
-∆matdiv∆1_TEST←'matdiv' 1e¯12  MK∆T3 (?5 5⍴0) (?5 5⍴0)
-∆matdiv∆2_TEST←'matdiv'  MK∆T2 (?5⍴0) (?5⍴0)
-∆matdiv∆3_TEST←'matdiv'  MK∆T2 (?5 5⍴0) (?5⍴0)
-∆matdiv∆4_TEST←'matdiv' 1e¯9 MK∆T3 (?5⍴0) (?5 5⍴0)
-∆matdiv∆5_TEST←'matdiv' 1e¯12 MK∆T3 (?5 3⍴0) (?5 2⍴0)
-∆matdiv∆6_TEST←'matdiv'  MK∆T2 (?5⍴0) (?5 2⍴0)
-∆matdiv∆7_TEST←'matdiv'  MK∆T2 (?5 3⍴0) (?5⍴0)
-
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace

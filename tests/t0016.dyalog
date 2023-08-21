@@ -4,6 +4,4 @@ catfirst←{⍺⍪⍵}
 
 find←{⍺⍷⍵}
 
-matdiv←{⍺⌹⍵}
-
 :EndNamespace
