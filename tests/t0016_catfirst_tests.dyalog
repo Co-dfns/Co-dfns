@@ -7,23 +7,6 @@
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0016←tn #.codfns.Fix ⎕SRC dy}
 
- _← 'catfirst' 'deal' 'decode' 'depth' 'drop∆R1' 'drop∆R2'
- _,←'drop∆R3' 'encode' 'encode∆Ovr' 'enlist' 'expand' 'expandfirst'
- _,←'find' 'first' 'gradedown' 'gradeup' 'identity' 'index∆R1' 'index∆R2'
- _,←'index∆R3' 'index∆R4'
- _,←'indexgen' 'indexof' 'intersection' 'left' 'match' 'matinv' 'matdiv'
- _,←'membership' 'mix' 'notmatch' 'pick' 'random' 'ravel' 'replicate'
- _,←⊂'replicatefirst'
- _,←'reshape∆R0' 'reshape∆Rv' 'reshape∆Rl' 'reshape∆Rr' 'reshape∆Rs'
- _,←'reverse∆R1' 'reverse∆R2' 'revfirst∆R1' 'revfirst∆R2' 'right'
- _,←'rotate∆S' 'rotate∆R' 'rotate∆T' 'rotate∆U' 'rotfirst∆S'
- _,←'rotfirst∆R' 'rotfirst∆T' 'rotfirst∆U' 'same' 'shape' 'shape∆R2'
- _,←'split' 'table' 'table∆R2' 'take∆R1' 'take∆R2'
- _,←'tally' 'transpose∆R1' 'transpose∆R2' 'union' 'unique'
- bindings←{⍵[⍋⍵;]}↑_
-
- ∆01_TEST←{#.UT.expect←bindings ⋄ cd.⎕NL 3}
-
  MK∆T1←{##.UT.expect←(⍎'dy.',⍺⍺)⍵⍵ ⋄ (⍎'cd.',⍺⍺)⍵⍵}
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
  MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
@@ -116,15 +99,6 @@
 ∆catfirst∆83_TEST←'catfirst' MK∆T2 (?5 196⍴2)    (⍬⍴1 0 0 0)
 ∆catfirst∆84_TEST←'catfirst' MK∆T2 3             (0 5⍴⍬)
 ∆catfirst∆85_TEST←'catfirst' MK∆T2 (0 5⍴⍬)       3
-
-F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
-B←{⊃((⎕DR ⍵)11)⎕DR ⍵}
-
-I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
-
-I32←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
-I16←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)163)⎕DR ⍵}
-I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
