@@ -155,11 +155,6 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆matdiv∆6_TEST←'matdiv'  MK∆T2 (?5⍴0) (?5 2⍴0)
 ∆matdiv∆7_TEST←'matdiv'  MK∆T2 (?5 3⍴0) (?5⍴0)
 
-∆matinv∆1_TEST←'matinv' 1e¯5 MK∆T4 (?5 5⍴0)
-∆matinv∆2_TEST←'matinv' MK∆T1 (?5⍴0)
-∆matinv∆3_TEST←'matinv' MK∆T1 (?0)
-∆matinv∆4_TEST←'matinv' 1e¯12 MK∆T4 (?5 3⍴0)
-
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace
