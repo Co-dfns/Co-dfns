@@ -203,6 +203,13 @@ enclose←{
 }
 par←enclose ambiv {⎕SIGNAL 16}
 
+⍝ ⊆: Nest
+nest←{
+	1≡≡⍵:⊂⍵
+	⍵
+}
+nst←nest ambiv {⎕SIGNAL 16}
+
 ⍝ +: Conjugate | Addition
 conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}
 add←conjugate ambiv ('add_vec_ibeam'⌶ numeric scalar)
