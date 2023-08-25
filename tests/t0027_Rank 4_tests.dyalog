@@ -38,7 +38,7 @@
  ∆0027_TEST←'idxof'     TEST2 (⌽⍳75)(1 2 3 4 5⍴⍳120)
  ∆0028_TEST←'sqd'       TEST2 (0 1 1)(1 2 3 4 5⍴⍳120)
  ∆0029_TEST←'ravel'     TEST1 (1 2 3 4 5⍴⍳120)
- ⍝ ∆0030_TEST←'catenate'  TEST2 (1 2 3 4 5⍴⍳120)(1 2 3 4 5⍴⍳120)
+ ∆0030_TEST←'catenate'  TEST2 (1 2 3 4 5⍴⍳120)(1 2 3 4 5⍴⍳120)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
