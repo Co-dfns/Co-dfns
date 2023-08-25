@@ -488,7 +488,10 @@ member←{(≢,⍵)≠(,⍵)⍳⍺}
 mem←enlist ambiv member
 
 ⍝ ⍷: Find
-fnd←{⎕SIGNAL 16}
+fnd←{
+	(0≡≢,⍵)∨((≢⍴⍺)>≢⍴⍵)∨any(⍴⍺)>(-≢⍴⍺)↑⍴⍵:(⍴⍵)⍴0 ⋄ 0≡≢,⍺:(⍴⍵)⍴1
+	(⍴⍵)↑(,⍺)∧.=⍨,⍤(≢⍴⍵)⊢⍵⌺⍨(⍴⍺),⍨1⍴⍨0⌈(≢⍴⍵)-≢⍴⍺
+}
 
 ⍝ ∪: Unique | Union
 unique←{0≡≢⍴⍵:,⍵ ⋄ 1≡≢⍵:⍵ ⋄ ⍵⌿⍨(⍳≢⍵)=⍵⍳⍵}
@@ -497,6 +500,16 @@ unq←unique ambiv union
 
 ⍝ ∩: Intersection
 int←{1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1<≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺⌿⍨⍺∊⍵}
+
+⍝ ⌺: Stencil
+stn←{
+	1≥≢⍴⍺:⍺{
+		r←≢w←⍺ ⋄ a←⍵ ⋄ s←1+(r↑⍴a)-w ⋄ st←(×⌿s),×⌿ts←r↓⍴a
+		(s,w,ts)⍴1 0 2⍉{st⍴s↑⍵↓a}⍤1⊢⍉w⊤⍳×⌿w
+	}⍵
+	r←≢w←0⌷⍺ ⋄ s←1⌷⍺ ⋄ a←⍵ ⋄ p←⌈s÷⍨(r↑⍴a)-w-1 ⋄ ts←r↓⍴a
+	(i,(⍳≢ts)+≢i←,i,⍪r+i←⍳r)⍉(ts,⍨,p,⍪s)⍴(p×s)↑⍵
+}
 
 ⍝ ?: Roll | Deal
 deal←{
