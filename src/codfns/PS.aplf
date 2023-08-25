@@ -224,7 +224,7 @@ PS←{
 		msg←'FAILED TYPE INFERENCE'
 		msg SIGNAL SELECT z
 	}⍬
-
+	
 	⍝ Compute exports
 	msk←(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
 	xn←sym[|msk⌿n] ⋄ xt←msk⌿k
@@ -360,6 +360,12 @@ PS←{
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
 	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p⊣msk←(t[p]=Z)⍲k[p]=¯2
 	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
+
+	⍝ Check for invalid types
+	∨⌿msk←(≠p)∧(t[p]=G)∧k>1:{
+		msg←'GUARD TESTS MUST BE ARRAY VALUES'
+		msg SIGNAL SELECT ⍸msk
+	}⍬
 
 	⍝ Count parentheses in source information
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
