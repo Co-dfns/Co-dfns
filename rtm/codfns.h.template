@@ -186,7 +186,6 @@ DECLSPEC int mk_func_box(struct cell_func_box **, struct cell_func *);
 DECLSPEC void release_func_box(struct cell_func_box *);
 DECLSPEC int mk_func(struct cell_func **, func_mon, func_dya, unsigned int);
 DECLSPEC void release_func(struct cell_func *);
-DECLSPEC int guard_check(struct cell_array *);
 DECLSPEC void release_env(void **, void **);
 DECLSPEC int mk_moper(struct cell_moper **, 
     func_mon, func_dya, func_mon, func_dya,
@@ -227,6 +226,7 @@ DECLSPEC int apply_dop_af(void ***);
 DECLSPEC int apply_dop_fa(void ***);
 DECLSPEC int apply_dop_ff(void ***);
 DECLSPEC int apply_variant(void ***);
+DECLSPEC int guard_check(void ***);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);

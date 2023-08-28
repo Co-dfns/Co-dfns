@@ -323,9 +323,12 @@ fail:
 }
 
 DECLSPEC int
-guard_check(struct cell_array *x)
+guard_check(void ***stkhd)
 {
+	struct cell_array *x;
 	int err, val;
+	
+	x = *--*stkhd;
 	
 	if (array_count(x) != 1)
 		CHK(5, fail, L"Non-singleton test expression.");
@@ -340,6 +343,8 @@ guard_check(struct cell_array *x)
 	return val - 1;
 
 fail:
+	release_array(x);
+	
 	return err;
 }
 

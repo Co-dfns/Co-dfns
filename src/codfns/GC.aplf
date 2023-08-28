@@ -254,14 +254,14 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
 		opt←var_names ⍵
+		dbg←highlight ⍵
 		z ←⊂'if (opts && opts->',opt,') {'
 		z,←⊂'	*stkhd++ = retain_cell(opts->',opt,');'
 		z,←⊂'} else {'
 		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
 		z,←⊂'}'
 		z,←⊂''
-		z,←⊂'release_cell(',tgt,');'
-		z,←⊂tgt,' = retain_cell(stkhd[-1]);'
+		z,←⊂'bind_value(&stkhd, &',tgt,'); /* ',dbg,' */'
 		z,⊂''
 	}¨i
 
@@ -270,24 +270,18 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight n[⍵]
-		z ←⊂'{'
-		z,←⊂'	struct cell_array *x = *--stkhd;'
+		z ←⊂'TRC(guard_check(&stkhd), ',dbg,');'
 		z,←⊂''
-		z,←⊂'	TRC(guard_check(x), ',dbg,');'
+		z,←⊂'if (err > 0)'
+		z,←⊂'	goto cleanup;'
 		z,←⊂''
-		z,←⊂'	release_array(x);'
-		z,←⊂''
-		z,←⊂'	if (err > 0)'
-		z,←⊂'		goto cleanup;'
-		z,←⊂''
-		z,←⊂'	if (!err) {'
-		z,← '		'∘,¨⊃⍪⌿(⍵=p)⌿zz
-		z,←⊂'		err = -1;'
-		z,←⊂'		goto cleanup;'
-		z,←⊂'	}'
-		z,←⊂''
-		z,←⊂'	err = 0;'
+		z,←⊂'if (!err) {'
+		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
+		z,←⊂'	err = -1;'
+		z,←⊂'	goto cleanup;'
 		z,←⊂'}'
+		z,←⊂''
+		z,←⊂'err = 0;'
 		z,⊂''
 	}¨i
 	
