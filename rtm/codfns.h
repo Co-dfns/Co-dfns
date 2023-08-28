@@ -212,6 +212,11 @@ DECLSPEC int mk_simple_array(void ***, enum array_type, unsigned int, size_t *, 
 DECLSPEC int mk_nested_array(void ***, size_t count);
 DECLSPEC int var_ref(void ***, void *);
 DECLSPEC void bind_value(void ***, void **);
+DECLSPEC int mk_closure_func(void ***, func_mon, func_dya, unsigned int, void **);
+DECLSPEC int mk_closure_moper(void ***, func_mon, func_dya, func_mon, func_dya, 
+    unsigned int, void **);
+DECLSPEC int mk_closure_doper(void ***, func_mon, func_dya, func_mon, func_dya, 
+    func_mon, func_dya, func_mon, func_dya, unsigned int, void **);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);

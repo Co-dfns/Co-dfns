@@ -74,6 +74,63 @@ bind_value(void ***stkhd, void **val)
 }
 
 DECLSPEC int
+mk_closure_func(void ***stkhd, func_mon fm, func_dya fd, unsigned int fc, void **fvs)
+{
+	struct cell_func *func;
+	int err;
+	
+	CHKFN(mk_func(&func, fm, fd, fc), fail);
+	
+	for (unsigned int i = 0; i < fc; i++)
+		func->fv[i] = retain_cell(fvs[i]);
+	
+	*(*stkhd)++ = func;
+
+fail:
+	return err;
+}
+
+DECLSPEC int
+mk_closure_moper(void ***stkhd, 
+    func_mon fam, func_dya fad, func_mon ffm, func_dya ffd,
+    unsigned int fc, void **fvs)
+{
+	struct cell_moper *mopr;
+	int err;
+	
+	CHKFN(mk_moper(&mopr, fam, fad, ffm, ffd, fc), fail);
+	
+	for (unsigned int i = 0; i < fc; i++)
+		mopr->fv[i] = retain_cell(fvs[i]);
+	
+	*(*stkhd)++ = mopr;
+fail:
+	return err;
+}
+
+DECLSPEC int
+mk_closure_doper(void ***stkhd,
+    func_mon faam, func_dya faad, func_mon fafm, func_dya fafd,
+    func_mon ffam, func_dya ffad, func_mon fffm, func_dya fffd,
+    unsigned int fc, void **fvs)
+{
+	struct cell_doper *dopr;
+	int err;
+	
+	CHKFN(mk_doper(&dopr, 
+	    faam, faad, fafm, fafd, ffam, ffad, fffm, fffd, fc), 
+	    fail);
+	    
+	for (unsigned int i = 0; i < fc; i++)
+		dopr->fv[i] = retain_cell(fvs[i]);
+	
+	*(*stkhd)++ = dopr;
+
+fail:
+	return err;
+}
+
+DECLSPEC int
 apply_mop(struct cell_func **z, struct cell_moper *op, 
     func_mon fm, func_dya fd, void *l)
 {

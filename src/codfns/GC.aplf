@@ -155,7 +155,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
 		dbg←highlight ⍵
-		('bind_value(&stkhd, &',tgt,');')''
+		('bind_value(&stkhd, &',tgt,'); /* ',dbg,' */')''
 	}¨i
 	
 	⍝ C: Closures for functions
@@ -168,16 +168,12 @@ GC←{
 		fids←var_refs fs
 		vids←var_refs vs[⍋n[vs]]
 		dbg←highlight ⍺
-		call←'mk_',ctyp,'(&k, ',(csep fids),', ',(⍕vc),')'
+		call←'mk_closure_',ctyp,'(&stkhd, ',(csep fids),', ',(⍕vc),', fvs)'
 		z ←⊂'{'
-		z,←⊂'	struct cell_',ctyp,' *k;'
+		z,←⊂'	void *fvs[] = {',(csep vids,0),'};'
 		z,←⊂''
 		z,←⊂'	CHK(',call,', cleanup, '
 		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,← '	k->fv['∘,¨(⍕¨⍳vc),¨'] = retain_cell('∘,¨vids,¨⊂');'
-		z,←(⊂'')⌿⍨1⌊vc
-		z,←⊂'	*stkhd++ = k;'
 		z,←⊂'}'
 		⊂z,⊂''
 	}⌸i
