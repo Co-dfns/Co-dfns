@@ -209,6 +209,7 @@ DECLSPEC int derive_func_opts(struct cell_func **, struct cell_func *, int);
 
 /* Calling helpers */
 DECLSPEC int mk_simple_array(void ***, enum array_type, unsigned int, size_t *, void *);
+DECLSPEC int mk_nested_array(void ***, size_t count);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);

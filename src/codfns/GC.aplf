@@ -135,23 +135,8 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_array *arr, **dat;'
-		z,←⊂''
-		z,←⊂'	CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, '
-		z,←⊂'	    ',dbg,');'
-		z,←⊂'	arr->shape[0] = ',(⍕n[⍵]),';'
-		z,←⊂'	CHK(alloc_array(arr), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂'	dat = arr->values;'
-		z,←⊂''
-		z,←{'	dat[',(⍕⍵),'] = *--stkhd;'}¨⍳n[⍵]
-		z,←⊂''
-		z,←⊂'	CHK(squeeze_array(arr), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = arr;'
-		z,←⊂'}'
+		z ←⊂'CHK(mk_nested_array(&stkhd, ',(⍕n[⍵]),'), cleanup,'
+		z,←⊂'    ',dbg,');'
 		z,⊂''
 	}¨i
 	

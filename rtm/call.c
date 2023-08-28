@@ -26,6 +26,36 @@ fail:
 }
 
 DECLSPEC int
+mk_nested_array(void ***stkhd, size_t count)
+{
+	struct cell_array *arr, **dat;
+	int err;
+	
+	arr = NULL;
+	
+	CHKFN(mk_array(&arr, ARR_NESTED, STG_HOST, 1), fail);
+	
+	arr->shape[0] = count;
+	
+	CHKFN(alloc_array(arr), fail);
+	
+	dat = arr->values;
+	
+	for (size_t i = 0; i < count; i++)
+		dat[i] = *--*stkhd;
+	
+	CHKFN(squeeze_array(arr), fail);
+	
+	*(*stkhd)++ = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECLSPEC int
 apply_mop(struct cell_func **z, struct cell_moper *op, 
     func_mon fm, func_dya fd, void *l)
 {
