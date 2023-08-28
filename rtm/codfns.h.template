@@ -201,10 +201,6 @@ DECLSPEC int mk_moper_box(struct cell_moper_box **, struct cell_moper *);
 DECLSPEC void release_moper_box(struct cell_moper_box *);
 DECLSPEC int mk_doper_box(struct cell_doper_box **, struct cell_doper *);
 DECLSPEC void release_doper_box(struct cell_doper_box *);
-DECLSPEC int apply_mop(struct cell_func **, struct cell_moper *, 
-    func_mon, func_dya, void *);
-DECLSPEC int apply_dop(struct cell_func **, struct cell_doper *, 
-    func_mon, func_dya, void *, void *);
 DECLSPEC int derive_func_opts(struct cell_func **, struct cell_func *, int);
 
 /* Calling helpers */
@@ -217,6 +213,19 @@ DECLSPEC int mk_closure_moper(void ***, func_mon, func_dya, func_mon, func_dya,
     unsigned int, void **);
 DECLSPEC int mk_closure_doper(void ***, func_mon, func_dya, func_mon, func_dya, 
     func_mon, func_dya, func_mon, func_dya, unsigned int, void **);
+DECLSPEC int apply_monadic(void ***);
+DECLSPEC int apply_dyadic(void ***);
+DECLSPEC int apply_assign(void ***, struct cell_array_box *);
+DECLSPEC int apply_mop(struct cell_func **, struct cell_moper *, 
+    func_mon, func_dya, void *);
+DECLSPEC int apply_mop_a(void ***);
+DECLSPEC int apply_mop_f(void ***);
+DECLSPEC int apply_dop(struct cell_func **, struct cell_doper *, 
+    func_mon, func_dya, void *, void *);
+DECLSPEC int apply_dop_aa(void ***);
+DECLSPEC int apply_dop_af(void ***);
+DECLSPEC int apply_dop_fa(void ***);
+DECLSPEC int apply_dop_ff(void ***);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);

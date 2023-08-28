@@ -200,21 +200,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_func *fn = stkhd[-1];'
-		z,←⊂'	struct cell_array *y = stkhd[-2];'
-		z,←⊂'	struct cell_array *dst;'
-		z,←⊂''
-		z,←⊂'	CHK((fn->fptr_mon)(&dst, y, fn), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,←⊂'	release_func(fn);'
-		z,←⊂'	release_array(y);'
-		z,←⊂''
-		z,←⊂'	stkhd -= 2;'
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		z,⊂''
+		('CHK(apply_monadic(&stkhd), cleanup, ',dbg,');')''
 	}¨i
 	
 	⍝ E2: Dyadic expression application
@@ -222,23 +208,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_array *x = stkhd[-1];'
-		z,←⊂'	struct cell_func *fn = stkhd[-2];'
-		z,←⊂'	struct cell_array *y = stkhd[-3];'
-		z,←⊂'	struct cell_array *dst;'
-		z,←⊂''
-		z,←⊂'	CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,←⊂'	release_array(x);'
-		z,←⊂'	release_func(fn);'
-		z,←⊂'	release_array(y);'
-		z,←⊂''
-		z,←⊂'	stkhd -= 3;'
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		z,⊂''
+		('CHK(apply_dyadic(&stkhd), cleanup, ',dbg,');')''
 	}¨i
 	
 	⍝ E4: Assignment
@@ -247,22 +217,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
 		tgt←var_refs ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_array_box *bx = ',tgt,';'
-		z,←⊂'	struct cell_array *x = stkhd[-1];'
-		z,←⊂'	struct cell_func *fn = stkhd[-2];'
-		z,←⊂'	struct cell_array *y = stkhd[-3];'
-		z,←⊂'	struct cell_array *orig = bx->value;'
-		z,←⊂''
-		z,←⊂'	CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,←⊂'	release_array(orig);'
-		z,←⊂'	release_array(x);'
-		z,←⊂'	release_func(fn);'
-		z,←⊂'	stkhd -= 2;'
-		z,←⊂'}'
-		z,⊂''
+		('CHK(apply_assign(&stkhd, ',tgt,'), cleanup, ',dbg,');')''
 	}¨i
 	
 	⍝ Om: Monadic operators
@@ -270,23 +225,8 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		ltyp←'array' 'func'⊃⍨k[⍵]=2
-		fns←csep 'op->fptr_'∘,¨(⊃ltyp),¨'md'
 		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_',ltyp,' *x = stkhd[-1];'
-		z,←⊂'	struct cell_moper *op = stkhd[-2];'
-		z,←⊂'	struct cell_func *dst;'
-		z,←⊂''
-		z,←⊂'	CHK(apply_mop(&dst, op, ',fns,', x), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,←⊂'	release_',ltyp,'(x);'
-		z,←⊂'	release_moper(op);'
-		z,←⊂'	stkhd -= 2;'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		z,⊂''
+		('CHK(apply_mop_',(⊃ltyp),'(&stkhd), cleanup, ',dbg,');')''
 	}¨i
 	
 	⍝ Od: Dyadic operators
@@ -297,23 +237,7 @@ GC←{
 		rtyp←'array' 'func'⊃⍨k[⍵]∊7 8
 		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
 		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_',ltyp,' *x = stkhd[-1];'
-		z,←⊂'	struct cell_doper *op = stkhd[-2];'
-		z,←⊂'	struct cell_',rtyp,' *y = stkhd[-3];'
-		z,←⊂'	struct cell_func *dst;'
-		z,←⊂''
-		z,←⊂'	CHK(apply_dop(&dst, op, ',fns,', x, y), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,←⊂'	release_',ltyp,'(x);'
-		z,←⊂'	release_doper(op);'
-		z,←⊂'	release_',rtyp,'(y);'
-		z,←⊂''
-		z,←⊂'	stkhd -= 3;'
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		z,⊂''
+		('CHK(apply_dop_',(⊃rtyp),(⊃ltyp),'(&stkhd), cleanup, ',dbg,');')''
 	}¨i
 	
 	⍝ Ox: Axis Operator and Variant Operator

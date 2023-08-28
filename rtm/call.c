@@ -131,24 +131,120 @@ fail:
 }
 
 DECLSPEC int
+apply_monadic(void ***stkhd)
+{
+	struct cell_func *fn;
+	struct cell_array *y, *dst;
+	int err;
+	
+	fn = (*stkhd)[-1];
+	y = (*stkhd)[-2];
+	
+	CHKFN((fn->fptr_mon)(&dst, y, fn), fail);
+	
+	release_func(fn);
+	release_array(y);
+	
+	*stkhd -= 2;
+	*(*stkhd)++ = dst;
+	
+fail:
+	return err;
+}
+
+DECLSPEC int
+apply_dyadic(void ***stkhd)
+{
+	struct cell_array *x, *y, *dst;
+	struct cell_func *fn;
+	int err;
+	
+	x = (*stkhd)[-1];
+	fn = (*stkhd)[-2];
+	y = (*stkhd)[-3];
+	
+	CHKFN((fn->fptr_dya)(&dst, x, y, fn), fail);
+	
+	release_array(x);
+	release_func(fn);
+	release_array(y);
+	
+	*stkhd -= 3;
+	*(*stkhd)++ = dst;
+	
+fail:
+	return err;
+}
+
+DECLSPEC int
+apply_assign(void ***stkhd, struct cell_array_box *bx)
+{
+	struct cell_array *x, *y, *orig;
+	struct cell_func *fn;
+	int err;
+	
+	x = (*stkhd)[-1];
+	fn = (*stkhd)[-2];
+	y = (*stkhd)[-3];
+	orig = bx->value;
+	
+	CHKFN((fn->fptr_dya)(&bx->value, x, y, fn), fail);
+	
+	release_array(orig);
+	release_array(x);
+	release_func(fn);
+	
+	*stkhd -= 2;
+	
+fail:
+	return err;
+}
+
+DECLSPEC int
 apply_mop(struct cell_func **z, struct cell_moper *op, 
-    func_mon fm, func_dya fd, void *l)
+    func_mon fm, func_dya fd, void *x)
 {
 	struct cell_func *dst;
 	int err;
 	
-	err = mk_func(&dst, fm, fd, 2);
-	
-	if (err)
-		return err;
+	CHKFN(mk_func(&dst, fm, fd, 2), fail);
 	
 	dst->fv[0] = retain_cell(op);
-	dst->fv[1] = retain_cell(l);
+	dst->fv[1] = retain_cell(x);
 	
 	*z = dst;
 	
-	return 0;
+fail:
+	return err;
 }
+
+#define DEF_APPLY_MOP(pfx) 								\
+DECLSPEC int										\
+apply_mop_##pfx(void ***stkhd)								\
+{											\
+	struct cell_func *dst;								\
+	struct cell_moper *op;								\
+	struct cell_void *x;								\
+	int err;									\
+											\
+	x = (*stkhd)[-1];								\
+	op = (*stkhd)[-2];								\
+											\
+	CHKFN(apply_mop(&dst, op, op->fptr_##pfx##m, op->fptr_##pfx##d, x), fail);	\
+											\
+	release_cell(x);								\
+	release_moper(op);								\
+											\
+	*stkhd -= 2;									\
+											\
+	*(*stkhd)++ = dst;								\
+											\
+fail:											\
+	return err;									\
+}
+
+DEF_APPLY_MOP(a)
+DEF_APPLY_MOP(f)
 
 DECLSPEC int
 apply_dop(struct cell_func **z, struct cell_doper *op, 
@@ -156,11 +252,8 @@ apply_dop(struct cell_func **z, struct cell_doper *op,
 {
 	struct cell_func *dst;
 	int err;
-
-	err = mk_func(&dst, fm, fd, 3);
-
-	if (err)
-		return err;
+	
+	CHKFN(mk_func(&dst, fm, fd, 3), fail);
 
 	dst->fv[0] = retain_cell(op);
 	dst->fv[1] = retain_cell(l);
@@ -168,8 +261,41 @@ apply_dop(struct cell_func **z, struct cell_doper *op,
 
 	*z = dst;
 	
-	return 0;
+fail:	
+	return err;
 }
+
+#define DEF_APPLY_DOP(rt, lt) 									\
+DECLSPEC int											\
+apply_dop_##rt##lt(void ***stkhd)								\
+{												\
+	struct cell_func *dst;									\
+	struct cell_doper *op;									\
+	struct cell_void *x, *y;								\
+	int err;										\
+												\
+	x = (*stkhd)[-1];									\
+	op = (*stkhd)[-2];									\
+	y = (*stkhd)[-3];									\
+												\
+	CHKFN(apply_dop(&dst, op, op->fptr_##rt##lt##m, op->fptr_##rt##lt##d, x, y), fail);	\
+												\
+	release_cell(x);									\
+	release_doper(op);									\
+	release_cell(y);									\
+												\
+	*stkhd -= 3;										\
+	*(*stkhd)++ = dst;									\
+												\
+fail:												\
+	return err;										\
+}
+
+DEF_APPLY_DOP(a, a)
+DEF_APPLY_DOP(a, f)
+DEF_APPLY_DOP(f, a)
+DEF_APPLY_DOP(f, f)
+
 
 DECLSPEC int
 derive_func_opts(struct cell_func **dst, struct cell_func *aa, int fs)
