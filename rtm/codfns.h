@@ -357,6 +357,9 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *cdf_matdiv;
 	struct cell_func *cdf_mdv;
 	struct cell_moper *cdf_com;
+	struct cell_moper_box *cdf_is_scalar;
+	struct cell_moper_box *cdf_is_scalar_mon;
+	struct cell_moper_box *cdf_is_scalar_dya;
 	struct cell_moper *cdf_map;
 	struct cell_moper_box *cdf_identity;
 	struct cell_doper_box *cdf_reduce;

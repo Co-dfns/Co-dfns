@@ -586,12 +586,12 @@ is_scalar_dya←{
 }
 map←{⍺←⊢ ⋄ op←⍺⍺
 	1≡⍺ 1:⍺{
-		op is_scalar_mon ⍬:op ⍵⊣mon_scl_count+←1
-		(⍴⍵)⍴squeeze op veach ⍵⊣mon_nst_count+←1
+		op is_scalar_mon ⍬:op ⍵
+		(⍴⍵)⍴squeeze op veach ⍵
 	}⍵
-	op is_scalar_dya ⍬:⍺ op ⍵⊣dya_scl_count+←1
+	op is_scalar_dya ⍬:⍺ op ⍵
 	⍺ chk_scl ⍵:
-	(⍺ max_shp ⍵)⍴squeeze ⍺ ⍺⍺ veach ⍵⊣dya_nst_count+←1
+	(⍺ max_shp ⍵)⍴squeeze ⍺ ⍺⍺ veach ⍵
 }
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
