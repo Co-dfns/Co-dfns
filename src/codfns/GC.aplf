@@ -119,19 +119,13 @@ GC←{
 		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
 		dbg←highlight ⍵
 		z ←⊂'{'
-		z,←⊂'	struct cell_array *arr;'
-		z,←⊂''
 		z,←⊂'	enum array_type typ = ARR_',atp,';'
 		z,←⊂'	unsigned int rnk = ',(⍕rnk),';'
+		z,←⊂'	size_t shp[] = {',(csep shp,0),'};'
 		z,←⊂'	',ctp,' dat[] = {',(csep dat),'};'
 		z,←⊂''
-		z,←⊂'	CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, ',dbg,');'
-		z,←(⊂'')⌿⍨0≠≢shp
-		z,← '	',¨shp{'arr->shape[',(⍕⍵),'] = ',(⍕⍺),';'}¨⍳≢shp
-		z,←⊂''
-		z,←⊂'	CHK(fill_array(arr, dat), cleanup, ',dbg,');'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = arr;'
+		z,←⊂'	CHK(mk_simple_array(&stkhd, typ, rnk, shp, dat), cleanup,'
+		z,←⊂'	    ',dbg,');'
 		z,←⊂'}'
 		z,⊂''
 	}¨i

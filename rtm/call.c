@@ -1,6 +1,31 @@
 #include "internal.h"
 
 DECLSPEC int
+mk_simple_array(void ***stkhd, enum array_type typ, unsigned int rnk, 
+	size_t *shp, void *dat)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	CHKFN(mk_array(&arr, typ, STG_HOST, rnk), fail);
+	
+	for (unsigned int i = 0; i < rnk; i++)
+		arr->shape[i] = shp[i];
+	
+	CHKFN(fill_array(arr, dat), fail);
+	
+	*(*stkhd)++ = arr;
+
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECLSPEC int
 apply_mop(struct cell_func **z, struct cell_moper *op, 
     func_mon fm, func_dya fd, void *l)
 {
