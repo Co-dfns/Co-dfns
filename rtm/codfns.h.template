@@ -226,6 +226,7 @@ DECLSPEC int apply_dop_aa(void ***);
 DECLSPEC int apply_dop_af(void ***);
 DECLSPEC int apply_dop_fa(void ***);
 DECLSPEC int apply_dop_ff(void ***);
+DECLSPEC int apply_variant(void ***);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);

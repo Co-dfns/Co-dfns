@@ -245,22 +245,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_func *aa = stkhd[-1];'
-		z,←⊂'	struct cell_array *axis = stkhd[-2];'
-		z,←⊂'	struct cell_func *dst;'
-		z,←⊂''
-		z,←⊂'	CHK(derive_func_opts(&dst, aa, 1), cleanup,'
-		z,←⊂'	    ',dbg,');'
-		z,←⊂''
-		z,←⊂'	dst->opts[0] = axis;'
-		z,←⊂''
-		z,←⊂'	release_func(aa);'
-		z,←⊂''
-		z,←⊂'	stkhd -= 2;'
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		z,⊂''
+		('CHK(apply_variant(&stkhd), cleanup, ',dbg,');')''
 	}¨i
 
 	⍝ B7: Option bindings

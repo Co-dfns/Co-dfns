@@ -296,25 +296,29 @@ DEF_APPLY_DOP(a, f)
 DEF_APPLY_DOP(f, a)
 DEF_APPLY_DOP(f, f)
 
-
 DECLSPEC int
-derive_func_opts(struct cell_func **dst, struct cell_func *aa, int fs)
+apply_variant(void ***stkhd)
 {
-	struct cell_func *fn;
+	struct cell_func *aa, *dst;
+	struct cell_array *axis;
 	int err;
 	
-	CHK(mk_func(&fn, aa->fptr_mon, aa->fptr_dya, fs+1), done,
-	    L"mk_func(&fn, aa->fm, aa->fd, fs+1)");
+	aa = (*stkhd)[-1];
+	axis = (*stkhd)[-2];
 	
-	fn->fv = aa->fv;
-	fn->opts = &fn->fv_[1];
-	fn->fv_[0] = retain_cell(aa);
-
-	*dst = fn;
+	CHKFN(mk_func(&dst, aa->fptr_mon, aa->fptr_dya, 2), fail);
 	
-	err = 0;
+	dst->fv = aa->fv;
+	dst->opts = &dst->fv_[1];
+	dst->fv_[0] = retain_cell(aa);
+	dst->opts[0] = axis;
 	
-done:
+	release_func(aa);
+	
+	*stkhd -= 2;
+	*(*stkhd)++ = dst;
+	
+fail:
 	return err;
 }
 
