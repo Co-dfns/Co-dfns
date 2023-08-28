@@ -56,6 +56,24 @@ fail:
 }
 
 DECLSPEC int
+var_ref(void ***stkhd, void *ref)
+{
+	if (!ref)
+		return 6;
+	
+	*(*stkhd)++ = retain_cell(ref);
+	
+	return 0;
+}
+
+DECLSPEC void
+bind_value(void ***stkhd, void **val)
+{
+	release_cell(*val);
+	*val = retain_cell((*stkhd)[-1]);
+}
+
+DECLSPEC int
 apply_mop(struct cell_func **z, struct cell_moper *op, 
     func_mon fm, func_dya fd, void *l)
 {
