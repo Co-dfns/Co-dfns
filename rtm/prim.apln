@@ -550,7 +550,49 @@ mdv←matinv ambiv matdiv
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 
 ⍝ ¨: Each
-map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}
+is_scalar←{
+	⍺⍺ eq + ⍬:1
+	⍺⍺ eq - ⍬:1
+	⍺⍺ eq × ⍬:1
+	⍺⍺ eq ÷ ⍬:1
+	⍺⍺ eq | ⍬:1
+	⍺⍺ eq ⌊ ⍬:1
+	⍺⍺ eq ⌈ ⍬:1
+	⍺⍺ eq * ⍬:1
+	⍺⍺ eq ⍟ ⍬:1
+	⍺⍺ eq ○ ⍬:1
+	⍺⍺ eq ! ⍬:1
+	0
+}
+is_scalar_mon←{
+	⍺⍺ is_scalar ⍬:1
+	⍺⍺ eq ~ ⍬:1
+	⍺⍺ eq ? ⍬:1
+	0
+}
+is_scalar_dya←{
+	⍺⍺ is_scalar ⍬:1
+	⍺⍺ eq ∧ ⍬:1
+	⍺⍺ eq ∨ ⍬:1
+	⍺⍺ eq ⍲ ⍬:1
+	⍺⍺ eq ⍱ ⍬:1
+	⍺⍺ eq < ⍬:1
+	⍺⍺ eq ≤ ⍬:1
+	⍺⍺ eq = ⍬:1
+	⍺⍺ eq ≥ ⍬:1
+	⍺⍺ eq > ⍬:1
+	⍺⍺ eq ≠ ⍬:1
+	0
+}
+map←{⍺←⊢ ⋄ op←⍺⍺
+	1≡⍺ 1:⍺{
+		op is_scalar_mon ⍬:op ⍵⊣mon_scl_count+←1
+		(⍴⍵)⍴squeeze op veach ⍵⊣mon_nst_count+←1
+	}⍵
+	op is_scalar_dya ⍬:⍺ op ⍵⊣dya_scl_count+←1
+	⍺ chk_scl ⍵:
+	(⍺ max_shp ⍵)⍴squeeze ⍺ ⍺⍺ veach ⍵⊣dya_nst_count+←1
+}
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
 identity←{

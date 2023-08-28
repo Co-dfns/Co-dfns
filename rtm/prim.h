@@ -143,6 +143,14 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_matdiv;
 	struct cell_func *cdf_mdv;
 	struct cell_moper *cdf_com;
+	struct cell_moper_box *cdf_is_scalar;
+	struct cell_moper_box *cdf_is_scalar_mon;
+	struct cell_moper_box *cdf_is_scalar_dya;
+	struct cell_array_box *cdf_mon_scl_count;
+	struct cell_array_box *cdf_dya_scl_count;
+	struct cell_array_box *cdf_mon_nst_count;
+	struct cell_array_box *cdf_dya_nst_count;
+	struct cell_func *cdf_stats;
 	struct cell_moper *cdf_map;
 	struct cell_moper_box *cdf_identity;
 	struct cell_doper_box *cdf_reduce;
