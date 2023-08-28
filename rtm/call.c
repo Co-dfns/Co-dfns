@@ -236,7 +236,6 @@ apply_mop_##pfx(void ***stkhd)								\
 	release_moper(op);								\
 											\
 	*stkhd -= 2;									\
-											\
 	*(*stkhd)++ = dst;								\
 											\
 fail:											\
@@ -340,7 +339,7 @@ guard_check(void ***stkhd)
 
 	CHKFN(get_scalar_int32(&val, x), fail);
 
-	return val - 1;
+	err =  val - 1;
 
 fail:
 	release_array(x);
