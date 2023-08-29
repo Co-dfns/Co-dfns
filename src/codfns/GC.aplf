@@ -311,7 +311,7 @@ GC←{
 		z,←⊂'    struct cell_array *cdf_omega,'
 		z,←⊂'    struct cell_func *cdf_self)'
 		z,←⊂'{'
-		z,←⊂'	void *stk[128];'
+		z,←⊂'	void *stk[256];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←(⊂'	struct cell_',atyp,' *cdf_alpha;')⌿⍨ism
@@ -350,6 +350,9 @@ GC←{
 		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,←⊂'cleanup:'
+		z,←⊂'	if (!err && stk != stkhd)'
+		z,←⊂'		CHK(99, cleanup, L"Stack not empty");'
+		z,←⊂''
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨haslvs
 		z,←(⊂'	release_',atyp,'(cdf_alpha);')⌿⍨ism
@@ -376,7 +379,7 @@ GC←{
 		z,←⊂id,'_init(void)'
 		z,←⊂'{'
 		z,←⊂'	struct ',id,'_loc *loc;'
-		z,←⊂'	void *stk[128];'
+		z,←⊂'	void *stk[256];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←⊂''
