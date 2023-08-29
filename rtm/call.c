@@ -339,7 +339,7 @@ guard_check(void ***stkhd)
 
 	CHKFN(get_scalar_int32(&val, x), fail);
 
-	err =  val - 1;
+	err = val - 1;
 
 fail:
 	release_array(x);
