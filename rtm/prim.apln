@@ -627,7 +627,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺¨
 	⍺∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:0∇,⍵
 	c←(s←⍴⍵)[axis] ⋄ zs←(axis↑s),(axis+1)↓s
 	0≡c:zs⍴⍺⍺ identity ⍬ ⋄ 1≡c:zs⍴⍵
-	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷[axis]⍵)op z}¨⊂⍵⊣z←(c-1)⌷[axis]⍵
+	⍵{((c⊢←c-1)⌷[axis]⍺)op ⍵}⍣c⊢(c←c-1)⌷[axis]⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
 	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc:⎕SIGNAL 5
@@ -710,7 +710,7 @@ xpf←{
 xpd←{0≡≢⍴⍵:⍺∇,⍵ ⋄ axis⍠←0⌈¯1+≢⍴⍵ ⋄ ⍺⍀[axis]⍵}
 
 ⍝ ∘.: Outer Product
-oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}
+oup←{i←⍳c←(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨c⍴⍵}
 
 ⍝ .: Inner Product
 dot←{

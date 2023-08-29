@@ -155,7 +155,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
 		dbg←highlight ⍵
-		('bind_value(&stkhd, &',tgt,'); /* ',dbg,' */')''
+		('bind_value(&stkhd, &',tgt,');')''
 	}¨i
 	
 	⍝ C: Closures for functions
