@@ -635,8 +635,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	⍺⍺ eq + ⍬:{
 		iv:{
 			ib:'count_vec'⌶ ⍵
-⍝			'sum_vec'⌶ ⍵
-			gen_red ⍵
+			'sum_vec'⌶ ⍵
 		}⍵
 ⍝ 		gen_red('sum_array'⌶⌶)⍵
 		gen_red ⍵

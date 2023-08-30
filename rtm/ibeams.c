@@ -2205,55 +2205,42 @@ count_vec_func(struct cell_array **z, struct cell_array *r,
     struct cell_func *self)
 {
 	struct cell_array *arr;
+	double sum;
 	int err;
 	
 	arr = NULL;
 	
-	if (r->type != ARR_BOOL)
-		CHK(99, fail, L"Non-Boolean type");
-	
 	switch (r->storage) {
 	case STG_DEVICE:{
-		af_array cnt, cnt_dbl;
-		
-		CHKFN(mk_array(&arr, ARR_DBL, STG_DEVICE, 0), fail);		
-		
-		CHKAF(af_count(&cnt, r->values, 0), fail);
-		arr->values = cnt; /* Ensures release on failure */
-		
-		CHKAF(af_cast(&cnt_dbl, cnt, f64), fail);
-		arr->values = cnt_dbl;
-		
-		af_release_array(cnt);
-		
-		break;
-	}
+		double mt;
+				
+		CHKAF(af_count_all(&sum, &mt, r->values), fail);
+	}break;
 	case STG_HOST:{
-		size_t count;
+		size_t count, accum;
 		int8_t *vals;
-		size_t sum;
 		
 		count = array_count(r);
-		sum = 0;
 		vals = r->values;
+		accum = 0;
 		
 		for (size_t i = 0; i < count; i++)
-			sum += vals[i];
+			accum += vals[i];
 		
-		if (sum <= 1) {
-			CHKFN(mk_array_int8(&arr, (int8_t)sum), fail);
-		} else if (sum <= INT16_MAX) {
-			CHKFN(mk_array_int16(&arr, (int16_t)sum), fail);
-		} else if (sum <= INT32_MAX) {
-			CHKFN(mk_array_int32(&arr, (int32_t)sum), fail);
-		} else {
-			CHKFN(mk_array_dbl(&arr, (double)sum), fail);
-		}
-		
-		break;
-	}
+		sum = (double)accum;
+	}break;
 	default:
 		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	if (sum <= 1) {
+		CHKFN(mk_array_int8(&arr, (int8_t)sum), fail);
+	} else if (sum <= INT16_MAX) {
+		CHKFN(mk_array_int16(&arr, (int16_t)sum), fail);
+	} else if (sum <= INT32_MAX) {
+		CHKFN(mk_array_int32(&arr, (int32_t)sum), fail);
+	} else {
+		CHKFN(mk_array_dbl(&arr, sum), fail);
 	}
 	
 	*z = arr;
@@ -2266,3 +2253,84 @@ fail:
 }
 
 DECL_FUNC(count_vec, count_vec_func, error_dya_syntax)
+
+int
+sum_vec_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	double real, imag;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		CHKAF(af_sum_all(&real, &imag, r->values), fail);
+	}break;
+	case STG_HOST:{
+		size_t count;
+		
+		real = imag = 0;
+		count = array_count(r);
+		
+		switch (r->type) {
+		ARR_SINT:{
+			int16_t *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				real += vals[i];
+		}break;
+		ARR_INT:{
+			int32_t *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				real += vals[i];
+		}break;
+		ARR_DBL:{
+			double *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				real += vals[i];
+		}break;
+		ARR_CMPX:{
+			struct apl_cmpx accum = {real, imag};
+			struct apl_cmpx *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				accum = add_cmpx(accum, vals[i]);
+			
+			real = accum.real;
+			imag = accum.imag;
+		}break;
+		default:
+			CHK(99, fail, L"Unexpected array type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	if (r->type == ARR_CMPX) {
+		struct apl_cmpx val = {real, imag};
+		CHKFN(mk_array_cmpx(&arr, val), fail);
+	} else if (real <= 1) {
+		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
+	} else if (real <= INT16_MAX) {
+		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
+	} else if (real <= INT32_MAX) {
+		CHKFN(mk_array_int32(&arr, (int32_t)real), fail);
+	} else {
+		CHKFN(mk_array_dbl(&arr, real), fail);
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(sum_vec, sum_vec_func, error_dya_syntax)
