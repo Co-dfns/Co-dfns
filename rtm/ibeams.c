@@ -2334,3 +2334,84 @@ fail:
 }
 
 DECL_FUNC(sum_vec, sum_vec_func, error_dya_syntax)
+
+int
+product_vec_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	double real, imag;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		CHKAF(af_product_all(&real, &imag, r->values), fail);
+	}break;
+	case STG_HOST:{
+		size_t count;
+		
+		real = imag = 0;
+		count = array_count(r);
+		
+		switch (r->type) {
+		ARR_SINT:{
+			int16_t *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				real *= vals[i];
+		}break;
+		ARR_INT:{
+			int32_t *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				real *= vals[i];
+		}break;
+		ARR_DBL:{
+			double *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				real *= vals[i];
+		}break;
+		ARR_CMPX:{
+			struct apl_cmpx accum = {real, imag};
+			struct apl_cmpx *vals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				accum = mul_cmpx(accum, vals[i]);
+			
+			real = accum.real;
+			imag = accum.imag;
+		}break;
+		default:
+			CHK(99, fail, L"Unexpected array type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	if (r->type == ARR_CMPX) {
+		struct apl_cmpx val = {real, imag};
+		CHKFN(mk_array_cmpx(&arr, val), fail);
+	} else if (real <= 1) {
+		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
+	} else if (real <= INT16_MAX) {
+		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
+	} else if (real <= INT32_MAX) {
+		CHKFN(mk_array_int32(&arr, (int32_t)real), fail);
+	} else {
+		CHKFN(mk_array_dbl(&arr, real), fail);
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(product_vec, product_vec_func, error_dya_syntax)

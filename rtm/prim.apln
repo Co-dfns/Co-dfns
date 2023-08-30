@@ -640,7 +640,11 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 ⍝ 		gen_red('sum_array'⌶⌶)⍵
 		gen_red ⍵
 	}⍵
-⍝	⍺⍺ eq × ⍬:{iv:'product_vec'⌶ ⍵ ⋄ gen_red('product_array'⌶⌶)⍵}⍵
+	⍺⍺ eq × ⍬:{
+		iv:'product_vec'⌶ ⍵
+		gen_red ⍵
+⍝		gen_red('product_array'⌶⌶)⍵
+	}⍵
 ⍝	⍺⍺ eq ⌊ ⍬:{iv:'min_vec'⌶ ⍵ ⋄ gen_red('min_array'⌶⌶)⍵}⍵
 ⍝	⍺⍺ eq ⌈ ⍬:{iv:'max_vec'⌶ ⍵ ⋄ gen_red('max_array'⌶⌶)⍵}⍵
 ⍝	ib∧⍺⍺ eq ∧ ⍬:{iv:'all_true_vec'⌶ ⍵ ⋄ gen_red('all_true_array'⌶⌶)⍵}⍵
