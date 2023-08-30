@@ -623,11 +623,31 @@ identity←{
 	⍺⍺ eq ⊖ ⍬:0
 	⎕SIGNAL 16
 }
-reduce←{axis←⍵⍵ ⋄ op←⍺⍺¨
+reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	⍺∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:0∇,⍵
-	c←(s←⍴⍵)[axis] ⋄ zs←(axis↑s),(axis+1)↓s
-	0≡c:zs⍴⍺⍺ identity ⍬ ⋄ 1≡c:zs⍴⍵
-	⍵{((c⊢←c-1)⌷[axis]⍺)op ⍵}⍣c⊢(c←c-1)⌷[axis]⍵
+	0≡c←(s←⍴⍵)[axis]:((axis↑s),(axis+1)↓s)⍴⍺⍺ identity ⍬
+	1≡c:((axis↑s),(axis+1)↓s)⍴⍵
+	⍺⍺ eq ⊢ ⍬:(c-1)⌷[axis]⍵
+	⍺⍺ eq ⊣ ⍬:0⌷[axis]⍵
+	gen_red←{⍵{((c⊢←c-1)⌷[axis]⍺)op¨⍵}⍣c⊢(c←c-1)⌷[axis]⍵}
+	is_char ⍵:gen_red ⍵ ⋄ ~is_simple ⍵:gen_red ⍵
+	ib←is_bool ⍵ ⋄ iv←1≡≢⍴⍵
+	⍺⍺ eq + ⍬:{
+		iv:{
+			ib:'count_vec'⌶ ⍵
+⍝			'sum_vec'⌶ ⍵
+			gen_red ⍵
+		}⍵
+⍝ 		gen_red('sum_array'⌶⌶)⍵
+		gen_red ⍵
+	}⍵
+⍝	⍺⍺ eq × ⍬:{iv:'product_vec'⌶ ⍵ ⋄ gen_red('product_array'⌶⌶)⍵}⍵
+⍝	⍺⍺ eq ⌊ ⍬:{iv:'min_vec'⌶ ⍵ ⋄ gen_red('min_array'⌶⌶)⍵}⍵
+⍝	⍺⍺ eq ⌈ ⍬:{iv:'max_vec'⌶ ⍵ ⋄ gen_red('max_array'⌶⌶)⍵}⍵
+⍝	ib∧⍺⍺ eq ∧ ⍬:{iv:'all_true_vec'⌶ ⍵ ⋄ gen_red('all_true_array'⌶⌶)⍵}⍵
+⍝	ib∧⍺⍺ eq ∨ ⍬:{iv:'any_true_vec'⌶ ⍵ ⋄ gen_red('any_true_array'⌶⌶)⍵}⍵
+⍝	ib∧⍺⍺ eq ≠ ⍬:{iv:'xor_vec'⌶ ⍵ ⋄ gen_red('xor_array'⌶⌶)⍵}⍵
+	gen_red ⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
 	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc:⎕SIGNAL 5

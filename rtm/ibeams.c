@@ -2199,3 +2199,70 @@ fail:
 }
 
 DECL_FUNC(matrix_inverse_ibeam, matrix_inverse_func, error_dya_syntax)
+
+int
+count_vec_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	if (r->type != ARR_BOOL)
+		CHK(99, fail, L"Non-Boolean type");
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		af_array cnt, cnt_dbl;
+		
+		CHKFN(mk_array(&arr, ARR_DBL, STG_DEVICE, 0), fail);		
+		
+		CHKAF(af_count(&cnt, r->values, 0), fail);
+		arr->values = cnt; /* Ensures release on failure */
+		
+		CHKAF(af_cast(&cnt_dbl, cnt, f64), fail);
+		arr->values = cnt_dbl;
+		
+		af_release_array(cnt);
+		
+		break;
+	}
+	case STG_HOST:{
+		size_t count;
+		int8_t *vals;
+		size_t sum;
+		
+		count = array_count(r);
+		sum = 0;
+		vals = r->values;
+		
+		for (size_t i = 0; i < count; i++)
+			sum += vals[i];
+		
+		if (sum <= 1) {
+			CHKFN(mk_array_int8(&arr, (int8_t)sum), fail);
+		} else if (sum <= INT16_MAX) {
+			CHKFN(mk_array_int16(&arr, (int16_t)sum), fail);
+		} else if (sum <= INT32_MAX) {
+			CHKFN(mk_array_int32(&arr, (int32_t)sum), fail);
+		} else {
+			CHKFN(mk_array_dbl(&arr, (double)sum), fail);
+		}
+		
+		break;
+	}
+	default:
+		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(count_vec, count_vec_func, error_dya_syntax)
