@@ -625,9 +625,9 @@ identity←{
 	⎕SIGNAL 16
 }
 reduce←{axis←⍵⍵ ⋄ op←⍺⍺
-	⍺∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:0∇,⍵
-	0≡c←(s←⍴⍵)[axis]:((axis↑s),(axis+1)↓s)⍴⍺⍺ identity ⍬
-	1≡c:((axis↑s),(axis+1)↓s)⍴⍵
+	⍺∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:0∇,⍵ ⋄ s←⍴⍵
+	0≡≢,⍵:((axis↑s),(axis+1)↓s)⍴⍺⍺ identity ⍬
+	1≡c←s[axis]:((axis↑s),(axis+1)↓s)⍴⍵
 	⍺⍺ eq ⊢ ⍬:(c-1)⌷[axis]⍵
 	⍺⍺ eq ⊣ ⍬:0⌷[axis]⍵
 	gen_red←{⍵{((c⊢←c-1)⌷[axis]⍺)op¨⍵}⍣c⊢(c←c-1)⌷[axis]⍵}
