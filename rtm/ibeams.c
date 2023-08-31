@@ -2815,3 +2815,315 @@ fail:
 }
 
 DECL_FUNC(sum_array, sum_array_func, error_dya_syntax)
+
+int
+product_array_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	enum array_type type;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+		af_array vals;
+		af_dtype dtype;
+		
+		type = ARR_DBL; dtype = f64;
+		
+		if (r->type == ARR_CMPX) {
+			type = ARR_CMPX; dtype = c64;
+		}
+			
+		CHKFN(mk_array(&arr, type, STG_DEVICE, 1), fail);
+		
+		vals = r->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		
+		vals = arr->values;
+		CHKAF(af_cast(&arr->values, vals, dtype), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_product(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		CHK(16, fail, L"Not implemented yet");
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	arr->shape[0] = r->shape[0] * r->shape[2];
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(product_array, product_array_func, error_dya_syntax)
+
+int
+all_true_array_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+		af_array vals;
+					
+		CHKFN(mk_array(&arr, ARR_BOOL, STG_DEVICE, 1), fail);
+		
+		vals = r->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		
+		vals = arr->values;
+		CHKAF(af_all_true(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		CHK(16, fail, L"Not implemented yet");
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	arr->shape[0] = r->shape[0] * r->shape[2];
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(all_true_array, all_true_array_func, error_dya_syntax)
+
+int
+any_true_array_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+		af_array vals;
+					
+		CHKFN(mk_array(&arr, ARR_BOOL, STG_DEVICE, 1), fail);
+		
+		vals = r->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		
+		vals = arr->values;
+		CHKAF(af_any_true(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		CHK(16, fail, L"Not implemented yet");
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	arr->shape[0] = r->shape[0] * r->shape[2];
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(any_true_array, any_true_array_func, error_dya_syntax)
+
+int
+min_array_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+		af_array vals;
+		
+		CHKFN(mk_array(&arr, r->type, STG_DEVICE, 1), fail);
+		
+		vals = r->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		
+		vals = arr->values;
+		CHKAF(af_min(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		CHK(16, fail, L"Not implemented yet");
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	arr->shape[0] = r->shape[0] * r->shape[2];
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(min_array, min_array_func, error_dya_syntax)
+
+int
+max_array_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+		af_array vals;
+		
+		CHKFN(mk_array(&arr, r->type, STG_DEVICE, 1), fail);
+		
+		vals = r->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		
+		vals = arr->values;
+		CHKAF(af_max(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		CHK(16, fail, L"Not implemented yet");
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	arr->shape[0] = r->shape[0] * r->shape[2];
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(max_array, max_array_func, error_dya_syntax)
+
+int
+xor_array_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+		af_array vals, one;
+		dim_t count;
+					
+		CHKFN(mk_array(&arr, ARR_BOOL, STG_DEVICE, 1), fail);
+		
+		vals = r->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		
+		vals = arr->values;
+		CHKAF(af_count(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		count = r->shape[0] * r->shape[2];
+		CHKAF(af_constant_ulong(&one, 1, 1, &count), fail);
+		CHKAF(af_bitand(&arr->values, one, vals, 0), device_fail);
+		CHKAF(af_release_array(vals), device_fail);
+		CHKAF(af_release_array(one), fail);
+		
+		vals = arr->values;
+		CHKAF(af_cast(&arr->values, vals, b8), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		break;
+		
+	device_fail:
+		af_release_array(one);
+		goto fail;
+	}break;
+	case STG_HOST:{
+		CHK(16, fail, L"Not implemented yet");
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	arr->shape[0] = r->shape[0] * r->shape[2];
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(xor_array, xor_array_func, error_dya_syntax)

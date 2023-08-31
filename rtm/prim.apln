@@ -635,7 +635,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	ib←is_bool ⍵ ⋄ ir←~is_cmpx ⍵
 	1≡≢⍴⍵:{
 		op eq + ⍬:{ib:'count_vec'⌶ ⍵ ⋄ 'sum_vec'⌶ ⍵}⍵
-		op eq × ⍬:'product_vec'⌶ ⍵
+		op eq × ⍬:{ib:'all_true_vec'⌶ ⍵ ⋄ 'product_vec'⌶ ⍵}⍵
 		ir∧op eq ⌊ ⍬:'min_vec'⌶ ⍵
 		ir∧op eq ⌈ ⍬:'max_vec'⌶ ⍵
 		ib∧op eq ∧ ⍬:'all_true_vec'⌶ ⍵
@@ -645,12 +645,12 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	}⍵
 	lc←×⌿ls←axis↑s ⋄ rc←×⌿rs←(axis+1)↓s ⋄ zs←ls,rs
 	⍺⍺ eq + ⍬:zs⍴{ib:'count_array'⌶ ⍵ ⋄ 'sum_array'⌶ ⍵}lc c rc⍴⍵
-⍝	⍺⍺ eq × ⍬:zs⍴'product_array'⌶ lc c rc⍴⍵
-⍝	ir∧⍺⍺ eq ⌊ ⍬:zs⍴'min_array'⌶ lc c rc⍴⍵
-⍝	ir∧⍺⍺ eq ⌈ ⍬:zs⍴'max_array'⌶ lc c rc⍴⍵
-⍝	ib∧⍺⍺ eq ∧ ⍬:zs⍴'all_true_array'⌶ lc c rc⍴⍵
-⍝	ib∧⍺⍺ eq ∨ ⍬:zs⍴'any_true_array'⌶ lc c rc⍴⍵
-⍝	ib∧⍺⍺ eq ≠ ⍬:zs⍴'xor_array'⌶ lc c rc⍴⍵
+	⍺⍺ eq × ⍬:zs⍴{ib:'all_true_array'⌶ ⍵ ⋄ 'product_array'⌶ ⍵}lc c rc⍴⍵
+	ir∧⍺⍺ eq ⌊ ⍬:zs⍴{ib:'all_true_array'⌶ ⍵ ⋄ 'min_array'⌶ ⍵}lc c rc⍴⍵
+	ir∧⍺⍺ eq ⌈ ⍬:zs⍴{ib:'any_true_array'⌶ ⍵ ⋄ 'max_array'⌶ ⍵}lc c rc⍴⍵
+	ib∧⍺⍺ eq ∧ ⍬:zs⍴'all_true_array'⌶ lc c rc⍴⍵
+	ib∧⍺⍺ eq ∨ ⍬:zs⍴'any_true_array'⌶ lc c rc⍴⍵
+	ib∧⍺⍺ eq ≠ ⍬:zs⍴'xor_array'⌶ lc c rc⍴⍵
 	gen_red ⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
