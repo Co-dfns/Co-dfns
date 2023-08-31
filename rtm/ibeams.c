@@ -3155,7 +3155,47 @@ max_array_func(struct cell_array **z, struct cell_array *r,
 		CHKAF(af_release_array(vals), fail);
 	}break;
 	case STG_HOST:{
-		CHK(16, fail, L"Not implemented yet");
+		size_t sc, sr, lc, rc;
+		
+		lc = r->shape[0];
+		sc = r->shape[1];
+		rc = r->shape[2];
+		sr = sc * rc;
+		
+		#define MAX_ARRAY_LOOP(ct, at, init) {				\
+			ct *tgt, *vals;							\
+											\
+			CHKFN(mk_array(&arr, at, STG_HOST, 1), fail);			\
+											\
+			arr->shape[0] = lc * rc;					\
+											\
+			CHKFN(alloc_array(arr), fail);					\
+											\
+			vals = r->values;						\
+			tgt = arr->values;						\
+											\
+			for (size_t i = 0; i < lc; i++) {				\
+				for (size_t j = 0; j < rc; j++) {			\
+					ct x = init;					\
+											\
+					for (size_t k = 0; k < sc; k++)			\
+						x = max_real(x, vals[i*sr+k*rc+j]);	\
+											\
+					tgt[i*rc+j] = x;				\
+				}							\
+			}								\
+		}
+		
+		switch (r->type) {
+		case ARR_SINT:
+			MAX_ARRAY_LOOP(int16_t, ARR_SINT, INT16_MIN);break;
+		case ARR_INT:
+			MAX_ARRAY_LOOP(int32_t, ARR_INT, INT32_MIN);break;
+		case ARR_DBL:
+			MAX_ARRAY_LOOP(double, ARR_DBL, DBL_MIN);break;
+		default:
+			CHK(99, fail, L"Unexpected array type");
+		}
 	}break;
 	default:
 		CHK(99, fail, L"Unknown storage type");
