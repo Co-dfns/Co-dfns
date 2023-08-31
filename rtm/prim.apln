@@ -646,11 +646,15 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 		gen_red ⍵
 ⍝		gen_red('product_array'⌶⌶)⍵
 	}⍵
-⍝	⍺⍺ eq ⌈ ⍬:{iv:'max_vec'⌶ ⍵ ⋄ gen_red('max_array'⌶⌶)⍵}⍵
 	ir∧⍺⍺ eq ⌊ ⍬:{
 		iv:'min_vec'⌶ ⍵
 		gen_red ⍵
 ⍝		gen_red('min_array'⌶⌶)⍵
+	}⍵
+	ir∧⍺⍺ eq ⌈ ⍬:{
+		iv:'max_vec'⌶ ⍵
+		gen_red ⍵
+⍝		gen_red('max_array'⌶⌶)⍵
 	}⍵
 ⍝	ib∧⍺⍺ eq ∧ ⍬:{iv:'all_true_vec'⌶ ⍵ ⋄ gen_red('all_true_array'⌶⌶)⍵}⍵
 ⍝	ib∧⍺⍺ eq ∨ ⍬:{iv:'any_true_vec'⌶ ⍵ ⋄ gen_red('any_true_array'⌶⌶)⍵}⍵
