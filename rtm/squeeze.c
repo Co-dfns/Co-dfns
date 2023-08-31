@@ -145,22 +145,20 @@ find_minmax(double *min, double *max,
 {
 	size_t count;
 	void *vals;
+	int err;
 	
 	count = array_values_count(arr);
 	vals = arr->values;
 	
 	if (arr->storage == STG_DEVICE) {
-		int err;
 		double real, imag;
 		
-		if (err = af_min_all(&real, &imag, vals))
-			return err;
+		CHKAF(af_min_all(&real, &imag, vals), fail);
 		
 		*min = real;
 		*is_real = (imag == 0);
 		
-		if (err = af_max_all(&real, &imag, vals))
-			return err;
+		CHKAF(af_max_all(&real, &imag, vals), fail);
 		
 		*max = real;
 		*is_real = (*is_real && (imag == 0));
@@ -170,14 +168,13 @@ find_minmax(double *min, double *max,
 			return 0;
 		}
 		
-		if (err = is_integer_device(is_int, vals))
-			return err;
+		CHKFN(is_integer_device(is_int, vals), fail);
 		
 		return 0;
 	}
 	
 	if (arr->storage != STG_HOST)
-		return 99;
+		CHK(99, fail, L"Expected host storage");
 	
 	*is_real = 1;
 	*is_int = 1;
@@ -223,11 +220,15 @@ find_minmax(double *min, double *max,
 			*is_int = (*is_int && is_integer_dbl(t.real));
 			*is_real = (*is_real && (t.imag == 0));
 		})
+		break;
 	default:
-		return 99;
+		CHK(99, fail, L"Unexpected array type");
 	}
-		
+	
 	return 0;
+
+fail:
+	return err;
 }
 
 DECLSPEC int
