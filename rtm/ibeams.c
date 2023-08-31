@@ -2275,25 +2275,25 @@ sum_vec_func(struct cell_array **z, struct cell_array *r,
 		count = array_count(r);
 		
 		switch (r->type) {
-		ARR_SINT:{
+		case ARR_SINT:{
 			int16_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real += vals[i];
 		}break;
-		ARR_INT:{
+		case ARR_INT:{
 			int32_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real += vals[i];
 		}break;
-		ARR_DBL:{
+		case ARR_DBL:{
 			double *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real += vals[i];
 		}break;
-		ARR_CMPX:{
+		case ARR_CMPX:{
 			struct apl_cmpx accum = {real, imag};
 			struct apl_cmpx *vals = r->values;
 			
@@ -2358,25 +2358,25 @@ product_vec_func(struct cell_array **z, struct cell_array *r,
 		count = array_count(r);
 		
 		switch (r->type) {
-		ARR_SINT:{
+		case ARR_SINT:{
 			int16_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real *= vals[i];
 		}break;
-		ARR_INT:{
+		case ARR_INT:{
 			int32_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real *= vals[i];
 		}break;
-		ARR_DBL:{
+		case ARR_DBL:{
 			double *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real *= vals[i];
 		}break;
-		ARR_CMPX:{
+		case ARR_CMPX:{
 			struct apl_cmpx accum = {real, imag};
 			struct apl_cmpx *vals = r->values;
 			
@@ -2441,19 +2441,19 @@ min_vec_func(struct cell_array **z, struct cell_array *r,
 		count = array_count(r);
 		
 		switch (r->type) {
-		ARR_SINT:{
+		case ARR_SINT:{
 			int16_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real = min_real(real, vals[i]);
 		}break;
-		ARR_INT:{
+		case ARR_INT:{
 			int32_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real = min_real(real, vals[i]);
 		}break;
-		ARR_DBL:{
+		case ARR_DBL:{
 			double *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
@@ -2511,19 +2511,19 @@ max_vec_func(struct cell_array **z, struct cell_array *r,
 		count = array_count(r);
 		
 		switch (r->type) {
-		ARR_SINT:{
+		case ARR_SINT:{
 			int16_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real = max_real(real, vals[i]);
 		}break;
-		ARR_INT:{
+		case ARR_INT:{
 			int32_t *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
 				real = max_real(real, vals[i]);
 		}break;
-		ARR_DBL:{
+		case ARR_DBL:{
 			double *vals = r->values;
 			
 			for (size_t i = 0; i < count; i++)
@@ -2721,6 +2721,8 @@ count_array_func(struct cell_array **z, struct cell_array *r,
 		af_array vals;
 					
 		CHKFN(mk_array(&arr, ARR_DBL, STG_DEVICE, 1), fail);
+		
+		arr->shape[0] = r->shape[0] * r->shape[2];
 		
 		vals = r->values;
 		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
