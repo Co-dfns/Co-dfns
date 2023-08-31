@@ -11,6 +11,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *cdf_is_char;
 	struct cell_func_box *cdf_is_integer;
 	struct cell_func_box *cdf_is_bool;
+	struct cell_func_box *cdf_is_cmpx;
 	struct cell_func_box *cdf_is_span;
 	struct cell_func_box *cdf_max_shp;
 	struct cell_func_box *cdf_has_nat_vals;

@@ -15,6 +15,7 @@ is_numeric←'is_numeric_ibeam'⌶
 is_char←'is_char_ibeam'⌶
 is_integer←'is_integer_ibeam'⌶
 is_bool←{11≡⎕DR squeeze ⍵}
+is_cmpx←{1289≡⎕DR squeeze ⍵}
 is_span←'is_span_ibeam'⌶
 max_shp←{⍺←0 ⋄ ⍺('max_shp_ibeam'⌶)⍵}
 has_nat_vals←'has_nat_vals_ibeam'⌶
@@ -631,7 +632,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	⍺⍺ eq ⊣ ⍬:0⌷[axis]⍵
 	gen_red←{⍵{((c⊢←c-1)⌷[axis]⍺)op¨⍵}⍣c⊢(c←c-1)⌷[axis]⍵}
 	is_char ⍵:gen_red ⍵ ⋄ ~is_simple ⍵:gen_red ⍵
-	ib←is_bool ⍵ ⋄ iv←1≡≢⍴⍵
+	ib←is_bool ⍵ ⋄ iv←1≡≢⍴⍵ ⋄ ir←~is_cmpx ⍵
 	⍺⍺ eq + ⍬:{
 		iv:{
 			ib:'count_vec'⌶ ⍵
@@ -645,8 +646,12 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 		gen_red ⍵
 ⍝		gen_red('product_array'⌶⌶)⍵
 	}⍵
-⍝	⍺⍺ eq ⌊ ⍬:{iv:'min_vec'⌶ ⍵ ⋄ gen_red('min_array'⌶⌶)⍵}⍵
 ⍝	⍺⍺ eq ⌈ ⍬:{iv:'max_vec'⌶ ⍵ ⋄ gen_red('max_array'⌶⌶)⍵}⍵
+	ir∧⍺⍺ eq ⌊ ⍬:{
+		iv:'min_vec'⌶ ⍵
+		gen_red ⍵
+⍝		gen_red('min_array'⌶⌶)⍵
+	}⍵
 ⍝	ib∧⍺⍺ eq ∧ ⍬:{iv:'all_true_vec'⌶ ⍵ ⋄ gen_red('all_true_array'⌶⌶)⍵}⍵
 ⍝	ib∧⍺⍺ eq ∨ ⍬:{iv:'any_true_vec'⌶ ⍵ ⋄ gen_red('any_true_array'⌶⌶)⍵}⍵
 ⍝	ib∧⍺⍺ eq ≠ ⍬:{iv:'xor_vec'⌶ ⍵ ⋄ gen_red('xor_array'⌶⌶)⍵}⍵
