@@ -2314,6 +2314,8 @@ sum_vec_func(struct cell_array **z, struct cell_array *r,
 	if (r->type == ARR_CMPX) {
 		struct apl_cmpx val = {real, imag};
 		CHKFN(mk_array_cmpx(&arr, val), fail);
+	} else if (!is_integer_dbl(real)) {
+		CHKFN(mk_array_dbl(&arr, real), fail);
 	} else if (real <= 1) {
 		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
 	} else if (real <= INT16_MAX) {
@@ -2395,6 +2397,8 @@ product_vec_func(struct cell_array **z, struct cell_array *r,
 	if (r->type == ARR_CMPX) {
 		struct apl_cmpx val = {real, imag};
 		CHKFN(mk_array_cmpx(&arr, val), fail);
+	} else if (!is_integer_dbl(real)) {
+		CHKFN(mk_array_dbl(&arr, real), fail);
 	} else if (real <= 1) {
 		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
 	} else if (real <= INT16_MAX) {
@@ -2463,7 +2467,9 @@ min_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	if (real <= 1) {
+	if (!is_integer_dbl(real)) {
+		CHKFN(mk_array_dbl(&arr, real), fail);
+	} else if (real <= 1) {
 		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
 	} else if (real <= INT16_MAX) {
 		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
@@ -2531,7 +2537,9 @@ max_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	if (real <= 1) {
+	if (!is_integer_dbl(real)) {
+		CHKFN(mk_array_dbl(&arr, real), fail);
+	} else if (real <= 1) {
 		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
 	} else if (real <= INT16_MAX) {
 		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
