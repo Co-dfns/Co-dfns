@@ -2659,3 +2659,49 @@ fail:
 }
 
 DECL_FUNC(any_true_vec, any_true_vec_func, error_dya_syntax)
+
+int
+xor_vec_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int8_t result;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		double real, imag;
+				
+		CHKAF(af_count_all(&real, &imag, r->values), fail);
+		
+		result = (int8_t)real&1;
+	}break;
+	case STG_HOST:{
+		size_t count;
+		int8_t *vals;
+		
+		count = array_count(r);
+		vals = r->values;
+		result = 0;
+		
+		for (size_t i = 0; i < count; i++)
+			result ^= vals[i];
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	CHKFN(mk_array_int8(&arr, result), fail);
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(xor_vec, xor_vec_func, error_dya_syntax)

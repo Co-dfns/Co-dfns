@@ -666,7 +666,11 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 		gen_red ⍵
 ⍝		gen_red('any_true_array'⌶⌶)⍵
 	}⍵
-⍝	ib∧⍺⍺ eq ≠ ⍬:{iv:'xor_vec'⌶ ⍵ ⋄ gen_red('xor_array'⌶⌶)⍵}⍵
+	ib∧⍺⍺ eq ≠ ⍬:{
+		iv:'xor_vec'⌶ ⍵
+		gen_red ⍵
+⍝		gen_red('xor_array'⌶⌶)⍵
+	}⍵
 	gen_red ⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
