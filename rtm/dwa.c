@@ -115,16 +115,28 @@ array_dwa_type(enum array_type type)
 }
 
 enum array_storage
-dwa_array_storage(unsigned int type)
+dwa_array_storage(struct pocket *pkt)
 {
-	switch (type) {
-	case 15:
-		return STG_DEVICE;
-	case 7:
-		return STG_HOST;
-	default:
+	size_t count;
+	unsigned int type;
+	
+	type = pkt->type;
+	
+	if (type != 15 && type != 7)
 		return -1;
-	}
+	
+	if (type == 7)
+		return STG_HOST;
+	
+	count = 1;
+	
+	for (unsigned int i = 0; i < pkt->rank; i++) 
+		count *= pkt->shape[i];
+	
+	if (count > 1024)
+		return STG_DEVICE;
+	
+	return STG_HOST;
 }
 
 int dwa2array(struct cell_array **tgt, struct pocket *pkt);
@@ -150,7 +162,7 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 		return 0;
 	}
 	
-	storage	= dwa_array_storage(pkt->type);
+	storage	= dwa_array_storage(pkt);
 	type	= dwa_array_type(pkt->eltype);
 	
 	CHK(storage == -1, done, L"Unsupported DWA type");
