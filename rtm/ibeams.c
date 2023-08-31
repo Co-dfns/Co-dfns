@@ -3019,6 +3019,8 @@ any_true_array_func(struct cell_array **z, struct cell_array *r,
 		af_array vals;
 					
 		CHKFN(mk_array(&arr, ARR_BOOL, STG_DEVICE, 1), fail);
+
+		arr->shape[0] = r->shape[0] * r->shape[2];
 		
 		vals = r->values;
 		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
@@ -3032,13 +3034,40 @@ any_true_array_func(struct cell_array **z, struct cell_array *r,
 		CHKAF(af_release_array(vals), fail);
 	}break;
 	case STG_HOST:{
-		CHK(16, fail, L"Not implemented yet");
+		size_t sc, sr, lc, rc;
+		int8_t *vals, *tgt;
+		
+		lc = r->shape[0];
+		sc = r->shape[1];
+		rc = r->shape[2];
+		sr = sc * rc;
+		
+		CHKFN(mk_array(&arr, ARR_BOOL, STG_HOST, 1), fail);
+		
+		arr->shape[0] = lc * rc;
+		
+		CHKFN(alloc_array(arr), fail);
+		
+		vals = r->values;
+		tgt = arr->values;
+		
+		for (size_t i = 0; i < lc; i++) {
+			for (size_t j = 0; j < rc; j++) {
+				int8_t x = 0;
+				
+				for (size_t k = 0; k < sc; k++)
+					if (vals[i*sr + k*rc + j]) {
+						x = 1;
+						break;
+					}
+					
+				tgt[i*rc + j] = x;
+			}
+		}
 	}break;
 	default:
 		CHK(99, fail, L"Unknown storage type");
 	}
-	
-	arr->shape[0] = r->shape[0] * r->shape[2];
 	
 	*z = arr;
 	

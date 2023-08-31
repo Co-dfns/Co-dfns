@@ -9,7 +9,7 @@
 
  MK∆T1←{##.UT.expect←(⍎'dy.',⍺⍺)⍵⍵ ⋄ (⍎'cd.',⍺⍺)⍵⍵}
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
- MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
+ MK∆T3←{fn tl←⍺⍺ ⋄ nv←(⍎'dy.',fn)⍵⍵ ⋄ cv←(⍎'cd.',fn)⍵⍵
   ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 
  X←⍉⍪¯35.5 ¯41.5 ¯29.5 7.5 34.5 ¯11.5 31.5 ¯0.5 32.5 12.5
@@ -51,7 +51,7 @@
 ∆redfirst∆32_TEST←'redfirst∆R2'  MK∆T1 (?128⍴0)
 ∆redfirst∆33_TEST←'redfirst∆R2'  MK∆T1 (?2048⍴0)
 ∆redfirst∆34_TEST←'redfirst∆R2'  MK∆T1 ((?128⍴0)+0j1×?128⍴0)
-∆redfirst∆35_TEST←'redfirst∆R2'  MK∆T1 ((?2048⍴0)+0j1×?2048⍴0)
+∆redfirst∆35_TEST←'redfirst∆R2' 1E¯322 MK∆T3 ((?2048⍴0)+0j1×?2048⍴0)
 ∆redfirst∆36_TEST←'redfirst∆min' MK∆T1 (?128⍴0)
 ∆redfirst∆37_TEST←'redfirst∆min' MK∆T1 (?2048⍴0)
 ∆redfirst∆38_TEST←'redfirst∆max' MK∆T1 (?128⍴0)
