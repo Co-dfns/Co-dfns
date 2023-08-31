@@ -2354,7 +2354,7 @@ product_vec_func(struct cell_array **z, struct cell_array *r,
 	case STG_HOST:{
 		size_t count;
 		
-		real = imag = 0;
+		real = 1; imag = 0;
 		count = array_count(r);
 		
 		switch (r->type) {
@@ -2437,7 +2437,7 @@ min_vec_func(struct cell_array **z, struct cell_array *r,
 	case STG_HOST:{
 		size_t count;
 		
-		real = imag = 0;
+		real = imag = DBL_MAX;
 		count = array_count(r);
 		
 		switch (r->type) {
@@ -2507,7 +2507,7 @@ max_vec_func(struct cell_array **z, struct cell_array *r,
 	case STG_HOST:{
 		size_t count;
 		
-		real = imag = 0;
+		real = imag = DBL_MIN;
 		count = array_count(r);
 		
 		switch (r->type) {
