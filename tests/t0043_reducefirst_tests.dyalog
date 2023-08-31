@@ -60,6 +60,8 @@
 ∆redfirst∆41_TEST←'redfirst∆lor' MK∆T1 (?2048⍴2)
 ∆redfirst∆42_TEST←'redfirst∆xor' MK∆T1 (?128⍴2)
 ∆redfirst∆43_TEST←'redfirst∆xor' MK∆T1 (?2048⍴2)
+∆redfirst∆44_TEST←'redfirst∆R1'  MK∆T1 (?1024 1024⍴2)
+∆redfirst∆45_TEST←'redfirst∆R1'  MK∆T1 (?1024 1024⍴0)
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

@@ -2707,6 +2707,57 @@ fail:
 DECL_FUNC(xor_vec, xor_vec_func, error_dya_syntax)
 
 int
+count_array_func(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+		af_array vals;
+					
+		CHKFN(mk_array(&arr, ARR_DBL, STG_DEVICE, 1), fail);
+		
+		vals = r->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		
+		vals = arr->values;
+		CHKAF(af_count(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_cast(&arr->values, vals, f64), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		CHK(16, fail, L"Not implemented yet");
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	arr->shape[0] = r->shape[0] * r->shape[2];
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(count_array, count_array_func, error_dya_syntax)
+
+int
 sum_array_func(struct cell_array **z, struct cell_array *r,
     struct cell_func *self)
 {

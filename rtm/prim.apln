@@ -644,7 +644,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 		gen_red ⍵
 	}⍵
 	lc←×⌿ls←axis↑s ⋄ rc←×⌿rs←(axis+1)↓s ⋄ zs←ls,rs
-	⍺⍺ eq + ⍬:zs⍴'sum_array'⌶ lc c rc⍴⍵
+	⍺⍺ eq + ⍬:zs⍴{ib:'count_array'⌶ ⍵ ⋄ 'sum_array'⌶ ⍵}lc c rc⍴⍵
 ⍝	⍺⍺ eq × ⍬:zs⍴'product_array'⌶ lc c rc⍴⍵
 ⍝	ir∧⍺⍺ eq ⌊ ⍬:zs⍴'min_array'⌶ lc c rc⍴⍵
 ⍝	ir∧⍺⍺ eq ⌈ ⍬:zs⍴'max_array'⌶ lc c rc⍴⍵
