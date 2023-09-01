@@ -636,8 +636,8 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	1≡≢⍴⍵:{
 		op eq + ⍬:{ib:'count_vec'⌶ ⍵ ⋄ 'sum_vec'⌶ ⍵}⍵
 		op eq × ⍬:{ib:'all_true_vec'⌶ ⍵ ⋄ 'product_vec'⌶ ⍵}⍵
-		ir∧op eq ⌊ ⍬:'min_vec'⌶ ⍵
-		ir∧op eq ⌈ ⍬:'max_vec'⌶ ⍵
+		ir∧op eq ⌊ ⍬:{ib:'all_true_vec'⌶ ⍵ ⋄ 'min_vec'⌶ ⍵}⍵
+		ir∧op eq ⌈ ⍬:{ib:'any_true_vec'⌶ ⍵ ⋄ 'max_vec'⌶ ⍵}⍵
 		ib∧op eq ∧ ⍬:'all_true_vec'⌶ ⍵
 		ib∧op eq ∨ ⍬:'any_true_vec'⌶ ⍵
 		ib∧op eq ≠ ⍬:'xor_vec'⌶ ⍵
