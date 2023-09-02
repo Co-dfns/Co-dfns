@@ -708,10 +708,34 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
 	hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:⍵
 	1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5 ⋄ (axis<0)∨axis≥≢⍴⍵:⎕SIGNAL 4
 	1≡≢,⍵:⍵ ⋄ (0≡≢,⍵)∨1≡(⍴⍵)[axis]:⍵
-	1≥≢⍴⍵:squeeze (⍴⍵)⍴{fn⌿x[⍳⍵]}¨1+⍳≢x←⍵
+	1≥≢⍴⍵:{
+		vec_gen←{squeeze (⍴⍵)⍴{fn⌿x[⍳⍵]}¨1+⍳≢x←⍵}
+		is_char ⍵:vec_gen ⍵ ⋄ ~is_simple ⍵:vec_gen ⍵
+		ib←is_bool ⍵ ⋄ ir←~is_cmpx ⍵
+		fn eq + ⍬:'plus_scan_vec'⌶ ⍵
+		fn eq × ⍬:⎕SIGNAL 16
+		ir∧fn eq ⌊ ⍬:⎕SIGNAL 16
+		ir∧fn eq ⌈ ⍬:⎕SIGNAL 16
+		ib∧fn eq ∧ ⍬:⎕SIGNAL 16
+		ib∧fn eq ∨ ⍬:⎕SIGNAL 16
+		ib∧fn eq ≠ ⍬:⎕SIGNAL 16
+		⎕SIGNAL 16
+		vec_gen ⍵
+	}⍵
 	c←(⍴⍵)[axis] ⋄ ls←×⌿axis↑⍴⍵ ⋄ rs←×⌿(axis+1)↓⍴⍵
 	z←ls c rs⍴⊃⍵ ⋄ x←ls c rs⍴⍵
-	squeeze(⍴⍵)⍴z⊣{z[;⍵;]←fn⌿[1]x[;⍳1+⍵;]}¨⍳c
+	arr_gen←{squeeze(⍴⍵)⍴z⊣{z[;⍵;]←fn⌿[1]x[;⍳1+⍵;]}¨⍳c}
+	is_char ⍵:arr_gen ⍵ ⋄ ~is_simple ⍵:arr_gen ⍵
+	ib←is_bool ⍵ ⋄ ir←~is_cmpx ⍵
+	⍺⍺ eq + ⍬:⎕SIGNAL 16
+	⍺⍺ eq × ⍬:⎕SIGNAL 16
+	ir∧⍺⍺ eq ⌊ ⍬:⎕SIGNAL 16
+	ir∧⍺⍺ eq ⌈ ⍬:⎕SIGNAL 16
+	ib∧⍺⍺ eq ∧ ⍬:⎕SIGNAL 16
+	ib∧⍺⍺ eq ∨ ⍬:⎕SIGNAL 16
+	ib∧⍺⍺ eq ≠ ⍬:⎕SIGNAL 16
+	⎕SIGNAL 16
+	arr_gen ⍵
 }
 scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
 	
