@@ -714,11 +714,11 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
 		ib←is_bool ⍵ ⋄ ir←~is_cmpx ⍵
 		fn eq + ⍬:'plus_scan_vec'⌶ ⍵
 		fn eq × ⍬:'times_scan_vec'⌶ ⍵
-		⍝ ir∧fn eq ⌊ ⍬:⎕SIGNAL 16
-		⍝ ir∧fn eq ⌈ ⍬:⎕SIGNAL 16
-		⍝ ib∧fn eq ∧ ⍬:⎕SIGNAL 16
-		⍝ ib∧fn eq ∨ ⍬:⎕SIGNAL 16
-		⍝ ib∧fn eq ≠ ⍬:⎕SIGNAL 16
+		ir∧fn eq ⌊ ⍬:'min_scan_vec'⌶ ⍵
+		ir∧fn eq ⌈ ⍬:'max_scan_vec'⌶ ⍵
+		ib∧fn eq ∧ ⍬:'min_scan_vec'⌶ ⍵
+		ib∧fn eq ∨ ⍬:'max_scan_vec'⌶ ⍵
+		ib∧fn eq ≠ ⍬:'xor_scan_vec'⌶ ⍵
 		vec_gen ⍵
 	}⍵
 	c←(⍴⍵)[axis] ⋄ ls←×⌿axis↑⍴⍵ ⋄ rs←×⌿(axis+1)↓⍴⍵ ⋄ x←ls c rs⍴⍵
@@ -728,11 +728,11 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
 	ib←is_bool ⍵ ⋄ ir←~is_cmpx ⍵
 	⍺⍺ eq + ⍬:(⍴⍵)⍴'plus_scan_array'⌶ x
 	⍺⍺ eq × ⍬:(⍴⍵)⍴'times_scan_array'⌶ x
-	⍝ir∧⍺⍺ eq ⌊ ⍬:⎕SIGNAL 16
-	⍝ir∧⍺⍺ eq ⌈ ⍬:⎕SIGNAL 16
-	⍝ib∧⍺⍺ eq ∧ ⍬:⎕SIGNAL 16
-	⍝ib∧⍺⍺ eq ∨ ⍬:⎕SIGNAL 16
-	⍝ib∧⍺⍺ eq ≠ ⍬:⎕SIGNAL 16
+	ir∧⍺⍺ eq ⌊ ⍬:(⍴⍵)⍴'min_scan_array'⌶ x
+	ir∧⍺⍺ eq ⌈ ⍬:(⍴⍵)⍴'max_scan_array'⌶ x
+	ib∧⍺⍺ eq ∧ ⍬:(⍴⍵)⍴'min_scan_array'⌶ x
+	ib∧⍺⍺ eq ∨ ⍬:(⍴⍵)⍴'max_scan_array'⌶ x
+	ib∧⍺⍺ eq ≠ ⍬:(⍴⍵)⍴'xor_scan_array'⌶ x
 	arr_gen ⍵
 }
 scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
