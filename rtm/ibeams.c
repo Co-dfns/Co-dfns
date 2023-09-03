@@ -3464,6 +3464,9 @@ plus_scan_vec_func(struct cell_array **z, struct cell_array *r,
 			dtype = f64;
 			break;
 		case ARR_CMPX:
+			type = ARR_CMPX;
+			dtype = c64;
+			break;
 		default:
 			CHK(99, fail, L"Unexpected array type");
 		}
@@ -3530,3 +3533,337 @@ fail:
 }
 
 DECL_FUNC(plus_scan_vec, plus_scan_vec_func, error_dya_syntax)
+
+int
+plus_scan_array_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		size_t count;
+		af_array vals;
+		enum array_type type;
+		af_dtype dtype;
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+				
+		count = array_count(r);
+		
+		switch (r->type) {
+		case ARR_BOOL:
+			if (count <= INT32_MAX) {
+				type = ARR_INT;
+				dtype = s32; 
+			} else {
+				type = ARR_DBL;
+				dtype = f64;
+			}
+			break;
+		case ARR_SINT:
+			if (count <= INT16_MAX) {
+				type = ARR_INT;
+				dtype = s32;
+			} else {
+				type = ARR_DBL;
+				dtype = f64;
+			}
+			break;
+		case ARR_INT:
+			type = ARR_DBL;
+			dtype = f64;
+			break;
+		case ARR_DBL:
+			type = ARR_DBL;
+			dtype = f64;
+			break;
+		case ARR_CMPX:
+			type = ARR_CMPX;
+			dtype = c64;
+			break;
+		default:
+			CHK(99, fail, L"Unexpected array type");
+		}
+		
+		CHKFN(mk_array(&arr, type, STG_DEVICE, 1), fail);
+		
+		arr->shape[0] = count;
+		
+		vals = r->values;
+		CHKAF(af_cast(&arr->values, vals, dtype), fail);
+		
+		vals = arr->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_accum(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		size_t count, lc, c, rc, cr;
+		
+		count = array_count(r);
+		lc = r->shape[0];
+		c = r->shape[1];
+		rc = r->shape[2];
+		cr = c * rc;
+		
+		#define PLUS_SCAN_ARRAY_LOOP(ct, at, st, sfx) {		\
+			st *vals;                                       \
+			ct *tgt;                                        \
+									\
+			CHKFN(mk_array(&arr, at, STG_HOST, 1), fail);   \
+									\
+			arr->shape[0] = count;				\
+									\
+			CHKFN(alloc_array(arr), fail);                  \
+									\
+			vals = r->values;                               \
+			tgt = arr->values;                              \
+									\
+			for (size_t i = 0; i < lc; i++)			\
+				for (size_t j = 0; j < rc; j++) {	\
+					size_t ij = i*cr + j;		\
+					tgt[ij] = vals[ij];		\
+									\
+					for (size_t k = 1; k < c; k++) {\
+						size_t x_1, x;		\
+									\
+						x_1 = ij + (k-1)*rc;	\
+						x = x_1 + rc;		\
+									\
+						tgt[x] = add_##sfx(	\
+						    tgt[x_1], vals[x]	\
+						);			\
+					}				\
+				}					\
+		}
+		
+		switch (r->type) {
+		case ARR_BOOL:PLUS_SCAN_ARRAY_LOOP(int16_t, ARR_SINT, int8_t, real);break;
+		case ARR_SINT:PLUS_SCAN_ARRAY_LOOP(int32_t, ARR_INT, int16_t, real);break;
+		case ARR_INT:PLUS_SCAN_ARRAY_LOOP(double, ARR_DBL, int32_t, real);break;
+		case ARR_DBL:PLUS_SCAN_ARRAY_LOOP(double, ARR_DBL, double, real);break;
+		case ARR_CMPX:
+			PLUS_SCAN_ARRAY_LOOP(struct apl_cmpx, ARR_CMPX, 
+			    struct apl_cmpx, cmpx);
+			break;
+		default:
+			CHK(99, fail, L"Unexpected array type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(plus_scan_array, plus_scan_array_func, error_dya_syntax)
+
+int
+times_scan_vec_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		size_t count;
+		af_array vals;
+		enum array_type type;
+		af_dtype dtype;
+		
+		count = array_count(r);
+		type = ARR_DBL;
+		dtype = f64;
+		
+		if (r->type == ARR_CMPX) {
+			type = ARR_CMPX;
+			dtype = c64;
+		}
+		
+		CHKFN(mk_array(&arr, type, STG_DEVICE, 1), fail);
+		
+		arr->shape[0] = count;
+		
+		vals = r->values;
+		CHKAF(af_cast(&arr->values, vals, dtype), fail);
+		
+		vals = arr->values;
+		CHKAF(af_scan(&arr->values, vals, 0, AF_BINARY_MUL, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		size_t count;
+		
+		count = array_count(r);
+		
+		#define TIMES_SCAN_VEC_LOOP(ct, at, st, sfx) {		\
+			st *vals;                                       \
+			ct *tgt;                                        \
+									\
+			CHKFN(mk_array(&arr, at, STG_HOST, 1), fail);   \
+									\
+			arr->shape[0] = count;				\
+									\
+			CHKFN(alloc_array(arr), fail);                  \
+									\
+			vals = r->values;                               \
+			tgt = arr->values;                              \
+									\
+			*tgt = *vals;                                   \
+									\
+			for (size_t i = 1; i < count; i++)              \
+				tgt[i] = mul_##sfx(tgt[i-1], vals[i]);  \
+		}
+		
+		switch (r->type) {
+		case ARR_BOOL:TIMES_SCAN_VEC_LOOP(double, ARR_DBL, int8_t, real);break;
+		case ARR_SINT:TIMES_SCAN_VEC_LOOP(double, ARR_DBL, int16_t, real);break;
+		case ARR_INT:TIMES_SCAN_VEC_LOOP(double, ARR_DBL, int32_t, real);break;
+		case ARR_DBL:TIMES_SCAN_VEC_LOOP(double, ARR_DBL, double, real);break;
+		case ARR_CMPX:
+			TIMES_SCAN_VEC_LOOP(struct apl_cmpx, ARR_CMPX, 
+			    struct apl_cmpx, cmpx);
+			break;
+		default:
+			CHK(99, fail, L"Unexpected array type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(times_scan_vec, times_scan_vec_func, error_dya_syntax)
+
+int
+times_scan_array_func(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		size_t count;
+		af_array vals;
+		enum array_type type;
+		af_dtype dtype;
+		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
+				
+		count = array_count(r);
+		type = ARR_DBL;
+		dtype = f64;
+		
+		if (r->type == ARR_CMPX) {
+			type = ARR_CMPX;
+			dtype = c64;
+		}
+		
+		CHKFN(mk_array(&arr, type, STG_DEVICE, 1), fail);
+		
+		arr->shape[0] = count;
+		
+		vals = r->values;
+		CHKAF(af_cast(&arr->values, vals, dtype), fail);
+		
+		vals = arr->values;
+		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_scan(&arr->values, vals, 1, AF_BINARY_MUL, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+	}break;
+	case STG_HOST:{
+		size_t count, lc, c, rc, cr;
+		
+		count = array_count(r);
+		lc = r->shape[0];
+		c = r->shape[1];
+		rc = r->shape[2];
+		cr = c * rc;
+		
+		#define TIMES_SCAN_ARRAY_LOOP(ct, at, st, sfx) {		\
+			st *vals;                                       \
+			ct *tgt;                                        \
+									\
+			CHKFN(mk_array(&arr, at, STG_HOST, 1), fail);   \
+									\
+			arr->shape[0] = count;				\
+									\
+			CHKFN(alloc_array(arr), fail);                  \
+									\
+			vals = r->values;                               \
+			tgt = arr->values;                              \
+									\
+			for (size_t i = 0; i < lc; i++)			\
+				for (size_t j = 0; j < rc; j++) {	\
+					size_t ij = i*cr + j;		\
+					tgt[ij] = vals[ij];		\
+									\
+					for (size_t k = 1; k < c; k++) {\
+						size_t x_1, x;		\
+									\
+						x_1 = ij + (k-1)*rc;	\
+						x = x_1 + rc;		\
+									\
+						tgt[x] = mul_##sfx(	\
+						    tgt[x_1], vals[x]	\
+						);			\
+					}				\
+				}					\
+		}
+		
+		switch (r->type) {
+		case ARR_BOOL:TIMES_SCAN_ARRAY_LOOP(double, ARR_DBL, int8_t, real);break;
+		case ARR_SINT:TIMES_SCAN_ARRAY_LOOP(double, ARR_DBL, int16_t, real);break;
+		case ARR_INT:TIMES_SCAN_ARRAY_LOOP(double, ARR_DBL, int32_t, real);break;
+		case ARR_DBL:TIMES_SCAN_ARRAY_LOOP(double, ARR_DBL, double, real);break;
+		case ARR_CMPX:
+			TIMES_SCAN_ARRAY_LOOP(struct apl_cmpx, ARR_CMPX, 
+			    struct apl_cmpx, cmpx);
+			break;
+		default:
+			CHK(99, fail, L"Unexpected array type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage device");
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(times_scan_array, times_scan_array_func, error_dya_syntax)

@@ -713,28 +713,26 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
 		is_char ⍵:vec_gen ⍵ ⋄ ~is_simple ⍵:vec_gen ⍵
 		ib←is_bool ⍵ ⋄ ir←~is_cmpx ⍵
 		fn eq + ⍬:'plus_scan_vec'⌶ ⍵
-		fn eq × ⍬:⎕SIGNAL 16
-		ir∧fn eq ⌊ ⍬:⎕SIGNAL 16
-		ir∧fn eq ⌈ ⍬:⎕SIGNAL 16
-		ib∧fn eq ∧ ⍬:⎕SIGNAL 16
-		ib∧fn eq ∨ ⍬:⎕SIGNAL 16
-		ib∧fn eq ≠ ⍬:⎕SIGNAL 16
-		⎕SIGNAL 16
+		fn eq × ⍬:'times_scan_vec'⌶ ⍵
+		⍝ ir∧fn eq ⌊ ⍬:⎕SIGNAL 16
+		⍝ ir∧fn eq ⌈ ⍬:⎕SIGNAL 16
+		⍝ ib∧fn eq ∧ ⍬:⎕SIGNAL 16
+		⍝ ib∧fn eq ∨ ⍬:⎕SIGNAL 16
+		⍝ ib∧fn eq ≠ ⍬:⎕SIGNAL 16
 		vec_gen ⍵
 	}⍵
-	c←(⍴⍵)[axis] ⋄ ls←×⌿axis↑⍴⍵ ⋄ rs←×⌿(axis+1)↓⍴⍵
-	z←ls c rs⍴⊃⍵ ⋄ x←ls c rs⍴⍵
-	arr_gen←{squeeze(⍴⍵)⍴z⊣{z[;⍵;]←fn⌿[1]x[;⍳1+⍵;]}¨⍳c}
+	c←(⍴⍵)[axis] ⋄ ls←×⌿axis↑⍴⍵ ⋄ rs←×⌿(axis+1)↓⍴⍵ ⋄ x←ls c rs⍴⍵
+	⍝ arr_gen←{squeeze(⍴⍵)⍴z⊣{z[;⍵;]←fn⌿[1]x[;⍳1+⍵;]}¨⍳c⊣z←ls c rs⍴⊃⍵}
+	arr_gen←{squeeze(⍴⍵)⍴z⊣{⍵+1⊣z[;⍵;]←fn⌿[1]x[;⍳1+⍵;]}⍣c⊢0⊣z←ls c rs⍴⊃⍵}
 	is_char ⍵:arr_gen ⍵ ⋄ ~is_simple ⍵:arr_gen ⍵
 	ib←is_bool ⍵ ⋄ ir←~is_cmpx ⍵
-	⍺⍺ eq + ⍬:⎕SIGNAL 16
-	⍺⍺ eq × ⍬:⎕SIGNAL 16
-	ir∧⍺⍺ eq ⌊ ⍬:⎕SIGNAL 16
-	ir∧⍺⍺ eq ⌈ ⍬:⎕SIGNAL 16
-	ib∧⍺⍺ eq ∧ ⍬:⎕SIGNAL 16
-	ib∧⍺⍺ eq ∨ ⍬:⎕SIGNAL 16
-	ib∧⍺⍺ eq ≠ ⍬:⎕SIGNAL 16
-	⎕SIGNAL 16
+	⍺⍺ eq + ⍬:(⍴⍵)⍴'plus_scan_array'⌶ x
+	⍺⍺ eq × ⍬:(⍴⍵)⍴'times_scan_array'⌶ x
+	⍝ir∧⍺⍺ eq ⌊ ⍬:⎕SIGNAL 16
+	⍝ir∧⍺⍺ eq ⌈ ⍬:⎕SIGNAL 16
+	⍝ib∧⍺⍺ eq ∧ ⍬:⎕SIGNAL 16
+	⍝ib∧⍺⍺ eq ∨ ⍬:⎕SIGNAL 16
+	⍝ib∧⍺⍺ eq ≠ ⍬:⎕SIGNAL 16
 	arr_gen ⍵
 }
 scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
