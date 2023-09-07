@@ -36,6 +36,7 @@ int mk_array_int8(struct cell_array **, int8_t);
 int mk_array_int16(struct cell_array **, int16_t);
 int mk_array_int32(struct cell_array **, int32_t);
 int mk_array_dbl(struct cell_array **, double);
+int mk_array_real(struct cell_array **, double);
 int mk_array_cmpx(struct cell_array **, struct apl_cmpx);
 int mk_array_char8(struct cell_array **, uint8_t);
 int mk_array_char16(struct cell_array **, uint16_t);
