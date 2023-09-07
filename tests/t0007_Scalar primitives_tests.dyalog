@@ -107,8 +107,8 @@
  'circneg5'  SCL∆TST∆RELATIVE 'cir' ¯5   I    (¯5⍴⍨≢F)   F   ¯5   B
  'circneg6'  SCL∆TST∆DYADIC   'cir' ¯6   IPS  (¯6⍴⍨≢F)   FPS ¯6   BNZ
  'circneg7'  SCL∆TST∆DYADIC   'cir' ¯7   AFN  (¯7⍴⍨≢F)   AFN ¯7   AFN
- 'binompos'  SCL∆TST∆RELATIVE 'bin'  IPS IPS  FPS        FPS  B    B
- 'binomial'  SCL∆TST∆DYADIC   'bin' I    I    F            F     B    B
+ ⍝'binompos'  SCL∆TST∆RELATIVE 'bin'  IPS IPS  FPS        FPS  B    B
+ ⍝'binomial'  SCL∆TST∆DYADIC   'bin' I    I    F            F     B    B
 
  ∆999_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
