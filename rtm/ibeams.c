@@ -2204,16 +2204,11 @@ int
 count_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
-	double sum;
+	double sum, mt;
 	int err;
-	
-	arr = NULL;
-	
+		
 	switch (r->storage) {
 	case STG_DEVICE:{
-		double mt;
-				
 		CHKAF(af_count_all(&sum, &mt, r->values), fail);
 	}break;
 	case STG_HOST:{
@@ -2233,22 +2228,9 @@ count_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	if (sum <= 1) {
-		CHKFN(mk_array_int8(&arr, (int8_t)sum), fail);
-	} else if (sum <= INT16_MAX) {
-		CHKFN(mk_array_int16(&arr, (int16_t)sum), fail);
-	} else if (sum <= INT32_MAX) {
-		CHKFN(mk_array_int32(&arr, (int32_t)sum), fail);
-	} else {
-		CHKFN(mk_array_dbl(&arr, sum), fail);
-	}
-	
-	*z = arr;
+	return mk_array_real(z, sum);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2258,12 +2240,9 @@ int
 sum_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
 	double real, imag;
 	int err;
-	
-	arr = NULL;
-	
+		
 	switch (r->storage) {
 	case STG_DEVICE:{
 		CHKAF(af_sum_all(&real, &imag, r->values), fail);
@@ -2313,25 +2292,12 @@ sum_vec_func(struct cell_array **z, struct cell_array *r,
 	
 	if (r->type == ARR_CMPX) {
 		struct apl_cmpx val = {real, imag};
-		CHKFN(mk_array_cmpx(&arr, val), fail);
-	} else if (!is_integer_dbl(real)) {
-		CHKFN(mk_array_dbl(&arr, real), fail);
-	} else if (real <= 1) {
-		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
-	} else if (real <= INT16_MAX) {
-		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
-	} else if (real <= INT32_MAX) {
-		CHKFN(mk_array_int32(&arr, (int32_t)real), fail);
-	} else {
-		CHKFN(mk_array_dbl(&arr, real), fail);
+		return mk_array_cmpx(z, val);
 	}
 	
-	*z = arr;
+	return mk_array_real(z, real);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2341,15 +2307,25 @@ int
 product_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
 	double real, imag;
 	int err;
-	
-	arr = NULL;
-	
+		
 	switch (r->storage) {
 	case STG_DEVICE:{
-		CHKAF(af_product_all(&real, &imag, r->values), fail);
+		af_array vals;
+		af_dtype dtype;
+		
+		dtype = r->type == ARR_CMPX ? c64 : f64;
+		
+		CHKAF(af_cast(&vals, r->values, dtype), fail);
+		CHKAF(af_product_all(&real, &imag, vals), device_fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		break;
+		
+	device_fail:
+		af_release_array(vals);
+		goto fail;
 	}break;
 	case STG_HOST:{
 		size_t count;
@@ -2396,25 +2372,12 @@ product_vec_func(struct cell_array **z, struct cell_array *r,
 	
 	if (r->type == ARR_CMPX) {
 		struct apl_cmpx val = {real, imag};
-		CHKFN(mk_array_cmpx(&arr, val), fail);
-	} else if (!is_integer_dbl(real)) {
-		CHKFN(mk_array_dbl(&arr, real), fail);
-	} else if (real <= 1) {
-		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
-	} else if (real <= INT16_MAX) {
-		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
-	} else if (real <= INT32_MAX) {
-		CHKFN(mk_array_int32(&arr, (int32_t)real), fail);
-	} else {
-		CHKFN(mk_array_dbl(&arr, real), fail);
+		return mk_array_cmpx(z, val);
 	}
 	
-	*z = arr;
+	return mk_array_real(z, real);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2424,12 +2387,9 @@ int
 min_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
 	double real, imag;
 	int err;
-	
-	arr = NULL;
-	
+		
 	switch (r->storage) {
 	case STG_DEVICE:{
 		CHKAF(af_min_all(&real, &imag, r->values), fail);
@@ -2467,24 +2427,9 @@ min_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	if (!is_integer_dbl(real)) {
-		CHKFN(mk_array_dbl(&arr, real), fail);
-	} else if (real <= 1) {
-		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
-	} else if (real <= INT16_MAX) {
-		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
-	} else if (real <= INT32_MAX) {
-		CHKFN(mk_array_int32(&arr, (int32_t)real), fail);
-	} else {
-		CHKFN(mk_array_dbl(&arr, real), fail);
-	}
-	
-	*z = arr;
+	return mk_array_real(z, real);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2494,11 +2439,8 @@ int
 max_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
 	double real, imag;
 	int err;
-	
-	arr = NULL;
 	
 	switch (r->storage) {
 	case STG_DEVICE:{
@@ -2537,24 +2479,9 @@ max_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	if (!is_integer_dbl(real)) {
-		CHKFN(mk_array_dbl(&arr, real), fail);
-	} else if (real <= 1) {
-		CHKFN(mk_array_int8(&arr, (int8_t)real), fail);
-	} else if (real <= INT16_MAX) {
-		CHKFN(mk_array_int16(&arr, (int16_t)real), fail);
-	} else if (real <= INT32_MAX) {
-		CHKFN(mk_array_int32(&arr, (int32_t)real), fail);
-	} else {
-		CHKFN(mk_array_dbl(&arr, real), fail);
-	}
-	
-	*z = arr;
+	return mk_array_real(z, real);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2564,11 +2491,8 @@ int
 all_true_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
 	int8_t result;
 	int err;
-	
-	arr = NULL;
 	
 	switch (r->storage) {
 	case STG_DEVICE:{
@@ -2597,14 +2521,9 @@ all_true_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	CHKFN(mk_array_int8(&arr, result), fail);
-	
-	*z = arr;
+	return mk_array_int8(z, result);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2614,11 +2533,8 @@ int
 any_true_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
 	int8_t result;
 	int err;
-	
-	arr = NULL;
 	
 	switch (r->storage) {
 	case STG_DEVICE:{
@@ -2647,14 +2563,9 @@ any_true_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	CHKFN(mk_array_int8(&arr, result), fail);
-	
-	*z = arr;
+	return mk_array_int8(z, result);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2664,11 +2575,8 @@ int
 xor_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
-	struct cell_array *arr;
 	int8_t result;
 	int err;
-	
-	arr = NULL;
 	
 	switch (r->storage) {
 	case STG_DEVICE:{
@@ -2693,14 +2601,9 @@ xor_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, L"Unknown storage device");
 	}
 	
-	CHKFN(mk_array_int8(&arr, result), fail);
-	
-	*z = arr;
+	return mk_array_int8(z, result);
 	
 fail:
-	if (err)
-		release_array(arr);
-	
 	return err;
 }
 
@@ -2772,9 +2675,9 @@ count_array_func(struct cell_array **z, struct cell_array *r,
 			}						\
 		}
 		
-		if ((lc * rc) <= INT16_MAX)
+		if (sc <= INT16_MAX)
 			COUNT_ARRAY_LOOP(int16_t, ARR_SINT)
-		else if ((lc * rc) <= INT32_MAX)
+		else if (sc <= INT32_MAX)
 			COUNT_ARRAY_LOOP(int32_t, ARR_INT)
 		else
 			COUNT_ARRAY_LOOP(double, ARR_DBL)
