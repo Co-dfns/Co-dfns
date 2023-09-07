@@ -824,6 +824,28 @@ DEFN_MKARRAY(mk_array_char16, ARR_CHAR16, uint16_t)
 DEFN_MKARRAY(mk_array_char32, ARR_CHAR32, uint32_t)
 
 int
+mk_array_real(struct cell_array **z, double real)
+{
+	double abv;
+
+	if (!is_integer_dbl(real))
+		return mk_array_dbl(z, real);
+	
+	abv = fabs(real);
+	
+	if (abv <= 1)
+		return mk_array_int8(z, (int8_t)real);
+	
+	if (abv <= INT16_MAX)
+		return mk_array_int16(z, (int16_t)real);
+	
+	if (abv <= INT32_MAX)
+		return mk_array_int32(z, (int32_t)real);
+	
+	return mk_array_dbl(z, real);
+}
+
+int
 mk_array_nested(struct cell_array **z, struct cell_array *val)
 {
 	*z = retain_cell(val);
