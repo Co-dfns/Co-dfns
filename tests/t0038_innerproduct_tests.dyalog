@@ -39,8 +39,9 @@
 ∆innerproduct∆20_TEST←'innerproduct∆R1' MK∆T2 (0 5⍴5)      (5 5⍴3)
 ∆innerproduct∆21_TEST←'innerproduct∆R4' MK∆T2 (1 3 2⍴1+⍳4) (1 2 5⍴1+⍳4)
 ∆innerproduct∆22_TEST←'innerproduct∆R1' MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
-∆innerproduct∆23_TEST←'innerproduct∆R5' MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
-∆innerproduct∆24_TEST←'innerproduct∆R6' MK∆T2 X            X
+∆innerproduct∆23_TEST←'innerproduct∆R2' MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
+∆innerproduct∆24_TEST←'innerproduct∆R5' MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
+∆innerproduct∆25_TEST←'innerproduct∆R6' MK∆T2 X            X
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
