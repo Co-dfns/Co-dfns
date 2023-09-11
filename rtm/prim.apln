@@ -471,7 +471,8 @@ gdd←{
 ⍝ ⊤: Encode
 enc←{
 	~is_numeric ⍺:⎕SIGNAL 11 ⋄ ~is_numeric ⍵:⎕SIGNAL 11
-	d←⊖×⍀⊖⍺ ⋄ z←d∘.{⍵-⍺×⌊⍵÷⍺+⍺=0}⍵
+	d←⊖×⍀⊖⍺
+	z←((⍴d),⍴⍵)⍴y-x×⌊y÷x+x=0 ⊣ x←(,d)[⌊(⍳c)÷rc] ⊣ y←c⍴⍵ ⊣ c←(≢,d)×rc←≢,⍵
 	d←(⍴d)⍴1↓d⍪1
 	(d≠0)×[⍳≢⍴d]⌊z÷[⍳≢⍴d]d+d=0
 }
