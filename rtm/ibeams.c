@@ -4264,3 +4264,293 @@ fail:
 }
 
 DECL_FUNC(xor_scan_array, xor_scan_array_func, error_dya_syntax)
+
+int
+dot_prod_func(struct cell_array **z, struct cell_array *l, struct cell_array *r,
+    struct cell_func *self)
+{
+	size_t count;
+	double real, imag;
+	int err;
+	
+	count = array_count(l);
+		
+	CHKFN(array_promote_storage(l, r), fail);
+	
+	real = 0; imag = 0;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		af_array l64, r64;
+		
+		l64 = r64 = NULL;
+		
+		CHKAF(af_cast(&l64, l->values, f64), fail_device);
+		CHKAF(af_cast(&r64, r->values, f64), fail_device);
+		
+		CHKAF(
+		    af_dot_all(&real, &imag, l64, r64, AF_MAT_NONE, AF_MAT_NONE),
+		    fail_device);
+		    
+	fail_device:
+		af_release_array(l64);
+		af_release_array(r64);
+		
+		if (err)
+			goto fail;
+	}break;
+	case STG_HOST:{
+		#define DOT_PROD_LOOP(lt, rt) {					\
+			lt *lv;                                 		\
+			rt *rv;                                 		\
+										\
+			lv = l->values;                         		\
+			rv = r->values;                         		\
+										\
+			for (size_t i = 0; i < count; i++)      		\
+				real += ((double)lv[i]) * ((double)rv[i]);	\
+		}
+		
+		#define DOT_PROD_LOOP_CMPX(lt, rt, cl, cr) {		\
+			lt *lv;                                         \
+			rt *rv;                                         \
+									\
+			lv = l->values;                                 \
+			rv = r->values;                                 \
+									\
+			struct apl_cmpx zv = {0, 0};                    \
+									\
+			for (size_t i = 0; i < count; i++)              \
+				zv = add_cmpx(zv,                       \
+				    mul_cmpx(cl(lv[i]), cr(rv[i])));	\
+									\
+			real = zv.real; imag = zv.imag;			\
+		}
+		
+		switch (type_pair(l->type, r->type)) {
+		case type_pair(ARR_BOOL, ARR_BOOL):DOT_PROD_LOOP(int8_t, int8_t);break;
+		case type_pair(ARR_BOOL, ARR_SINT):DOT_PROD_LOOP(int8_t, int16_t);break;
+		case type_pair(ARR_BOOL, ARR_INT): DOT_PROD_LOOP(int8_t, int32_t);break;
+		case type_pair(ARR_BOOL, ARR_DBL): DOT_PROD_LOOP(int8_t, double);break;
+		case type_pair(ARR_SINT, ARR_BOOL):DOT_PROD_LOOP(int16_t, int8_t);break;
+		case type_pair(ARR_SINT, ARR_SINT):DOT_PROD_LOOP(int16_t, int16_t);break;
+		case type_pair(ARR_SINT, ARR_INT): DOT_PROD_LOOP(int16_t, int32_t);break;
+		case type_pair(ARR_SINT, ARR_DBL): DOT_PROD_LOOP(int16_t, double);break;
+		case type_pair(ARR_INT , ARR_BOOL):DOT_PROD_LOOP(int32_t, int8_t);break;
+		case type_pair(ARR_INT , ARR_SINT):DOT_PROD_LOOP(int32_t, int16_t);break;
+		case type_pair(ARR_INT , ARR_INT): DOT_PROD_LOOP(int32_t, int32_t);break;
+		case type_pair(ARR_INT , ARR_DBL): DOT_PROD_LOOP(int32_t, double);break;
+		case type_pair(ARR_DBL , ARR_BOOL):DOT_PROD_LOOP(double, int8_t);break;
+		case type_pair(ARR_DBL , ARR_SINT):DOT_PROD_LOOP(double, int16_t);break;
+		case type_pair(ARR_DBL , ARR_INT): DOT_PROD_LOOP(double, int32_t);break;
+		case type_pair(ARR_DBL , ARR_DBL): DOT_PROD_LOOP(double, double);break;
+		case type_pair(ARR_BOOL, ARR_CMPX):
+			DOT_PROD_LOOP_CMPX(int8_t, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_SINT, ARR_CMPX):
+			DOT_PROD_LOOP_CMPX(int16_t, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_INT , ARR_CMPX):
+			DOT_PROD_LOOP_CMPX(int32_t, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_DBL , ARR_CMPX):
+			DOT_PROD_LOOP_CMPX(double, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_CMPX, ARR_BOOL):
+			DOT_PROD_LOOP_CMPX(struct apl_cmpx, int8_t, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_SINT):
+			DOT_PROD_LOOP_CMPX(struct apl_cmpx, int16_t, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_INT ):
+			DOT_PROD_LOOP_CMPX(struct apl_cmpx, int32_t, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_DBL ):
+			DOT_PROD_LOOP_CMPX(struct apl_cmpx, double, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_CMPX):
+			DOT_PROD_LOOP_CMPX(struct apl_cmpx, struct apl_cmpx,,);
+			break;
+		default:
+			CHK(99, fail, L"Unexpected non-numeric type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unexpected storage type");
+	}
+	
+	if (!imag) {
+		CHKFN(mk_array_real(z, real), fail);
+	} else {
+		struct apl_cmpx res = {real, imag};
+		CHKFN(mk_array_cmpx(z, res), fail);
+	}
+	
+fail:
+	return err;
+}
+
+DECL_FUNC(dot_prod_ibeam, error_mon_syntax, dot_prod_func)
+
+int
+matmul_func(struct cell_array **z, struct cell_array *l, struct cell_array *r,
+    struct cell_func *self)
+{
+	struct cell_array *arr;
+	size_t lm, lrk, rm;
+	enum array_type type;
+	int err;
+
+	lm = l->shape[0];
+	lrk = l->shape[1];
+	rm = r->shape[1];
+	
+	arr = NULL;
+	
+	CHKFN(array_promote_storage(l, r), fail);
+	
+	type = ARR_DBL;
+	
+	if (l->type == ARR_CMPX || r->type == ARR_CMPX)
+		type = ARR_CMPX;
+	
+	CHKFN(mk_array(&arr, type, l->storage, 2), fail);
+	
+	arr->shape[0] = lm;
+	arr->shape[1] = rm;
+	
+	switch (l->storage) {
+	case STG_DEVICE:{
+		af_array x, y, vals;
+		af_dtype dtype;
+		dim_t sp[2];
+		
+		dtype = f64;
+		
+		if (type == ARR_CMPX)
+			dtype = c64;
+		
+		x = y = vals = NULL;
+		
+		sp[0] = lrk; sp[1] = lm;
+		CHKAF(af_cast(&vals, l->values, dtype), fail_device);
+		CHKAF(af_moddims(&x, vals, 2, sp), fail_device);
+		CHKAF(af_release_array(vals), fail_device);vals = NULL;
+		
+		sp[0] = rm; sp[1] = lrk;
+		CHKAF(af_cast(&vals, r->values, dtype), fail_device);
+		CHKAF(af_moddims(&y, vals, 2, sp), fail_device);
+		CHKAF(af_release_array(vals), fail_device);vals = NULL;
+		
+		CHKAF(af_matmul(&arr->values, y, x, AF_MAT_NONE, AF_MAT_NONE), 
+		    fail_device);
+		    
+	fail_device:
+		af_release_array(x);
+		af_release_array(y);
+		af_release_array(vals);
+		
+		if (err)
+			goto fail;
+	}break;
+	case STG_HOST:{
+		CHKFN(alloc_array(arr), fail);
+		
+		#define MATMUL_LOOP(lt, rt) {					\
+			rt *rv;							\
+			lt *lv;							\
+			double *zv;						\
+										\
+			rv = r->values;						\
+			lv = l->values;						\
+			zv = arr->values;					\
+										\
+			for (size_t i = 0; i < lm; i++)				\
+				for (size_t k = 0; k < lrk; k++)		\
+					for (size_t j = 0; j < rm; j++)		\
+						zv[i*rm+j] += 			\
+						    ((double)lv[i*lrk+k])	\
+						    * ((double)rv[k*rm+j]);	\
+		}
+
+		#define MATMUL_LOOP_CMPX(lt, rt, cl, cr) {			\
+			rt *rv;							\
+			lt *lv;							\
+			struct apl_cmpx *zv;					\
+										\
+			rv = r->values;						\
+			lv = l->values;						\
+			zv = arr->values;					\
+										\
+			for (size_t i = 0; i < lm; i++)				\
+				for (size_t k = 0; k < lrk; k++)		\
+					for (size_t j = 0; j < rm; j++)		\
+						zv[i*rm+j] =			\
+						    add_cmpx(zv[i*rm+j],	\
+						        mul_cmpx(		\
+						            cl(lv[i*lrk+k]),	\
+							    cr(rv[k*rm+j])));	\
+		}
+		
+		switch (type_pair(l->type, r->type)) {
+		case type_pair(ARR_BOOL, ARR_BOOL):MATMUL_LOOP(int8_t, int8_t);break;
+		case type_pair(ARR_BOOL, ARR_SINT):MATMUL_LOOP(int8_t, int16_t);break;
+		case type_pair(ARR_BOOL, ARR_INT): MATMUL_LOOP(int8_t, int32_t);break;
+		case type_pair(ARR_BOOL, ARR_DBL): MATMUL_LOOP(int8_t, double);break;
+		case type_pair(ARR_SINT, ARR_BOOL):MATMUL_LOOP(int16_t, int8_t);break;
+		case type_pair(ARR_SINT, ARR_SINT):MATMUL_LOOP(int16_t, int16_t);break;
+		case type_pair(ARR_SINT, ARR_INT): MATMUL_LOOP(int16_t, int32_t);break;
+		case type_pair(ARR_SINT, ARR_DBL): MATMUL_LOOP(int16_t, double);break;
+		case type_pair(ARR_INT , ARR_BOOL):MATMUL_LOOP(int32_t, int8_t);break;
+		case type_pair(ARR_INT , ARR_SINT):MATMUL_LOOP(int32_t, int16_t);break;
+		case type_pair(ARR_INT , ARR_INT): MATMUL_LOOP(int32_t, int32_t);break;
+		case type_pair(ARR_INT , ARR_DBL): MATMUL_LOOP(int32_t, double);break;
+		case type_pair(ARR_DBL , ARR_BOOL):MATMUL_LOOP(double, int8_t);break;
+		case type_pair(ARR_DBL , ARR_SINT):MATMUL_LOOP(double, int16_t);break;
+		case type_pair(ARR_DBL , ARR_INT): MATMUL_LOOP(double, int32_t);break;
+		case type_pair(ARR_DBL , ARR_DBL): MATMUL_LOOP(double, double);break;
+		case type_pair(ARR_BOOL, ARR_CMPX):
+			MATMUL_LOOP_CMPX(int8_t, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_SINT, ARR_CMPX):
+			MATMUL_LOOP_CMPX(int16_t, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_INT , ARR_CMPX):
+			MATMUL_LOOP_CMPX(int32_t, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_DBL , ARR_CMPX):
+			MATMUL_LOOP_CMPX(double, struct apl_cmpx, cast_cmpx, );
+			break;
+		case type_pair(ARR_CMPX, ARR_BOOL):
+			MATMUL_LOOP_CMPX(struct apl_cmpx, int8_t, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_SINT):
+			MATMUL_LOOP_CMPX(struct apl_cmpx, int16_t, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_INT ):
+			MATMUL_LOOP_CMPX(struct apl_cmpx, int32_t, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_DBL ):
+			MATMUL_LOOP_CMPX(struct apl_cmpx, double, , cast_cmpx);
+			break;
+		case type_pair(ARR_CMPX, ARR_CMPX):
+			MATMUL_LOOP_CMPX(struct apl_cmpx, struct apl_cmpx,,);
+			break;
+		default:
+			CHK(99, fail, L"Unexpected non-numeric type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+DECL_FUNC(matmul_ibeam, error_mon_syntax, matmul_func)
