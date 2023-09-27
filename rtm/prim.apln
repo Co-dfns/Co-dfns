@@ -102,7 +102,7 @@ sqd_idx←{
 		1<≢⍴axis:⎕SIGNAL 4
 		(≢axis)≢≢⍺:⎕SIGNAL 5
 		(≢⍴⍵)idx_rng_check axis:
-		i←(≢⍴⍵)⍴spn ⋄ i[axis]←⍺ ⋄ i⌷⍵
+		i←(≢⍴⍵)⍴'span_array'⌶⌶⌶⌶ ⋄ i[axis]←⍺ ⋄ i⌷⍵
 	}⍵
 	1≡≢⍺:⍺{
 		is_span⊢i←⊃⍺:⍵
