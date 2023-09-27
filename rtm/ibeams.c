@@ -998,6 +998,10 @@ index_func(struct cell_array **z,
 		unsigned int rnk;
 		
 		rnk = (unsigned int)(r->rank - lc);
+		bcount = 1;
+		
+		for (size_t i = 0; i < lc; i++)
+			bcount *= sp[i];
 				
 		CHKFN(array_migrate_storage(l, STG_HOST), fail);
 
@@ -1026,7 +1030,27 @@ index_func(struct cell_array **z,
 		
 		switch (arr->storage) {
 		case STG_DEVICE:{
-			CHK(16, fail, L"Device simple indexing not supported yet");
+			dim_t asp[2] = {ccount, bcount};
+			af_seq ix[2] = {
+				{0, (double)ccount - 1, 1}, 
+				{(double)idx, (double)idx, 1}
+			};
+			af_array t;
+			
+			CHKAF(af_moddims(&arr->values, r->values, 2, asp), fail);
+			
+			t = arr->values;
+			CHKAF(af_index(&arr->values, t, 2, ix), sdev_fail);
+			CHKAF(af_release_array(t), sdev_fail);
+			
+			t = arr->values;
+			CHKAF(af_flat(&arr->values, t), sdev_fail);
+		
+		sdev_fail:
+			TRCAF(af_release_array(t));
+			
+			if (err)
+				goto fail;
 		}break;			
 		case STG_HOST:{
 			size_t elem_size, byte_count, byte_offset;
@@ -1194,8 +1218,8 @@ index_func(struct cell_array **z,
 	
 	zv = arr->values;
 	rv = r->values;
-	bcount = 1;
 	csz = ccount * array_element_size(arr);
+	bcount = 1;
 	
 	for (size_t i = 0; i < ic; i++) {
 		ci[i] = 0;
