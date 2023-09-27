@@ -1149,13 +1149,16 @@ index_func(struct cell_array **z,
 		CHKAF(af_create_indexers(&ix), fail);
 		
 		for (size_t i = 0; i < ic; i++) {
-			size_t j = ic - (i + 1);
-			af_array v = idx[i]->values;
+			size_t j;
+			af_array v;
 			
+			j = ic - (i + 1);
 			asp[j] = sp[i];
 			
-			if (idx[i]->type != ARR_SPAN)
+			if (idx[i]->type != ARR_SPAN) {
+				CHKAF(af_cast(&v, idx[i]->values, s64), dev4_fail);
 				CHKAF(af_set_array_indexer(ix, v, j), dev4_fail);
+			}
 		}
 		
 		t = NULL;
@@ -1167,6 +1170,10 @@ index_func(struct cell_array **z,
 		CHKAF(af_flat(&arr->values, t), dev4_fail);
 				
 	dev4_fail:
+		for (size_t i = 0; i < ic; i++)
+			if (idx[i]->type != ARR_SPAN)
+				TRCAF(af_release_array(ix[ic - (i + 1)].idx.arr));
+		
 		TRCAF(af_release_array(t));
 		TRCAF(af_release_indexers(ix));
 		
