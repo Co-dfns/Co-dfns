@@ -95,15 +95,22 @@ mst←'mst_ibeam'⌶⌶
 ⍝ ⌷: Materialize | Squad indexing
 materialize←{⍵}
 sqd_idx←{
-	1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5
-	axis⍠←0
-	axis≡0:⍺{
-		0≡≢i:⍵
-		is_span⊢idx←⍵ flatten_idx i:⍵
-		0≡≢,idx:(⍴idx)⍴⍵
-		(⍴idx)⍴idx('index_ibeam'⌶)⍵
+	1<≢⍴⍺:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢⍺:⎕SIGNAL 5
+	0≡≢⍺:⍵
+	hax←1 ⋄ axis⍠←hax←0
+	hax:⍺{
+		1<≢⍴axis:⎕SIGNAL 4
+		(≢axis)≢≢⍺:⎕SIGNAL 5
+		(≢⍴⍵)idx_rng_check axis:
+		i←(≢⍴⍵)⍴spn ⋄ i[axis]←⍺ ⋄ i⌷⍵
 	}⍵
-	i←⍳¨⍴⍵ ⋄ i[axis]←⍺ ⋄ i⌷⍵
+	1≡≢⍺:⍺{
+		is_span⊢i←⊃⍺:⍵
+		(≢⍵)idx_rng_check i:
+		(squeeze ⍺)('index_ibeam'⌶)⍵
+	}⍵
+	_←((≢⍺)↑⍴⍵){is_span ⍵:⍬ ⋄ ⍺ idx_rng_check ⍵: ⋄ ⍬}¨⍺
+	(squeeze ⍺)('index_ibeam'⌶)⍵
 }
 sqd←materialize ambiv sqd_idx
 

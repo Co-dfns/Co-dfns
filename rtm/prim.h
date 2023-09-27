@@ -3,7 +3,7 @@ EXPORT struct cdf_prim_loc {
 	wchar_t **__names;
 	struct cell_func *cdf_q_signal;
 	struct cell_func *cdf_q_dr;
-	struct cell_array *cdf_spn;
+	struct cell_array_box *cdf_spn;
 	struct cell_doper_box *cdf_eq;
 	struct cell_func_box *cdf_squeeze;
 	struct cell_func_box *cdf_is_simple;

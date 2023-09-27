@@ -975,72 +975,279 @@ int
 index_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	struct cell_array *t;
-	size_t count;
-	int err;
+	struct cell_array *idx_[32];
+	size_t sp_[32], cnt_[32], ci_[32];
+	struct cell_array *arr, **lv, **idx;
+	size_t lc, zc, ic, *sp, *cnt, csz, bcount, ccount, *ci;
+	unsigned int zr;
+	int err, f;
+	char *zv, *rv;
 	
-	t = NULL;
+	arr = NULL;
+	f = 0;
 	
-	CHK(array_promote_storage(l, r), fail, L"array_promote_storage(l, r)");
+	lc = array_count(l);
+	sp = r->shape;
+	ccount = 1;
 	
-	CHK(mk_array(&t, r->type, r->storage, 1), fail,
-	    L"mk_array(&t, r->type, r->storage, 1)");
-
-	t->shape[0] = count = array_count(l);
+	for (size_t i = lc; i < r->rank; i++)
+		ccount *= sp[i];
 	
-	if (l->storage == STG_DEVICE) {
-		af_array idx;
+	if (l->type != ARR_NESTED) {
+		size_t idx;
+		unsigned int rnk;
 		
-		CHKAF(af_cast(&idx, l->values, s64), fail);
-		CHKAF(af_lookup(&t->values, r->values, idx, 0), device_fail);
-		CHKAF(af_release_array(idx), fail);
+		rnk = (unsigned int)(r->rank - lc);
+				
+		CHKFN(array_migrate_storage(l, STG_HOST), fail);
+
+		idx = 0;
+		
+		#define IDX_SIMP_OFFSET(lt) {				\
+			lt *lv = l->values;				\
+									\
+			for (size_t i = 0; i < lc; i++)			\
+				idx = idx * *sp++ + (size_t)*lv++;	\
+		}
+		
+		switch (l->type) {
+		case ARR_BOOL:IDX_SIMP_OFFSET(int8_t);break;
+		case ARR_SINT:IDX_SIMP_OFFSET(int16_t);break;
+		case ARR_INT:IDX_SIMP_OFFSET(int32_t);break;
+		case ARR_DBL:IDX_SIMP_OFFSET(double);break;
+		default:
+			CHK(99, fail, L"Unexpected non-real type");
+		}
+		
+		CHKFN(mk_array(&arr, r->type, r->storage, rnk), fail);
+		
+		for (size_t i = 0; i < rnk; i++)
+			arr->shape[i] = r->shape[lc + i];
+		
+		switch (arr->storage) {
+		case STG_DEVICE:{
+			CHK(16, fail, L"Device simple indexing not supported yet");
+		}break;			
+		case STG_HOST:{
+			size_t elem_size, byte_count, byte_offset;
+			char *src;
+			
+			CHKFN(alloc_array(arr), fail);
+			
+			elem_size = array_element_size(arr);
+			byte_count = ccount * elem_size;
+			byte_offset = idx * byte_count;
+			src = r->values;
+			
+			memcpy(arr->values, src + byte_offset, byte_count);
+		}break;
+		default:
+			CHK(99, fail, L"Unknown storage type");
+		}
 		
 		goto done;
-
-device_fail:
-		CHKAF(af_release_array(idx), fail);
-		
-		goto fail;
 	}
 	
-	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	lv = l->values;
+	zr = (unsigned int)(r->rank - lc);
 	
-	if (l->storage != STG_HOST)
-		CHK(99, fail, L"Unexpected storage type for ⍺");
+	for (size_t i = 0; i < lc; i++)
+		if (lv[i]->type == ARR_SPAN)
+			zr++;
+		else 
+			zr += lv[i]->rank;
 	
-	#define INDEX_GETIDX_real(sfx, fail) idx = (int64_t)lv[i]
-	#define INDEX_GETIDX_cmpx(sfx, fail) BAD_ELEM(sfx, fail)
-	#define INDEX_GETIDX_char(sfx, fail) BAD_ELEM(sfx, fail)
-	#define INDEX_GETIDX_cell(sfx, fail) BAD_ELEM(sfx, fail)
+	CHKFN(mk_array(&arr, r->type, r->storage, zr), fail);
 	
-	#define INDEX_ASSIGN_real tv[i] = rv[idx]
-	#define INDEX_ASSIGN_cmpx tv[i] = rv[idx]
-	#define INDEX_ASSIGN_char tv[i] = rv[idx]
-	#define INDEX_ASSIGN_cell tv[i] = retain_cell(rv[idx])
+	sp = arr->shape;
 	
-	#define INDEX_LOOP(op, lk, lt, ls, rk, rt, rs, fail) {	\
-		lt *lv = l->values;				\
-		rt *rv = r->values;				\
-		rt *tv = t->values;				\
-								\
-		for (size_t i = 0; i < count; i++) {		\
-			int64_t idx = 0;			\
-								\
-			INDEX_GETIDX_##lk(#ls, fail);		\
-			INDEX_ASSIGN_##rk;			\
-		}						\
-	}							\
+	for (size_t i = 0; i < lc; i++)
+		if (lv[i]->type == ARR_SPAN)
+			*sp++ = r->shape[i];
+		else
+			for (unsigned int j = 0; j < lv[i]->rank; j++)
+				*sp++ = lv[i]->shape[j];
 	
-	DYADIC_TYPE_SWITCH(l->type, r->type, INDEX_LOOP,, fail);
+	for (size_t i = lc; i < r->rank; i++)
+		*sp++ = r->shape[i];
+	
+	zc = array_count(arr);
+	
+	if (!zc) {
+		arr->type = ARR_SINT;
+		arr->storage = STG_HOST;
+		
+		CHKFN(alloc_array(arr), fail);
 
-done:
-	*z = t;
+		goto done;
+	}
 	
-	return 0;
+	if (zc > STORAGE_DEVICE_THRESHOLD)
+		arr->storage = STG_DEVICE;
+	
+	CHKFN(array_migrate_storage(r, arr->storage), fail);
+	
+	for (size_t i = 0; i < lc; i++)
+		if (lv[i]->type != ARR_SPAN)
+			CHKFN(array_migrate_storage(lv[i], arr->storage), fail);
+	
+	ic = 1;
+	
+	for (size_t i = 1; i < lc; i++)
+		if (lv[i]->type == ARR_SPAN)
+			ic += lv[i-1]->type != ARR_SPAN;
+		else
+			ic++;
+		
+	idx = idx_;
+	sp = sp_;
+	cnt = cnt_;
+	ci = ci_;
+		
+	if (ic > 32) {
+		f = 1;
+		idx = NULL;
+		sp = NULL;
+		cnt = NULL;
+		ci = NULL;
+		
+		idx = calloc(ic, sizeof(struct cell_array *));
+		CHK(idx == NULL, fail, L"Cannot allocate memory for idx.");
+		
+		sp = calloc(ic, sizeof(size_t));
+		CHK(sp == NULL, fail, L"Cannot allocate memory for sp.");
+		
+		cnt = calloc(ic, sizeof(size_t));
+		CHK(cnt == NULL, fail, L"Cannot allocate memory for cnt.");
+		
+		ci = calloc(ic, sizeof(size_t));
+		CHK(ci == NULL, fail, L"Cannot allocate memory for ci.");
+	}
+	
+	for (size_t i = 0; i < ic; i++)
+		sp[i] = 1;
+	
+	ic = 0;
+	idx[0] = lv[0];
+	sp[0] = r->shape[0];
+	
+	for (size_t i = 1; i < lc; i++) {
+		if (lv[i]->type != ARR_SPAN || idx[ic]->type != ARR_SPAN)
+			ic++;
+		
+		idx[ic] = lv[i];
+		sp[ic] *= r->shape[i];
+	}
+	
+	ic++;
+	
+	if (ic <= 4 && arr->storage == STG_DEVICE) {
+		af_index_t *ix;
+		af_array t;
+		dim_t asp[4];
+		
+		CHKAF(af_create_indexers(&ix), fail);
+		
+		for (size_t i = 0; i < ic; i++) {
+			size_t j = ic - (i + 1);
+			af_array v = idx[i]->values;
+			
+			asp[j] = sp[i];
+			
+			if (idx[i]->type != ARR_SPAN)
+				CHKAF(af_set_array_indexer(ix, v, j), dev4_fail);
+		}
+		
+		t = NULL;
+		CHKAF(af_moddims(&t, r->values, (unsigned int)ic, asp), dev4_fail);
+		CHKAF(af_index_gen(&arr->values, t, ic, ix), dev4_fail);
+		CHKAF(af_release_array(t), dev4_fail);
+		
+		t = arr->values;
+		CHKAF(af_flat(&arr->values, t), dev4_fail);
+				
+	dev4_fail:
+		TRCAF(af_release_array(t));
+		TRCAF(af_release_indexers(ix));
+		
+		if (err)
+			goto fail;
+		
+		goto done;
+	}
+	
+	if (arr->storage == STG_DEVICE) {
+		CHK(16, fail, L"High rank device indexing not supported yet.");
+	}
+	
+	if (arr->storage != STG_HOST)
+		CHK(99, fail, L"Unknown storage type.");
+	
+	CHKFN(alloc_array(arr), fail);
+	
+	zv = arr->values;
+	rv = r->values;
+	bcount = 1;
+	csz = ccount * array_element_size(arr);
+	
+	for (size_t i = 0; i < ic; i++) {
+		ci[i] = 0;
+
+		if (idx[i]->type == ARR_SPAN)
+			bcount *= cnt[i] = sp[i];
+		else
+			bcount *= cnt[i] = array_count(idx[i]);
+	}
+		
+	for (size_t i = 0; i < bcount; i++) {		
+		size_t ix = 0;
+		
+		for (size_t j = 0; j < ic; j++) {
+			size_t x;
+			
+			if (idx[j]->type == ARR_SPAN)
+				x = ci[j];
+			else
+				CHKFN(get_scalar_u64(&x, idx[j], ci[j]), fail);
+			
+			ix = ix * sp[j] + x;
+		}
+		
+		memcpy(zv + i * csz, rv + ix * csz, csz);
+		
+		for (size_t j = ic - 1; j >= 0; j--) {
+			if (++ci[j] == cnt[j])
+				ci[j] = 0;
+			else
+				break;
+		}
+	}
+	
+done:	
+	if (arr->type == ARR_NESTED) {
+		size_t count;
+		struct cell_array **zv;
+
+		zv = arr->values;
+		count = array_count(arr);
+		
+		for (size_t i = 0; i < count; i++)
+			retain_cell(*zv++);
+	}
+	
+	*z = arr;
 	
 fail:
-	release_array(t);
+	if (err)
+		release_array(arr);
 	
+	if (f) {
+		free(idx);
+		free(sp);
+		free(cnt);
+		free(ci);
+	}
+
 	return err;
 }
 
