@@ -337,7 +337,7 @@ guard_check(void ***stkhd)
 	if (x->type != ARR_BOOL)
 		CHK(11, fail, L"Test expression is not Boolean.");
 
-	CHKFN(get_scalar_int32(&val, x), fail);
+	CHKFN(get_scalar_int32(&val, x, 0), fail);
 
 	err = val - 1;
 

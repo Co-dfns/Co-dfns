@@ -644,14 +644,18 @@ array_max_type(enum array_type a, enum array_type b)
 }
 
 int
-get_scalar_data(void **val, void *buf, struct cell_array *arr)
+get_scalar_data(void **val, void *buf, struct cell_array *arr, size_t i)
 {
 	int err;
 	
+	err = 0;
+	
 	switch (arr->storage) {
 	case STG_DEVICE:
-		if (err = af_get_scalar(buf, arr->values))
-			return err;
+		if (i)
+			CHK(99, fail, L"Cannot index beyond first element of device buffer");
+		
+		CHKAF(af_get_scalar(buf, arr->values), fail);
 		
 		*val = buf;
 		break;
@@ -659,38 +663,38 @@ get_scalar_data(void **val, void *buf, struct cell_array *arr)
 		*val = arr->values;
 		break;
 	default:
-		return 99;
+		CHK(99, fail, L"Unknown storage type");
 	}
-	
-	return 0;
+
+fail:
+	return err;
 }
 
 #define DEFN_GET_SCALAR_NUM(name, ztype)			\
 int                                                             \
-name(ztype *dst, struct cell_array *arr)                         \
+name(ztype *dst, struct cell_array *arr, size_t i)              \
 {                                                               \
 	char buf[16];                                           \
 	void *val;                                              \
 	int err;                                                \
 								\
-	if (err = get_scalar_data(&val, buf, arr))              \
-		return err;                                     \
+	CHKFN(get_scalar_data(&val, buf, arr, i), fail);	\
 								\
 	switch (arr->type) {                                    \
 	case ARR_BOOL:                                          \
-		*dst = (ztype)*((int8_t *)val);                 \
+		*dst = (ztype)((int8_t *)val)[i];               \
 		break;                                          \
 	case ARR_SINT:                                          \
-		*dst = (ztype)*((int16_t *)val);                \
+		*dst = (ztype)((int16_t *)val)[i];              \
 		break;                                          \
 	case ARR_INT:                                           \
-		*dst = (ztype)*((int32_t *)val);                \
+		*dst = (ztype)((int32_t *)val)[i];              \
 		break;                                          \
 	case ARR_DBL:                                           \
-		*dst = (ztype)*((double *)val);                 \
+		*dst = (ztype)((double *)val)[i];               \
 		break;                                          \
 	case ARR_CMPX:                                          \
-		*dst = (ztype)(*(struct apl_cmpx *)val).real;   \
+		*dst = (ztype)((struct apl_cmpx *)val)[i].real; \
 		break;                                          \
 	case ARR_CHAR8:                                         \
 	case ARR_CHAR16:                                        \
@@ -702,7 +706,8 @@ name(ztype *dst, struct cell_array *arr)                         \
 		return 99;                                      \
 	}                                                       \
 								\
-	return 0;	                                        \
+fail:								\
+	return err;	                                        \
 }                                                               \
 
 DEFN_GET_SCALAR_NUM(get_scalar_int8, int8_t)
@@ -712,34 +717,33 @@ DEFN_GET_SCALAR_NUM(get_scalar_dbl, double)
 DEFN_GET_SCALAR_NUM(get_scalar_u64, uint64_t)
 
 int
-get_scalar_cmpx(struct apl_cmpx *dst, struct cell_array *arr)
+get_scalar_cmpx(struct apl_cmpx *dst, struct cell_array *arr, size_t i)
 {
 	char buf[16];
 	void *val;
 	int err;
 	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
+	CHKFN(get_scalar_data(&val, buf, arr, i), fail);
 	
 	switch (arr->type) {
 	case ARR_BOOL:
-		(*dst).real = (double)*((int8_t *)val);
+		(*dst).real = (double)((int8_t *)val)[i];
 		(*dst).imag = 0;
 		break;
 	case ARR_SINT:
-		(*dst).real = (double)*((int16_t *)val);
+		(*dst).real = (double)((int16_t *)val)[i];
 		(*dst).imag = 0;
 		break;
 	case ARR_INT:
-		(*dst).real = (double)*((int32_t *)val);
+		(*dst).real = (double)((int32_t *)val)[i];
 		(*dst).imag = 0;
 		break;
 	case ARR_DBL:
-		(*dst).real = (double)*((double *)val);
+		(*dst).real = (double)((double *)val)[i];
 		(*dst).imag = 0;
 		break;
 	case ARR_CMPX:
-		*dst = *((struct apl_cmpx *)val);
+		*dst = ((struct apl_cmpx *)val)[i];
 		break;
 	case ARR_CHAR8:
 	case ARR_CHAR16:
@@ -750,30 +754,30 @@ get_scalar_cmpx(struct apl_cmpx *dst, struct cell_array *arr)
 	default:
 		return 99;
 	}
-	
-	return 0;
+
+fail:
+	return err;
 }
 
 #define DEFN_GET_SCALAR_CHAR(name, ztype)		\
 int                                                     \
-name(ztype *dst, struct cell_array *arr)	                \
+name(ztype *dst, struct cell_array *arr, size_t i)      \
 {                                                       \
 	char buf[16];                                   \
 	void *val;                                      \
 	int err;                                        \
 							\
-	if (err = get_scalar_data(&val, buf, arr))      \
-		return err;                             \
+	CHKFN(get_scalar_data(&val, buf, arr, i), fail);\
 							\
 	switch (arr->type) {                            \
 	case ARR_CHAR8:                                 \
-		*dst = (ztype)*(uint8_t *)val;           \
+		*dst = (ztype)((uint8_t *)val)[i];      \
 		break;                                  \
 	case ARR_CHAR16:                                \
-		*dst = (ztype)*(uint16_t *)val;          \
+		*dst = (ztype)((uint16_t *)val)[i];     \
 		break;                                  \
 	case ARR_CHAR32:                                \
-		*dst = (ztype)*(uint32_t *)val;          \
+		*dst = (ztype)((uint32_t *)val)[i];     \
 		break;                                  \
 	case ARR_BOOL:                                  \
 	case ARR_SINT:                                  \
@@ -787,7 +791,8 @@ name(ztype *dst, struct cell_array *arr)	                \
 		return 99;                              \
 	}                                               \
 							\
-	return 0;                                       \
+fail:							\
+	return err;                                     \
 }                                                       \
 
 DEFN_GET_SCALAR_CHAR(get_scalar_char8, uint8_t)

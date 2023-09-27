@@ -55,7 +55,7 @@ q_signal_mon(struct cell_array **z,
 	if (!is_integer_array(r))
 		return 11;
 	
-	if (err = get_scalar_int32(&val, r))
+	if (err = get_scalar_int32(&val, r, 0))
 		return err;
 	
 	return val;
@@ -407,6 +407,7 @@ dev_fail:
 			for (size_t i = 0; i < count; i++) {		\
 				int64_t idx = 0;			\
 									\
+				SET_GETIDX_##lk(#ls, fail);		\
 				SET_GETIDX_##lk(#ls, fail);		\
 				SET_ASSIGN_##tk(fail);			\
 			}						\
@@ -926,8 +927,7 @@ index_gen_func(struct cell_array **z, struct cell_array *r, struct cell_func *se
 	err = 0;
 	t = NULL;
 	
-	CHK(get_scalar_u64(&dim, r), fail,
-	    L"get_scalar_u64(&dim, r)");
+	CHKFN(get_scalar_u64(&dim, r, 0), fail);
 	
 	ztype = closest_numeric_array_type((double)dim);
 	
