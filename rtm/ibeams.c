@@ -665,11 +665,27 @@ reshape_func(struct cell_array **z,
 	tc = array_values_count(t);
 	rc = array_values_count(r);
 	
+	if (r->type == ARR_SPAN && rank) {
+		struct cell_array **tv;
+		
+		t->storage = STG_HOST;
+		t->type = ARR_NESTED;
+		
+		CHKFN(alloc_array(t), fail);
+		
+		tv = t->values;
+		
+		for (size_t i = 0; i < tc; i++)
+			tv[i] = retain_cell(r);
+		
+		goto done;
+	}
+	
 	if (tc == rc) {
 		t->values = r->values;
 		t->vrefc = r->vrefc;
 		
-		CHK(retain_array_data(t), fail, L"retain_array_data(t)");
+		CHKFN(retain_array_data(t), fail);
 		
 		goto done;
 	}
@@ -696,10 +712,10 @@ reshape_func(struct cell_array **z,
 		goto done;
 	}
 
-	CHKFN(alloc_array(t), fail);
-	
 	if (t->storage != STG_HOST)
 		CHK(99, fail, L"Unexpected storage type");
+	
+	CHKFN(alloc_array(t), fail);
 	
 	blocks = tc / rc;
 	tail = tc % rc;
