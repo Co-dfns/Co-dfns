@@ -2,6 +2,8 @@
 
 #include "codfns.h"
 
+#define STORAGE_DEVICE_THRESHOLD 1024
+
 wchar_t *get_aferr_msg(int);
 
 #define type_pair(src, dst) ((src * ARR_MAX) + dst)

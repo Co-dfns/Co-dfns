@@ -133,7 +133,7 @@ dwa_array_storage(struct pocket *pkt)
 	for (unsigned int i = 0; i < pkt->rank; i++) 
 		count *= pkt->shape[i];
 	
-	if (count > 1024)
+	if (count > STORAGE_DEVICE_THRESHOLD)
 		return STG_DEVICE;
 	
 	return STG_HOST;
