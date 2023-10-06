@@ -63,32 +63,20 @@ rho←('shape_ibeam'⌶) ambiv reshape
 ⍝ X[]←Y: Bracket Assignment
 idx_rnk_check←{(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4 ⋄ 0}
 idx_rng_check←{
-	0≡≢,⍵:0
-	0≡is_integer⊢idx←squeeze ⍵:⎕SIGNAL 11
-	any(idx<0)∨⍺≤idx:⎕SIGNAL 3
-	0
-}
-flatten_idx←{
-	(1≡≢⍵)∧1≡≢s←⍴⍺:(⊃s){is_span ⍵:⍵ ⋄ ⍺ idx_rng_check ⍵: ⋄ ⍵}⊃⍵
-	i←⍵{is_span ⍺:⍳⍵ ⋄ ⍵ idx_rng_check ⍺: ⋄ ⍺}¨(c←≢⍵)↑s
-	⊃∘.+⌿(i×c↑1↓o),⊂(c↓s)⍴⍳c⌷o←⌽×⍀1,⌽s
-}
-idx_shp_check←{1≡≢,⍵:0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
-set_get_idx←{
-	⍺ idx_rnk_check ⍺⍺:
-	idx←⍺ flatten_idx ⍺⍺
-	proto←⍺{is_span idx:⍺ ⋄ idx}⍵
-	proto idx_shp_check ⍵:
-	idx
+	is_span ⍵:0
+	0≡≡⍺:⍺{
+		0≡≢,⍵:0
+		0≡is_integer⊢squeeze ⍵:⎕SIGNAL 11
+		any(⍵<0)∨⍺≤⍵:⎕SIGNAL 3
+	0}⍵
+	0⊣⍺ ∇¨⍵
 }
 set←'set_ibeam'⌶
 
 ⍝ X[]f←Y: Modified Bracket Assignment
-mst_vals←{op←⍵⍵
-	is_span⊢idx←⍺(⍺⍺ set_get_idx)⍵:idx(,⍺ op¨⍵)
-	(,idx)((,⍺)[,idx] op¨,⍵)
-	(≢idx)≡≢uidx←∪idx:uidx((,⍺)[uidx] op¨,⍵)
-	uidx((⌽uidx,idx){op⍨⌿⍵}⌸⌽(,⍺)[uidx],⍵)
+mst_vals←{idx←⍺⍺ ⋄ op←⍵⍵ ⋄ idx((idx⌷⍺)op¨⍵)
+	⍝ (≢idx)≡≢uidx←∪idx:uidx((,⍺)[uidx] op¨,⍵)
+	⍝ uidx((⌽uidx,idx){op⍨⌿⍵}⌸⌽(,⍺)[uidx],⍵)
 }
 mst←'mst_ibeam'⌶⌶
 
@@ -109,7 +97,7 @@ sqd_idx←{
 		(≢⍵)idx_rng_check i:
 		(squeeze ⍺)('index_ibeam'⌶)⍵
 	}⍵
-	_←((≢⍺)↑⍴⍵){is_span ⍵:⍬ ⋄ ⍺ idx_rng_check ⍵: ⋄ ⍬}¨⍺
+	((≢⍺)↑⍴⍵) idx_rng_check ⍺:
 	(squeeze ⍺)('index_ibeam'⌶)⍵
 }
 sqd←materialize ambiv sqd_idx
@@ -395,10 +383,11 @@ take←{
 	~is_integer axis:⎕SIGNAL 11
 	x←⍺ ⋄ y←⍺{(~hax)∧0≡≢⍴⍵:((≢⍺)⍴1)⍴⍵ ⋄ ⍵}⍵ 
 	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
-	~any(|x)≥(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
-	s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s ⋄ z←s⍴0⍴y
-	i←,z flatten_idx (wi←⍳¨w)+m×s-w←s⌊⍴y
-	s⍴z⊣z[i]←,(wi+m×(⍴y)-w)⌷y⊣z←,z
+	~any(|x)>(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
+	⎕SIGNAL 16
+	⍝ s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s ⋄ z←s⍴0⍴y
+	⍝ i←,z flatten_idx (wi←⍳¨w)+m×s-w←s⌊⍴y
+	⍝ s⍴z⊣z[i]←,(wi+m×(⍴y)-w)⌷y⊣z←,z
 }
 tke←mix ambiv take
 

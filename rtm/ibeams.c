@@ -299,6 +299,7 @@ done:
 
 DECL_FUNC(any_ibeam, any_monadic, error_dya_nonce)
 
+
 int
 set_idx_val(struct cell_array **z, struct cell_array *idx,
     struct cell_array *r)
@@ -432,71 +433,6 @@ done:
 	
 	return err;
 }
-
-int
-set_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	struct cell_array *idx;
-	struct cell_func *get_idx;
-	struct cell_moper *set_get_idx;
-	int err;
-		
-	idx = NULL;
-	get_idx = NULL;
-	set_get_idx = cdf_prim.cdf_set_get_idx->value;
-	
-	CHK(apply_mop(&get_idx, set_get_idx, 
-	    set_get_idx->fptr_am, set_get_idx->fptr_ad, l),
-	    done, L"get_idx←⍺ set_get_idx");
-	CHK((get_idx->fptr_dya)(&idx, *z, r, get_idx), done, 
-	    L"idx←(*z) get_idx ⍵");
-	CHKFN(set_idx_val(z, idx, r), done);
-	
-done:
-	release_func(get_idx);
-	release_array(idx);
-	
-	return err;
-}
-
-DECL_FUNC(set_ibeam, error_mon_syntax, set_func)
-
-int
-mst_oper(struct cell_array **z, 
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	struct cell_array *idx, *val, *idx_vals, **iv;
-	struct cell_func *oper, *get_idx_vals;
-	struct cell_doper *mst_vals;
-	int err;
-	
-	get_idx_vals = NULL;
-	idx_vals = NULL;
-	oper = self->fv[1];
-	mst_vals = cdf_prim.cdf_mst_vals;
-	
-	CHK(apply_dop(&get_idx_vals, mst_vals,
-	    mst_vals->fptr_fam, mst_vals->fptr_fad, l, oper),
-	    fail, L"get_idx_vals←⍺ mst_vals ⍺⍺");
-	CHK((get_idx_vals->fptr_dya)(&idx_vals, *z, r, get_idx_vals), fail,
-	    L"(idx vals)←(*z) get_idx_vals ⍵");
-	
-	iv = idx_vals->values;
-	idx = iv[0];
-	val = iv[1];
-	
-	CHKFN(set_idx_val(z, idx, val), fail);
-
-fail:
-	release_func(get_idx_vals);
-	release_array(idx_vals);
-	
-	return err;
-}
-
-DECL_MOPER(mst_ibeam, 
-    error_mon_syntax, error_dya_syntax, error_mon_syntax, mst_oper)
 
 int
 ravel_func(struct cell_array **z,
@@ -972,13 +908,136 @@ fail:
 DECL_FUNC(index_gen_vec, index_gen_func, error_dya_syntax)
 
 int
+simple_index_offset(size_t *res, struct cell_array *tgt, struct cell_array *l)
+{
+	size_t idx, *sp, lc;
+	int err;
+	
+	CHKFN(array_migrate_storage(l, STG_HOST), fail);
+	
+	sp = tgt->shape;
+	lc = array_count(l);
+	idx = 0;
+	
+	#define IDX_SIMP_OFFSET(lt) {				\
+		lt *lv = l->values;				\
+								\
+		for (size_t i = 0; i < lc; i++)			\
+			idx = idx * *sp++ + (size_t)*lv++;	\
+	}
+	
+	switch (l->type) {
+	case ARR_BOOL:IDX_SIMP_OFFSET(int8_t);break;
+	case ARR_SINT:IDX_SIMP_OFFSET(int16_t);break;
+	case ARR_INT:IDX_SIMP_OFFSET(int32_t);break;
+	case ARR_DBL:IDX_SIMP_OFFSET(double);break;
+	default:
+		CHK(99, fail, L"Unexpected non-real type");
+	}
+	
+	*res = idx;
+	
+fail:
+	return err;
+}
+
+int
+merge_indices(size_t *ic_p, size_t *bc_p, struct cell_array ***idx_p, size_t **sp_p, 
+    size_t **cnt_p, size_t **ci_p, int *f_p,
+    struct cell_array *tgt, struct cell_array *l, 
+    size_t lim)
+{
+	struct cell_array **idx, **lv;
+	size_t ic, bc, *sp, *cnt, *ci, lc;
+	int err, f;
+	
+	err = 0;
+	f = 0;
+	lv = l->values;
+	ic = 1;
+	lc = array_count(l);
+	
+	for (size_t i = 1; i < lc; i++)
+		if (lv[i]->type == ARR_SPAN)
+			ic += lv[i-1]->type != ARR_SPAN;
+		else
+			ic++;
+	
+	idx = *idx_p;
+	sp = *sp_p;
+	cnt = *cnt_p;
+	ci = *ci_p;
+	
+	if (ic > lim) {
+		f = 1;
+		idx = NULL;
+		sp = cnt = ci = NULL;
+		
+		idx = calloc(ic, sizeof(struct cell_array *));
+		CHK(idx == NULL, fail, L"Cannot allocate memory for idx");
+		
+		sp = calloc(ic, sizeof(size_t));
+		CHK(sp == NULL, fail, L"Cannot allocate memory for sp");
+
+		cnt = calloc(ic, sizeof(size_t));
+		CHK(cnt == NULL, fail, L"Cannot allocate memory for cnt");
+
+		ci = calloc(ic, sizeof(size_t));
+		CHK(ci == NULL, fail, L"Cannot allocate memory for ci");
+	}
+	
+	for (size_t i = 0; i < ic; i++) {
+		sp[i] = 1;
+		ci[i] = 0;
+	}
+	
+	ic = 0;
+	
+	for (size_t i = 0; i < lc; ic++) {
+		idx[ic] = lv[i];
+		sp[ic] *= tgt->shape[i];
+					
+		if (lv[i++]->type == ARR_SPAN) {
+			while (i < lc && lv[i]->type == ARR_SPAN)
+				sp[ic] *= tgt->shape[i++];
+		}
+	}
+	
+	bc = 1;
+	
+	for (size_t i = 0; i < ic; i++)
+		if (idx[i]->type == ARR_SPAN)
+			bc *= cnt[i] = sp[i];
+		else
+			bc *= cnt[i] = array_count(idx[i]);
+	
+	*ic_p = ic;
+	*bc_p = bc;
+	*idx_p = idx;
+	*sp_p = sp;
+	*cnt_p = cnt;
+	*ci_p = ci;
+	*f_p = f;
+	
+fail:
+	if (err && f) {
+		free(idx);
+		free(sp);
+		free(cnt);
+		free(ci);
+	}
+	
+	return err;
+}
+
+int
 index_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *idx_[32];
 	size_t sp_[32], cnt_[32], ci_[32];
 	struct cell_array *arr, **lv, **idx;
-	size_t lc, zc, ic, *sp, *cnt, csz, bcount, ccount, *ci;
+	size_t lc, zc, ic, *sp, *cnt, csz, bc, ccount, *ci;
 	unsigned int zr;
 	int err, f;
 	char *zv, *rv;
@@ -998,31 +1057,12 @@ index_func(struct cell_array **z,
 		unsigned int rnk;
 		
 		rnk = (unsigned int)(r->rank - lc);
-		bcount = 1;
+		bc = 1;
 		
 		for (size_t i = 0; i < lc; i++)
-			bcount *= sp[i];
-				
-		CHKFN(array_migrate_storage(l, STG_HOST), fail);
-
-		idx = 0;
+			bc *= sp[i];
 		
-		#define IDX_SIMP_OFFSET(lt) {				\
-			lt *lv = l->values;				\
-									\
-			for (size_t i = 0; i < lc; i++)			\
-				idx = idx * *sp++ + (size_t)*lv++;	\
-		}
-		
-		switch (l->type) {
-		case ARR_BOOL:IDX_SIMP_OFFSET(int8_t);break;
-		case ARR_SINT:IDX_SIMP_OFFSET(int16_t);break;
-		case ARR_INT:IDX_SIMP_OFFSET(int32_t);break;
-		case ARR_DBL:IDX_SIMP_OFFSET(double);break;
-		default:
-			CHK(99, fail, L"Unexpected non-real type");
-		}
-		
+		CHKFN(simple_index_offset(&idx, r, l), fail);
 		CHKFN(mk_array(&arr, r->type, r->storage, rnk), fail);
 		
 		for (size_t i = 0; i < rnk; i++)
@@ -1030,7 +1070,7 @@ index_func(struct cell_array **z,
 		
 		switch (arr->storage) {
 		case STG_DEVICE:{
-			dim_t asp[2] = {ccount, bcount};
+			dim_t asp[2] = {ccount, bc};
 			af_seq ix[2] = {
 				{0, (double)ccount - 1, 1}, 
 				{(double)idx, (double)idx, 1}
@@ -1106,7 +1146,7 @@ index_func(struct cell_array **z,
 		goto done;
 	}
 	
-	if (zc > STORAGE_DEVICE_THRESHOLD)
+	if (zc > STORAGE_DEVICE_THRESHOLD && arr->type != ARR_NESTED)
 		arr->storage = STG_DEVICE;
 	
 	CHKFN(array_migrate_storage(r, arr->storage), fail);
@@ -1114,56 +1154,13 @@ index_func(struct cell_array **z,
 	for (size_t i = 0; i < lc; i++)
 		if (lv[i]->type != ARR_SPAN)
 			CHKFN(array_migrate_storage(lv[i], arr->storage), fail);
-	
-	ic = 1;
-	
-	for (size_t i = 1; i < lc; i++)
-		if (lv[i]->type == ARR_SPAN)
-			ic += lv[i-1]->type != ARR_SPAN;
-		else
-			ic++;
 		
 	idx = idx_;
 	sp = sp_;
 	cnt = cnt_;
 	ci = ci_;
-		
-	if (ic > 32) {
-		f = 1;
-		idx = NULL;
-		sp = NULL;
-		cnt = NULL;
-		ci = NULL;
-		
-		idx = calloc(ic, sizeof(struct cell_array *));
-		CHK(idx == NULL, fail, L"Cannot allocate memory for idx.");
-		
-		sp = calloc(ic, sizeof(size_t));
-		CHK(sp == NULL, fail, L"Cannot allocate memory for sp.");
-		
-		cnt = calloc(ic, sizeof(size_t));
-		CHK(cnt == NULL, fail, L"Cannot allocate memory for cnt.");
-		
-		ci = calloc(ic, sizeof(size_t));
-		CHK(ci == NULL, fail, L"Cannot allocate memory for ci.");
-	}
 	
-	for (size_t i = 0; i < ic; i++)
-		sp[i] = 1;
-	
-	ic = 0;
-	idx[0] = lv[0];
-	sp[0] = r->shape[0];
-	
-	for (size_t i = 1; i < lc; i++) {
-		if (lv[i]->type != ARR_SPAN || idx[ic]->type != ARR_SPAN)
-			ic++;
-		
-		idx[ic] = lv[i];
-		sp[ic] *= r->shape[i];
-	}
-	
-	ic++;
+	CHKFN(merge_indices(&ic, &bc, &idx, &sp, &cnt, &ci, &f, r, l, 32), fail);
 	
 	if (ic <= 4 && arr->storage == STG_DEVICE) {
 		af_index_t *ix;
@@ -1219,18 +1216,8 @@ index_func(struct cell_array **z,
 	zv = arr->values;
 	rv = r->values;
 	csz = ccount * array_element_size(arr);
-	bcount = 1;
-	
-	for (size_t i = 0; i < ic; i++) {
-		ci[i] = 0;
-
-		if (idx[i]->type == ARR_SPAN)
-			bcount *= cnt[i] = sp[i];
-		else
-			bcount *= cnt[i] = array_count(idx[i]);
-	}
 		
-	for (size_t i = 0; i < bcount; i++) {		
+	for (size_t i = 0; i < bc; i++) {		
 		size_t ix = 0;
 		
 		for (size_t j = 0; j < ic; j++) {
@@ -1246,12 +1233,11 @@ index_func(struct cell_array **z,
 		
 		memcpy(zv + i * csz, rv + ix * csz, csz);
 		
-		for (size_t j = ic - 1; j >= 0; j--) {
+		for (size_t j = ic - 1; j >= 0; j--)
 			if (++ci[j] == cnt[j])
 				ci[j] = 0;
 			else
 				break;
-		}
 	}
 	
 done:	
@@ -1283,6 +1269,329 @@ fail:
 }
 
 DECL_FUNC(index_ibeam, error_mon_syntax, index_func)
+
+int
+set_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *arr, *sp, *tgt, **lv, *idx_[32];
+	struct cell_func *idx_rnk_check, *idx_rng_check;
+	size_t sp_[32], cnt_[32], ci_[32];
+	size_t lc, rc, zc, ic, bc, csz, *isp, *cnt, *ci;
+	char *zv, *rv;
+	int err, f;
+	enum array_type mtype;
+	
+	tgt = *z;
+	arr = NULL;
+	sp = NULL;
+	f = 0;
+	
+	idx_rnk_check = cdf_prim.cdf_idx_rnk_check->value;
+	CHK((idx_rnk_check->fptr_dya)(&arr, tgt, l, idx_rnk_check), fail,
+	    L"z idx_rnk_check ⍺:");
+	CHKFN(release_array(arr), fail);arr = NULL;
+	
+	CHKFN(shape_func(&sp, tgt, NULL), fail);
+	
+	idx_rng_check = cdf_prim.cdf_idx_rng_check->value;
+	CHK((idx_rng_check->fptr_dya)(&arr, sp, l, idx_rng_check), fail,
+	    L"(⍴z) idx_rng_check ⍺:");
+	CHKFN(release_array(sp), fail);sp = NULL;
+	CHKFN(release_array(arr), fail);arr = NULL;
+	
+	CHKFN(squeeze_array(l), fail);
+		
+	if (l->type == ARR_NESTED) {
+		lv = l->values;
+		lc = array_count(l);
+
+		if (r->rank) {
+			size_t zr, *rsp;
+
+			zr = 0;
+			
+			for (size_t i = 0; i < lc; i++)
+				if (lv[i]->type == ARR_SPAN)
+					zr++;
+				else
+					zr += lv[i]->rank;
+			
+			if (zr != r->rank)
+				CHK(4, fail, 
+				    L"Index rank does not match value rank");
+
+			rsp = r->shape;
+			
+			for (size_t i = 0; i < lc; i++) {
+				size_t lr, *ls;
+				wchar_t msg[] = 
+				    L"Index shape does not match value shape.";
+				
+				if (lv[i]->type == ARR_SPAN) {
+					if (tgt->shape[i] != *rsp++)
+						CHK(5, fail, msg);
+					
+					continue;
+				}
+				
+				lr = lv[i]->rank;
+				ls = lv[i]->shape;
+				
+				for (size_t j = 0; j < lr; j++)
+					if (*ls++ != *rsp++)
+						CHK(5, fail, msg);
+			}
+		}
+		
+		zc = 1;
+		
+		for (size_t i = 0; i < lc; i++)
+			zc *= array_count(lv[i]);
+		
+		if (!zc) {
+			retain_cell(tgt);
+			goto done;
+		}
+	} else {
+		if (r->rank)
+			CHK(4, fail, L"Non-scalar assigned to scalar index");
+	}
+	
+	if (tgt->refc > 1) {
+		CHKFN(array_shallow_copy(&tgt, tgt), fail);
+	} else {
+		retain_cell(tgt);
+	}
+	
+	mtype = array_max_type(tgt->type, r->type);
+	
+	if (r->type != mtype)
+		CHKFN(array_shallow_copy(&r, r), fail);
+	
+	if (l->type != ARR_NESTED) {
+		size_t idx;
+		
+		CHKFN(simple_index_offset(&idx, tgt, l), fail);
+		CHKFN(array_migrate_storage(r, tgt->storage), fail);
+		CHKFN(cast_values(tgt, mtype), fail);
+		CHKFN(cast_values(r, mtype), fail);
+		
+		switch (tgt->storage) {
+		case STG_DEVICE:{
+			af_seq seq = {(double)idx, (double)idx, 1};
+			af_array tmp;
+			
+			CHKAF(af_assign_seq(&tmp, tgt->values, 1, &seq, r->values),
+			    fail);
+			CHKAF(af_release_array(tgt->values), fail);
+			
+			tgt->values = tmp;			
+		}break;
+		case STG_HOST:{
+			size_t elem_size;
+			char *dst;
+			
+			elem_size = array_element_size(r);
+			dst = tgt->values;
+			
+			memcpy(dst + idx * elem_size, r->values, elem_size);
+			
+			if (r->type == ARR_NESTED)
+				retain_cell(*(struct cell_array **)r->values);
+		}break;
+		default:
+			CHK(99, fail, L"Unknown storage type.");
+		}
+		
+		goto done;
+	}
+	
+	if (zc > STORAGE_DEVICE_THRESHOLD && tgt->type != ARR_NESTED)
+		CHKFN(array_migrate_storage(tgt, STG_DEVICE), fail);
+	
+	CHKFN(array_promote_storage(tgt, r), fail);
+	CHKFN(cast_values(tgt, mtype), fail);
+	CHKFN(cast_values(r, mtype), fail);
+	
+	for (size_t i = 0; i < lc; i++)
+		if (lv[i]->type != ARR_SPAN)
+			CHKFN(array_migrate_storage(lv[i], tgt->storage), fail);
+	
+	lv = idx_;
+	isp = sp_;
+	cnt = cnt_;
+	ci = ci_;
+	
+	CHKFN(merge_indices(&ic, &bc, &lv, &isp, &cnt, &ci, &f, tgt, l, 32), fail);
+	
+	if (ic <= 4 && tgt->storage == STG_DEVICE) {
+		af_index_t *ix;
+		af_array t, rv4;
+		dim_t asp[4], rsp[4];
+		
+		CHKAF(af_create_indexers(&ix), fail);
+
+		t = NULL;
+		rv4 = NULL;
+		
+		for (size_t i = 0; i < ic; i++) {
+			size_t j;
+			af_array v;
+			
+			j = ic - (i + 1);
+			asp[j] = isp[i];
+			rsp[j] = cnt[i];
+			
+			if (lv[i]->type != ARR_SPAN) {
+				CHKAF(af_cast(&v, lv[i]->values, s64), dev4_fail);
+				CHKAF(af_set_array_indexer(ix, v, j), dev4_fail);
+			}
+		}	
+				
+		if (!r->rank) {
+			CHKAF(af_tile(&t, r->values, (unsigned)bc, 1, 1, 1), dev4_fail);
+		} else {
+			t = r->values;
+		}
+		
+		CHKAF(af_moddims(&rv4, t, (unsigned int)ic, rsp), dev4_fail);
+		
+		if (!r->rank)
+			CHKAF(af_release_array(t), dev4_fail);
+		
+		t = NULL;
+		CHKAF(af_moddims(&t, tgt->values, (unsigned int)ic, asp), dev4_fail);
+		CHKAF(af_assign_gen(&tgt->values, t, ic, ix, rv4), dev4_fail);
+		CHKAF(af_release_array(rv4), dev4_fail);rv4 = NULL;
+		CHKAF(af_release_array(t), dev4_fail);
+		
+		t = tgt->values;
+		CHKAF(af_flat(&tgt->values, t), dev4_fail);
+				
+	dev4_fail:
+		for (size_t i = 0; i < ic; i++)
+			if (lv[i]->type != ARR_SPAN)
+				TRCAF(af_release_array(ix[ic - (i + 1)].idx.arr));
+		
+		TRCAF(af_release_array(t));
+		TRCAF(af_release_array(rv4));
+		TRCAF(af_release_indexers(ix));
+		
+		if (err)
+			goto fail;
+		
+		goto done;
+	}
+	
+	if (tgt->storage == STG_DEVICE) {
+		CHK(16, fail, L"High rank device indexing not finished.");
+	}
+	
+	if (tgt->storage != STG_HOST)
+		CHK(99, fail, L"Unknown storage type.");
+	
+	if (*tgt->vrefc > 1) {
+		void *vals = tgt->values;
+		
+		CHKFN(release_array_data(tgt), fail);
+		CHKFN(alloc_array(tgt), fail);
+		CHKFN(fill_array(tgt, vals), fail);
+	}
+
+	zv = tgt->values;
+	rv = r->values;
+	csz = array_element_size(tgt);
+	rc = array_count(r);
+	
+	for (size_t i = 0; i < bc; i++) {
+		size_t ix = 0;
+		char *rve, *zve;
+		
+		for (size_t j = 0; j < ic; j++) {
+			size_t x;
+			
+			if (lv[j]->type == ARR_SPAN)
+				x = ci[j];
+			else
+				CHKFN(get_scalar_u64(&x, lv[j], ci[j]), fail);
+			
+			ix = ix * isp[j] + x;
+		}
+		
+		rve = rv + (i % rc) * csz;
+		zve = zv + ix * csz;
+		
+		if (r->type == ARR_NESTED) {
+			retain_cell(*(struct cell_array **)rve);
+			CHKFN(release_array(*(struct cell_array **)zve), fail);
+		}
+		
+		memcpy(zve, rve, csz);
+		
+		for (size_t j = ic - 1; j >= 0; j--)
+			if (++ci[j] == cnt[j])
+				ci[j] = 0;
+			else
+				break;
+	}
+	
+done:
+	*z = tgt;
+	
+fail:
+	if (f) {
+		free(lv);
+		free(isp);
+		free(cnt);
+		free(ci);
+	}
+	
+	if (err) {
+		release_array(sp);
+		release_array(arr);
+	}
+	
+	return err;
+}
+
+DECL_FUNC(set_ibeam, error_mon_syntax, set_func)
+
+int
+mst_oper(struct cell_array **z, 
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *idx, *val, *idx_vals, **iv;
+	struct cell_func *oper, *get_idx_vals;
+	struct cell_doper *mst_vals;
+	int err;
+	
+	get_idx_vals = NULL;
+	idx_vals = NULL;
+	oper = self->fv[1];
+	mst_vals = cdf_prim.cdf_mst_vals;
+	
+	CHK(apply_dop(&get_idx_vals, mst_vals,
+	    mst_vals->fptr_fam, mst_vals->fptr_fad, l, oper),
+	    fail, L"get_idx_vals←idx mst_vals op");
+	CHK((get_idx_vals->fptr_dya)(&idx_vals, *z, r, get_idx_vals), fail,
+	    L"(idx vals)←(*z)(idx mst_vals op)⍵");
+
+	iv = idx_vals->values;
+	idx = iv[0];
+	val = iv[1];
+	
+	CHKFN(set_func(z, idx, val, NULL), fail);
+	
+fail:
+	release_func(get_idx_vals);
+	release_array(idx_vals);
+	
+	return err;
+}
+
+DECL_MOPER(mst_ibeam, 
+    error_mon_syntax, error_dya_syntax, error_mon_syntax, mst_oper)
 
 int
 monadic_scalar_apply(struct cell_array **z, struct cell_array *r,
