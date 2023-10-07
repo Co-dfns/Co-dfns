@@ -947,20 +947,25 @@ fail:
 int
 array_promote_storage(struct cell_array *l, struct cell_array *r)
 {
+	enum array_storage stg;
 	int err;
 	
 	CHKFN(squeeze_array(l), fail);
 	CHKFN(squeeze_array(r), fail);
 	
-	if (r->type == ARR_NESTED) {
-		CHKFN(array_migrate_storage(l, STG_HOST), fail);
-	} else if (l->type == ARR_NESTED) {
-		CHKFN(array_migrate_storage(r, STG_HOST), fail);
-	} else if (l->storage == STG_DEVICE) {
-		CHKFN(array_migrate_storage(r, STG_DEVICE), fail);
-	} else if (r->storage == STG_DEVICE) {
-		CHKFN(array_migrate_storage(l, STG_DEVICE), fail);
-	}
+	stg = STG_HOST;
+	
+	if (r->type == ARR_NESTED || l->type == ARR_NESTED)
+		stg = STG_HOST;
+	else if (l->storage == STG_DEVICE || r->storage == STG_DEVICE)
+		stg = STG_DEVICE;
+	else if (array_count(l) > STORAGE_DEVICE_THRESHOLD)
+		stg = STG_DEVICE;
+	else if (array_count(r) > STORAGE_DEVICE_THRESHOLD)
+		stg = STG_DEVICE;
+	
+	CHKFN(array_migrate_storage(r, stg), fail);
+	CHKFN(array_migrate_storage(l, stg), fail);
 
 fail:
 	return err;
