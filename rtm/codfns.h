@@ -203,7 +203,6 @@ DECLSPEC void release_doper_box(struct cell_doper_box *);
 DECLSPEC int derive_func_opts(struct cell_func **, struct cell_func *, int);
 
 /* Calling helpers */
-DECLSPEC int mk_simple_array(void ***, enum array_type, unsigned int, size_t *, void *);
 DECLSPEC int mk_nested_array(void ***, size_t count);
 DECLSPEC int var_ref(void ***, void *);
 DECLSPEC void bind_value(void ***, void **);
