@@ -29,6 +29,8 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆indexgen∆5_TEST←'indexgen' MK∆T1 (⊃83 11⎕DR 1)
 ∆indexgen∆6_TEST←'indexgen' MK∆T1 (⊃83 11⎕DR 0)
 ∆indexgen∆7_TEST←'indexgen' MK∆T1 (F 7)
+∆indexgen∆8_TEST←'indexgen' MK∆T1 512
+∆indexgen∆9_TEST←'indexgen' MK∆T1 2000
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

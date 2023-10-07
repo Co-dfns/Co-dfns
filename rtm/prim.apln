@@ -384,10 +384,9 @@ take←{
 	x←⍺ ⋄ y←⍺{(~hax)∧0≡≢⍴⍵:((≢⍺)⍴1)⍴⍵ ⋄ ⍵}⍵ 
 	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
 	~any(|x)>(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
-	⎕SIGNAL 16
-	⍝ s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s ⋄ z←s⍴0⍴y
-	⍝ i←,z flatten_idx (wi←⍳¨w)+m×s-w←s⌊⍴y
-	⍝ s⍴z⊣z[i]←,(wi+m×(⍴y)-w)⌷y⊣z←,z
+	s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s
+	z←s⍴0⍴y ⋄ i←(wi←⍳¨w)+m×s-w←s⌊⍴y ⋄ v←(wi+m×(⍴y)-w)⌷y
+	'take_ibeam'⌶ z i v
 }
 tke←mix ambiv take
 

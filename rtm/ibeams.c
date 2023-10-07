@@ -871,10 +871,10 @@ int
 index_gen_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *t;
-	size_t dim, tile;
-	enum array_type ztype;
-	af_dtype aftype;
+	size_t dim;
 	int err;
+	enum array_storage stg;
+	enum array_type ztype;
 	
 	err = 0;
 	t = NULL;
@@ -886,21 +886,52 @@ index_gen_func(struct cell_array **z, struct cell_array *r, struct cell_func *se
 	if (ztype == ARR_BOOL)
 		ztype = ARR_SINT;
 	
-	CHK(mk_array(&t, ztype, STG_DEVICE, 1), fail,
-	    L"mk_array(&t, ztype, STG_DEVICE, 1)");
+	stg = dim > STORAGE_DEVICE_THRESHOLD ? STG_DEVICE : STG_HOST;
+	
+	CHKFN(mk_array(&t, ztype, stg, 1), fail);
 	
 	t->shape[0] = dim;
-	tile = 1;
-	aftype = array_af_dtype(t);
 	
-	CHKAF(af_iota(&t->values, 1, &dim, 1, &tile, aftype), fail);
+	switch (t->storage) {
+	case STG_DEVICE:{
+		size_t tile;
+		af_dtype aftype;
+		
+		tile = 1;
+		aftype = array_af_dtype(t);
+		
+		CHKAF(af_iota(&t->values, 1, &dim, 1, &tile, aftype), fail);
+	}break;
+	case STG_HOST:{
+		CHKFN(alloc_array(t), fail);
+		
+		#define INDEX_GEN_LOOP(tp) {		\
+			tp *v;				\
+							\
+			v = t->values;			\
+							\
+			for (tp i = 0; i < dim; i++)	\
+				*v++ = i;		\
+		}
+		
+		switch (t->type) {
+		case ARR_BOOL:INDEX_GEN_LOOP(int8_t);break;
+		case ARR_SINT:INDEX_GEN_LOOP(int16_t);break;
+		case ARR_INT:INDEX_GEN_LOOP(int32_t);break;
+		case ARR_DBL:INDEX_GEN_LOOP(double);break;
+		default:
+			CHK(99, fail, L"Unexpected non-real type");
+		}
+	}break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
 	
 	*z = t;
 	
-	return 0;
-
 fail:
-	release_array(t);
+	if (err)
+		release_array(t);
 	
 	return err;
 }
@@ -5117,3 +5148,27 @@ fail:
 }
 
 DECL_FUNC(matmul_ibeam, error_mon_syntax, matmul_func)
+
+int
+take_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array **args, *tgt, *idx, *val, *orig;
+	int err;
+	
+	args = r->values;
+	tgt = args[0];
+	idx = args[1];
+	val = args[2];
+	
+	orig = tgt;
+	
+	CHKFN(release_array(tgt), fail);
+	CHKFN(set_func(&tgt, idx, val, NULL), fail);
+	
+	*z = retain_cell(tgt);
+	
+fail:
+	return err;
+}
+
+DECL_FUNC(take_ibeam, take_func, error_dya_syntax)
