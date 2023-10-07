@@ -203,8 +203,11 @@ mk_array(struct cell_array **dest,
 	struct		cell_array *arr;
 	size_t		size;
 	
-	size = sizeof(struct cell_array) + rank * sizeof(size_t);
-
+	size = sizeof(struct cell_array);
+	
+	if (rank > ARRAY_MAX_STATIC_RANK)
+		size += (rank - ARRAY_MAX_STATIC_RANK) * sizeof(size_t);
+	
 	arr = malloc(size);
 
 	if (arr == NULL)
@@ -217,7 +220,9 @@ mk_array(struct cell_array **dest,
 	arr->rank	= rank;
 	arr->values	= NULL;
 	arr->vrefc	= NULL;
-
+	arr->shape	= arr->shape_;
+	arr->srefc	= NULL;
+	
 	*dest = arr;
 
 	return 0;
