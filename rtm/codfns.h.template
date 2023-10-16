@@ -63,19 +63,15 @@ struct apl_cmpx {
 	double imag;
 };
 
-#define ARRAY_MAX_STATIC_RANK 4
-
 struct cell_array {
 	enum cell_type ctyp;
 	unsigned int refc;
 	enum array_storage storage;
 	enum array_type type;
 	void *values;
-	unsigned *vrefc;
-	unsigned rank;
-	size_t *shape;
-	unsigned *srefc;
-	size_t shape_[ARRAY_MAX_STATIC_RANK];
+	unsigned int *vrefc;
+	unsigned int rank;
+	size_t shape[];
 };
 
 struct cell_func {

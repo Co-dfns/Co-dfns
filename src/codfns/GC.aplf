@@ -123,11 +123,10 @@ GC←{
 		z,←⊂'	static unsigned vrefc = 1;'
 		z,←⊂'	static struct cell_array val = {'
 		z,←⊂'		CELL_ARRAY, 1, STG_HOST, ARR_',atp,','
-		z,←⊂'		dat, &vrefc, ',(⍕rnk),', NULL, NULL,'
+		z,←⊂'		dat, &vrefc, ',(⍕rnk),','
 		z,←⊂'		',(csep shp,0)
 		z,←⊂'	};'
 		z,←⊂''
-		z,←⊂'	val.shape = val.shape_;'
 		z,←⊂'	vrefc++;'
 		z,←⊂'	*stkhd++ = retain_cell(&val);'
 		z,←⊂'}'
