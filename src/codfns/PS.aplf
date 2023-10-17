@@ -384,8 +384,9 @@ PS←{
 	}⍬
 	
 	⍝ Merge simple arrays into single A1 nodes
-	msk←((t=A)∧k=7)∨(t=A)∧0=≡¨sym[|n] ⋄ msk[p]∧←msk ⋄ i←⍸msk←msk∧msk[p]
-	k[p[i]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
+	msk←((t=A)∧0=≡¨sym[|n])∧(t[p]=A)∧k[p]=7
+	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
+	k[p[i←⍸msk]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
 	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
 
 	⍝ Sort AST by depth-first pre-order traversal
