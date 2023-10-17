@@ -171,7 +171,7 @@ index_gen←{
 	0≡≢,⍵:⊂⍬
 	(,0)≡,⍵:⍬
 	1≡≢,⍵:'index_gen_vec'⌶ ⍵
-	⎕SIGNAL 16
+	⊃∘.,⌿⍳¨⍵
 }
 index_of←{
 	1<≢⍴⍺:⎕SIGNAL 16 ⋄ 1<≡⍺:⎕SIGNAL 16 ⋄ 1<≡⍵:⎕SIGNAL 16
