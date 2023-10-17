@@ -195,6 +195,13 @@ dis←disclose ambiv pick
 ⍝ ⊂: Enclose / Partition
 enclose←{
 	0≡≡⍵:⍵
+	hax←1 ⋄ axis⍠←hax←0 ⋄ hax:(,axis){
+		⍺≡⍬:⊂¨⍵
+		(≢⍴⍵)idx_rng_check ⍺:
+		m←(≢⍴⍵)⍴0 ⋄ _←⍺{i←⍺[⍵] ⋄ m[i]:⎕SIGNAL 11 ⋄ ⍵+m[i]←1}⍣(≢⍺)⊢0
+		nax←0⍴⍨(≢⍴⍵)-≢⍺ ⋄ i←0 ⋄ _←{m[⍵]:⍵+1 ⋄ nax[i]←⍵ ⋄ ⍵+i+←1}⍣(≢⍴⍵)⊢0
+		(⍳(⍴⍵)[nax])⌷[nax]¨⊂⍵
+	}⍵
 	'enclose_ibeam'⌶ ⍵
 }
 par←enclose ambiv {⎕SIGNAL 16}
