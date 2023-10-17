@@ -76,6 +76,12 @@ dwa_array_type(enum dwa_type dtype)
 		return ARR_DBL;
 	case APLZ:
 		return ARR_CMPX;
+	case APLU:
+		return ARR_CHAR8;
+	case APLV:
+		return ARR_CHAR16;
+	case APLW:
+		return ARR_CHAR32;
 	case APLP:
 		return ARR_NESTED;
 	default:
