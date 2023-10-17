@@ -140,7 +140,7 @@ GC←{
 		dbg←highlight ⍵
 		z ←⊂'CHK(mk_nested_array(&stkhd, ',(⍕n[⍵]),'), cleanup,'
 		z,←⊂'    ',dbg,');'
-		z,⊂''
+		z
 	}¨i
 	
 	⍝ V: Variable reference
@@ -149,7 +149,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
 		dbg←highlight ⍵
-		('CHK(var_ref(&stkhd, ',tgt,'), cleanup, ',dbg,');')''
+		⊂'CHK(var_ref(&stkhd, ',tgt,'), cleanup, ',dbg,');'
 	}¨i
 
 	⍝ B: Non-option bindings
@@ -158,7 +158,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
 		dbg←highlight ⍵
-		('bind_value(&stkhd, &',tgt,');')''
+		⊂'bind_value(&stkhd, &',tgt,');'
 	}¨i
 	
 	⍝ C: Closures for functions
@@ -203,7 +203,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		('CHK(apply_monadic(&stkhd), cleanup, ',dbg,');')''
+		⊂'CHK(apply_monadic(&stkhd), cleanup, ',dbg,');'
 	}¨i
 	
 	⍝ E2: Dyadic expression application
@@ -211,7 +211,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		('CHK(apply_dyadic(&stkhd), cleanup, ',dbg,');')''
+		⊂'CHK(apply_dyadic(&stkhd), cleanup, ',dbg,');'
 	}¨i
 	
 	⍝ E4: Assignment
@@ -220,7 +220,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
 		tgt←var_refs ⍵
-		('CHK(apply_assign(&stkhd, ',tgt,'), cleanup, ',dbg,');')''
+		⊂'CHK(apply_assign(&stkhd, ',tgt,'), cleanup, ',dbg,');'
 	}¨i
 	
 	⍝ Om: Monadic operators
@@ -229,7 +229,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		ltyp←'array' 'func'⊃⍨k[⍵]=2
 		dbg←highlight ⍵
-		('CHK(apply_mop_',(⊃ltyp),'(&stkhd), cleanup, ',dbg,');')''
+		⊂'CHK(apply_mop_',(⊃ltyp),'(&stkhd), cleanup, ',dbg,');'
 	}¨i
 	
 	⍝ Od: Dyadic operators
@@ -240,7 +240,7 @@ GC←{
 		rtyp←'array' 'func'⊃⍨k[⍵]∊7 8
 		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
 		dbg←highlight ⍵
-		('CHK(apply_dop_',(⊃rtyp),(⊃ltyp),'(&stkhd), cleanup, ',dbg,');')''
+		⊂'CHK(apply_dop_',(⊃rtyp),(⊃ltyp),'(&stkhd), cleanup, ',dbg,');'
 	}¨i
 	
 	⍝ Ox: Axis Operator and Variant Operator
@@ -248,7 +248,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		('CHK(apply_variant(&stkhd), cleanup, ',dbg,');')''
+		⊂'CHK(apply_variant(&stkhd), cleanup, ',dbg,');'
 	}¨i
 
 	⍝ B7: Option bindings
