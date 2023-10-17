@@ -806,7 +806,9 @@ jot←{
 rnk←{fn←⍺⍺ ⋄ spec←⍵⍵ ⋄ ⍺←⊢
 	1<≡spec:⎕SIGNAL 11 ⋄ 1<≢⍴spec:⎕SIGNAL 4 ⋄ 3<≢spec:⎕SIGNAL 5
 	spec←3⍴(¯1×2≡≢spec)⌽spec ⋄ p←spec[0] ⋄ q←spec[1] ⋄ r←spec[2]
-	1≡⍺ 1:{p≥k←≢⍴⍵:fn ⍵ ⋄ k≤|p:↑fn¨⍵ ⋄ ↑(d↑⍴⍵)⍴{fn ⍵⌷z}¨⍳≢z←,[⍳d←k-k|p]⍵}⍵
+	1≡⍺ 1:{
+		p≥k←≢⍴⍵:fn ⍵ ⋄ k≤|p:↑fn¨⍵ ⋄ d←k-k|p ⋄ any 0=s←d↑⍴⍵:s⍴⍬
+		↑s⍴{fn ⍵⌷z}¨⍳≢z←,[⍳d←k-k|p]⍵}⍵
 	dx←⍺{q≥k←≢⍴⍺:0 ⋄ k≤|q:k ⋄ k-k|q}⍵ ⋄ dy←⍺{r≥k←≢⍴⍵:0 ⋄ k≤|r:k ⋄ k-k|r}⍵
 	s←⍺{
 		dx∧dy∧dx≢dy:⎕SIGNAL 4 ⋄ dx∧dy∧(dx↑⍴⍺)≢dy↑⍴⍵:⎕SIGNAL 5
