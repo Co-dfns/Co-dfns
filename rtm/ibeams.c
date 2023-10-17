@@ -1463,6 +1463,7 @@ set_func(struct cell_array **z,
 		af_index_t *ix;
 		af_array t, rv4;
 		dim_t asp[4], rsp[4];
+		unsigned int afrk;
 		
 		CHKAF(af_create_indexers(&ix), fail);
 
@@ -1481,7 +1482,15 @@ set_func(struct cell_array **z,
 				CHKAF(af_cast(&v, lv[i]->values, s64), dev4_fail);
 				CHKAF(af_set_array_indexer(ix, v, j), dev4_fail);
 			}
-		}	
+		}
+		
+		afrk = 0;
+		
+		for (unsigned int i = 0; i < ic; i++)
+			if (asp[i] > 1 || rsp[i] > 1)
+				afrk = i;
+			
+		afrk++;
 				
 		if (!r->rank) {
 			CHKAF(af_tile(&t, r->values, (unsigned)bc, 1, 1, 1), dev4_fail);
@@ -1496,7 +1505,7 @@ set_func(struct cell_array **z,
 		
 		t = NULL;
 		CHKAF(af_moddims(&t, tgt->values, (unsigned int)ic, asp), dev4_fail);
-		CHKAF(af_assign_gen(&tgt->values, t, ic, ix, rv4), dev4_fail);
+		CHKAF(af_assign_gen(&tgt->values, t, afrk, ix, rv4), dev4_fail);
 		CHKAF(af_release_array(rv4), dev4_fail);rv4 = NULL;
 		CHKAF(af_release_array(t), dev4_fail);
 		
