@@ -124,6 +124,13 @@ cast_values(struct cell_array *arr, enum array_type type)
 	if (arr->type == type)
 		return 0;
 	
+	if (type == ARR_MIXED) {
+		CHKFN(array_migrate_storage(arr, STG_HOST), fail);
+		CHKFN(cast_values(arr, ARR_NESTED), fail);
+		
+		return 0;
+	}
+	
 	switch (arr->storage) {
 	case STG_DEVICE:
 		CHKFN(cast_values_device(arr, type), fail);
