@@ -403,6 +403,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_doper *cdf_pow;
 	struct cell_doper *cdf_jot;
 	struct cell_doper *cdf_rnk;
+	struct cell_doper *cdf_at;
 	struct cell_moper *cdf_key;
 } cdf_prim;
 

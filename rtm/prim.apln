@@ -826,25 +826,25 @@ rnk←{fn←⍺⍺ ⋄ spec←⍵⍵ ⋄ ⍺←⊢
 }
 
 ⍝ @: At operator
-⍝ at←{⍺←⊢                             
-⍝     lfn←3=⎕NC'⍺⍺'
-⍝     rfn←3=⎕NC'⍵⍵'
-⍝     lfn⍱1≡⍺ 1:⎕SIGNAL 2
-⍝     ~lfn:⍺⍺⊣∇∇ ⍵⍵⊢⍵
-⍝     S←⍵⍵⊣⍵
-⍝     rfn<1<|≡S:A⊣A[S]←⍺ ⍺⍺(A←⍵)[S]
-⍝     pfx←{⍺≡(⍴⍺)↑⍵}
-⍝     rfn⍱1≥⍴⍴S:⎕SIGNAL 4
-⍝     ~rfn≤pfx/⍴¨S ⍵:⎕SIGNAL 5
-⍝     X←⍸∘~∘~⍣rfn⊢,S
-⍝     P←,[⍳1+⍴⍴S]↑,⊂⍵
-⍝     sel←(⊂X)⌷P
-⍝     sx←{⍬⍴⍣(1=×/⍴⍵)⊢⍵}
-⍝     new←sx ⍺ ⍺⍺ sel
-⍝     ext←new∘.⊣((⍴⍴new)↓⍴sel)⍴0
-⍝     ⍝ (⍴⍵)⍴P⊣((⊂X)⌷P)←ext
-⍝     (⍴⍵)⍴'sqdset_ibeam'⌶ P (⊂X) ext
-⍝ }
+at←{⍺←⊢                             
+    lfn←3=⎕NC'⍺⍺'
+    rfn←3=⎕NC'⍵⍵'
+    lfn⍱1≡⍺ 1:⎕SIGNAL 2
+    ~lfn:⍺⍺⊣∇∇ ⍵⍵⊢⍵
+    S←⍵⍵⊣⍵
+    rfn<1<|≡S:A⊣A[S]←⍺ ⍺⍺(A←⍵)[S]
+    pfx←{⍺≡(⍴⍺)↑⍵}
+    rfn⍱1≥⍴⍴S:⎕SIGNAL 4
+    ~rfn≤pfx/⍴¨S ⍵:⎕SIGNAL 5
+    X←⍸∘~∘~⍣rfn⊢,S
+    P←,[⍳1+⍴⍴S]↑,⊂⍵
+    sel←(⊂X)⌷P
+    sx←{⍬⍴⍣(1=×/⍴⍵)⊢⍵}
+    new←sx ⍺ ⍺⍺ sel
+    ext←new∘.⊣((⍴⍴new)↓⍴sel)⍴0
+    ⍝ (⍴⍵)⍴P⊣((⊂X)⌷P)←ext
+    (⍴⍵)⍴'sqdset_ibeam'⌶ P (⊂X) ext
+}
 
 ⍝ ⌸: Key operator
 key←{fn←⍺⍺ ⋄ ⎕SIGNAL 16}
