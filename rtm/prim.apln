@@ -380,7 +380,7 @@ neq←firstocc ambiv (noteq scalar)
 mix←{
 	1≥≡squeeze ⍵:⍵
 	k←⌈⌿≢∘⍴¨v←,⍵ ⋄ v←{s←k⍴1 ⋄ s[⍳≢⍴⍵]←⍴⍵ ⋄ s⍴⍵}¨v ⋄ s←⊃⌈⌿⍴¨v
-	((⍴⍵),s)⍴z⊣v{⍵+1⊣'take_ibeam'⌶ z(⍵,⍳¨⍴x)(x←⍵⊃⍺)}⍣(≢,⍵)⊢0⊣z←((≢,⍵),s)⍴0⍴⊃⍵
+	((⍴⍵),s)⍴z⊣v{⍵+1⊣'sqdset_ibeam'⌶ z(⍵,⍳¨⍴x)(x←⍵⊃⍺)}⍣(≢,⍵)⊢0⊣z←((≢,⍵),s)⍴0⍴⊃⍵
 }
 take←{
 	1<≢⍴⍺:⎕SIGNAL 4
@@ -393,7 +393,7 @@ take←{
 	~any(|x)>(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
 	s←⍴y ⋄ s[axis]←x ⋄ m←s<0 ⋄ s←|s
 	z←s⍴0⍴y ⋄ i←(wi←⍳¨w)+m×s-w←s⌊⍴y ⋄ v←(wi+m×(⍴y)-w)⌷y
-	'take_ibeam'⌶ z i v
+	'sqdset_ibeam'⌶ z i v
 }
 tke←mix ambiv take
 
@@ -796,7 +796,7 @@ dot←{
 pow←{
 	⍺←⊢ ⋄ l←⍺ ⋄ f←⍺⍺ ⋄ g←⍵⍵
 	3=⎕NC'⍵⍵':{(z←l f ⍵)g ⍵:z ⋄ ∇z}⍵
-	g{0≡⍺:⍵ ⋄ (⍺-1)∇l f ⍵}⍵
+	g{0=⍺:⍵ ⋄ (⍺-1)∇l f ⍵}⍵
 }
 
 ⍝ ∘: Compose Operator
@@ -824,6 +824,27 @@ rnk←{fn←⍺⍺ ⋄ spec←⍵⍵ ⋄ ⍺←⊢
 	x←⍺{dx≡0:(1,⍴⍺)⍴⍺ ⋄ ,[⍳dx]⍺}⍵ ⋄ y←⍺{dy≡0:(1,⍴⍵)⍴⍵ ⋄ ,[⍳dy]⍵}⍵
 	↑s⍴((≢x)|⍳c){(⍺⌷x) fn ⍵⌷y}¨(≢y)|⍳c←(≢x)⌈≢y
 }
+
+⍝ @: At operator
+⍝ at←{⍺←⊢                             
+⍝     lfn←3=⎕NC'⍺⍺'
+⍝     rfn←3=⎕NC'⍵⍵'
+⍝     lfn⍱1≡⍺ 1:⎕SIGNAL 2
+⍝     ~lfn:⍺⍺⊣∇∇ ⍵⍵⊢⍵
+⍝     S←⍵⍵⊣⍵
+⍝     rfn<1<|≡S:A⊣A[S]←⍺ ⍺⍺(A←⍵)[S]
+⍝     pfx←{⍺≡(⍴⍺)↑⍵}
+⍝     rfn⍱1≥⍴⍴S:⎕SIGNAL 4
+⍝     ~rfn≤pfx/⍴¨S ⍵:⎕SIGNAL 5
+⍝     X←⍸∘~∘~⍣rfn⊢,S
+⍝     P←,[⍳1+⍴⍴S]↑,⊂⍵
+⍝     sel←(⊂X)⌷P
+⍝     sx←{⍬⍴⍣(1=×/⍴⍵)⊢⍵}
+⍝     new←sx ⍺ ⍺⍺ sel
+⍝     ext←new∘.⊣((⍴⍴new)↓⍴sel)⍴0
+⍝     ⍝ (⍴⍵)⍴P⊣((⊂X)⌷P)←ext
+⍝     (⍴⍵)⍴'sqdset_ibeam'⌶ P (⊂X) ext
+⍝ }
 
 ⍝ ⌸: Key operator
 key←{fn←⍺⍺ ⋄ ⎕SIGNAL 16}

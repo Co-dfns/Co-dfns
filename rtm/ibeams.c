@@ -5162,7 +5162,7 @@ fail:
 DECL_FUNC(matmul_ibeam, error_mon_syntax, matmul_func)
 
 int
-take_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+sqdset_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array **args, *tgt, *idx, *val, *orig;
 	int err;
@@ -5183,4 +5183,4 @@ fail:
 	return err;
 }
 
-DECL_FUNC(take_ibeam, take_func, error_dya_syntax)
+DECL_FUNC(sqdset_ibeam, sqdset_func, error_dya_syntax)
