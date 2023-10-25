@@ -5164,15 +5164,13 @@ DECL_FUNC(matmul_ibeam, error_mon_syntax, matmul_func)
 int
 sqdset_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 {
-	struct cell_array **args, *tgt, *idx, *val, *orig;
+	struct cell_array **args, *tgt, *idx, *val;
 	int err;
 	
 	args = r->values;
 	tgt = args[0];
 	idx = args[1];
 	val = args[2];
-	
-	orig = tgt;
 	
 	CHKFN(release_array(tgt), fail);
 	CHKFN(set_func(&tgt, idx, val, NULL), fail);
