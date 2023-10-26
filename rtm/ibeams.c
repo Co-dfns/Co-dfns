@@ -1981,6 +1981,24 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 DEFN_DYADIC_SCALAR(log, LOG, dbl_cmpx_type)
 
 int
+bitand_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = l->type > r->type ? l->type : r->type;
+	
+	return 0;
+}
+
+#define bitand_real(x, y) (((int64_t)x) & ((int64_t)y))
+#define bitand_af(z, l, r) af_bitand(z, l, r, 0)
+
+#define BITAND_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(sfx, typ, bitand_real, fail)
+#define BITAND_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define BITAND_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define BITAND_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
+
+DEFN_DYADIC_SCALAR(bitand, BITAND, bitand_type)
+
+int
 max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = l->type > r->type ? l->type : r->type;
@@ -3178,44 +3196,6 @@ fail:
 DECL_FUNC(any_true_vec, any_true_vec_func, error_dya_syntax)
 
 int
-xor_vec_func(struct cell_array **z, struct cell_array *r, 
-    struct cell_func *self)
-{
-	int8_t result;
-	int err;
-	
-	switch (r->storage) {
-	case STG_DEVICE:{
-		double real, imag;
-				
-		CHKAF(af_count_all(&real, &imag, r->values), fail);
-		
-		result = (int8_t)real&1;
-	}break;
-	case STG_HOST:{
-		size_t count;
-		int8_t *vals;
-		
-		count = array_count(r);
-		vals = r->values;
-		result = 0;
-		
-		for (size_t i = 0; i < count; i++)
-			result ^= vals[i];
-	}break;
-	default:
-		CHK(99, fail, L"Unknown storage device");
-	}
-	
-	return mk_array_int8(z, result);
-	
-fail:
-	return err;
-}
-
-DECL_FUNC(xor_vec, xor_vec_func, error_dya_syntax)
-
-int
 count_array_func(struct cell_array **z, struct cell_array *r,
     struct cell_func *self)
 {
@@ -3837,97 +3817,6 @@ fail:
 DECL_FUNC(max_array, max_array_func, error_dya_syntax)
 
 int
-xor_array_func(struct cell_array **z, struct cell_array *r,
-    struct cell_func *self)
-{
-	struct cell_array *arr;
-	int err;
-	
-	arr = NULL;
-	
-	switch (r->storage) {
-	case STG_DEVICE:{
-		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
-		af_array vals, one;
-		dim_t count;
-					
-		CHKFN(mk_array(&arr, ARR_BOOL, STG_DEVICE, 1), fail);
-		
-		arr->shape[0] = r->shape[0] * r->shape[2];
-		
-		vals = r->values;
-		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
-		
-		vals = arr->values;
-		CHKAF(af_count(&arr->values, vals, 1), fail);
-		CHKAF(af_release_array(vals), fail);
-		
-		vals = arr->values;
-		CHKAF(af_flat(&arr->values, vals), fail);
-		CHKAF(af_release_array(vals), fail);
-		
-		vals = arr->values;
-		count = r->shape[0] * r->shape[2];
-		CHKAF(af_constant_ulong(&one, 1, 1, &count), fail);
-		CHKAF(af_bitand(&arr->values, one, vals, 0), device_fail);
-		CHKAF(af_release_array(vals), device_fail);
-		CHKAF(af_release_array(one), fail);
-		
-		vals = arr->values;
-		CHKAF(af_cast(&arr->values, vals, b8), fail);
-		CHKAF(af_release_array(vals), fail);
-		
-		break;
-		
-	device_fail:
-		af_release_array(one);
-		goto fail;
-	}break;
-	case STG_HOST:{
-		size_t sc, sr, lc, rc;
-		int8_t *vals, *tgt;
-		
-		lc = r->shape[0];
-		sc = r->shape[1];
-		rc = r->shape[2];
-		sr = sc * rc;
-		
-		CHKFN(mk_array(&arr, ARR_BOOL, STG_HOST, 1), fail);
-		
-		arr->shape[0] = lc * rc;
-		
-		CHKFN(alloc_array(arr), fail);
-		
-		vals = r->values;
-		tgt = arr->values;
-		
-		for (size_t i = 0; i < lc; i++) {
-			for (size_t j = 0; j < rc; j++) {
-				int8_t x = 0;
-				
-				for (size_t k = 0; k < sc; k++)
-					x ^= vals[i*sr + k*rc + j];
-					
-				tgt[i*rc + j] = x;
-			}
-		}
-	}break;
-	default:
-		CHK(99, fail, L"Unknown storage type");
-	}
-	
-	*z = arr;
-	
-fail:
-	if (err)
-		release_array(arr);
-	
-	return err;
-}
-
-DECL_FUNC(xor_array, xor_array_func, error_dya_syntax)
-
-int
 plus_scan_vec_func(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
@@ -4110,6 +3999,10 @@ plus_scan_array_func(struct cell_array **z, struct cell_array *r,
 		
 		vals = arr->values;
 		CHKAF(af_accum(&arr->values, vals, 1), fail);
+		CHKAF(af_release_array(vals), fail);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail);
 		CHKAF(af_release_array(vals), fail);
 	}break;
 	case STG_HOST:{
@@ -4706,170 +4599,6 @@ fail:
 }
 
 DECL_FUNC(max_scan_array, max_scan_array_func, error_dya_syntax)
-
-int
-xor_scan_vec_func(struct cell_array **z, struct cell_array *r, 
-    struct cell_func *self)
-{
-	struct cell_array *arr;
-	int err;
-	
-	arr = NULL;
-	
-	switch (r->storage) {
-	case STG_DEVICE:{
-		af_array vals, one;
-		
-		CHKFN(mk_array(&arr, r->type, STG_DEVICE, 1), fail);
-		
-		arr->shape[0] = array_count(r);
-		
-		vals = r->values;
-		CHKAF(af_accum(&arr->values, vals, 0), fail);
-		
-		vals = arr->values;
-		CHKAF(af_constant_ulong(&one, 1, 1, arr->shape), fail);
-		CHKAF(af_bitand(&arr->values, one, vals, 0), device_fail);
-		CHKAF(af_release_array(vals), device_fail);
-		CHKAF(af_release_array(one), fail);
-
-		vals = arr->values;
-		CHKAF(af_cast(&arr->values, vals, b8), fail);
-		CHKAF(af_release_array(vals), fail);
-		
-		break;
-
-	device_fail:
-		af_release_array(one);
-		goto fail;
-	}break;
-	case STG_HOST:{
-		size_t count;
-		int8_t *vals, *tgt;
-		
-		count = array_count(r);
-		
-		CHKFN(mk_array(&arr, ARR_BOOL, STG_HOST, 1), fail);
-
-		arr->shape[0] = count;
-
-		CHKFN(alloc_array(arr), fail);
-
-		vals = r->values;
-		tgt = arr->values;
-
-		*tgt = *vals;
-
-		for (size_t i = 1; i < count; i++)
-			tgt[i] = tgt[i-1] ^ vals[i];
-	}break;
-	default:
-		CHK(99, fail, L"Unknown storage device");
-	}
-	
-	*z = arr;
-	
-fail:
-	if (err)
-		release_array(arr);
-	
-	return err;
-}
-
-DECL_FUNC(xor_scan_vec, xor_scan_vec_func, error_dya_syntax)
-
-int
-xor_scan_array_func(struct cell_array **z, struct cell_array *r, 
-    struct cell_func *self)
-{
-	struct cell_array *arr;
-	int err;
-	
-	arr = NULL;
-	
-	switch (r->storage) {
-	case STG_DEVICE:{
-		af_array vals, one;
-		dim_t sp[3] = {r->shape[2], r->shape[1], r->shape[0]};
-						
-		CHKFN(mk_array(&arr, r->type, STG_DEVICE, 1), fail);
-		
-		arr->shape[0] = array_count(r);
-		
-		vals = r->values;
-		CHKAF(af_moddims(&arr->values, vals, 3, sp), fail);
-		
-		vals = arr->values;
-		CHKAF(af_accum(&arr->values, vals, 1), fail);
-		CHKAF(af_release_array(vals), fail);
-		
-		vals = arr->values;
-		CHKAF(af_flat(&arr->values, vals), fail);
-		CHKAF(af_release_array(vals), fail);
-		
-		vals = arr->values;
-		CHKAF(af_constant_ulong(&one, 1, 1, arr->shape), fail);
-		CHKAF(af_bitand(&arr->values, one, vals, 0), device_fail);
-		CHKAF(af_release_array(vals), device_fail);
-		CHKAF(af_release_array(one), fail);
-
-		vals = arr->values;
-		CHKAF(af_cast(&arr->values, vals, b8), fail);
-		CHKAF(af_release_array(vals), fail);
-		
-		break;
-
-	device_fail:
-		af_release_array(one);
-		goto fail;
-	}break;
-	case STG_HOST:{
-		size_t lc, c, rc, cr;
-		int8_t *vals, *tgt;
-		
-		lc = r->shape[0];
-		c = r->shape[1];
-		rc = r->shape[2];
-		cr = c * rc;
-		
-		CHKFN(mk_array(&arr, ARR_BOOL, STG_HOST, 1), fail);
-
-		arr->shape[0] = array_count(r);
-
-		CHKFN(alloc_array(arr), fail);
-
-		vals = r->values;
-		tgt = arr->values;
-
-		for (size_t i = 0; i < lc; i++)
-			for (size_t j = 0; j < rc; j++) {
-				size_t ij = i*cr + j;
-				tgt[ij] = vals[ij];
-
-				for (size_t k = 1; k < c; k++) {
-					size_t x_1, x;
-
-					x_1 = ij + (k-1)*rc;
-					x = x_1 + rc;
-
-					tgt[x] = tgt[x_1] ^ vals[x];
-				}
-			}
-	}break;
-	default:
-		CHK(99, fail, L"Unknown storage device");
-	}
-	
-	*z = arr;
-	
-fail:
-	if (err)
-		release_array(arr);
-	
-	return err;
-}
-
-DECL_FUNC(xor_scan_array, xor_scan_array_func, error_dya_syntax)
 
 int
 dot_prod_func(struct cell_array **z, struct cell_array *l, struct cell_array *r,

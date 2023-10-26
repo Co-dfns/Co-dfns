@@ -25,6 +25,7 @@ both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
+bitand←'bitand_vec_ibeam'⌶
 any←'any_ibeam'⌶
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 ambiv←{
@@ -318,7 +319,7 @@ logor←{
 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵
 	(is_bool ⍺)∧is_integer ⍵:⍺+(~⍺)×|⍵
 	(is_bool ⍵)∧is_integer ⍺:⍵+(~⍵)×|⍺
-	⍺ both_integer ⍵:(|⍺){~∨⌿m←⍵≠0:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
+	⍺ both_integer ⍵:(|⍺){∧⌿,m←⍵=0:⍺ ⋄ ((⍺×m)+⍵×n)∇(⍵×m)+(⍵|⍺)×n←~m}|⍵
 	(|⍺){~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
 }
 lor←{⎕SIGNAL 2}ambiv (logor numeric scalar)
@@ -644,7 +645,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 		ir∧op eq ⌈ ⍬:{ib:'any_true_vec'⌶ ⍵ ⋄ 'max_vec'⌶ ⍵}⍵
 		ib∧op eq ∧ ⍬:'all_true_vec'⌶ ⍵
 		ib∧op eq ∨ ⍬:'any_true_vec'⌶ ⍵
-		ib∧op eq ≠ ⍬:'xor_vec'⌶ ⍵
+		ib∧op eq ≠ ⍬:⍬⍴1 bitand 'count_vec'⌶ ⍵
 		gen_red ⍵
 	}⍵
 	lc←×⌿ls←axis↑s ⋄ rc←×⌿rs←(axis+1)↓s ⋄ zs←ls,rs
@@ -654,7 +655,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	ir∧⍺⍺ eq ⌈ ⍬:zs⍴{ib:'any_true_array'⌶ ⍵ ⋄ 'max_array'⌶ ⍵}lc c rc⍴⍵
 	ib∧⍺⍺ eq ∧ ⍬:zs⍴'all_true_array'⌶ lc c rc⍴⍵
 	ib∧⍺⍺ eq ∨ ⍬:zs⍴'any_true_array'⌶ lc c rc⍴⍵
-	ib∧⍺⍺ eq ≠ ⍬:zs⍴'xor_array'⌶ lc c rc⍴⍵
+	ib∧⍺⍺ eq ≠ ⍬:zs⍴1 bitand 'count_array'⌶ lc c rc⍴⍵
 	gen_red ⍵
 }
 nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
@@ -722,7 +723,7 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
 		ir∧fn eq ⌈ ⍬:'max_scan_vec'⌶ ⍵
 		ib∧fn eq ∧ ⍬:'min_scan_vec'⌶ ⍵
 		ib∧fn eq ∨ ⍬:'max_scan_vec'⌶ ⍵
-		ib∧fn eq ≠ ⍬:'xor_scan_vec'⌶ ⍵
+		ib∧fn eq ≠ ⍬:1 bitand 'plus_scan_vec'⌶ ⍵
 		vec_gen ⍵
 	}⍵
 	c←(⍴⍵)[axis] ⋄ ls←×⌿axis↑⍴⍵ ⋄ rs←×⌿(axis+1)↓⍴⍵ ⋄ x←ls c rs⍴⍵
@@ -736,7 +737,7 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
 	ir∧⍺⍺ eq ⌈ ⍬:(⍴⍵)⍴'max_scan_array'⌶ x
 	ib∧⍺⍺ eq ∧ ⍬:(⍴⍵)⍴'min_scan_array'⌶ x
 	ib∧⍺⍺ eq ∨ ⍬:(⍴⍵)⍴'max_scan_array'⌶ x
-	ib∧⍺⍺ eq ≠ ⍬:(⍴⍵)⍴'xor_scan_array'⌶ x
+	ib∧⍺⍺ eq ≠ ⍬:(⍴⍵)⍴1 bitand 'plus_scan_array'⌶ x
 	arr_gen ⍵
 }
 scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
@@ -776,6 +777,7 @@ dot←{
 		(1≥lr)∧1≥rr:s⍴x dot_prod y
 		s⍴x matmul y
 	}⍵
+	(⍺ both_bool ⍵)∧(f eq ≠ ⍬)∧g eq ∧ ⍬:2|⍺+.×⍵
 	l1:s⍴⍺⍺⌿(⊂⊃⍺)⍵⍵¨⍵ ⋄ r1:s⍴⍺⍺/⍺ ⍵⍵¨⊂⊃⍵
 	c←≢y ⋄ ex←0≡≢x ⋄ ey←0≡1⌷⍴y
 	ex∧ey:s⍴f⌿(c⍴x)g¨c⍴y ⋄ ex:s⍴f⌿(c⍴x)g¨y[;0] ⋄ ey:s⍴f⌿x[0;]g¨c⍴y
