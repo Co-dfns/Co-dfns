@@ -237,7 +237,10 @@ absolute←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11
 	'abs_vec_ibeam'⌶ ⍵
 }
-residue←{⍵-⍺×⌊⍵÷⍺+0=⍺}
+residue←{
+	2≡⍺:(⍴⍵)⍴1 bitand ⍵
+	⍵-⍺×⌊⍵÷⍺+0=⍺
+}
 res←absolute numeric ambiv residue
 
 ⍝ ⌊: Floor | Minimum
