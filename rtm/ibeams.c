@@ -5050,6 +5050,9 @@ matmul_func(struct cell_array **z, struct cell_array *l, struct cell_array *r,
 		
 		CHKAF(af_matmul(&arr->values, y, x, AF_MAT_NONE, AF_MAT_NONE), 
 		    fail_device);
+		
+		vals = arr->values;
+		CHKAF(af_flat(&arr->values, vals), fail_device);
 		    
 	fail_device:
 		af_release_array(x);

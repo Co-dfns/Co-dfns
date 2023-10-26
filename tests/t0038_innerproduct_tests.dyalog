@@ -49,6 +49,8 @@
 ∆innerproduct∆30_TEST←'innerproduct∆R1' MK∆T2 (⍉?64⍴0)      (?64 64⍴0)
 ∆innerproduct∆31_TEST←'innerproduct∆R1' MK∆T2 (⍉?64 64⍴0)   (?64⍴0)
 ∆innerproduct∆32_TEST←'innerproduct∆R1' MK∆T2 (⍉?16 16 16⍴0)(?16 16 16⍴0)
+∆innerproduct∆33_TEST←'innerproduct∆R7' MK∆T2 (?16 16⍴2) (?16 16⍴2)
+∆innerproduct∆34_TEST←'innerproduct∆R7' MK∆T2 (?48 48⍴2) (?48 48⍴2)
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
