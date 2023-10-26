@@ -250,7 +250,11 @@ default:																\
 int										\
 fn##_device(af_array *z, af_array l, af_array r)				\
 {										\
-	return fn##_af(z, l, r);						\
+	int err;								\
+										\
+	TRCAF(fn##_af(z, l, r));						\
+										\
+	return err;								\
 }										\
 										\
 int										\
