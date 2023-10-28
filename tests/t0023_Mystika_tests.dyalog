@@ -15,7 +15,7 @@
  c←2
  m←3↑256+2*16
  ra←8 8
- t←4?4
+ t←3?3
 
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0023←tn #.codfns.Fix ⎕SRC dy}
@@ -41,7 +41,7 @@
  ∆19_TEST←{#.UT.expect←dy.aew ad ⋄ cd.aew ad}
  ∆20_TEST←{#.UT.expect←ra dy.rho m ⋄ ra cd.rho m}
  ∆21_TEST←{#.UT.expect←dy.fft ae ⋄ cd.fft ae}
- ⍝ ∆22_TEST←{#.UT.expect←t dy.trn2 ae ⋄ t cd.trn2 ae}
+ ∆22_TEST←{#.UT.expect←t dy.trn2 af ⋄ t cd.trn2 af}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
