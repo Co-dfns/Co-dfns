@@ -39,9 +39,10 @@ scalar←{op←⍺⍺
 		hl←(≢⍴⍺)>≢⍴⍵ ⋄ l←⍺{hl:⍵ ⋄ ⍺}⍵ ⋄ h←⍺{hl:⍺ ⋄ ⍵}⍵ ⋄ s←⍴h
 		1<≢⍴axis:⎕SIGNAL 4 ⋄ (≢⍴l)≢≢axis:⎕SIGNAL 4 ⋄ axis←,axis
 		(⍴l)≢s[axis]:⎕SIGNAL 5
-		zs←(≢s)⍴1 ⋄ zs[axis]←⍴l
-		l←⊃{s[⍺]≡zs[⍺]:⍵ ⋄ s[⍺]⌿[⍺]⍵}⌿(⍳≢s),⊂zs⍴l
-		hl:h op scalar l ⋄ l op scalar h
+		m←(≢s)⍴1 ⋄ m[axis]←0 ⋄ mi←⍸m
+		t←⍳≢s ⋄ t[mi]←⍳≢mi ⋄ t[axis]←(≢mi)+⍳≢axis
+		h←t⍉h ⋄ l←(⍴h)⍴l ⋄ t←⍋t
+		hl:t⍉h op scalar l ⋄ t⍉l op scalar h
 	}⍵
 	⍺ chk_scl ⍵:
 	s←⍺ max_shp ⍵
@@ -477,10 +478,9 @@ gdd←{
 ⍝ ⊤: Encode
 enc←{
 	~is_numeric ⍺:⎕SIGNAL 11 ⋄ ~is_numeric ⍵:⎕SIGNAL 11
-	d←⊖×⍀⊖⍺
-	z←((⍴d),⍴⍵)⍴y-x×⌊y÷x+x=0 ⊣ x←(,d)[⌊(⍳c)÷rc] ⊣ y←c⍴⍵ ⊣ c←(≢,d)×rc←≢,⍵
-	d←(⍴d)⍴1↓d⍪1
-	(d≠0)×[⍳≢⍴d]⌊z÷[⍳≢⍴d]d+d=0
+	d←⍪⍺ ⋄ z←((⍴d),≢,⍵)⍴0⍴⍵ ⋄ sd←(⍳≢d),⊂,⍵
+	_←sd{⍵+1⊣d[;⍵]{((v≠0)×⌊⍵÷v+v=0)⊣z[⍺;⍵⍵;]←⍵|⍨v←⍺⍺[⍺]}⍵⌿⍺⍺}⍣(1⌷⍴d)⊢0
+	((⍴⍺),⍴⍵)⍴z
 }
 
 ⍝ ⊥: Decode
