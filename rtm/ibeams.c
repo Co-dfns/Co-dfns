@@ -1224,10 +1224,10 @@ index_func(struct cell_array **z,
 	dev4_fail:
 		for (size_t i = 0; i < ic; i++)
 			if (idx[i]->type != ARR_SPAN)
-				TRCAF(af_release_array(ix[ic - (i + 1)].idx.arr));
+				af_release_array(ix[ic - (i + 1)].idx.arr);
 		
-		TRCAF(af_release_array(t));
-		TRCAF(af_release_indexers(ix));
+		af_release_array(t);
+		af_release_indexers(ix);
 		
 		if (err)
 			goto fail;
