@@ -1193,12 +1193,18 @@ index_func(struct cell_array **z,
 	
 	CHKFN(merge_indices(&ic, &bc, &idx, &sp, &cnt, &ci, &f, r, l, 32), fail);
 	
-	if (ic <= 4 && arr->storage == STG_DEVICE) {
+	if ((ic < 4 || ic <= 4 && lc == r->rank) && arr->storage == STG_DEVICE) {
 		af_index_t *ix;
 		af_array t;
 		dim_t asp[4];
 		
 		CHKAF(af_create_indexers(&ix), fail);
+		
+		if (lc < r->rank) {
+			sp[ic] = ccount;
+			idx[ic] = cdf_span_array;
+			ic++;
+		}
 		
 		for (size_t i = 0; i < ic; i++) {
 			size_t j;
