@@ -4,8 +4,8 @@
  tn←'t0026' ⋄ cn←'c0026'
  cd←⎕NS⍬ ⋄ dy←#.⍎tn
 
- EXEC←{0::⊃⎕DM ⋄ ⍺ ⍺⍺ ⍵}
- TEST←{X Y←⍵⍵ ⋄ #.UT.expect←X dy.(⍎⍺⍺) Y ⋄ X cd.(⍎⍺⍺) Y}
+ EXEC←{0::⎕EM ⎕EN ⋄ ⍺ ⍺⍺ ⍵}
+ TEST←{X Y←⍵⍵ ⋄ #.UT.expect←X dy.(⍎⍺⍺) EXEC Y ⋄ X cd.(⍎⍺⍺) EXEC Y}
 
  ∆0000_TEST←{#.UT.expect←'Successful compile'
   _←#.⎕EX cn ⋄ 'Successful compile'⊣cd∘←#.c0026←tn #.codfns.Fix ⎕SRC dy}
@@ -86,9 +86,9 @@
  ∆0065_TEST←'rav0'TEST(2.5    )(2 3⍴⍳6)
  ∆0066_TEST←'rav0'TEST(0.5 0.5)(⍳5)
  ∆0067_TEST←'rav0'TEST(1 2⍴⍳2 )(2 3⍴⍳5)
- ∆0068_TEST←{A←⍬ ⋄ X←1 2 3 4⍴⍳24 ⋄ #.UT.expect←'NONCE ERROR' ⋄ A cd.rav0 EXEC X}
- ∆0069_TEST←{A←1 0 1⍴0 ⋄ X←⍳5 ⋄ #.UT.expect←'RANK ERROR' ⋄ A cd.rav0 EXEC X}
- ∆0070_TEST←{A←1 1 1⍴0 ⋄ X←⍳5 ⋄ #.UT.expect←'RANK ERROR' ⋄ A cd.rav0 EXEC X}
+ ∆0068_TEST←'rav0'TEST(⍬      )(1 2 3 4⍴⍳24)
+ ∆0069_TEST←'rav0'TEST(1 0 1⍴0)(⍳5)
+ ∆0070_TEST←'rav0'TEST(1 1 1⍴0)(⍳5)
  ∆0071_TEST←'rav0'TEST(¯1 0   )(⍳5)
 
  ∆0072_TEST←'rav0'TEST(0      )(⍳5          )

@@ -118,12 +118,17 @@ ravel←{
 	noax←0 ⋄ rr←≢⍴⍵ ⋄ axis⍠←noax←1
 	noax:'ravel_ibeam'⌶ ⍵
 	1≡≢,axis:{
+		axis≤¯1:⎕SIGNAL 11
+		(≢⍴⍵)≤axis:⎕SIGNAL 4
 		is_integer squeeze axis:⍵
-		((pr↑s),1,(pr←⌈axis)↓s←⍴⍵)⍴⍵
+		is_numeric axis:((pr↑s),1,(pr←⌈axis)↓s←⍴⍵)⍴⍵
+		⎕SIGNAL 11
 	}⍵
 	0≡≢,axis:((⍴⍵),1)⍴⍵
 	~is_integer squeeze axis:⎕SIGNAL 11
 	1≢≢⍴axis:⎕SIGNAL 4
+	any axis≤¯1:⎕SIGNAL 11
+	any (≢⍴⍵)≤axis:⎕SIGNAL 4
 	axis≢(⍳c←≢axis)+b←⊃axis:⎕SIGNAL 11
 	((b↑s),(×⌿c↑b↓s),(b+c)↓s←⍴⍵)⍴⍵
 }
@@ -422,7 +427,7 @@ drp←split ambiv drop
 ⍝ ⊖: Rerverse First | Rotate First
 reverse_axis←{
 	0≡≢⍴⍵:⍵
-	axis⍠←0 ⋄ 1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 4
+	axis⍠←0 ⋄ 1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5
 	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4
 	1≡≢,⍵:⍵ ⋄ s←(⍴⍵)[axis] ⋄ (⊂s-1+⍳s)⌷[axis]⍵
 }
