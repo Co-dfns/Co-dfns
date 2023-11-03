@@ -644,7 +644,7 @@ identity←{
 	⍺⍺ eq ⊖ ⍬:0
 	⎕SIGNAL 16
 }
-reduce←{axis←⍵⍵ ⋄ op←⍺⍺ ⋄ ⍺(⍵⍵ chk_axis)⍵:
+reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	0≡≢⍴⍵:0∇,⍵ ⋄ s←⍴⍵
 	0≡≢,⍵:((axis↑s),(axis+1)↓s)⍴⍺⍺ identity ⍬
 	1≡c←s[axis]:((axis↑s),(axis+1)↓s)⍴⍵
@@ -673,7 +673,7 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺ ⋄ ⍺(⍵⍵ chk_axis)⍵:
 	ib∧⍺⍺ eq ≠ ⍬:zs⍴1 bitand 'count_array'⌶ lc c rc⍴⍵
 	gen_red ⍵
 }
-nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴⍵)[axis]
+nwreduce←{op←⍺⍺¨ ⋄ axis←⍵⍵ ⋄ rc←1+(⍴⍵)[axis]
 	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc:⎕SIGNAL 5
 	0=⍺:(s⊣s[axis]+←1⊣s←⍴⍵)⍴⍺⍺ identity ⍬ ⋄ 1=|⍺:⍵
 	rc-←|⍺ ⋄ stp←{z⊢←((⊂⍺+⍳rc)⌷[axis]⍵)op z}
@@ -681,12 +681,12 @@ nwreduce←{op←⍺⍺¨ ⋄ 1≢≢,axis←⍵⍵:⎕SIGNAL 5 ⋄ rc←1+(⍴�
 	z⊣(⌽⍳⍺-1)stp¨⊂⍵⊣z←(⍺-1)↓[axis]⍵
 }
 red_check←{⍺←0 ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5 ⋄ 0}
-rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⊣hax←0
-	1≡⍺ 1:hax(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
+rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⊣hax←0 ⋄ hax(axis chk_axis)⍵:
+	1≡⍺ 1:(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
 }
 
 ⍝ /: Reduce | N-wise Reduce
-red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0
+red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
 	1≡⍺ 1:hax(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
 }
 
@@ -754,7 +754,7 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺ ⋄ hax(axis chk_axis)⍵:
 scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
 	
 ⍝ \: Scan
-scn←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ axis ⍺⍺ scan axis⊢⍵}
+scn←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
 
 ⍝ ⍀⍀: Expand First
 xpf←{
