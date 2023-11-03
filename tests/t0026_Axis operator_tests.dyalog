@@ -791,7 +791,7 @@
  ∆0779_TEST←'cat2'TEST( 0.5 )(2 4⍴⍳8)
  ∆0780_TEST←'cat1'TEST( 0.5 )(,5    )
  ∆0781_TEST←'cat1'TEST( ¯.5 )(,5    )
- ∆0782_TEST←{A←.5 ⋄ X←5 ⋄ #.UT.expect←'NONCE ERROR' ⋄ A cd.cat4 EXEC X}
+ ∆0782_TEST←'cat4'TEST(  .5 )(5     )
 
  ∆0783_TEST←'cat0'TEST(¯.5)(5        )
  ∆0784_TEST←'cat1'TEST(¯.5)(5        )
@@ -821,7 +821,7 @@
  ∆0807_TEST←'ctf2'TEST( 0.5 )(2 4⍴⍳8)
  ∆0808_TEST←'ctf1'TEST( 0.5 )(,5    )
  ∆0809_TEST←'ctf1'TEST( ¯.5 )(,5    )
- ∆0810_TEST←{A←.5 ⋄ X←5 ⋄ #.UT.expect←'NONCE ERROR' ⋄ A cd.ctf4 EXEC X}
+ ∆0810_TEST←'ctf4'TEST(  .5 )(5     )
 
  ∆0811_TEST←'ctf0'TEST(¯.5)(5        )
  ∆0812_TEST←'ctf1'TEST(¯.5)(5        )
@@ -1064,7 +1064,7 @@
  ∆1043_TEST←'sqd3'TEST( 1 0  2)(1 0 5)
  ∆1044_TEST←'sqd3'TEST( 1 0  2)(1 1 3)
  ∆1045_TEST←'sqd3'TEST( 1 0  2)(2 1 3)
- ∆1046_TEST←'sqd0'TEST(   0 .5)(    ⍬)
+ ∆1046_TEST←{#.UT.expect←'DOMAIN ERROR' ⋄ 0 .5 cd.sqd0 EXEC ⍬}
  ∆1047_TEST←'sqd0'TEST(  .5  0)(    ⍬)
  ∆1048_TEST←'sqd0'TEST(1 1⍴.5 )(    ⍬)
  ∆1049_TEST←'sqd1'TEST(0 0    )(  0 0)

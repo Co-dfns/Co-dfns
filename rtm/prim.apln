@@ -51,6 +51,11 @@ scalar←{op←⍺⍺
 	⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵
 	s⍴squeeze ⍺ ∇ veach ⍵
 }
+chk_axis←{axis←⍺⍺ ⋄ ~⍺:0
+	1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢axis:⎕SIGNAL 5
+	~has_nat_vals axis:⎕SIGNAL 11 ⋄ (≢⍴⍵)≤axis:⎕SIGNAL 4
+	0
+}
 
 ⍝ ⍴: Shape / Reshape
 chk_valid_shape←{
@@ -85,15 +90,21 @@ mst←'mst_ibeam'⌶⌶
 ⍝ ⌷: Materialize | Squad indexing
 materialize←{⍵}
 sqd_idx←{
-	1<≢⍴⍺:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢⍺:⎕SIGNAL 5
-	0≡≢⍺:⍵
 	hax←1 ⋄ axis⍠←hax←0
 	hax:⍺{
+		1<≢⍴⍺:⎕SIGNAL 4
 		1<≢⍴axis:⎕SIGNAL 4
+		~is_integer squeeze axis:⎕SIGNAL 11
+		any axis<0:⎕SIGNAL 11
+		any (≢⍴⍵)≤axis:⎕SIGNAL 4
 		(≢axis)≢≢⍺:⎕SIGNAL 5
-		(≢⍴⍵)idx_rng_check axis:
+		0≡≢⍺:⍵
+		m←(≢⍴⍵)⍴0 ⋄ _←{m[⍵]:⎕SIGNAL 11 ⋄ m[⍵]←1}¨axis
+		(≢⍴⍵)<≢⍺:⎕SIGNAL 5
 		i←(≢⍴⍵)⍴'span_array'⌶⌶⌶⌶ ⋄ i[axis]←⍺ ⋄ i⌷⍵
 	}⍵
+	1<≢⍴⍺:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢⍺:⎕SIGNAL 5
+	0≡≢⍺:⍵
 	1≡≢⍺:⍺{
 		is_span⊢i←⊃⍺:⍵
 		(≢⍵)idx_rng_check i:
@@ -133,11 +144,11 @@ ravel←{
 	((b↑s),(×⌿c↑b↓s),(b+c)↓s←⍴⍵)⍴⍵
 }
 catenate←{
-	lr←≢⍴⍺ ⋄ rr←≢⍴⍵ ⋄ rk←lr⌈rr ⋄ axis⍠←¯1+rk
-	(0≡lr)∧(0≡rr):(,⍺),,⍵
-	ar←≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5 
-	~is_numeric axis:⎕SIGNAL 11 ⋄ axis≤¯1:⎕SIGNAL 11
-	axis≥rk:⎕SIGNAL 4 ⋄ (1<|lr-rr)∧noscl←(lr≢0)∧rr≢0:⎕SIGNAL 4
+	lr←≢⍴⍺ ⋄ rr←≢⍴⍵ ⋄ rk←lr⌈rr ⋄ hax←1 ⋄ axis⍠←¯1+rk⊣hax←0
+	1<ar←≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢axis:⎕SIGNAL 5 ⋄ ~is_numeric axis:⎕SIGNAL 11
+	hax∧axis≤¯1:⎕SIGNAL 11 ⋄ hax∧rk≤axis:⎕SIGNAL 4
+	0≡rk:(,⍺),,⍵
+	(1<|lr-rr)∧noscl←(lr≢0)∧rr≢0:⎕SIGNAL 4
 	axis≠fx←⌈axis:⍺{
 		(lr≢0)∧(rr≢0)∧lr≠rr:⎕SIGNAL 4
 		(,[axis]⍣(lr≢0)⊢⍺),[fx],[axis]⍣(rr≢0)⊢⍵
@@ -155,7 +166,11 @@ cat←ravel ambiv catenate
 
 ⍝ Table / Catenate First
 table←{((≢⍵),×⌿1↓⍴⍵)⍴⍵}
-catenatefirst←{⍺,[0]⍵}
+catenatefirst←{
+	hax←1 ⋄ axis⍠←hax←0 ⋄ hax:⍺,[axis]⍵
+	(~hax)∧(0≡≢⍴⍺)∧0≡≢⍴⍵:(,⍺),,⍵
+	⍺,[0]⍵
+}
 ctf←table ambiv catenatefirst
 
 ⍝ ≡: Depth / Same
@@ -395,9 +410,8 @@ mix←{
 take←{
 	1<≢⍴⍺:⎕SIGNAL 4
 	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0
-	1<≢⍴axis:⎕SIGNAL 11
-	(≢,⍺)≢≢,axis:⎕SIGNAL 5
-	~is_integer axis:⎕SIGNAL 11
+	1<≢⍴axis:⎕SIGNAL 4 ⋄ ~has_nat_vals axis:⎕SIGNAL 11
+	(≢,⍺)≢≢,axis:⎕SIGNAL 5 ⋄ ~is_integer squeeze ⍺:⎕SIGNAL 11
 	x←⍺ ⋄ y←⍺{(~hax)∧0≡≢⍴⍵:((≢⍺)⍴1)⍴⍵ ⋄ ⍵}⍵ 
 	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
 	~any(|x)>(⍴y)[axis]:((⍳¨|x)+(x<0)×(⍴y)[axis]-|x)⌷[axis]y
@@ -414,10 +428,9 @@ split←{
 }
 drop←{
 	1<≢⍴⍺:⎕SIGNAL 4
-	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0
-	1<≢⍴axis:⎕SIGNAL 11
-	(≢,⍺)≢≢,axis:⎕SIGNAL 5
-	~is_integer axis:⎕SIGNAL 11
+	hax←1 ⋄ axis⍠←⍳≢⍺⊣hax←0 
+	1<≢⍴axis:⎕SIGNAL 4 ⋄ ~has_nat_vals axis:⎕SIGNAL 11
+	(≢,⍺)≢≢,axis:⎕SIGNAL 5 ⋄ ~is_integer squeeze ⍺:⎕SIGNAL 11
 	x←⍺ ⋄ y←⍺{(~hax)∧0≡≢⍴⍵:((≢⍺)⍴1)⍴⍵ ⋄ ⍵}⍵ 
 	any(axis<0)∨axis≥≢⍴y:⎕SIGNAL 4
 	((0⌈x)+⍳¨0⌈(⍴y)[axis]-|x)⌷[axis]y
@@ -425,29 +438,23 @@ drop←{
 drp←split ambiv drop
 
 ⍝ ⊖: Rerverse First | Rotate First
-reverse_axis←{
-	0≡≢⍴⍵:⍵
-	axis⍠←0 ⋄ 1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5
-	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4
-	1≡≢,⍵:⍵ ⋄ s←(⍴⍵)[axis] ⋄ (⊂s-1+⍳s)⌷[axis]⍵
-}
+reverse_axis←{0≡≢⍴⍵:⍵ ⋄ axis⍠←0 ⋄ 1≡≢,⍵:⍵ ⋄ s←(⍴⍵)[axis] ⋄ (⊂s-1+⍳s)⌷[axis]⍵}
 rotate_axis←{
-	0≡≢⍴⍵:⍵
-	axis⍠←0 ⋄ 1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 4
-	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4
-	(1≢≢,⍺)∧(⍴⍺)≢(axis≠⍳≢⍴⍵)⌿⍴⍵:⎕SIGNAL 4
+	0≡≢⍴⍵:⍵ ⋄ axis⍠←0 ⋄ lns←1≢≢,⍺
+	lns∧(≢⍴⍺)≢(≢⍴⍵)-1:⎕SIGNAL 4
+	lns∧(⍴⍺)≢(axis≠⍳≢⍴⍵)⌿⍴⍵:⎕SIGNAL 5
 	ac←(⍴⍵)[axis] ⋄ lc←×⌿(axis+1)↓⍴⍵ ⋄ ix←⍳≢,⍵
 	1≡≢,⍵:⍵ ⋄ 1≡≢,⍺:(⊂ac|⍺+⍳ac)⌷[axis]⍵
 	si←(lc|ix)+lc×(ac|(⌊ix÷lc)+,ac⌿[axis],[axis-.5]⍺)+ac×⌊ix÷lc×ac	
 	(⍴⍵)⍴(,⍵)[si]
 }
-reverse_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ reverse_axis[axis] ⍵}
-rotate_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺ rotate_axis[axis] ⍵}
+reverse_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ reverse_axis[axis] ⍵}
+rotate_first←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ ⍺ rotate_axis[axis] ⍵}
 rtf←reverse_first ambiv rotate_first
 
 ⍝ ⌽: Reverse Last | Rotate Last
-reverse_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ reverse_axis[axis] ⍵}
-rotate_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺ rotate_axis[axis] ⍵}
+reverse_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ reverse_axis[axis] ⍵}
+rotate_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ ⍺ rotate_axis[axis] ⍵}
 rot←reverse_last ambiv rotate_last
 
 ⍝ ⍉: Transpose
@@ -637,8 +644,8 @@ identity←{
 	⍺⍺ eq ⊖ ⍬:0
 	⎕SIGNAL 16
 }
-reduce←{axis←⍵⍵ ⋄ op←⍺⍺
-	⍺∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:0∇,⍵ ⋄ s←⍴⍵
+reduce←{axis←⍵⍵ ⋄ op←⍺⍺ ⋄ ⍺(⍵⍵ chk_axis)⍵:
+	0≡≢⍴⍵:0∇,⍵ ⋄ s←⍴⍵
 	0≡≢,⍵:((axis↑s),(axis+1)↓s)⍴⍺⍺ identity ⍬
 	1≡c←s[axis]:((axis↑s),(axis+1)↓s)⍴⍵
 	⍺⍺ eq ⊢ ⍬:(c-1)⌷[axis]⍵
@@ -698,12 +705,10 @@ iou←where ambiv interval_idx
 
 ⍝ ⌿⌿: Replicate First
 rpf←{
-	hax←1 ⋄ axis⍠←hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4
+	hax←1 ⋄ axis⍠←hax←0 ⋄ hax(axis chk_axis)⍵:
 	noscl←{0≡≢⍴⍵:,⍵ ⋄ ⍵} ⋄ x←noscl ⍺ ⋄ y←noscl ⍵
-	1<≢⍴axis:⎕SIGNAL 5 ⋄ 1≢≢,axis:⎕SIGNAL 5
-	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴y:⎕SIGNAL 4 ⋄ 1<≢⍴⍺:⎕SIGNAL 4
-	(0≢≢x)∧~is_integer x:⎕SIGNAL 11
-	(ya≢≢x)∧(1≢≢x)⍱1≢ya←(⍴y)[axis]:⎕SIGNAL 5
+	1<≢⍴⍺:⎕SIGNAL 4 ⋄ (0≢≢x)∧~is_integer x:⎕SIGNAL 11
+	(ya≢≢x)∧(1≢≢x)∧1≢ya←(⍴y)[axis]:⎕SIGNAL 5
 	ac←ya{(⍺⌈⍵)×⍺ ⍵∧.≠0}≢x ⋄ x←ac⍴x
 	s←⍴z←(⊂(ya≠1)×i←⍸|x)⌷[axis]y ⋄ ls←×⌿axis↑s ⋄ rs←×⌿(axis+1)↓s
 	z←ls(s[axis])rs⍴z ⋄ z[;⍸x[i]<0;]←⊃0⍴,y ⋄ s⍴z
@@ -711,16 +716,14 @@ rpf←{
 
 ⍝ //: Replicate
 rep←{
-	hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax∧0≡≢⍴⍵:⎕SIGNAL 4
+	hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
 	noscl←{0≡≢⍴⍵:,⍵ ⋄ ⍵} ⋄ x←noscl ⍺ ⋄ y←x{1≡≢,⍵:(⍴⍺)⍴⍵ ⋄ ⍵}noscl ⍵
 	x⌿[axis]y	
 }
 
 ⍝ ⍀: Scan First
-scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺
-	hax∧0≡≢⍴⍵:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:⍵
-	1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5 ⋄ (axis<0)∨axis≥≢⍴⍵:⎕SIGNAL 4
-	1≡≢,⍵:⍵ ⋄ (0≡≢,⍵)∨1≡(⍴⍵)[axis]:⍵
+scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺ ⋄ hax(axis chk_axis)⍵:
+	0≡≢⍴⍵:⍵ ⋄ 1≡≢,⍵:⍵ ⋄ (0≡≢,⍵)∨1≡(⍴⍵)[axis]:⍵
 	1≥≢⍴⍵:{
 		vec_gen←{squeeze (⍴⍵)⍴{fn⌿x[⍳⍵]}¨1+⍳≢x←⍵}
 		is_char ⍵:vec_gen ⍵ ⋄ ~is_simple ⍵:vec_gen ⍵
@@ -755,10 +758,8 @@ scn←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ axis ⍺⍺ scan ax
 
 ⍝ ⍀⍀: Expand First
 xpf←{
-	0≡≢⍴⍵:⍺∇,⍵ ⋄ axis⍠←0
-	1<≢⍴axis:⎕SIGNAL 5 ⋄ 1≢≢,axis:⎕SIGNAL 5 ⋄ ~is_integer axis:⎕SIGNAL 11
-	axis<0:⎕SIGNAL 11 ⋄ axis≥≢⍴⍵:⎕SIGNAL 4 ⋄ 1<≢⍴⍺:⎕SIGNAL 4
-	as←(⍴⍵)[axis]
+	hax←1 ⋄ axis⍠←hax←0 ⋄ hax(axis chk_axis)⍵:
+	0≡≢⍴⍵:⍺∇,⍵ ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ as←(⍴⍵)[axis]
 	0≡≢⍺:⍺{0≡as:⍵ ⋄ 1≡as:s⍴⍵⊣s[axis]←0⊣s←⍴⍵ ⋄ ⎕SIGNAL 5}⍵
 	1≡as:(⊂(1⌈|⍺)⌿⍺>0)⌷[axis]¯2↑[axis]⍵
 	as≢z[¯1+≢z←+⍀m←⍺>0]:⎕SIGNAL 5
@@ -766,7 +767,10 @@ xpf←{
 }
 
 ⍝ \\: Expand Last
-xpd←{0≡≢⍴⍵:⍺∇,⍵ ⋄ axis⍠←0⌈¯1+≢⍴⍵ ⋄ ⍺⍀[axis]⍵}
+xpd←{
+	hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
+	0≡≢⍴⍵:⍺∇,⍵ ⋄ ⍺⍀[axis]⍵
+}
 
 ⍝ ∘.: Outer Product
 oup←{i←⍳c←(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨c⍴⍵}

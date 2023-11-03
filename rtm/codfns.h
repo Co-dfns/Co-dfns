@@ -262,6 +262,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func_box *cdf_same;
 	struct cell_moper_box *cdf_veach;
 	struct cell_moper_box *cdf_scalar;
+	struct cell_moper_box *cdf_chk_axis;
 	struct cell_func_box *cdf_chk_valid_shape;
 	struct cell_func *cdf_reshape;
 	struct cell_func *cdf_rho;
