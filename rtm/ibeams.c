@@ -1404,6 +1404,14 @@ set_func(struct cell_array **z,
 		retain_cell(tgt);
 	}
 	
+	if (tgt->storage == STG_HOST && *tgt->vrefc > 1) {
+		void *vals = tgt->values;
+		
+		CHKFN(release_array_data(tgt), fail);
+		CHKFN(alloc_array(tgt), fail);
+		CHKFN(fill_array(tgt, vals), fail);
+	}
+
 	mtype = array_max_type(tgt->type, r->type);
 	
 	if (r->type != mtype)
@@ -1540,14 +1548,6 @@ set_func(struct cell_array **z,
 	if (tgt->storage != STG_HOST)
 		CHK(99, fail, L"Unknown storage type.");
 	
-	if (*tgt->vrefc > 1) {
-		void *vals = tgt->values;
-		
-		CHKFN(release_array_data(tgt), fail);
-		CHKFN(alloc_array(tgt), fail);
-		CHKFN(fill_array(tgt, vals), fail);
-	}
-
 	zv = tgt->values;
 	rv = r->values;
 	csz = array_element_size(tgt);
