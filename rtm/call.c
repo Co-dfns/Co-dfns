@@ -115,7 +115,7 @@ apply_monadic(void ***stkhd)
 	fn = (*stkhd)[-1];
 	y = (*stkhd)[-2];
 	
-	CHKFN((fn->fptr_mon)(&dst, y, fn), fail);
+	CHKIG((fn->fptr_mon)(&dst, y, fn), fail);
 	
 	release_func(fn);
 	release_array(y);
@@ -138,7 +138,7 @@ apply_dyadic(void ***stkhd)
 	fn = (*stkhd)[-2];
 	y = (*stkhd)[-3];
 	
-	CHKFN((fn->fptr_dya)(&dst, x, y, fn), fail);
+	CHKIG((fn->fptr_dya)(&dst, x, y, fn), fail);
 	
 	release_array(x);
 	release_func(fn);
@@ -163,7 +163,7 @@ apply_assign(void ***stkhd, struct cell_array_box *bx)
 	y = (*stkhd)[-3];
 	orig = bx->value;
 	
-	CHKFN((fn->fptr_dya)(&bx->value, x, y, fn), fail);
+	CHKIG((fn->fptr_dya)(&bx->value, x, y, fn), fail);
 	
 	release_array(orig);
 	release_array(x);
@@ -182,7 +182,7 @@ apply_mop(struct cell_func **z, struct cell_moper *op,
 	struct cell_func *dst;
 	int err;
 	
-	CHKFN(mk_func(&dst, fm, fd, 2), fail);
+	CHKIG(mk_func(&dst, fm, fd, 2), fail);
 	
 	dst->fv[0] = retain_cell(op);
 	dst->fv[1] = retain_cell(x);
@@ -205,7 +205,7 @@ apply_mop_##pfx(void ***stkhd)								\
 	x = (*stkhd)[-1];								\
 	op = (*stkhd)[-2];								\
 											\
-	CHKFN(apply_mop(&dst, op, op->fptr_##pfx##m, op->fptr_##pfx##d, x), fail);	\
+	CHKIG(apply_mop(&dst, op, op->fptr_##pfx##m, op->fptr_##pfx##d, x), fail);	\
 											\
 	release_cell(x);								\
 	release_moper(op);								\
@@ -227,7 +227,7 @@ apply_dop(struct cell_func **z, struct cell_doper *op,
 	struct cell_func *dst;
 	int err;
 	
-	CHKFN(mk_func(&dst, fm, fd, 3), fail);
+	CHKIG(mk_func(&dst, fm, fd, 3), fail);
 
 	dst->fv[0] = retain_cell(op);
 	dst->fv[1] = retain_cell(l);
@@ -252,7 +252,7 @@ apply_dop_##rt##lt(void ***stkhd)								\
 	op = (*stkhd)[-2];									\
 	y = (*stkhd)[-3];									\
 												\
-	CHKFN(apply_dop(&dst, op, op->fptr_##rt##lt##m, op->fptr_##rt##lt##d, x, y), fail);	\
+	CHKIG(apply_dop(&dst, op, op->fptr_##rt##lt##m, op->fptr_##rt##lt##d, x, y), fail);	\
 												\
 	release_cell(x);									\
 	release_doper(op);									\
@@ -280,7 +280,7 @@ apply_variant(void ***stkhd)
 	aa = (*stkhd)[-1];
 	axis = (*stkhd)[-2];
 	
-	CHKFN(mk_func(&dst, aa->fptr_mon, aa->fptr_dya, 2), fail);
+	CHKIG(mk_func(&dst, aa->fptr_mon, aa->fptr_dya, 2), fail);
 	
 	dst->fv = aa->fv;
 	dst->opts = &dst->fv_[1];

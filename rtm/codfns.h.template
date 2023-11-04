@@ -135,6 +135,7 @@ if (0 < (err = (expr))) {					\
 }								\
 
 #define CHKFN(expr, fail) CHK(expr, fail, L"" #expr)
+#define CHKIG(expr, fail) if (0 < (err = (expr))) goto fail;
 
 #define CHKAF(expr, fail)					\
 if (0 < (err = (expr))) {					\
