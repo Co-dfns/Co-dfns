@@ -64,11 +64,7 @@ chk_valid_shape←{
 	{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
 	0
 }
-prototype←{
-	is_numeric squeeze ⍵:(⍴⍵)⍴0
-	is_char ⍵:(⍴⍵)⍴' '
-	∇¨⍵
-}
+prototype←{is_numeric squeeze ⍵:(⍴⍵)⍴0 ⋄ is_char ⍵:(⍴⍵)⍴' ' ⋄ ∇¨⍵}
 reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
 rho←('shape_ibeam'⌶) ambiv reshape
 
@@ -411,6 +407,7 @@ neq←firstocc ambiv (noteq scalar)
 ⍝ ↑: Mix | Take
 mix←{
 	1≥≡squeeze ⍵:⍵
+	0≡≢,⍵:((⍴⍵),⍴v)⍴v←⊃⍵
 	k←⌈⌿≢∘⍴¨v←,⍵ ⋄ v←{s←k⍴1 ⋄ s[⍳≢⍴⍵]←⍴⍵ ⋄ s⍴⍵}¨v ⋄ s←⊃⌈⌿⍴¨v
 	((⍴⍵),s)⍴z⊣v{⍵+1⊣'sqdset_ibeam'⌶ z(⍵,⍳¨⍴x)(x←⍵⊃⍺)}⍣(≢,⍵)⊢0⊣z←((≢,⍵),s)⍴0⍴⊃⍵
 }
