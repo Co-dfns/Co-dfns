@@ -584,15 +584,37 @@ reshape_func(struct cell_array **z,
 	
 	if (!array_count(t)) {
 		t->storage = STG_HOST;
-		t->type = ARR_BOOL;
 		
-		CHKFN(alloc_array(t), fail);
+		if (is_numeric_array(r)) {
+			t->type = ARR_BOOL;
+			
+			CHKFN(alloc_array(t), fail);
+		}
 		
 		if (is_char_array(r)) {
-			uint8_t *val = t->values;
+			uint8_t *val;
 			
 			t->type = ARR_CHAR8;
+			
+			CHKFN(alloc_array(t), fail);
+			
+			val = t->values;
 			*val = ' ';
+		}
+		
+		if (r->type == ARR_NESTED) {
+			struct cell_array **tgt, **src;
+			struct cell_func *proto;
+			
+			t->type = ARR_NESTED;
+			
+			CHKFN(alloc_array(t), fail);
+			
+			proto = cdf_prim.cdf_prototype;
+			tgt = t->values;
+			src = r->values;
+			
+			CHKFN(proto->fptr_mon(tgt, *src, proto), fail);
 		}
 		
 		goto done;

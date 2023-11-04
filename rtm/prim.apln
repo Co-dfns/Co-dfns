@@ -64,6 +64,11 @@ chk_valid_shape←{
 	{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
 	0
 }
+prototype←{
+	is_numeric squeeze ⍵:(⍴⍵)⍴0
+	is_char ⍵:(⍴⍵)⍴' '
+	∇¨⍵
+}
 reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
 rho←('shape_ibeam'⌶) ambiv reshape
 

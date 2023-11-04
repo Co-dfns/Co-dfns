@@ -277,7 +277,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 	
 	pkt = getarray(array_dwa_type(arr->type), arr->rank, arr->shape, lp);
 	
-	if (!array_count(arr)) {
+	if (!array_count(arr) && arr->type != ARR_NESTED) {
 		/* We don't do anything on the empty array case */
 	} else if (arr->storage == STG_DEVICE) {
 		af_dtype typ;
@@ -297,8 +297,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 		size_t count = array_values_count(arr);
 
 		for (size_t i = 0; i < count; i++)
-			CHK(array2dwa(&pkts[i], ptrs[i], NULL), done,
-			    L"array2dwa(&pkts[i], ptrs[i], NULL)");
+			CHKFN(array2dwa(&pkts[i], ptrs[i], NULL), done);
 	} else {
 		CHK(99, done, L"Unexpected array type");
 	}

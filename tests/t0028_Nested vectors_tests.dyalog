@@ -64,7 +64,7 @@
  ∆0053_TEST←'nst'TEST1 (2 3⍴⍳4)
  ∆0054_TEST←'nst'TEST1 (⊂2 3⍴⍳4)
  ∆0055_TEST←'nst'TEST1 (3⍴⊂⍳4)
- ∆0056_TEST←'reshape'TEST2 0 (⊂⍬)
+ ∆0056_TEST←'reshape'TEST2 0 (⊂2 5⍴⊂'abc')
  ∆0057_TEST←'id'TEST1 (0⍴⊂⍬)
  ∆0058_TEST←'mix'TEST1 (0⍴⊂⍬)
  ∆0059_TEST←'get'TEST2 (⍳3) (⍳5)
