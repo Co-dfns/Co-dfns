@@ -146,7 +146,7 @@ fail:
 	return err;
 }
 
-inline int
+int
 find_minmax(double *min, double *max, 
     unsigned char *is_real, unsigned char *is_int, struct cell_array *arr)
 {
