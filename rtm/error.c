@@ -4,7 +4,20 @@
 
 #include "internal.h"
 
-DECLSPEC struct cell_array *debug_info = NULL;
+struct cell_array *debug_info = NULL;
+
+DECLSPEC struct cell_array *
+get_debug_info(void)
+{
+	return debug_info;
+}
+
+DECLSPEC void
+release_debug_info(void)
+{
+	release_array(debug_info);
+	debug_info = NULL;
+}
 
 DECLSPEC void
 debug_trace(int err, const char *file, int line, const char *func, 

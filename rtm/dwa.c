@@ -313,7 +313,7 @@ DECLSPEC int
 call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr, const wchar_t *name)
 {
 	struct localp *zp, *lp, *rp;
-	struct cell_array *z, *l, *r;
+	struct cell_array *z, *l, *r, *dbg;
 	int err, err2;
 	
 	zp = zptr;
@@ -347,14 +347,15 @@ cleanup:
 	
 	err2 = 0;
 	
-	if (debug_info)
-		err2 = array2dwa(NULL, debug_info, zp);
+	dbg = get_debug_info();
 	
-	if (debug_info == NULL || err2)
+	if (dbg)
+		err2 = array2dwa(NULL, dbg, zp);
+	
+	if (dbg == NULL || err2)
 		zp->pocket = scalnum(0);
 	
-	release_array(debug_info);
-	debug_info = NULL;
+	release_debug_info();
 	
 	return err;
 }

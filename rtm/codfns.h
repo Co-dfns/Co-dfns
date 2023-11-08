@@ -3,11 +3,23 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define EXPORT __declspec(dllexport)
-#ifdef EXPORTING
+#ifdef _WIN32
+ #define EXPORT __declspec(dllexport)
+ #ifdef EXPORTING
 	#define DECLSPEC EXPORT
-#else
+ #else
 	#define DECLSPEC __declspec(dllimport)
+ #endif
+#elif defined(__GNUC__)
+ #define EXPORT __attribute__ ((visibility ("default")))
+ #ifdef EXPORTING
+	#define DECLSPEC EXPORT
+ #else
+	#define DECLSPEC __attribute__ ((visibility ("default")))
+ #endif
+#else
+ #define EXPORT
+ #define DECLSPEC
 #endif
 
 enum cell_type {
@@ -43,6 +55,9 @@ enum array_type {
 enum array_storage {
 	STG_HOST, STG_DEVICE, STG_MAX
 };
+
+struct cell_func;
+struct cell_array;
 
 typedef int (*func_mon)(struct cell_array **,
     struct cell_array *, struct cell_func *);
@@ -125,7 +140,8 @@ DECL_BOX_STRUCT(moper);
 DECL_BOX_STRUCT(doper);
 
 /* Error Handling */
-DECLSPEC struct cell_array *debug_info;
+DECLSPEC struct cell_array *get_debug_info(void);
+DECLSPEC void release_debug_info(void);
 DECLSPEC void debug_trace(int, const char *, int, const char *, const wchar_t *);
 
 #define CHK(expr, fail, msg)					\
