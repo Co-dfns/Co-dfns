@@ -1,4 +1,4 @@
-MK∆RTM path;put;tie;src;vsbat;vsc;wsd;codfns_h;CR;LF;data;header
+MK∆RTM path;put;tie;src;vsbat;vsc;gcc;clang;codfns_h;CR;LF;data;header
 
 tie←{
         0::⎕SIGNAL ⎕EN
@@ -25,28 +25,55 @@ codfns_h,←'#endif',CR LF
 codfns_h,←CR LF
 (path,'\rtm\codfns.h')put codfns_h
 
-vsbat←#.codfns.VS∆PATH
-vsbat,←'\VC\Auxiliary\Build\vcvarsall.bat'
-wsd←path,'\'
+→codfns.opsys WINDOWS LINUX MAC
 
-vsc←'%comspec% /C ""',vsbat,'" amd64'
-vsc,←'  && cd "',wsd,'\rtm"'
-vsc,←'  && cl /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
-vsc,←'    /DEBUG /Od /Zc:inline /Zi /FS'
-vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
-vsc,←'    /WX /MD /EHsc /nologo'
-vsc,←'    /I"%AF_PATH%\include"'
-vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"EXPORTING"'
-vsc,←'    "*.c" /link /DLL /OPT:REF'
-vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
-vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
-vsc,←'    /DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
-vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
-vsc,←'    /TLBID:1 /OUT:"codfns.dll""'
+WINDOWS:
+	vsbat←#.codfns.VS∆PATH
+	vsbat,←'\VC\Auxiliary\Build\vcvarsall.bat'
+	
+	vsc←'%comspec% /C ""',vsbat,'" amd64'
+	vsc,←'  && cd "',path,'\rtm"'
+	vsc,←'  && cl /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
+	vsc,←'    /DEBUG /Od /Zc:inline /Zi /FS'
+	vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
+	vsc,←'    /WX /MD /EHsc /nologo'
+	vsc,←'    /I"%AF_PATH%\include"'
+	vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"EXPORTING"'
+	vsc,←'    "*.c" /link /DLL /OPT:REF'
+	vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
+	vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
+	vsc,←'    /DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
+	vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
+	vsc,←'    /TLBID:1 /OUT:"codfns.dll""'
+	
+	⎕CMD ⎕←vsc
+	⎕CMD ⎕←'copy "',path,'\rtm\codfns.h" "',path,'\tests\"'
+	⎕CMD ⎕←'copy "',path,'\rtm\codfns.exp" "',path,'\tests\"'
+	⎕CMD ⎕←'copy "',path,'\rtm\codfns.lib" "',path,'\tests\"'
+	⎕CMD ⎕←'copy "',path,'\rtm\codfns.pdb" "',path,'\tests\"'
+	⎕CMD ⎕←'copy "',path,'\rtm\codfns.dll" "',path,'\tests\"'
+→0
 
-⎕CMD ⎕←vsc
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.exp" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.lib" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.pdb" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.dll" "',wsd,'tests\"'
+LINUX:
+	gcc ←'cd ''',path,'/rtm'''
+	gcc,←'  && gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
+	gcc,←'    -Wno-parentheses -Wno-misleading-indentation'
+	gcc,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
+	gcc,←'    -o libcodfns.so *.c -laf',AF∆LIB
+	
+	⎕CMD ⎕←gcc
+	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
+	⎕CMD ⎕←'cp "',path,'/rtm/libcodfns.so" "',path,'/tests/"'
+→0
+
+MAC:
+	clang ←'cd ''',path,'/rtm'''
+	clang,←'  && clang -std=c99 -Ofast -g -Wall -fPIC -shared'
+	clang,←'    -Wno-parentheses -Wno-misleading-indentation'
+	clang,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
+	clang,←'    -o libcodfns.dylib *.c -laf',AF∆LIB
+	
+	⎕CMD ⎕←clang
+	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
+	⎕CMD ⎕←'cp "',path,'/rtm/libcodfns.dylib" "',path,'/tests/"'
+→0

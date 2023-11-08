@@ -1,27 +1,52 @@
 CC←{
 	data header←⍵
-	vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
-	soext←{opsys'.dll' '.so' '.dylib'}
-	libdir←opsys ''' ' '/lib64'' ' '/lib'' '
-	ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.c'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
-	cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,libdir}
-	cco←'-std=c99 -Ofast -g -Wall -fPIC -shared '
-	cco,←'-Wno-parentheses -Wno-misleading-indentation '
-	ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
-	gcc←'gcc'ucc'so'
-	clang←'clang'ucc'dylib'
-	vsco←{z←'/W3 /wd4102 /wd4275 /DEBUG /Od /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
-		z,←'/WX /MD /EHsc /nologo '
-		z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
-	vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
-		z,←'/LIBPATH:"%AF_PATH%\lib" /OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
-		z,'/DYNAMICBASE "af', AF∆LIB, '.lib" "codfns.lib" '}
-	vsc0←{~⎕NEXISTS vsbat:'VISUAL C?'⎕SIGNAL 99 ⋄ '""',vsbat,'" amd64'}
-	vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),' "',⍵,'.c" '}
-	vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
-	vsc←{⎕CMD ('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
+	ostype←opsys 'win' 'linux' 'mac'
 	_←header ⎕NPUT (⍺,'.h')1
-	_←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣data ⎕NPUT (⍺,'.c')1
-	⎕←⍪⊃⎕NGET(⍺,'.log')1
-	⎕NEXISTS f←⍺,soext⍬:f ⋄ 'COMPILE ERROR' ⎕SIGNAL 22
+	_←data ⎕NPUT (⍺,'.c')1
+	'win'≡ostype:⍺{
+		vsbat←#.codfns.VS∆PATH
+		vsbat,←'\VC\Auxiliary\Build\vcvarsall.bat'
+		~⎕NEXISTS vsbat:'MISSING VISUAL C'⎕SIGNAL 99
+		
+		vsc←'%comspec% /C ""',vsbat,'" amd64'
+		vsc,←'	&& cd "',(⊃⎕CMD'echo %CD%'),'"'
+		vsc,←'  && cl /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
+		vsc,←'    /DEBUG /Od /Zc:inline /Zi /FS'
+		vsc,←'    /Fo".\\" /Fd"',⍺,'.pdb"'
+		vsc,←'    /WX /MD /EHsc /nologo'
+		vsc,←'    /I"%AF_PATH%\include"'
+		vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" '
+		vsc,←'    "',⍺,'.c" /link /DLL /OPT:REF'
+		vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
+		vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
+		vsc,←'    /DYNAMICBASE "af',AF∆LIB,'.lib" "codfns.lib"'
+		vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
+		vsc,←'    /TLBID:1 /OUT:"',⍺,'.dll" > "',⍺,'.log""'
+		
+		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc
+		⎕NEXISTS f←⍺,'.dll':f
+		'COMPILE ERROR' ⎕SIGNAL 22
+	}⍵
+	'linux'≡ostype:⍺{
+		gcc ←'gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
+		gcc,←' -Wno-parentheses -Wno-misleading-indentation'
+		gcc,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
+		gcc,←' -o ''',⍺,'.so'' ''',⍺,'.c'' -laf',AF∆LIB
+		gcc,←' > ''',⍺,'.log'' 2>&1'
+		
+		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc
+		⎕NEXISTS f←⍺,'.so':f
+		'COMPILE ERROR' ⎕SIGNAL 22		
+	}⍵
+	'mac'≡ostype:⍺{
+		clang ←'clang -std=c99 -Ofast -g -Wall -fPIC -shared'
+		clang,←' -Wno-parentheses -Wno-misleading-indentation'
+		clang,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
+		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c'' -laf',AF∆LIB
+		clang,←' > ''',⍺,'.log'' 2>&1'
+		
+		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
+		⎕NEXISTS f←⍺,'.so':f
+		'COMPILE ERROR' ⎕SIGNAL 22		
+	}⍵
 }
