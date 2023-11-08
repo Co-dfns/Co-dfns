@@ -337,17 +337,35 @@ not←notscl ambiv without
 ⍝ ∧: And
 logand←{
 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵
-	⍺×⍵÷z+0=z←⍺∨⍵
+	⍺×⍵÷⍺∨⍵
 }
 and←{⎕SIGNAL 2}ambiv (logand numeric scalar)
 
 ⍝ ∨: Or
+rational←{
+	r←⍵ ⋄ s←⍴⍵ ⋄ c20←s⍴0 ⋄ c21←s⍴1 ⋄ c10←s⍴1 ⋄ c11←s⍴0
+	{
+		an←⌊⍵ ⋄ c0←c20+an×c10 ⋄ c1←c21+an×c11
+		~∨⌿,m←r≠c0÷c1:c0 c1
+		i←⍸m ⋄ c20[i]←c10[i] ⋄ c21[i]←c11[i] ⋄ c10[i]←c0[i] ⋄ c11[i]←c1[i]
+		x←⍵ ⋄ x[i]←÷x[i]-an[i]
+		∇ x
+	}⍵
+	⍝ 'rational_ibeam'⌶ ⍵
+}
+gcd←{⍺≡⍺+⍺:⍵ ⋄ b ∇ (b←⍺⌊⍵)|⍺⌈⍵}
+lcm←{⍺×⍵÷⍺ gcd ⍵}
 logor←{
 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵
 	(is_bool ⍺)∧is_integer ⍵:⍺+(~⍺)×|⍵
 	(is_bool ⍵)∧is_integer ⍺:⍵+(~⍵)×|⍺
-	⍺ both_integer ⍵:(|⍺){∧⌿,m←⍵=0:⍺ ⋄ ((⍺×m)+⍵×n)∇(⍵×m)+(⍵|⍺)×n←~m}|⍵
-	(|⍺){~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
+	⍺ both_integer ⍵:(|⍺)gcd(|⍵)
+	y←rational |⍺ ⋄ a←0⊃y ⋄ b←1⊃y
+	x←rational |⍵ ⋄ c←0⊃x ⋄ d←1⊃x
+        (a gcd c)÷b lcm d
+	⊂(a b c d)Y X ((Y←a gcd c)÷X←b lcm d)
+	⍝ ⍺ both_integer ⍵:(|⍺){∧⌿,m←⍵=0:⍺ ⋄ ((⍺×m)+⍵×n)∇(⍵×m)+(⍵|⍺)×n←~m}|⍵
+	⍝ (|⍺){~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
 }
 lor←{⎕SIGNAL 2}ambiv (logor numeric scalar)
 

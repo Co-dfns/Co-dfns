@@ -323,6 +323,9 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *cdf_not;
 	struct cell_func *cdf_logand;
 	struct cell_func *cdf_and;
+	struct cell_func_box *cdf_rational;
+	struct cell_func_box *cdf_gcd;
+	struct cell_func_box *cdf_lcm;
 	struct cell_func *cdf_logor;
 	struct cell_func *cdf_lor;
 	struct cell_func *cdf_nan;
