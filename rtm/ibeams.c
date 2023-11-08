@@ -1346,6 +1346,8 @@ set_func(struct cell_array **z,
 	arr = NULL;
 	sp = NULL;
 	f = 0;
+	zc = 0;
+	lc = 0;
 	
 	idx_rnk_check = cdf_prim.cdf_idx_rnk_check->value;
 	CHK((idx_rnk_check->fptr_dya)(&arr, tgt, l, idx_rnk_check), fail,
