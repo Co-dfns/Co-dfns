@@ -4942,3 +4942,107 @@ fail:
 }
 
 DECL_FUNC(sqdset_ibeam, sqdset_func, error_dya_syntax)
+
+void
+rational_val(double x, double *num, double *den)
+{
+	int bds, exv;
+	double d, n;
+	
+	bds = DBL_MANT_DIG;
+	
+	d = 1;
+	n = frexp(x, &exv) * exp2(bds);
+	exv -= bds;
+	
+	if (exv > 0) {
+		n *= exp2(exv);
+	} else if (exv < 0) {
+		d *= exp2(-exv);
+	}
+	
+	while (n && fmod(n, 2) == 0 && fmod(d, 2) == 0) {
+		n /= 2;
+		d /= 2;
+	}
+	
+	*num = n;
+	*den = d;
+}
+
+int
+rational_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *numr, *denm, *src, *res, **nd;
+	size_t count;
+	double *nm, *dn, *vs; // , exq;
+	int err;
+	
+	numr = NULL;
+	denm = NULL;
+	res = NULL;
+	
+	CHKFN(mk_array(&res, ARR_NESTED, STG_HOST, 1), fail);
+	CHKFN(mk_array(&numr, ARR_DBL, STG_HOST, r->rank), fail);
+	CHKFN(mk_array(&denm, ARR_DBL, STG_HOST, r->rank), fail);
+	CHKFN(array_shallow_copy(&src, r), fail);
+	CHKFN(array_migrate_storage(src, STG_HOST), fail);
+	
+	res->shape[0] = 2;
+	
+	for (unsigned int i = 0; i < r->rank; i++) {
+		numr->shape[i] = r->shape[i];
+		denm->shape[i] = r->shape[i];
+	}
+	
+	CHKFN(alloc_array(res), fail);
+	CHKFN(alloc_array(numr), fail);
+	CHKFN(alloc_array(denm), fail);
+	
+	count = array_values_count(src);
+	vs = src->values;
+	nm = numr->values;
+	dn = denm->values;
+	nd = res->values;
+	
+	for (size_t i = 0; i < count; i++) {
+		double real, a, an, c2a, c2b, c1a, c1b, ca, cb;
+		
+		real = *vs++;
+		a = real;
+		c2a = 0; c2b = 1;
+		c1a = 1; c1b = 0;
+		
+		while (1) {
+			an = floor(a);
+			ca = c2a + an * c1a;
+			cb = c2b + an * c1b;
+			
+			if (real == ca / cb)
+				break;
+			
+			a = 1 / (a - an);
+			c2a = c1a; c2b = c1b;
+			c1a = ca; c1b = cb;
+		}
+		
+		*nm++ = ca;
+		*dn++ = cb;
+	}
+	
+	nd[0] = numr;
+	nd[1] = denm;
+	
+	*z = res;
+	
+fail:
+	if (err) {
+		release_array(numr);
+		release_array(denm);
+		release_array(res);
+	}
+	
+	return err;
+}
+
+DECL_FUNC(rational_ibeam, rational_func, error_dya_syntax)
