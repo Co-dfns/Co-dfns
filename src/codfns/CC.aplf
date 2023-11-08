@@ -32,7 +32,7 @@ CC←{
 		gcc,←' -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
 		gcc,←' -Wno-incompatible-pointer-types -Wno-missing-braces'
 		gcc,←' -Wno-unused-but-set-variable'
-		gcc,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
+		gcc,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'' -L.'
 		gcc,←' -o ''',⍺,'.so'' ''',⍺,'.c'' -lcodfns -laf',AF∆LIB
 		gcc,←' > ''',⍺,'.log'' 2>&1'
 		

@@ -64,7 +64,7 @@ LINUX:
 	gcc,←'    -Wno-unused-but-set-variable'
 	gcc,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
 	gcc,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib64'''
-	gcc,←'    -o libcodfns.so *.c -laf',codfns.AF∆LIB
+	gcc,←'    -o libcodfns.so *.c -lm -laf',codfns.AF∆LIB
 	
 	⎕CMD ⎕←gcc
 	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
@@ -79,7 +79,7 @@ MAC:
 	clang,←'    -Wno-unused-but-set-variable'
 	clang,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
 	clang,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib'''
-	clang,←'    -o libcodfns.dylib *.c -laf',AF∆LIB
+	clang,←'    -o libcodfns.dylib *.c -lm -laf',AF∆LIB
 	
 	⎕CMD ⎕←clang
 	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
