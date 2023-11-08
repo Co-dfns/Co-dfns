@@ -44,6 +44,9 @@ enum array_storage {
 	STG_HOST, STG_DEVICE, STG_MAX
 };
 
+struct cell_func;
+struct cell_array;
+
 typedef int (*func_mon)(struct cell_array **,
     struct cell_array *, struct cell_func *);
 
