@@ -22,15 +22,15 @@ The Co-dfns compiler, and any objects that are compiled by Co-dfns, are dual-lic
 
 **How is Co-dfns released?**
 
-The Co-dfns will soon be transitioning to a semantic versioning model with a rapid deployment cycle. We will not shy away from breaking backwards compatibility, and will freely increment the major version number when appropriate. Please take this into consideration and make sure to plan accordingly. 
+Co-dfns uses a "release when it's ready" semantic versioning model. We release freely and without any set cycle or cadence, and we attempt to release whenever we can improve the system, rather than holding on to releases. We will not shy away from breaking backwards compatibility, and we will freely increment the major version number when appropriate. Please take this into consideration and make sure to plan accordingly. 
 
 **Will Co-dfns be self-hosting?**
 
-Yes. It is not currently, but it will be.
+Yes. It is not currently, but it will be. We are getting very close to this goal now.
 
 **Will Co-dfns work standalone without Dyalog APL?**
 
-No, not completely. It is not my current intent to separate the Co-dfns compiler from the Dyalog APL interpreter. The intent has always been to keep the compiler small, and leverage the existing features of the interpreter where they make sense to avoid duplicate work. 
+Co-dfns is not intended to replace working within the Dyalog APL development environment. However, Co-dfns is designed to allow for use cases where the interpreter may not be a good fit. The intent has always been to keep the compiler small, and leverage the existing features of the interpreter where they make sense to avoid duplicate work. 
 
 That being said, Co-dfns compiled modules have always been designed to easily integrate into a variety of application frameworks. It is possible to, for instance, embed Co-dfns compiled modules into C and Java programs, provided that you comply with the license terms. Compiled Co-dfns modules are capable of operating independent of the Dyalog APL interpreter, and thus, you do not need the interpreter in order to run a Co-dfns compiled module if you don't want to do so. 
 

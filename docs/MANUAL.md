@@ -4,10 +4,10 @@
 
 	target←<module name> codfns.Fix <namespace script>
 	]codfns.compile <namespace> <target> [-af={cpu,opencl,cuda}]
-	(depth type kind name src_start src_end) exports symbols source←codfns.TK 'line1' 'line2' ...
-        (depth type kind name src_start src_end) exports symbols source←codfns.TK 'source code ...'
-	(depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
-        (depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
+	(depth type kind name src_start src_end) symbols source←codfns.TK 'line1' 'line2' ...
+        (depth type kind name src_start src_end) symbols source←codfns.TK 'source code ...'
+	(parent depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
+        (parent depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
 
 ## Description
 
@@ -52,6 +52,7 @@ A parsed AST is an inverted table of nodes containing the following columns. The
 
 Name  | Description
 ----- | -----------
+parent| The parent node of the node in the AST. Root nodes are their own parents.
 depth | The depth of the node in the AST. Root nodes are depth 0.
 type  | The type of the node, as an index into the `N∆` constant.
 kind  | The sub-type or kind of the node, as an integer.
@@ -73,22 +74,6 @@ type | The type of the binding as an integer (¯1: Unbound, 0: Ambiguous, 1: Arr
 
 When the parser fails to successfully parse a given input source, the parser updates ⎕DMX and signals an appropriate error code. Additionally, it updates the `EN` and `DM` variables in the `codfns` namespace to reflect the error. See the official Dyalog APL documentation on `⎕EN` and `⎕DM` for information on the format of these variables.
 
-## Runtime API
-
-Every module that is compiled also exposes additional functionality in the Co-dfns runtime through the Runtime API. This functionality is available inside the `module.∆` namespace, where `module` is the name of the namespace linked to the compiled module. It also initializes the `module.⍙` to contain all of the exported functions declared using the raw C API, allowing for the use of the caching functions without declaring your functions manually.
-
-Expression               | Description
------------------------- | -----------
-Init                     | A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
-[Wn] (Fn Display Tst) Z  | Enters a display loop for a newly created graphical window named `Wn`. The operator `Display` has the same basic interface as the `⍣` operator, except that the left-argument to `Fn` will always be the window id. The event loop will continue until either the window is closed, the iteration count has been reached, or the termination condition is true.
-Wh Image Z               | Takes a window handle and an image value that is either a rank 2 or rank 3 array and displays the image to the given window handle. A rank 3 array must have its last axis of size 3, and should be a set of color values in the RGB scale. Returns `Z`.
-Wh Plot Z                | Takes a window handle and a plot array. It displays the plot in the given window referenced by the window handle. The plot can be either a 2-D or 3-D plot, indicated by the size of the second axis in the given matrix. A plot array must be a matrix whose column count is either 2 or 3. Each row corresponds to a specific point to plot, given by X, Y, and optionally, Z values. Returns `Z`.
-Wh Histogram Frq Min Max | Takes a window handle and a triple containing a vector of frequencies, the minimum value, and the maximum value referenced by the frequency vector. It displays the histogram of the values to the given Window Handle.
-MKA array                | Returns a pointer to a Co-dfns allocated array that is equivalent to `array`.
-EXA ptr                  | Returns a Dyalog APL array that is equivalent to the Co-dfns allocated array pointed to by `ptr`.
-FREA ptr                 | Frees the Co-dfns allocated array pointed to by `ptr`.
-Sync                     | Waits until all computation on the GPU is complete before returning
-
 ## Files
 
 The compiler produces a set of files for each compiled module. The specific files that are generated may differ based on platform, but the following files will always exist:
@@ -97,11 +82,11 @@ File                  | Description
 --------------------- | -----------
 module.log            | A log of the backend messages and compiler output, indicating any issues encountered during the compilation of the backend code.
 module.{so,dll,dylib} | The shared object of the module.
-module.cpp            | The generated intermediate source code for the module.
+module.c              | The generated intermediate source code for the module.
 
 ## Examples
 
-Compile an empty namespace (useful for accessing the graphics functionality):
+Compile an empty namespace:
 
 	ns←'gfx'codfns.Fix ':Namespace' ':EndNamespace'
 
@@ -133,62 +118,31 @@ exceed 1 - 10 MB. While recursion and guards are supported, it is best if
 you restrict their use to outer-most functions, since they are significantly
 less efficient on the GPU than APL primitives.
 
-### Primitive Support
-
-The following table indicates what features are supported for what primitives:
-
-Primitive | Integer | Real | Complex | Numeric Rank > 4 | Nested Vectors | Nested Rank > 4 | Nested Depth > 2 | Character
---------- | ------- | ---- | ------- | ---------------- | -------------- | --------------- | ---------------- | ---------
-Conjugate |         |      |         |                  |                |                 |                  |
-Add       |         |      |         |                  |                |                 |                  |
-
-### Syntax Support
-
-The following table indicates language/syntactic features that are supported for which parts of the Co-dfns system, as follows:
-
- * Parser support means that the syntax will be parsed and that you can use the Parser API to work with APL source containing these features
- * Compiler support means that the underlying compiler and code generator will be able to compile/generate the code into the backend representation
- * Runtime support means that the underlying Co-dfns runtime support has been implemented for this syntax and code can be executed natively that uses these syntaxes
-
-Syntax      | Parser | Compiler | Runtime
------------ | ------ | -------- | -------
-Namespaces  |        |          | 
-
 ### Known limitations
 
 The following limitations are known to exist:
 
 * User-command interface does not work with namespace global variables
-* User-defined operators must use function types for ⍺⍺ and ⍵⍵ only
 * User-defined operators are not exported
 * Trains are not currently supported
 * Binomial is not implemented correctly for some values
-* Only partial support for arrays of rank > 4
-* Only partial support for nested arrays, including some missing nested array primitives
-* Character types are not supported
 * Selective assignment is not supported yet
-* Mixed arrays are not supported
-* Lexically scoped trad-fns are not supported yet
+* Trad-fns are not supported yet
 * Error Guards are not supported yet
 * Namespaces with free references are not supported yet
 * Nested namespaces are not supported
 * Structured Colon Statements are not supported
 * Branch (→) is not supported
-* Arbitrary precision integers are not supported
-* Sparse arrays are not supported yet
 * Format (⍕) is not supported
-* I-Beam (⌶) is not supported
 * Spawn (&) is not supported
 * 128-bit floating point values are not supported
 * Variant (⍠) is not supported
-* Stencil (⌺) is not supported
+* Key (⌸) is not supported
 * Inverse (⍣¯1) is not supported
 * Execute (⍎) is not supported
-* The compiler does not support any Dyalog system functions or commands
+* Only ⎕NC, ⎕SIGNAL, and ⎕DR are supported Dyalog system functions
 * Objects/Classes are not supported in the system
-* Type promotion on overflow is not supported
-* Dynamically scoped trad-fns are not supported
-* `⎕IO ⎕ML ⎕CT` is fixed at `0 1 0`
+* `⎕IO ⎕ML ⎕CT` are fixed at `0 1 0`
 
 ## Authors
 

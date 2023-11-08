@@ -2,7 +2,7 @@
 
 ## Release Cycle, Versioning
 
-The Co-dfns compiler follows a rapid release cycle. That means there is only one currently supported release, which is the latest version. Compiler versions follow semantic versioning, but without the typical expectations that major versions are released less frequently.
+The Co-dfns compiler follows a "release when it's ready, don't hold back" philosophy with semantic versioning. There is only one currently supported release, which is the latest version. Compiler versions follow semantic versioning, but without the typical expectations that major versions are released less frequently.
 
 The `master` branch is expected to track the versioning closely, and so the compiler can also be thought of as operating on a running release cycle/deployment model. 
 
@@ -36,13 +36,38 @@ system here:
 
 http://arrayfire.org/docs/installing.htm
 
-Please make sure that the version of CUDA that you install is 
-the same as the version of CUDA used by the ArrayFire package you installed.
+## Loading the compiler
 
-## Installing and using the `codfns.dws` workspace
+To load the compiler, you can load the src directory into your workspace using
+link:
 
-The `codfns.dws` workspace includes a `codfns` namespace that encapsulates the compiler functionality. The workspace may be installed anywhere that is convenient, and the codfns namespace may be copied via the `)copy` system command as convenient. It is also reasonable to simply create a copy of the codfns workspace wherever convenient and use it as desired.
+	]link.import # src
+	
+This will make the `codfns` namespace available to you as well as setting up 
+the testing harness.
 
-## Installing the Co-dfns User Command
+## Building the runtime
 
-The compiler may also be used through the Dyalog user-command functionality. To install the Co-dfns compiler as an user command, copy the `codfns.dyalog` file into one of the user-command paths (see Dyalog documentation for more information on setting up the user-command system). After doing so, the Co-dfns compiler functionality can be examined through the `]?codfns` help command. 
+You need to build the runtime for the compiler if you wish to use it. 
+
+	MK∆RTM'.' ⍝ From the top-level of the Co-dfns repository
+
+This will build the runtime in `rtm/` and also copy the necessary distributables 
+to the `tests/` directory so that you can run the test suite.
+
+## Compiling a namespace
+
+You can compile a namespace script using the following:
+
+	'module_name'codfns.Fix <namespace script>
+
+Where `<namespace script>` is the same as the output of `⎕SRC` on a scripted 
+namespace (vector of character vectors).
+
+## Running the test suite
+
+You can run the test suite by changing into the `tests/` directory and running 
+the following command:
+
+	TEST'ALL'
+
