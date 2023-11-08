@@ -11,19 +11,19 @@ put←{
         1:r←s⊣⎕NUNTIE t
 }
 
-src←⊃⎕NGET path,'\rtm\prim.apln'
+src←⊃⎕NGET path,'/rtm/prim.apln'
 data header←codfns.{'prim'GC TT PS TK ⍵}src
 (path,'\rtm\prim.c')put data
 (path,'\rtm\prim.h')put header
 
-codfns_h←⊃⎕NGET path,'\rtm\codfns.h.template'
+codfns_h←⊃⎕NGET path,'/rtm/codfns.h.template'
 codfns_h,←CR LF←⎕UCS 13 10
 codfns_h,←'/* Runtime primitives */',CR LF
 codfns_h,←'#ifndef EXPORTING',CR LF
 codfns_h,←'EXPORT'⎕R'DECLSPEC'⊢header
 codfns_h,←'#endif',CR LF
 codfns_h,←CR LF
-(path,'\rtm\codfns.h')put codfns_h
+(path,'/rtm/codfns.h')put codfns_h
 
 →codfns.opsys WINDOWS LINUX MAC
 
