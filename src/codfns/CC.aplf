@@ -41,12 +41,14 @@ CC←{
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 	'mac'≡ostype:⍺{
-		clang ←'clang -std=c99 -Ofast -g -Wall -fPIC -shared'
+		clang ←'clang -arch x86_64 -std=c99 -Ofast -g -Wall -fPIC -shared'
 		clang,←' -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
 		clang,←' -Wno-incompatible-pointer-types -Wno-missing-braces'
 		clang,←' -Wno-unused-but-set-variable'
-		clang,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
-		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c'' -lcodfns -laf',AF∆LIB
+		clang,←' -isystem /opt/arrayfire/include'
+		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c''
+		clang,←' -Wl,-rpath,. ./libcodfns.dylib'
+		clang,←' -Wl,-rpath,/opt/arrayfire/lib /opt/arrayfire/lib/libaf',AF∆LIB,'.dylib'
 		clang,←' > ''',⍺,'.log'' 2>&1'
 		
 		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
