@@ -57,8 +57,8 @@ WINDOWS:
 LINUX:
 	gcc ←'cd ''',path,'/rtm'''
 	gcc,←'  && gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
-	gcc,←'    -Wno-parentheses -Wno-misleading-indentation -Wunused-variable'
-	gcc,←'    -Wincompatible-pointer-types'
+	gcc,←'    -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
+	gcc,←'    -Wno-incompatible-pointer-types'
 	gcc,←'    -DNOMINMAX -DAF_DEBUG -DEXPORTING'
 	gcc,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib64'''
 	gcc,←'    -o libcodfns.so *.c -laf',codfns.AF∆LIB
@@ -71,8 +71,8 @@ LINUX:
 MAC:
 	clang ←'cd ''',path,'/rtm'''
 	clang,←'  && clang -std=c99 -Ofast -g -Wall -fPIC -shared'
-	clang,←'    -Wno-parentheses -Wno-misleading-indentation -Wunused-variable'
-	clang,←'    -Wincompatible-pointer-types'
+	clang,←'    -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
+	clang,←'    -Wno-incompatible-pointer-types'
 	clang,←'    -DNOMINMAX -DAF_DEBUG -DEXPORTING'
 	clang,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib'''
 	clang,←'    -o libcodfns.dylib *.c -laf',AF∆LIB
