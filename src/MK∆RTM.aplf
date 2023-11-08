@@ -58,6 +58,7 @@ LINUX:
 	gcc ←'cd ''',path,'/rtm'''
 	gcc,←'  && gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
 	gcc,←'    -Wno-parentheses -Wno-misleading-indentation'
+	gcc,←'    -DNOMINMAX -DAF_DEBUG -DEXPORTING'
 	gcc,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib64'''
 	gcc,←'    -o libcodfns.so *.c -laf',codfns.AF∆LIB
 	
@@ -70,6 +71,7 @@ MAC:
 	clang ←'cd ''',path,'/rtm'''
 	clang,←'  && clang -std=c99 -Ofast -g -Wall -fPIC -shared'
 	clang,←'    -Wno-parentheses -Wno-misleading-indentation'
+	clang,←'    -DNOMINMAX -DAF_DEBUG -DEXPORTING'
 	clang,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib'''
 	clang,←'    -o libcodfns.dylib *.c -laf',AF∆LIB
 	
