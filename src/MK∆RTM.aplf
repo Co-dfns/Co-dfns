@@ -1,6 +1,4 @@
-MK∆RTM path;⎕IO;put;tie;src;vsbat;vsc;gcc;clang;codfns_h;CR;LF;data;header
-
-⎕IO←0
+MK∆RTM path;put;tie;src;vsbat;vsc;gcc;clang;codfns_h;CR;LF;data;header
 
 tie←{
         0::⎕SIGNAL ⎕EN
@@ -61,7 +59,7 @@ LINUX:
 	gcc,←'  && gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
 	gcc,←'    -Wno-parentheses -Wno-misleading-indentation'
 	gcc,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib64'''
-	gcc,←'    -o libcodfns.so *.c -laf',AF∆LIB
+	gcc,←'    -o libcodfns.so *.c -laf',codfns.AF∆LIB
 	
 	⎕CMD ⎕←gcc
 	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
