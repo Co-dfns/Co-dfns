@@ -1,4 +1,4 @@
-EXPORT struct cdf_prim_loc {
+struct cdf_prim_loc {
 	unsigned int __count;
 	wchar_t **__names;
 	struct cell_func *cdf_q_signal;
@@ -177,5 +177,5 @@ EXPORT struct cdf_prim_loc {
 	struct cell_doper *cdf_rnk;
 	struct cell_doper *cdf_at;
 	struct cell_moper *cdf_key;
-} cdf_prim;
+};
 

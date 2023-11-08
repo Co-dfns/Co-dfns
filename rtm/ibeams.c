@@ -7,6 +7,8 @@
 #include "internal.h"
 #include "prim.h"
 
+extern struct cdf_prim_loc cdf_prim;
+
 int
 error_mon_syntax(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)

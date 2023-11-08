@@ -19,8 +19,10 @@ data header←codfns.{'prim'GC TT PS TK ⍵}src
 codfns_h←⊃⎕NGET path,'/rtm/codfns.h.template'
 codfns_h,←CR LF←⎕UCS 13 10
 codfns_h,←'/* Runtime primitives */',CR LF
-codfns_h,←'#ifndef EXPORTING',CR LF
-codfns_h,←'EXPORT'⎕R'DECLSPEC'⊢header
+codfns_h,←'#ifndef BUILD_CODFNS',CR LF
+codfns_h,←header
+codfns_h,←CR LF
+codfns_h,←'DECLSPEC struct cdf_prim_loc cdf_prim;',CR LF
 codfns_h,←'#endif',CR LF
 codfns_h,←CR LF
 (path,'/rtm/codfns.h')put codfns_h
@@ -38,7 +40,7 @@ WINDOWS:
 	vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
 	vsc,←'    /WX /MD /EHsc /nologo'
 	vsc,←'    /I"%AF_PATH%\include"'
-	vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"EXPORTING"'
+	vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"BUILD_CODFNS"'
 	vsc,←'    "*.c" /link /DLL /OPT:REF'
 	vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
 	vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
@@ -60,7 +62,7 @@ LINUX:
 	gcc,←'    -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
 	gcc,←'    -Wno-incompatible-pointer-types -Wno-missing-braces'
 	gcc,←'    -Wno-unused-but-set-variable'
-	gcc,←'    -DNOMINMAX -DAF_DEBUG -DEXPORTING'
+	gcc,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
 	gcc,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib64'''
 	gcc,←'    -o libcodfns.so *.c -laf',codfns.AF∆LIB
 	
@@ -75,7 +77,7 @@ MAC:
 	clang,←'    -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
 	clang,←'    -Wno-incompatible-pointer-types -Wno-missing-braces'
 	clang,←'    -Wno-unused-but-set-variable'
-	clang,←'    -DNOMINMAX -DAF_DEBUG -DEXPORTING'
+	clang,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
 	clang,←'    -I''',codfns.AF∆PREFIX,'/include'' -L''',codfns.AF∆PREFIX,'/lib'''
 	clang,←'    -o libcodfns.dylib *.c -laf',AF∆LIB
 	

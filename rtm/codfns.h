@@ -5,17 +5,17 @@
 
 #ifdef _WIN32
  #define EXPORT __declspec(dllexport)
- #ifdef EXPORTING
+ #ifdef BUILD_CODFNS
 	#define DECLSPEC EXPORT
  #else
 	#define DECLSPEC __declspec(dllimport)
  #endif
 #elif defined(__GNUC__)
  #define EXPORT __attribute__ ((visibility ("default")))
- #ifdef EXPORTING
+ #ifdef BUILD_CODFNS
 	#define DECLSPEC EXPORT
  #else
-	#define DECLSPEC __attribute__ ((visibility ("default")))
+	#define DECLSPEC extern __attribute__ ((visibility ("default")))
  #endif
 #else
  #define EXPORT
@@ -248,8 +248,8 @@ DECLSPEC int guard_check(void ***);
 DECLSPEC int cdf_prim_init(void);
 
 /* Runtime primitives */
-#ifndef EXPORTING
-DECLSPEC struct cdf_prim_loc {
+#ifndef BUILD_CODFNS
+struct cdf_prim_loc {
 	unsigned int __count;
 	wchar_t **__names;
 	struct cell_func *cdf_q_signal;
@@ -428,7 +428,9 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_doper *cdf_rnk;
 	struct cell_doper *cdf_at;
 	struct cell_moper *cdf_key;
-} cdf_prim;
+};
 
+
+DECLSPEC struct cdf_prim_loc cdf_prim;
 #endif
 

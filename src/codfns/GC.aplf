@@ -89,7 +89,7 @@ GC←{
 	pref,←⊂'    return set_dwafns(p);'
 	pref,←⊂'}'
 	pref,←⊂''
-	
+
 	⍝ We declare all external variables in the prefix
 	pref,←decl_vars ⍸(t=V)∧lx=5
 	pref,←⊂''
@@ -369,6 +369,7 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	pref,←⊂''
 
 	⍝ F0: Initialization functions for namespaces
 	i←⍸(t=F)∧k=0
@@ -410,19 +411,22 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
-	
+
 	⍝ Export headers
 	header←{∊(⊃⍪⌿⍵),¨⊂⎕UCS 13 10}{
+		0=≢i:0⍴⊂''
 		id←⊃var_names ⍵
-		z ←⊂'EXPORT struct ',id,'_loc {'
+		pref,←⊂'EXPORT struct ',id,'_loc ',id,';'
+		z ←⊂'struct ',id,'_loc {'
 		z,←⊂'	unsigned int __count;'
 		z,←⊂'	wchar_t **__names;'
 		z,← '	',¨decl_vars ⊃lv[⍵]
-		z,←⊂'} ',id,';'
+		z,←⊂'};'
 		z,←⊂''
 		z
 	}¨i
-
+	pref,←⊂''
+	
 	⍝ Export functions
 	i←⍸(t=B)∧(k=2)∧k[p]=0
 	exp←⊃⍪⌿{
@@ -462,7 +466,7 @@ GC←{
 	⍞←(∨⌿msk)↑(⎕UCS 10)(⊣,⍨,)⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
 
 	⍝ Assemble all the data together into a single character vector
-	data←∊(pref,(⊂''),(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
+	data←∊(pref,(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
 	
 	⍝ Return data+headers
 	data header

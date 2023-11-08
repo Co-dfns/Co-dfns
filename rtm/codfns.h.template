@@ -5,17 +5,17 @@
 
 #ifdef _WIN32
  #define EXPORT __declspec(dllexport)
- #ifdef EXPORTING
+ #ifdef BUILD_CODFNS
 	#define DECLSPEC EXPORT
  #else
 	#define DECLSPEC __declspec(dllimport)
  #endif
 #elif defined(__GNUC__)
  #define EXPORT __attribute__ ((visibility ("default")))
- #ifdef EXPORTING
+ #ifdef BUILD_CODFNS
 	#define DECLSPEC EXPORT
  #else
-	#define DECLSPEC __attribute__ ((visibility ("default")))
+	#define DECLSPEC extern __attribute__ ((visibility ("default")))
  #endif
 #else
  #define EXPORT
