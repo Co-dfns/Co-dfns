@@ -3,11 +3,23 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define EXPORT __declspec(dllexport)
-#ifdef EXPORTING
+#ifdef _WIN32
+ #define EXPORT __declspec(dllexport)
+ #ifdef EXPORTING
 	#define DECLSPEC EXPORT
-#else
+ #else
 	#define DECLSPEC __declspec(dllimport)
+ #endif
+#elif defined(__GNUC__)
+ #define EXPORT __attribute__ ((visibility ("default")))
+ #ifdef EXPORTING
+	#define DECLSPEC EXPORT
+ #else
+	#define DECLSPEC __attribute__ ((visibility ("default")))
+ #endif
+#else
+ #define EXPORT
+ #define DECLSPEC
 #endif
 
 enum cell_type {
