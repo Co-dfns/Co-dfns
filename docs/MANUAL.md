@@ -132,6 +132,7 @@ The following limitations are known to exist:
 * Namespaces with free references are not supported yet
 * Nested namespaces are not supported
 * Structured Colon Statements are not supported
+* Modified bracket assignment does not support duplicate indices
 * Branch (→) is not supported
 * Format (⍕) is not supported
 * Spawn (&) is not supported
