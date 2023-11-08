@@ -31,7 +31,7 @@ CC←{
 		gcc ←'gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
 		gcc,←' -Wno-parentheses -Wno-misleading-indentation'
 		gcc,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
-		gcc,←' -o ''',⍺,'.so'' ''',⍺,'.c'' -laf',AF∆LIB
+		gcc,←' -o ''',⍺,'.so'' ''',⍺,'.c'' -lcodfns -laf',AF∆LIB
 		gcc,←' > ''',⍺,'.log'' 2>&1'
 		
 		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc
@@ -42,7 +42,7 @@ CC←{
 		clang ←'clang -std=c99 -Ofast -g -Wall -fPIC -shared'
 		clang,←' -Wno-parentheses -Wno-misleading-indentation'
 		clang,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
-		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c'' -laf',AF∆LIB
+		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c'' -lcodfns -laf',AF∆LIB
 		clang,←' > ''',⍺,'.log'' 2>&1'
 		
 		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
