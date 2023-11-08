@@ -7,7 +7,7 @@
  _,←'rec' 'exp' 'nlg' 'mag' 'pit' 'flr' 'cel' 'not' 'mat' 'fac'
  bindings←{⍵[⍋⍵;]}↑_
 
- cd←⎕NS⍬ ⋄ dy←#.⍎tn
+ cd←⎕NS⍬ ⋄ dy←#.⍎tn ⋄ ⎕CT←0
 
  ∆000_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0007←tn #.codfns.Fix ⎕SRC dy}
@@ -33,7 +33,7 @@
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
  MK∆T3←{fn tl←⍺⍺ ⋄ in←⍵⍵ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
   ##.UT.expect←(≢,nv)⍴1 ⋄ Z←,tl>|nv-cv
-  Z⊣{⎕←↑(↑in)(-⌿↑in)(↑nv cv)}⍣(~∧⌿Z)⊢Z}
+  Z⊣{⎕←↑(↑in)(↑nv cv)}⍣(~∧⌿Z)⊢Z}
 
  i←1 ⋄ idx←{∊'ZI3'⎕FMT i⊣i+←1}
 
