@@ -29,7 +29,8 @@ CC←{
 	}⍵
 	'linux'≡ostype:⍺{
 		gcc ←'gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
-		gcc,←' -Wno-parentheses -Wno-misleading-indentation'
+		gcc,←' -Wno-parentheses -Wno-misleading-indentation -Wunused-variable'
+		gcc,←' -Wincompatible-pointer-types'
 		gcc,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
 		gcc,←' -o ''',⍺,'.so'' ''',⍺,'.c'' -lcodfns -laf',AF∆LIB
 		gcc,←' > ''',⍺,'.log'' 2>&1'
@@ -40,7 +41,8 @@ CC←{
 	}⍵
 	'mac'≡ostype:⍺{
 		clang ←'clang -std=c99 -Ofast -g -Wall -fPIC -shared'
-		clang,←' -Wno-parentheses -Wno-misleading-indentation'
+		clang,←' -Wno-parentheses -Wno-misleading-indentation -Wunused-variable'
+		clang,←' -Wincompatible-pointer-types'
 		clang,←' -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
 		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c'' -lcodfns -laf',AF∆LIB
 		clang,←' > ''',⍺,'.log'' 2>&1'
