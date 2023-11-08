@@ -4,7 +4,7 @@
  nc←':Namespace' ':EndNamespace' ⋄ mc←':NaMeSpAcE' ':eNdNaMeSpAcE'
 
  ∆0_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX'c0001' ⋄ 0⊣#.c0001←'t0001'#.codfns.Fix nc}
- ∆1_TEST←{#.UT.expect←0 ⋄ _←'init'⎕NA'I t0001.dll|cdf_ptr0_init' ⋄ (⎕EX'init')⊢init}
+ ∆1_TEST←{#.UT.expect←0 ⋄ _←'init'⎕NA'I t0001|cdf_ptr0_init' ⋄ (⎕EX'init')⊢init}
  ∆2_TEST←{#.UT.expect←0 0⍴'' ⋄ #.c0001.⎕NL 3}
  ∆3_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX'c0001' ⋄ 0⊣#.c0001←'t0001'#.codfns.Fix lc}
  ∆4_TEST←{#.UT.expect←0 0⍴'' ⋄ #.c0001.⎕NL 3}
