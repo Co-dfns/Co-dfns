@@ -46,7 +46,7 @@ CC←{
 		clang,←' -Wno-incompatible-pointer-types -Wno-missing-braces'
 		clang,←' -Wno-unused-but-set-variable'
 		clang,←' -isystem /opt/arrayfire/include'
-		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c''
+		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c'''
 		clang,←' -Wl,-rpath,. ./libcodfns.dylib'
 		clang,←' -Wl,-rpath,/opt/arrayfire/lib /opt/arrayfire/lib/libaf',AF∆LIB,'.dylib'
 		clang,←' > ''',⍺,'.log'' 2>&1'
