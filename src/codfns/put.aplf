@@ -1,4 +1,0 @@
-put←{
-	s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83
-	1:r←s⊣⎕NUNTIE t
-}

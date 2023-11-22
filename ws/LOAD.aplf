@@ -1,0 +1,18 @@
+ LOAD root;src
+
+ src←⊂':Namespace codfns'
+
+ src,←⊃⎕NGET (root,'\cmp\main.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\util.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\TK.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\PS.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\TT.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\GC.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\CC.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\NS.apl') 1
+ src,←⊃⎕NGET (root,'\cmp\MK∆RTM.apl') 1
+
+ src,←⊂':EndNamespace'
+ 
+ ⎕FIX src
+ 

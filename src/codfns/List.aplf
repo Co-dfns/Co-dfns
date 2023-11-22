@@ -1,5 +1,0 @@
-r←List
-r←⎕NS¨1⍴⊂⍬ ⋄ r.Name←,¨⊂'Compile' ⋄ r.Group←⊂'CODFNS'
-r[0].Desc←'Compile an object using Co-dfns'
-r.Parse←⊂'2S -af=cpu opencl cuda '
-

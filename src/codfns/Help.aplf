@@ -1,3 +1,0 @@
-Z←Help _
-Z←'Usage: <object> <target> [-af={cpu,opencl,cuda}]'
-

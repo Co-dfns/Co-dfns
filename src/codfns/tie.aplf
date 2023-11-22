@@ -1,5 +1,0 @@
-tie←{
-	0::⎕SIGNAL ⎕EN
-	22::⍵ ⎕NCREATE 0
-	0 ⎕NRESIZE ⍵ ⎕NTIE 0
-}

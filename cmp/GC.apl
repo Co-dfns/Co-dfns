@@ -345,11 +345,11 @@ GC←{
 		z,←(⊂'')⌿⍨hasopts
 		z,←(⊂'	opts = (struct opt_vars *)cdf_self->opts;')⌿⍨hasopts
 		z,←(⊂'')⌿⍨hasopts
-		z,←'	',¨init_vars lvs
+		z,←(⊂'	'),¨init_vars lvs
 		z,←⊂'	err = 0;'
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂''
-		z,←'	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←(⊂'	'),¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,←⊂'cleanup:'
@@ -401,9 +401,9 @@ GC←{
 		z,←⊂''
 		z,←⊂'	CHKFN(cdf_prim_init(), cleanup);'
 		z,←⊂''
-		z,← '	',¨init_vars ⊃lv[⍵]
+		z,←(⊂'	'),¨init_vars ⊃lv[⍵]
 		z,←⊂''
-		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←(⊂'	'),¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
@@ -420,7 +420,7 @@ GC←{
 		z ←⊂'struct ',id,'_loc {'
 		z,←⊂'	unsigned int __count;'
 		z,←⊂'	wchar_t **__names;'
-		z,← '	',¨decl_vars ⊃lv[⍵]
+		z,←(⊂'	'),¨decl_vars ⊃lv[⍵]
 		z,←⊂'};'
 		z,←⊂''
 		z

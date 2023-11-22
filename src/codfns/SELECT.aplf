@@ -1,2 +1,0 @@
- Z←SELECT I
- Z←∊pos[I]+⍳¨end[I]-pos[I]

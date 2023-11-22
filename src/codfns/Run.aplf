@@ -1,8 +1,0 @@
- Run(C I);Convert;in;out
-⍝ Parameters
-⍝      AF∆LIB        ArrayFire backend to use
- Convert←{⍺(⎕SE.SALT.Load'[SALT]/lib/NStoScript -noname').ntgennscode ⍵}
- in out←I.Arguments ⋄ AF∆LIB←I.af''⊃⍨I.af≡0
- S←(⊂':Namespace ',out),2↓0 0 0 out Convert ##.THIS.⍎in
- →0⌿⍨'Compile'≢C
- {##.THIS.⍎out,'←⍵'}out Fix S⊣⎕EX'##.THIS.',out
