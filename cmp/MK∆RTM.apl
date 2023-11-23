@@ -1,4 +1,6 @@
-∇ MK∆RTM path;src;vsbat;vsc;gcc;clang;codfns_h;CR;LF;data;header
+∇ {LIB}MK∆RTM path;src;vsbat;vsc;gcc;clang;codfns_h;CR;LF;data;header
+
+  ⍎'LIB←AF∆LIB'⌿⍨0=⎕NC'LIB'
 
   src←⊃⎕NGET path,'/rtm/prim.apln'
   data header←'prim'GC TT PS TK src
@@ -32,7 +34,7 @@
   	vsc,←'    "*.c" /link /DLL /OPT:REF'
   	vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
   	vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
-  	vsc,←'    /DYNAMICBASE "af',AF∆LIB,'.lib"'
+  	vsc,←'    /DYNAMICBASE "af',LIB,'.lib"'
   	vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
   	vsc,←'    /TLBID:1 /OUT:"codfns.dll""'
   	
@@ -52,7 +54,7 @@
   	gcc,←'    -Wno-unused-but-set-variable'
   	gcc,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
   	gcc,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
-  	gcc,←'    -o libcodfns.so *.c -lm -laf',AF∆LIB
+  	gcc,←'    -o libcodfns.so *.c -lm -laf',LIB
   	
   	⎕CMD ⎕←gcc
   	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
@@ -67,7 +69,7 @@
   	clang,←'    -Wno-unused-but-set-variable'
   	clang,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
   	clang,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
-  	clang,←'    -o libcodfns.dylib *.c -lm -laf',AF∆LIB
+  	clang,←'    -o libcodfns.dylib *.c -lm -laf',LIB
   	
   	⎕CMD ⎕←clang
   	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'

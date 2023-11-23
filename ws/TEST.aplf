@@ -1,6 +1,8 @@
 TEST←{
+	⍺←'cpu'
         #.UT.(print_passed print_summary)←1
 	⎕CT←0
+	codfns.AF∆LIB←⍺
         'ALL'≡⍵:#.UT.run './'
         path←'./t',(1 0⍕(4⍴10)⊤⍵),'_*_tests.dyalog'
         #.UT.run ⊃⊃0⎕NINFO⍠1⊢path
