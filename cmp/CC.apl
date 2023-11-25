@@ -4,8 +4,7 @@ CC←{
 	_←header ⎕NPUT (⍺,'.h')1
 	_←data ⎕NPUT (⍺,'.c')1
 	'win'≡ostype:⍺{
-		vsbat←#.codfns.VS∆PATH
-		vsbat,←'\VC\Auxiliary\Build\vcvarsall.bat'
+		vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 		~⎕NEXISTS vsbat:'MISSING VISUAL C'⎕SIGNAL 99
 		
 		vsc←'%comspec% /C ""',vsbat,'" amd64'
