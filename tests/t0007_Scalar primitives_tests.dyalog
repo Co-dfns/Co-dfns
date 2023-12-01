@@ -15,11 +15,14 @@
 
  I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,¯50+?9⍴100
  I2←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,¯50+?9⍴100
+ IC←I+I2×0J1
  F←0,¯5+100÷⍨?9⍴1000
  F2←0,¯5+100÷⍨?9⍴1000
+ FC←F+F2×0J1
  F1LT←?10⍴0
  AFN←(?10⍴0)-?10⍴2
  B←?10⍴2
+ BC←B+B×0J1
  INT←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,?9⍴100
  FNT←0,100÷⍨?9⍴1000
  IPS←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}2+?10⍴100
@@ -63,6 +66,7 @@
  'magnitude'   SCL∆TST∆MONADIC 'mag' I   F   B
  'pitimes'     SCL∆TST∆MONADIC 'pit' I   F   B
  'floor'       SCL∆TST∆MONADIC 'flr' I   F   B
+ 'floorcmpx'   SCL∆TST∆MONADIC 'flr' IC  FC  BC
  'ceiling'     SCL∆TST∆MONADIC 'cel' I   F   B
  'not'         SCL∆TST∆MONADIC 'not' B   B   B
  'materialize' SCL∆TST∆MONADIC 'mat' I   F   B

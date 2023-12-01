@@ -265,7 +265,11 @@ res←absolute numeric ambiv residue
 ⍝ ⌊: Floor | Minimum
 floor_array←{
 	is_integer ⍵:⍵
-	1289=⎕DR ⍵:⎕SIGNAL 16
+	1289=⎕DR ⍵:{
+		a←9○⍵ ⋄ b←11○⍵
+		ad←a-fa←⌊a ⋄ bd←b-fb←⌊b ⋄ m←1≤ad+bd
+		(fa+m×t)+0J1×fb+m×~t←ad≥bd
+	}⍵
 	'floor_vec_ibeam'⌶ ⍵
 }
 min←floor_array numeric ambiv ('min_vec_ibeam'⌶ numeric scalar)
