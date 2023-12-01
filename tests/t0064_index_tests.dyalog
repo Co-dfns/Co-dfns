@@ -39,6 +39,7 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆index∆16_TEST←'index∆R1' MK∆T2 (9 5)  (?10 6⍴1000)
 ∆index∆17_TEST←'index∆R1' MK∆T2 (9 5)  (?100 20 5⍴1000)
 ∆index∆18_TEST←'index∆R1' MK∆T2 (⊂9 5) (?100 20 5⍴1000)
+∆index∆19_TEST←'index∆R1' MK∆T2 ((9 5) 5 2 2 1)  (?100 20 5 3 4 5⍴1000)
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

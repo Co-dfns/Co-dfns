@@ -1104,7 +1104,7 @@ index_func(struct cell_array **z,
 			asp[j] = sp[i];
 			
 			if (idx[i]->type != ARR_SPAN) {
-				CHKAF(af_cast(&v, idx[i]->values, s64), dev4_fail);
+				CHKAF(af_cast(&v, idx[i]->values, u64), dev4_fail);
 				CHKAF(af_set_array_indexer(ix, v, j), dev4_fail);
 			}
 		}
@@ -1132,7 +1132,42 @@ index_func(struct cell_array **z,
 	}
 	
 	if (arr->storage == STG_DEVICE) {
-		CHK(16, fail, L"High rank device indexing not supported yet.");
+		af_index_t *ix;
+		af_array t, v;
+		dim_t asp[3];
+		
+		t = NULL;
+		v = NULL;
+		asp[0] = array_count(r);
+		asp[1] = 1;
+		asp[2] = 1;
+		arr->values = r->values;
+		
+		CHKAF(af_create_indexers(&ix), fail);
+		
+		for (size_t i = 0; i < ic; i++) {
+			asp[1] = sp[i];
+			asp[0] /= sp[i];
+			
+			CHKAF(af_cast(&v, idx[i]->values, u64), devhr_fail);
+			CHKAF(af_set_array_indexer(ix, v, 1), devhr_fail);
+			CHKAF(af_moddims(&t, arr->values, 3, asp), devhr_fail);
+			CHKAF(af_index_gen(&arr->values, t, 3, ix), devhr_fail);
+			CHKAF(af_release_array(t), devhr_fail);t = NULL;
+			CHKAF(af_release_array(v), devhr_fail);v = NULL;
+			
+			asp[2] *= cnt[i];
+		}
+		
+		t = arr->values;
+		CHKAF(af_flat(&arr->values, t), devhr_fail);
+	
+	devhr_fail:
+		af_release_array(v);
+		af_release_array(t);
+		af_release_indexers(ix);
+		
+		goto done;
 	}
 	
 	if (arr->storage != STG_HOST)
