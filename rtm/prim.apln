@@ -207,12 +207,7 @@ iot←index_gen ambiv index_of
 
 ⍝ ⊃: First / Pick
 disclose←'disclose_ibeam'⌶
-pick←{
-	1<≢,⍺:⎕SIGNAL 16
-	1<≡⍺:⎕SIGNAL 16
-	0≡≢,⍺:⍵
-	⊃⍺⌷⍵
-}
+pick←{0≡≢,⍺:⍵ ⋄ (1↓⍺)∇⊃(⊃⍺)⌷⍵}
 dis←disclose ambiv pick
 
 ⍝ ⊂: Enclose / Partition

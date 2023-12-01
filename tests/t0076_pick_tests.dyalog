@@ -39,6 +39,9 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆pick∆12_TEST←'pick' MK∆T2 ⍬(F 2 3 4⍴99)
 ∆pick∆13_TEST←'pick' MK∆T2 0(F ⍳5)
 ∆pick∆14_TEST←'pick' MK∆T2 3(F 2 4 6 8)
+∆pick∆15_TEST←'pick' MK∆T2 (⊂1 0)(3 3⍴⍳9)
+∆pick∆16_TEST←'pick' MK∆T2 (1 0)((1 2 3)(4 5 6))
+∆pick∆17_TEST←'pick' MK∆T2 ((1 0)(2 3))(3 3⍴⊂4 4⍴⍳16)
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
