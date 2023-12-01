@@ -884,5 +884,14 @@ at←{⍺←⊢
 
 ⍝ ⌸: Key operator
 key←{fn←⍺⍺ ⋄ ⎕SIGNAL 16}
+⍝	0=⎕NC'⍺':⍵ ∇⍳≢⍵
+⍝	3=⎕NC'⍺⍺':⍺(⊣⍺⍺∘(⌿∘⍵)⍤¯1 1≡⍤99 ¯1⍤¯1 99)⍨∪⍺
+⍝
+⍝	mask←(≢≥⍳∘⍺)⍺⍺  ⍝ high-rank ∊
+⍝	keys←⍺⍺⍪mask⌿⍺
+⍝	vals←(-≢keys)↑mask⌿⍵
+⍝
+⍝	1↓¨keys{⊂⍵}∇∇ vals
+⍝}
 
 :EndNamespace
