@@ -333,7 +333,7 @@ fac←'factorial_vec_ibeam'⌶ numeric ambiv (binomial numeric scalar)
 
 ⍝ ~: Not | Without
 notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
-without←{⎕SIGNAL 16}
+without←{1<≢⍴⍺:⎕SIGNAL 11 ⋄ (~⍺∊⍵)⌿⍺}
 not←notscl ambiv without
 
 ⍝ ∧: And
