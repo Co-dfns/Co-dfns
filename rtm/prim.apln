@@ -415,7 +415,7 @@ greaterthan←{
 gth←{⎕SIGNAL 2}ambiv (greaterthan numeric scalar)
 
 ⍝ ≠: Not Equal | First Occurrence
-firstocc←{⎕SIGNAL 16}
+firstocc←{(⍳≢⍵)=⍵⍳⍵}
 neq_vec←'neq_vec_ibeam'⌶
 noteq←{
 	⍺ both_numeric ⍵:⍺ neq_vec ⍵
