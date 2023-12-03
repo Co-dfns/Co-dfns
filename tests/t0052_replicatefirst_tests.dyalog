@@ -44,6 +44,7 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆replicatefirst∆21_TEST←'replicatefirst' MK∆T2 (¯1 0)             (2 3⍴⍳6)
 ∆replicatefirst∆22_TEST←'replicatefirst' MK∆T2 (1 1 1)            (,5)
 ∆replicatefirst∆23_TEST←'replicatefirst' MK∆T2 (⍳5)               (,5)
+∆replicatefirst∆24_TEST←'replicatefirst' MK∆T2 (1 0 1 0)          ('abc' 'def' 'ghi' 'd')
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

@@ -735,7 +735,7 @@ rpf←{
 	(ya≢≢x)∧(1≢≢x)∧1≢ya←(⍴y)[axis]:⎕SIGNAL 5
 	ac←ya{(⍺⌈⍵)×⍺ ⍵∧.≠0}≢x ⋄ x←ac⍴x
 	s←⍴z←(⊂(ya≠1)×i←⍸|x)⌷[axis]y ⋄ ls←×⌿axis↑s ⋄ rs←×⌿(axis+1)↓s
-	z←ls(s[axis])rs⍴z ⋄ z[;⍸x[i]<0;]←⊃0⍴,y ⋄ s⍴z
+	z←ls(s[axis])rs⍴z ⋄ z[;⍸x[i]<0;]←⊂⊃0⍴,y ⋄ s⍴z
 }
 
 ⍝ //: Replicate
