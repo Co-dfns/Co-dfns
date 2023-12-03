@@ -448,7 +448,9 @@ tke←mix ambiv take
 ⍝ ↓: Split | Drop
 split←{
 	0≡≡⍵:⍵
-	⎕SIGNAL 16
+	hax←1 ⋄ axis⍠←¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
+	lc←×⌿ls←axis↑⍴⍵ ⋄ rc←×⌿rs←(1+axis)↓⍴⍵ ⋄ ac←axis⌷⍴⍵ ⋄ z←lc ac rc⍴⍵
+	(ls,rs)⍴(⍳lc)∘.{z[⍺;;⍵]}⍳rc
 }
 drop←{
 	1<≢⍴⍺:⎕SIGNAL 4

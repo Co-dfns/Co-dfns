@@ -29,6 +29,8 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆split∆02_TEST←'split' MK∆T1 (I16 7)
 ∆split∆03_TEST←'split' MK∆T1 (I8 7)
 ∆split∆04_TEST←'split' MK∆T1 (7.5)
+∆split∆05_TEST←'split' MK∆T1 (2 3 4⍴⍳24)
+∆split∆06_TEST←'split_axis' MK∆T2 (1) (2 3 4⍴⍳24)
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
