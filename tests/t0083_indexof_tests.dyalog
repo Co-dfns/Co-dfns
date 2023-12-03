@@ -112,6 +112,8 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆indexof∆85_TEST←'indexof' MK∆T2 (3⌿⍳10) (3⌿⍳10)
 ∆indexof∆86_TEST←'indexof' MK∆T2 (25⍴⍳10) (25⍴⍳10)
 ∆indexof∆87_TEST←'indexof' MK∆T2 ('abc' 'def' 'ghi')('abc' 'xyz' 'ghi' 'def' 'abc')
+∆indexof∆88_TEST←'indexof' MK∆T2 (3 2⍴'abcdef')('cd')
+∆indexof∆89_TEST←'indexof' MK∆T2 (3 2⍴'abcdef')(4 2⍴'efxtcdab')
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
