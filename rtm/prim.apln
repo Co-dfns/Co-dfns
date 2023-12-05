@@ -727,7 +727,7 @@ red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴
 ⍝ ⍸: Where/Interval Index
 where_nz←'where_nz_ibeam'⌶
 where←{
-	1<≢⍴⍵:⎕SIGNAL 16
+	1<≢⍴⍵:(,⍳⍴⍵)[⍸,⍵]
 	0≡≢,⍵:⍬
 	~is_numeric ⍵:⎕SIGNAL 11 ⋄ any ⍵<0:⎕SIGNAL 11
 	0≡≢i←where_nz ⍵:⍬

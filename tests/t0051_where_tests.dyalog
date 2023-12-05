@@ -29,6 +29,7 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆replicate∆06_TEST←'where' MK∆T1 0 2 0 2 5
 ∆replicate∆07_TEST←'where' MK∆T1 4 0 0 0 0
 ∆replicate∆08_TEST←'where_host' MK∆T1 ⍬
+∆replicate∆09_TEST←'where' MK∆T1 (2 3⍴⍳6)
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
