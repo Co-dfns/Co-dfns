@@ -227,7 +227,15 @@ enclose←{
 	}⍵
 	'enclose_ibeam'⌶ ⍵
 }
-par←enclose ambiv {⎕SIGNAL 16}
+part_enc←{
+	1<≢⍴⍺:⎕SIGNAL 4
+	hax←1 ⋄ axis⍠←¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
+	0≡≢⍴⍵:⍺∇,⍵ ⋄ ac←(⍴⍵)[axis] ⋄ 0≡≢⍴⍺:(ac⍴⍺)∇⍵
+	(≢⍺)>1+ac:⎕SIGNAL 5
+	~has_nat_vals ⍺:⎕SIGNAL 11
+	2(⍵{(⊂⍺+⍳⍵-⍺)⌷[axis]⍺⍺})⌿(⍸⍺),ac
+}
+par←enclose ambiv part_enc
 
 ⍝ ⊆: Nest
 nest←{

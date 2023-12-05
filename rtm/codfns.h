@@ -311,6 +311,7 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_pick;
 	struct cell_func *cdf_dis;
 	struct cell_func *cdf_enclose;
+	struct cell_func *cdf_part_enc;
 	struct cell_func *cdf_par;
 	struct cell_func *cdf_nest;
 	struct cell_func *cdf_nst;
