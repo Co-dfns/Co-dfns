@@ -242,7 +242,16 @@ nest←{
 	1≡≡⍵:⊂⍵
 	⍵
 }
-nst←nest ambiv {⎕SIGNAL 16}
+partition←{
+	1<≢⍴⍺:⎕SIGNAL 4 ⋄ 0≡≢⍴⍵:⎕SIGNAL 4
+	hax←1 ⋄ axis⍠←¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
+	ac←(⍴⍵)[axis] ⋄ 0≡≢⍴⍺:(ac⍴⍺)∇⍵ ⋄ ac≢≢⍺:⎕SIGNAL 5
+	~has_nat_vals ⍺:⎕SIGNAL 11
+	m←⍺≠0 ⋄ p←m⌿2<⌿0,⍺ ⋄ pi←2{⍺+⍳⍵-⍺}⌿(⍸p),≢p ⋄ mi←⍸m ⋄ pc←≢pi
+	lc←×⌿ls←axis↑⍴⍵ ⋄ rc←×⌿rs←(1+axis)↓⍴⍵ ⋄ z←lc pc rc⍴⊂0⍴⊂⊃⍵ ⋄ x←lc ac rc⍴⍵
+	(ls,pc,rs)⍴z⊣(⍳lc)∘.{z[⍺;;⍵]←x[⍺;mi;⍵]∘{⍺[⍵]}¨pi}⍳rc
+}
+nst←nest ambiv partition
 
 ⍝ +: Conjugate | Addition
 conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}

@@ -314,6 +314,7 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_part_enc;
 	struct cell_func *cdf_par;
 	struct cell_func *cdf_nest;
+	struct cell_func *cdf_partition;
 	struct cell_func *cdf_nst;
 	struct cell_func *cdf_conjugate;
 	struct cell_func *cdf_add;
