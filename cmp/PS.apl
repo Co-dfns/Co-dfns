@@ -110,7 +110,7 @@ PS←{
 	⍝ Wrap bindings/assignments into B(Z, Z) nodes
 	_←p[i]{
 		t[⍵⌿⍨bp[⍵]∧0,¯1↓bm[⍵]]←B
-		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓t[⍵]∊F P B])
+		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓(t[⍵]∊F P B)∨t[⍵]=¯1])
 		∨⌿m←~bm[∊v]:'INVALID ASSIGNMENT TARGET'SIGNAL pos[m⌿∊v]
 
 		p[∊v]←(≢¨v)⌿(≢p)+⍳≢v ⋄ vb[m⌿∊v]←(m←t[∊v]=V)⌿(≢¨v)⌿b
