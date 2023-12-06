@@ -3,7 +3,8 @@
   ⍎'LIB←AF∆LIB'⌿⍨0=⎕NC'LIB'
 
   src←⊃⎕NGET path,'/rtm/prim.apln'
-  data header←'prim'GC TT PS TK src
+  echo←{⍺←⊢ ⋄ ⍺ ⍺⍺ ⍵⊣⍞←⍵⍵}
+  data header←'prim'GC echo 'G' TT echo 'C' PS echo 'P' TK echo 'T' ⊢ src
   (path,'\rtm\prim.c')put data
   (path,'\rtm\prim.h')put header
   
