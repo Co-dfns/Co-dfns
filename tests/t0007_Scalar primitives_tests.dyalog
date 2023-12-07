@@ -35,25 +35,25 @@
  MK∆T1←{##.UT.expect←(⍎'dy.',⍺⍺)⍵⍵ ⋄ (⍎'cd.',⍺⍺)⍵⍵}
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
  MK∆T3←{fn tl←⍺⍺ ⋄ in←⍵⍵ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
-  ##.UT.expect←(≢,nv)⍴1 ⋄ Z←,tl>|nv-cv
-  Z⊣{⎕←↑(↑in)(↑nv cv)}⍣(~∧⌿Z)⊢Z}
+  ##.UT.expect←0=⊃0⍴⊂nv ⋄ Z←tl>|nv-cv
+  Z⊣{⎕←↑(↑in)(↑nv cv)}⍣(~∧⌿∊Z)⊢Z}
 
  i←1 ⋄ idx←{∊'ZI3'⎕FMT i⊣i+←1}
 
  ∇Z←N SCL∆TST∆DYADIC(FN IL IR FL FR BL BR);S
- S←('IL' 'FL' 'BL')∘.{⍺,' ',⍵}('IR' 'FR' 'BR')
- ⍎¨(∘.,⍨'ifb'){'∆',(idx⍬),'∆',N,'∆',⍺,'_TEST←''',FN,'''MK∆T2 ',⍵}¨S
+ S←('IL' 'FL' 'BL' '(⊂IL)')∘.{⍺,' ',⍵}('IR' 'FR' 'BR' '(⊂IR)')
+ ⍎¨(∘.,⍨'ifbn'){'∆',(idx⍬),'∆',N,'∆',⍺,'_TEST←''',FN,'''MK∆T2 ',⍵}¨S
  Z←0 0⍴⍬
  ∇
 
  ∇Z←N SCL∆TST∆RELATIVE(FN IL IR FL FR BL BR);L;R
- S←('IL' 'FL' 'BL')∘.{⍺,' ',⍵}('IR' 'FR' 'BR')
- ⍎¨(∘.,⍨'ifb'){'∆',(idx⍬),'∆',N,'∆',⍺,'_TEST←''',FN,''' 1e¯7 MK∆T3 ',⍵}¨S
+ S←('IL' 'FL' 'BL' '(⊂IL)')∘.{⍺,' ',⍵}('IR' 'FR' 'BR' '(⊂IR)')
+ ⍎¨(∘.,⍨'ifbn'){'∆',(idx⍬),'∆',N,'∆',⍺,'_TEST←''',FN,''' 1e¯7 MK∆T3 ',⍵}¨S
  Z←0 0⍴⍬
  ∇
 
  ∇Z←N SCL∆TST∆MONADIC(FN I F B)
- ⍎¨'ifb'{'∆',(idx⍬),'∆',N,'∆',⍺,'_TEST←''',FN,'''MK∆T1 ',⍵}¨'IFB'
+ ⍎¨'ifbn'{'∆',(idx⍬),'∆',N,'∆',⍺,'_TEST←''',FN,'''MK∆T1 ',⍵}¨'IFB',⊂'(⊂I)'
  Z←0 0⍴⍬
  ∇
 

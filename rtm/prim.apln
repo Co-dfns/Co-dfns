@@ -51,6 +51,7 @@ scalar←{op←⍺⍺
 	⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵
 	s⍴squeeze ⍺ ∇ veach ⍵
 }
+scl_mon←{is_simple ⍵:⍺⍺ ⍵ ⋄ (⍴⍵)⍴squeeze ∇ veach ⍵}
 chk_axis←{axis←⍺⍺ ⋄ ~⍺:0
 	1<≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢axis:⎕SIGNAL 5
 	~has_nat_vals axis:⎕SIGNAL 11 ⋄ (≢⍴⍵)≤axis:⎕SIGNAL 4
@@ -271,16 +272,12 @@ mul←sign ambiv ('mul_vec_ibeam'⌶ numeric scalar)
 div←{1÷⍵} ambiv ('div_vec_ibeam'⌶ numeric scalar)
 
 ⍝ |: Absolute Value | Residue
-absolute←{
-	0≡is_numeric ⍵:⎕SIGNAL 11
-	1289≡⎕DR ⍵:⎕SIGNAL 11
-	'abs_vec_ibeam'⌶ ⍵
-}
+absolute←{1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 'abs_vec_ibeam'⌶ ⍵}
 residue←{
 	2≡⍺:(⍴⍵)⍴1 bitand ⍵
 	⍵-⍺×⌊⍵÷⍺+0=⍺
 }
-res←absolute numeric ambiv residue
+res←absolute numeric scl_mon ambiv (residue numeric scalar)
 
 ⍝ ⌊: Floor | Minimum
 floor_array←{
@@ -292,7 +289,7 @@ floor_array←{
 	}⍵
 	'floor_vec_ibeam'⌶ ⍵
 }
-min←floor_array numeric ambiv ('min_vec_ibeam'⌶ numeric scalar)
+min←floor_array numeric scl_mon ambiv ('min_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⌈: Ceiling | Maximum
 ceil_array←{
@@ -300,13 +297,13 @@ ceil_array←{
 	1289=⎕DR ⍵:-⌊-⍵
 	'ceil_vec_ibeam'⌶ ⍵
 }
-max←ceil_array numeric ambiv ('max_vec_ibeam'⌶ numeric scalar)
+max←ceil_array numeric scl_mon ambiv ('max_vec_ibeam'⌶ numeric scalar)
 
 ⍝ *: Exponent | Power
-exp←'exp_vec_ibeam'⌶ numeric ambiv ('pow_vec_ibeam'⌶ numeric scalar)
+exp←'exp_vec_ibeam'⌶ numeric scl_mon ambiv ('pow_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⍟: Natural Logarithm | Logarithm
-log←'nlg_vec_ibeam'⌶ numeric ambiv ('log_vec_ibeam'⌶ numeric scalar)
+log←'nlg_vec_ibeam'⌶ numeric scl_mon ambiv ('log_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ○: Pi Times | Trigonometric Functions
 pitimes←{3.14159265358979323846×⍵}
@@ -339,19 +336,19 @@ trig←{
 	¯12=⍺:*⍵×0J1
 	⎕SIGNAL 11
 }
-cir←pitimes numeric ambiv (trig numeric scalar)
+cir←pitimes numeric scl_mon ambiv (trig numeric scalar)
 
 ⍝ !: Factorial | Binomial
 binomial←{
 	∨⌿,(⍵=⌊⍵)∧(⍵<0)∧⍺≠⌊⍺:⎕SIGNAL 11
 	(!⍵)÷(!⍺)×!⍵-⍺
 }
-fac←'factorial_vec_ibeam'⌶ numeric ambiv (binomial numeric scalar)
+fac←'factorial_vec_ibeam'⌶ numeric scl_mon ambiv (binomial numeric scalar)
 
 ⍝ ~: Not | Without
 notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
 without←{1<≢⍴⍺:⎕SIGNAL 11 ⋄ (~⍺∊⍵)⌿⍺}
-not←notscl ambiv without
+not←notscl scl_mon ambiv without
 
 ⍝ ∧: And
 logand←{
@@ -365,12 +362,11 @@ rational←{
 	r←⍵ ⋄ s←⍴⍵ ⋄ c20←s⍴0 ⋄ c21←s⍴1 ⋄ c10←s⍴1 ⋄ c11←s⍴0
 	{
 		an←⌊⍵ ⋄ c0←c20+an×c10 ⋄ c1←c21+an×c11
-		~∨⌿,m←r≠c0÷c1:c0 c1
+		~∨⌿m←r≠c0÷c1:c0 c1
 		i←⍸m ⋄ c20[i]←c10[i] ⋄ c21[i]←c11[i] ⋄ c10[i]←c0[i] ⋄ c11[i]←c1[i]
 		x←⍵ ⋄ x[i]←÷x[i]-an[i]
 		∇ x
 	}⍵
-	⍝ 'rational_ibeam'⌶ ⍵
 }
 gcd←{⍺≡⍺+⍺:⍵ ⋄ b ∇ (b←⍺⌊⍵)|⍺⌈⍵}
 lcm←{⍺×⍵÷⍺ gcd ⍵}
@@ -379,20 +375,17 @@ logor←{
 	(is_bool ⍺)∧is_integer ⍵:⍺+(~⍺)×|⍵
 	(is_bool ⍵)∧is_integer ⍺:⍵+(~⍵)×|⍺
 	⍺ both_integer ⍵:(|⍺)gcd(|⍵)
-	y←rational |⍺ ⋄ a←0⊃y ⋄ b←1⊃y
-	x←rational |⍵ ⋄ c←0⊃x ⋄ d←1⊃x
+	y←rational |,⍺ ⋄ a←(⍴⍺)⍴0⊃y ⋄ b←(⍴⍺)⍴1⊃y
+	x←rational |,⍵ ⋄ c←(⍴⍵)⍴0⊃x ⋄ d←(⍴⍵)⍴1⊃x
         (a gcd c)÷b lcm d
-	⊂(a b c d)Y X ((Y←a gcd c)÷X←b lcm d)
-	⍝ ⍺ both_integer ⍵:(|⍺){∧⌿,m←⍵=0:⍺ ⋄ ((⍺×m)+⍵×n)∇(⍵×m)+(⍵|⍺)×n←~m}|⍵
-	⍝ (|⍺){~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
 }
 lor←{⎕SIGNAL 2}ambiv (logor numeric scalar)
 
 ⍝ ⍲: Not and
-nan←{⎕SIGNAL 2}ambiv{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}
+nan←{⎕SIGNAL 2}ambiv ({⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11} scalar)
 
 ⍝ ⍱: Not Or
-nor←{⎕SIGNAL 2}ambiv{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}
+nor←{⎕SIGNAL 2}ambiv ({⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11} scalar)
 
 ⍝ <: Less than
 lessthan←{
