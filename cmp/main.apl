@@ -1,5 +1,5 @@
 (⎕IO ⎕ML ⎕WX)←0 1 3
-VERSION←5 3 0
+VERSION←5 3 1
 AF∆PREFIX←'/opt/arrayfire'
 AF∆LIB←'cuda'
 VS∆PATH←'\Program Files\Microsoft Visual Studio\2022\Community'
