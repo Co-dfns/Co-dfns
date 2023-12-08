@@ -737,13 +737,13 @@ where←{
 	+⍀z⊣z[0,¯1↓sx]←i-0,¯1↓i⊣z←c⍴0
 }
 interval_idx←{
-	1<≢⍴⍺:⎕SIGNAL 16 ⋄ 1<≢⍴⍵:⎕SIGNAL 16 ⋄ 1<≡⍺:⎕SIGNAL 16 ⋄ 1<≡⍵:⎕SIGNAL 16
+	1<≢⍴⍺:⎕SIGNAL 16 ⋄ 1<≡⍺:⎕SIGNAL 16 ⋄ 1<≡⍵:⎕SIGNAL 16
 	0=≢⍴⍺:⎕SIGNAL 4
 	(is_char ⍺)∨is_char ⍵:⎕SIGNAL 16
 	0≡≢⍵:⍬ ⋄ 0≡≢⍺:(≢⍵)⍴⍬ ⋄ any 2>⌿⍺:⎕SIGNAL 11
-	lv←⍺ ⋄ rv←⍵ ⋄ zv←(≢⍵)⍴¯1
+	lv←⍺ ⋄ rv←,⍵ ⋄ zv←(≢,⍵)⍴¯1
 	_←{⍵-h⊣zv[i]←t[i←⍸lv[t←zv+h]≤rv]⊣h←⌈⍵÷2}⍣(⌈2⍟lc)⊢lc←≢lv
-	zv+m×lv[zv+m←zv≠lc-1]≤rv
+	(⍴⍵)⍴zv+m×lv[zv+m←zv≠lc-1]≤rv
 }
 iou←where ambiv interval_idx
 

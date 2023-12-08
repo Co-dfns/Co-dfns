@@ -47,6 +47,10 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆intervalindex∆19_TEST←'intervalindex' MK∆T2 (0 2 4)(⍳5)
 ∆intervalindex∆20_TEST←'intervalindex' MK∆T2 (0 0 0 2 2)(⍳5)
 ∆intervalindex∆21_TEST←'intervalindex' MK∆T2 (0 4 4)(⍳5)
+∆intervalindex∆22_TEST←'intervalindex' MK∆T2 (0 1 2)(5 6⍴⍳30)
+∆intervalindex∆23_TEST←'intervalindex' MK∆T2 (0 2 4)(5 6⍴⍳30)
+∆intervalindex∆24_TEST←'intervalindex' MK∆T2 (0 0 0 2 2)(5 6⍴⍳30)
+∆intervalindex∆25_TEST←'intervalindex' MK∆T2 (0 4 4)(5 6⍴⍳30)
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
