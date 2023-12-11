@@ -3,7 +3,7 @@
 ## Synopsis
 
 	target←<module name> codfns.Fix <namespace script>
-	]codfns.compile <namespace> <target> [-af={cpu,opencl,cuda}]
+	]codfns.compile <namespace> <target>
 	(depth type kind name src_start src_end) symbols source←codfns.TK 'line1' 'line2' ...
         (depth type kind name src_start src_end) symbols source←codfns.TK 'source code ...'
 	(parent depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
@@ -21,7 +21,6 @@ Argument  | Description
 --------- | -----------
 namespace | The name of a compilable namespace defined in the current workspace. The compiler will attempt to compile this namespace.
 target    | The name the compiler should give to the compiled Co-dfns module. Upon compilation, a namespace called `<target>` will be created and linked to the compiled module.
--af       | Specify a specific backend to use. Valid options are: cpu, cuda, opencl. If this option is omitted, then the Co-dfns compiled object will attempt to auto-detect the fastest backend to use at runtime.
 
 ### Namespace Options and Functions
 
@@ -30,8 +29,7 @@ Expression | Description
 Fix        | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
 TK         | The Co-dfns tokenizing function. It takes a vector of character vectors containing a namespace script and tokenizes the code.
 PS         | The Co-dfns parsing function. It takes the output of `TK` and parses the code into an AST.
-AF∆LIB     | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
-AF∆PREFIX  | The location of the ArrayFire library installation for Linux/Mac platforms.
+AF∆PREFIX  | The location of the ArrayFire library installation for Linux/Mac platforms, used by MK∆RTM.
 VERSION    | The version of the compiler. Do not modify this value.
 VS∆PATH    | The path to your Microsoft Visual Studio installation
 
@@ -90,10 +88,10 @@ Compile an empty namespace:
 
 	ns←'gfx'codfns.Fix ':Namespace' ':EndNamespace'
 
-Compile a namespace for CUDA only using the user-command:
+Compile a namespace using the user-command:
 
 	_←⎕NS⍬
-	]compile _ ns -af=cuda
+	]compile _ ns
 
 Compile a basic function to see the system working:
 
@@ -118,12 +116,14 @@ exceed 1 - 10 MB. While recursion and guards are supported, it is best if
 you restrict their use to outer-most functions, since they are significantly
 less efficient on the GPU than APL primitives.
 
+We compile under the assumption that ⎕IO ⎕ML ⎕CT←0 1 0. 
+
 ### Known limitations
 
 The following limitations are known to exist:
 
 * User-command interface does not work with namespace global variables
-* User-defined operators are not exported
+* We do not make DWA or C wrappers for User-defined operators
 * Trains are not currently supported
 * Binomial is not implemented correctly for some values
 * Selective assignment is not supported yet
@@ -138,12 +138,10 @@ The following limitations are known to exist:
 * Spawn (&) is not supported
 * 128-bit floating point values are not supported
 * Variant (⍠) is not supported
-* Key (⌸) is not supported
 * Inverse (⍣¯1) is not supported
 * Execute (⍎) is not supported
 * Only ⎕NC, ⎕SIGNAL, and ⎕DR are supported Dyalog system functions
 * Objects/Classes are not supported in the system
-* `⎕IO ⎕ML ⎕CT` are fixed at `0 1 0`
 
 ## Authors
 
