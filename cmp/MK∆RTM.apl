@@ -1,6 +1,6 @@
 ∇ {LIB}MK∆RTM path;src;vsbat;vsc;gcc;clang;codfns_h;CR;LF;data;header
 
-  ⍎'LIB←AF∆LIB'⌿⍨0=⎕NC'LIB'
+  ⍎'LIB←'''''⌿⍨0=⎕NC'LIB'
 
   src←⊃⎕NGET path,'/rtm/prim.apln'
   echo←{⍺←⊢ ⋄ ⍺ ⍺⍺ ⍵⊣⍞←⍵⍵}
