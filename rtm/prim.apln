@@ -905,15 +905,13 @@ at←{⍺←⊢
 }
 
 ⍝ ⌸: Key operator
-key←{fn←⍺⍺ ⋄ ⎕SIGNAL 16}
-⍝	0=⎕NC'⍺':⍵ ∇⍳≢⍵
-⍝	3=⎕NC'⍺⍺':⍺(⊣⍺⍺∘(⌿∘⍵)⍤¯1 1≡⍤99 ¯1⍤¯1 99)⍨∪⍺
-⍝
-⍝	mask←(≢≥⍳∘⍺)⍺⍺  ⍝ high-rank ∊
-⍝	keys←⍺⍺⍪mask⌿⍺
-⍝	vals←(-≢keys)↑mask⌿⍵
-⍝
-⍝	1↓¨keys{⊂⍵}∇∇ vals
-⍝}
+key←{op←⍺⍺ ⋄ ⍺←⊢ 
+	1≡⍺ 1:⍵ ∇⍳≢⍵
+	1<≢⍴⍺:⎕SIGNAL 16
+	(≢⍺)≢≢⍵:⎕SIGNAL 5
+	3=⎕NC'⍺⍺':↑(m⌿⍺)op¨(m←≠(⊂i)⌷⍺)⊂[0](⊂i←⍋⍺)⌷⍵
+	m←(≢op)≥op⍳⍺ ⋄ k←op⍪m⌿⍺ ⋄ v←(-≢k)↑m⌿⍵
+	1↓¨k{⊂⍵}∇∇ v
+}
 
 :EndNamespace
