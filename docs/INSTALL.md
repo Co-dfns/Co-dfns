@@ -67,6 +67,17 @@ You need to build the runtime for the compiler if you wish to use it.
 This will build the runtime in `rtm/` and also copy the necessary distributables 
 to the `tests/` directory so that you can run the test suite.
 
+By default, the runtime will be linked against the Unifed ArrayFire backend. 
+However, if you wish to select a specific backend, you can provide one of the 
+following left arguments to MK∆RTM:
+
+	'cpu'		CPU Backend
+	'opencl'	OpenCL (Make sure to have good drivers!)
+	'cuda'		CUDA backend (Must have a CUDA capable GPU)
+
+Other backends may be possible depending on the specific version of ArrayFire
+that you have installed.
+
 ## Compiling a namespace
 
 You can compile a namespace script using the following:
