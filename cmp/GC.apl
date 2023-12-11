@@ -428,7 +428,7 @@ GC←{
 	pref,←⊂''
 	
 	⍝ Export functions
-	i←⍸(t=B)∧(k=2)∧k[p]=0
+	i←⍸(t=B)∧(k=2)∧(t[p]=F)∧k[p]=0
 	exp←⊃⍪⌿{
 		fn ns←var_names ⍵,p[⍵]
 		fnv←⊃var_values ⍵
