@@ -44,6 +44,8 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[Co-dfns Update 2023 // Aaron Hsu // Dyalog '23](https://www.youtube.com/watch?v=6yfBlNKw7Ug)
+
 [U-Net CNN in APL: Exploring Zero-Framework, Zero-Library Machine Learning. ARRAY 2023.](https://dl.acm.org/doi/10.1145/3589246.3595371)
 
 [Implementing the Convolutional Neural Network U-Net in APL, Dyalog User Meeting 2022](https://dyalog.tv/Dyalog22/?v=LQz1b14YYiI)
