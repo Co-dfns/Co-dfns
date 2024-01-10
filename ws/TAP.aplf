@@ -1,0 +1,6 @@
+TAP←{
+	⎕CT←0
+        path←'./t',(1 0⍕(4⍴10)⊤⍵),'_*.apln'
+        suite←⎕SE.SALT.Load ⊃⊃0⎕NINFO⍠1⊢path
+	suite.TEST
+}
