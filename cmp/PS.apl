@@ -23,8 +23,9 @@ PS←{
 	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸t[p]∊T F
 	'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
 	
-	⍝ The first line in a trad-fn is an H node
-	t[⍸(≠p)∧t[p]=T]←H
+	⍝ Parse the first line of a trad-fn as an H node
+	t[⍸(≠p)∧t[p]=T]←H ⋄ n[⍸t=T]←n[⍸msk←t[p]=H]
+	n t k pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)(~msk)⌿p
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
 	_←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(t[p]=Z)∧p≠⍳≢p⊣msk←t≠Z
