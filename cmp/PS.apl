@@ -19,9 +19,12 @@ PS←{
 	_←(gz 1⌽⊢)¨(t[i]=Z)⊂i←⍸d=0
 	'Non-Z top-level node'assert t[⍸p=⍳≢p]=Z:
 
-	⍝ Wrap all dfns expression bodies as Z nodes
-	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸t[p]=F
+	⍝ Wrap all function expression bodies as Z nodes
+	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸t[p]∊T F
 	'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
+	
+	⍝ The first line in a trad-fn is an H node
+	t[⍸(≠p)∧t[p]=T]←H
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
 	_←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(t[p]=Z)∧p≠⍳≢p⊣msk←t≠Z
