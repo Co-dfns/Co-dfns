@@ -108,15 +108,18 @@ TK←{
 	0≠⊃tm←¯1⌽≠⍀tm:'UNBALANCED TRAD-FNS'SIGNAL lineof pos[⊃⌽⍸2<⌿0⍪tm]
 	msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0
 	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL lineof msk⌿pos
+	
+	⍝ Parse trad-fns into T type
+	t[⍸msk←2<⌿tm⍪0]←T ⋄ d+←tm∧~msk
 
 	⍝ Identify colons belonging to Labels
-	t[⍸tm∧(d=0)∧∊(<⍀∧∘~⊃)¨':'=(t=Z)⊂x]←L
+	t[⍸tm∧(d=1)∧∊(<⍀∧∘~⊃)¨':'=(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
-	ki←⍸(t=0)∧(d=0)∧(':'=x)∧1⌽t=V
+	ki←⍸((':'=x)∧1⌽t=V)∧msk←(t=0)∧(d=0)∨tm∧d=1
 	t[ki]←K ⋄ end[ki]←end[ki+1] ⋄ t[ki+1]←0
 	ERR←'EMPTY COLON IN NON-DFNS CONTEXT, EXPECTED LABEL OR KEYWORD'
-	∨⌿msk←(t=0)∧(d=0)∧':'=x:ERR SIGNAL msk⌿pos
+	∨⌿msk←msk∧':'=x:ERR SIGNAL msk⌿pos
 
 	⍝ Tokenize system variables
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
