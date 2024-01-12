@@ -24,6 +24,17 @@ TAP←{⍺←⊢ ⋄ (0∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok 
  TAP lx=4 0 0
  TAP pos end=(0 12 13)(31 17 15)
  TAP xn xt≡¨(,⊂'FN')(,1)
+ ⎕←''
+ 
+ TAP PARSE NS '∇FN X' '∇'
+ TAP t=CD.(F T H V)
+ TAP p d=(0 0 1 2)(0 1 2 3)
+ TAP k=0 2 1 1
+ TAP n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'X')
+ TAP lx=4 0 0 1
+ TAP pos end=(0 12 13 16)(33 19 17 17)
+ TAP xn xt≡¨(,⊂'FN')(,2)
+ ⎕←''
 ∇
 
 :EndNamespace

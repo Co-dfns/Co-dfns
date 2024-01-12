@@ -24,8 +24,13 @@ PS←{
 	'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
 	
 	⍝ Parse the first line of a trad-fn as an H node
-	t[⍸(≠p)∧t[p]=T]←H ⋄ n[i←⍸t=T]←n[⍸msk←t[p]=H] ⋄ k[i]←1
-	n t k pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)(~msk)⌿p
+	t[⍸(≠p)∧t[p]=T]←H
+	_←p[i]{ti←p[⍺]
+		(,V)≡t[⍵]:⍺{n[ti]←n[⍵] ⋄ k[⍵]←¯1 ⋄ k[ti]←1 ⋄ k[⍺]←0}⍵
+		V V≡t[⍵]:⍺{n[ti]←n[⊃⍵] ⋄ k[⍵]←1 ⋄ k[⊃⍵]←¯1 ⋄ k[ti]←2 ⋄ k[⍺]←1}⍵
+		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
+	0}⌸i←⍸t[p]=H
+	n t k pos end⌿⍨←⊂msk←(t=V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
 	_←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(t[p]=Z)∧p≠⍳≢p⊣msk←t≠Z
@@ -106,7 +111,7 @@ PS←{
 	}⍬
 
 	⍝ We use vb to link variables to their binding
-	vb←¯1⍴⍨≢p
+	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸t[p]=H
 	
 	⍝ Treat ⍺ as V node for assignment parsing
 	t[⍸n=¯2]←V
@@ -142,9 +147,9 @@ PS←{
 	mk←{⍺[⍵],⍪n[⍵]}
 	fb,←¯1⊣fr←rf mk⊢fb←fb[∪⍳⍨rf mk⊢fb←⊖fb[∪⍳⍨rz mk⊢fb←⊖⍸t[0⌈vb]=B]]
 
-	⍝ Mark lexical scope of non-variable primitives
-	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3
-	lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
+	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
+	lx←(≢p)⍴0 ⋄ lx[⍸t[p]=H]←1 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
+	
 	
 	⍝ Link local variables with their local bindings
 	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
