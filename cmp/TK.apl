@@ -116,10 +116,10 @@ TK←{
 	t[⍸tm∧(d=1)∧∊(<⍀∧∘~⊃)¨':'=(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
-	ki←⍸((':'=x)∧1⌽t=V)∧msk←(t=0)∧(d=0)∨tm∧d=1
+	ki←⍸((':'=x)∧1⌽t=V)∧(t=0)∧msk←(d=0)∨tm∧d=1
 	t[ki]←K ⋄ end[ki]←end[ki+1] ⋄ t[ki+1]←0
 	ERR←'EMPTY COLON IN NON-DFNS CONTEXT, EXPECTED LABEL OR KEYWORD'
-	∨⌿msk←msk∧':'=x:ERR SIGNAL msk⌿pos
+	∨⌿msk←msk∧(t=0)∧':'=x:ERR SIGNAL msk⌿pos
 
 	⍝ Tokenize system variables
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
