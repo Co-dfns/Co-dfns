@@ -188,7 +188,7 @@ TK←{
 
 	⍝ Kinds of atoms, characters, numbers, primitives, and system variables
 	k[⍸(t∊A C N)∨(t=S)∧n∊SYSV]←1
-	k[⍸(n∊,¨prmfs)∨(t=S)∧n∊SYSF]←2
+	k[⍸((t=P)∧n∊,¨prmfs)∨(t=S)∧n∊SYSF]←2
 	k[⍸(n∊,¨prmmo,⊂'∘.')∨(t=S)∧n∊SYSM]←3
 	k[⍸(n∊,¨prmdo)∨(t=S)∧n∊SYSD]←4
 	k[⍸n∊,¨prmfo]←5

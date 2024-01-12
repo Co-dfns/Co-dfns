@@ -11,10 +11,19 @@ TAP←{⍺←⊢ ⋄ (0∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok 
  Z←(⊂':Namespace'),src,⊂':EndNamespace'
 ∇
 
-∇{Z}←TEST;src;p;d;t;k;n;lx;pos;end;xn;xt;sym;IN
+∇{Z}←TEST;src;p;d;t;k;n;lx;pos;end;xn;xt;sym;IN;CD
  Z←⍪⍬
  
+ CD←##.codfns
+ 
  TAP PARSE NS '∇FN' '∇'
+ TAP t=CD.(F T H)
+ TAP p d=(0 0 1)(0 1 2)
+ TAP k=0 1 0
+ TAP n=0 (-sym⍳⊂'FN') 0
+ TAP lx=4 0 0
+ TAP pos end=(0 12 13)(31 17 15)
+ TAP xn xt≡¨(,⊂'FN')(,1)
 ∇
 
 :EndNamespace

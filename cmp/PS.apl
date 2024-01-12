@@ -24,7 +24,7 @@ PS←{
 	'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
 	
 	⍝ Parse the first line of a trad-fn as an H node
-	t[⍸(≠p)∧t[p]=T]←H ⋄ n[⍸t=T]←n[⍸msk←t[p]=H]
+	t[⍸(≠p)∧t[p]=T]←H ⋄ n[i←⍸t=T]←n[⍸msk←t[p]=H] ⋄ k[i]←1
 	n t k pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)(~msk)⌿p
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
@@ -230,7 +230,7 @@ PS←{
 	}⍬
 	
 	⍝ Compute exports
-	msk←(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
+	msk←(t=T)∨(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
 	xn←sym[|msk⌿n] ⋄ xt←msk⌿k
 
 	⍝ Parse plural value sequences to A7 nodes
