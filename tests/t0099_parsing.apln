@@ -7,10 +7,14 @@ TAP←{⍺←⊢ ⋄ (0∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok 
  Z←1
 ∇
 
+∇Z←NS src
+ Z←(⊂':Namespace'),src,⊂':EndNamespace'
+∇
+
 ∇{Z}←TEST;src;p;d;t;k;n;lx;pos;end;xn;xt;sym;IN
  Z←⍪⍬
  
- TAP PARSE '∇FN' '∇'
+ TAP PARSE NS '∇FN' '∇'
 ∇
 
 :EndNamespace
