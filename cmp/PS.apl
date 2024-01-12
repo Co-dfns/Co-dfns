@@ -26,8 +26,9 @@ PS←{
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
 	_←p[i]{ti←p[⍺]
-		(,V)≡t[⍵]:⍺{n[ti]←n[⍵] ⋄ k[⍵]←¯1 ⋄ k[ti]←1 ⋄ k[⍺]←0}⍵
-		V V≡t[⍵]:⍺{n[ti]←n[⊃⍵] ⋄ k[⍵]←1 ⋄ k[⊃⍵]←¯1 ⋄ k[ti]←2 ⋄ k[⍺]←1}⍵
+		(,V)≡t[⍵]:⍺{n[ti]←n[⍵] ⋄ k[⍵,ti,⍺]←¯1 1 0}⍵
+		V V≡t[⍵]:⍺{n[ti]←n[⊃⍵] ⋄ k[⍵,ti,⍺]←¯1 1 2 1}⍵
+		V V V≡t[⍵]:⍺{n[ti]←n[1⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 1 2 4}⍵
 		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
 	0}⌸i←⍸t[p]=H
 	n t k pos end⌿⍨←⊂msk←(t=V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
