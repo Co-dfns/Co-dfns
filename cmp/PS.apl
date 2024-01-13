@@ -29,9 +29,10 @@ PS←{
 		(,V)≡t[⍵]:⍺{n[ti]←n[⍵] ⋄ k[⍵,ti,⍺]←¯1 1 0}⍵
 		V V≡t[⍵]:⍺{n[ti]←n[⊃⍵] ⋄ k[⍵,ti,⍺]←¯1 1 2 1}⍵
 		V V V≡t[⍵]:⍺{n[ti]←n[1⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 1 2 4}⍵
+		V P V V V≡t[⍵]:⍺{n[ti]←n[3⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 1 ¯1 1 2 13}⍵
 		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
 	0}⌸i←⍸t[p]=H
-	n t k pos end⌿⍨←⊂msk←(t=V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+	n t k pos end⌿⍨←⊂msk←(t∊P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
 	_←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(t[p]=Z)∧p≠⍳≢p⊣msk←t≠Z
