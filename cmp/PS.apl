@@ -29,6 +29,8 @@ PS←{
 		(,V)≡t[⍵]:⍺{n[ti]←n[⍵] ⋄ k[⍵,ti,⍺]←¯1 1 0}⍵
 		V V≡t[⍵]:⍺{n[ti]←n[⊃⍵] ⋄ k[⍵,ti,⍺]←¯1 1 2 1}⍵
 		V V V≡t[⍵]:⍺{n[ti]←n[1⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 1 2 4}⍵
+		V P V≡t[⍵]:⍺{n[ti]←n[2⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 ¯1 1 9}⍵
+		V P V V≡t[⍵]:⍺{n[ti]←n[2⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 ¯1 1 2 10}⍵
 		V P V V V≡t[⍵]:⍺{n[ti]←n[3⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 1 ¯1 1 2 13}⍵
 		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
 	0}⌸i←⍸t[p]=H

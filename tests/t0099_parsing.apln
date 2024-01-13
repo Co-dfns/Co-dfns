@@ -46,6 +46,26 @@ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'
  TAP xn xt≡¨(,⊂'FN')(,2)
  ⎕←''
  
+ TAP PARSE NS '∇Z←FN' '∇'
+ TAP t=CD.(F T H V)
+ TAP p d=(0 0 1 2)(0 1 2 3)
+ TAP k=0 1 9 1
+ TAP n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
+ TAP lx=4 0 0 1
+ TAP pos end=(0 11 12 12)(32 18 16 13)
+ TAP xn xt≡¨(,⊂'FN')(,1)
+ ⎕←''
+ 
+ TAP PARSE NS '∇Z←FN X' '∇'
+ TAP t=CD.(F T H V V)
+ TAP p d=(0 0 1 2 2)(0 1 2 3 3)
+ TAP k=0 2 10 1 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
+ TAP lx=4 0 0 1 1
+ TAP pos end=(0 11 12 12 17)(34 20 18 13 18)
+ TAP xn xt≡¨(,⊂'FN')(,2)
+ ⎕←''
+ 
  TAP PARSE NS '∇Z←X FN Y' '∇'
  TAP t=CD.(F T H V V V)
  TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
@@ -55,6 +75,7 @@ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'
  TAP pos end=(0 11 12 12 14 19)(36 22 20 13 15 20)
  TAP xn xt≡¨(,⊂'FN')(,2)
  ⎕←''
+
 ∇
 
 :EndNamespace
