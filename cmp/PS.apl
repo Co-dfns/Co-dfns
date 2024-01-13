@@ -25,15 +25,18 @@ PS←{
 	
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
-	_←p[i]{ti←p[⍺]
-		(,V)≡t[⍵]:⍺{n[ti]←n[⍵] ⋄ k[⍵,ti,⍺]←¯1 1 0}⍵
-		V V≡t[⍵]:⍺{n[ti]←n[⊃⍵] ⋄ k[⍵,ti,⍺]←¯1 1 2 1}⍵
-		V V V≡t[⍵]:⍺{n[ti]←n[1⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 1 2 4}⍵
-		V P V≡t[⍵]:⍺{n[ti]←n[2⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 ¯1 1 9}⍵
-		V P V V≡t[⍵]:⍺{n[ti]←n[2⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 ¯1 1 2 10}⍵
-		V P V V V≡t[⍵]:⍺{n[ti]←n[3⊃⍵] ⋄ k[⍵,ti,⍺]←1 ¯1 1 ¯1 1 2 13}⍵
+	ERR←'UNEXPECTED TOKEN IN TRAD-FNS HEADER'
+	_←p[i]{ti←p[⍺] ⋄ ki←⍵,ti,⍺
+		nt←'←()V'['←()'⍳⊃¨sym[|n[⍵]]]
+		∨⌿msk←(nt='V')∧t[⍵]≠V:ERR SIGNAL SELECT msk⌿⍵
+		nt≡,'V':n[ti]←n[⍵]⊣k[ki]←¯1 1 0
+		nt≡'VV':n[ti]←n[⊃⍵]⊣k[ki]←¯1 1 2 1
+		nt≡'VVV':n[ti]←n[1⊃⍵]⊣k[ki]←1 ¯1 1 2 4
+		nt≡'V←V':n[ti]←n[2⊃⍵]⊣k[ki]←1 ¯1 ¯1 1 9
+		nt≡'V←VV':n[ti]←n[2⊃⍵]⊣k[ki]←1 ¯1 ¯1 1 2 10
+		nt≡'V←VVV':n[ti]←n[3⊃⍵]⊣k[ki]←1 ¯1 1 ¯1 1 2 13
 		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
-	0}⌸i←⍸t[p]=H
+	}⌸i←⍸t[p]=H
 	n t k pos end⌿⍨←⊂msk←(t∊P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
