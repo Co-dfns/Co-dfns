@@ -29,17 +29,18 @@ PS←{
 	_←p[i]{ti←p[⍺] ⋄ ki←ti,⍺,⍵
 		nt←'←()V'['←()'⍳⊃¨sym[|n[⍵]]]
 		∨⌿msk←(nt='V')∧t[⍵]≠V:ERR SIGNAL SELECT msk⌿⍵
-		nt≡,'V'      :n[ti]←n[  ⍵]⊣k[ki]←1  0 ¯1
-		nt≡'VV'      :n[ti]←n[0⊃⍵]⊣k[ki]←2  1 ¯1  1
-		nt≡'VVV'     :n[ti]←n[1⊃⍵]⊣k[ki]←2  4  1 ¯1  1
-		nt≡'V←V'     :n[ti]←n[2⊃⍵]⊣k[ki]←1  9  1 ¯1 ¯1
-		nt≡'V←VV'    :n[ti]←n[2⊃⍵]⊣k[ki]←2 10  1 ¯1 ¯1  1
-		nt≡'V←VVV'   :n[ti]←n[3⊃⍵]⊣k[ki]←2 13  1 ¯1  1 ¯1  1
-		nt≡'(VV)V'   :n[ti]←n[2⊃⍵]⊣k[ki]←3 28 ¯1  2 ¯1 ¯1  1
-		nt≡'V(VV)V'  :n[ti]←n[3⊃⍵]⊣k[ki]←3 31  1 ¯1  2 ¯1 ¯1  1
-		nt≡'V←V(VV)V':n[ti]←n[5⊃⍵]⊣k[ki]←3 40  1 ¯1  1 ¯1  2 ¯1 ¯1 1
-		nt≡'(VVV)V'  :n[ti]←n[2⊃⍵]⊣k[ki]←4 55 ¯1  2 ¯1  2 ¯1  1
-		nt≡'V(VVV)V' :n[ti]←n[3⊃⍵]⊣k[ki]←4 58  1 ¯1  2 ¯1  2 ¯1  1
+		nt≡,'V'       :n[ti]←n[  ⍵]⊣k[ki]←1  0 ¯1
+		nt≡'VV'       :n[ti]←n[0⊃⍵]⊣k[ki]←2  1 ¯1  1
+		nt≡'VVV'      :n[ti]←n[1⊃⍵]⊣k[ki]←2  4  1 ¯1  1
+		nt≡'V←V'      :n[ti]←n[2⊃⍵]⊣k[ki]←1  9  1 ¯1 ¯1
+		nt≡'V←VV'     :n[ti]←n[2⊃⍵]⊣k[ki]←2 10  1 ¯1 ¯1  1
+		nt≡'V←VVV'    :n[ti]←n[3⊃⍵]⊣k[ki]←2 13  1 ¯1  1 ¯1  1
+		nt≡'(VV)V'    :n[ti]←n[2⊃⍵]⊣k[ki]←3 28 ¯1  2 ¯1 ¯1  1
+		nt≡'V(VV)V'   :n[ti]←n[3⊃⍵]⊣k[ki]←3 31  1 ¯1  2 ¯1 ¯1  1
+		nt≡'V←V(VV)V' :n[ti]←n[5⊃⍵]⊣k[ki]←3 40  1 ¯1  1 ¯1  2 ¯1 ¯1 1
+		nt≡'(VVV)V'   :n[ti]←n[2⊃⍵]⊣k[ki]←4 55 ¯1  2 ¯1  2 ¯1  1
+		nt≡'V(VVV)V'  :n[ti]←n[3⊃⍵]⊣k[ki]←4 58  1 ¯1  2 ¯1  2 ¯1  1
+		nt≡'V←V(VVV)V':n[ti]←n[5⊃⍵]⊣k[ki]←4 67  1 ¯1  1 ¯1  2 ¯1  2 ¯1  1
 		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
 	}⌸i←⍸t[p]=H
 	n t k pos end⌿⍨←⊂msk←(t∊0 P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
