@@ -39,6 +39,7 @@ PS←{
 		nt≡'V(VV)V'  :n[ti]←n[3⊃⍵]⊣k[ki]←3 31  1 ¯1  2 ¯1 ¯1  1
 		nt≡'V←V(VV)V':n[ti]←n[5⊃⍵]⊣k[ki]←3 40  1 ¯1  1 ¯1  2 ¯1 ¯1 1
 		nt≡'(VVV)V'  :n[ti]←n[2⊃⍵]⊣k[ki]←4 55 ¯1  2 ¯1  2 ¯1  1
+		nt≡'V(VVV)V' :n[ti]←n[3⊃⍵]⊣k[ki]←4 58  1 ¯1  2 ¯1  2 ¯1  1
 		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
 	}⌸i←⍸t[p]=H
 	n t k pos end⌿⍨←⊂msk←(t∊0 P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
