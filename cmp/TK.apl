@@ -48,7 +48,7 @@ TK←{
 
 	⍝ Remove insignificant whitespace
 	t pos end⌿⍨←⊂~(t=0)∧(⊢∧1⌽⊢)IN[pos]∊WS
-	t pos end⌿⍨←⊂(t≠0)∨(~IN[pos]∊WS)∨⊃¯1 1∧.⌽⊂IN[pos]∊alp,num,'¯⍺⍵⎕.'
+	t pos end⌿⍨←⊂(t≠0)∨(~IN[pos]∊WS)∨⊃¯1 1∧.⌽⊂IN[pos]∊alp,num,'¯⍺⍵⎕.:'
 
 	⍝ Verify all open characters are valid
 	msk←~IN[pos]∊alp,num,syna,synb,prms,WS
@@ -116,10 +116,8 @@ TK←{
 	t[⍸tm∧(d=1)∧∊(<⍀∧∘~⊃)¨':'=(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
-	ki←⍸((':'=x)∧1⌽t=V)∧(t=0)∧msk←(d=0)∨tm∧d=1
-	t[ki]←K ⋄ end[ki]←end[ki+1] ⋄ t[ki+1]←0
-	ERR←'EMPTY COLON IN NON-DFNS CONTEXT, EXPECTED LABEL OR KEYWORD'
-	∨⌿msk←msk∧(t=0)∧':'=x:ERR SIGNAL msk⌿pos
+	t[⍸(':'=x)∧(t=0)∧(d=0)∨tm∧d=1]←K
+	end[ki]←end[1+ki←⍸(t=K)∧1⌽t=V] ⋄ t[ki+1]←0
 
 	⍝ Tokenize system variables
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
@@ -139,18 +137,24 @@ TK←{
 	~∧⌿msk:'CANNOT REPRESENT NUMBER'SIGNAL SELECT ⍸(t=N)⍀~msk
 	n[i]←vals
 	
+	⍝ Split inheritance reference if necessary
+	msk←(t=K)∧¯1⌽(t=V)∧¯1⌽(t=K)∧n∊⊂':class'
+	tm d t n pos end msk⌿⍨←⊂1+msk ⋄ i←⍸2<⌿0⍪msk
+	t[i+1]←V ⋄ n[i]←1↑¨n[i] ⋄ n[i+1]←1↓¨n[i+1] ⋄ end[i]←pos[i+1]←pos[i]+1	
+	
 	⍝ Check that all keywords are valid
 	KW←'NAMESPACE' 'ENDNAMESPACE' 'END' 'IF' 'ELSEIF' 'ANDIF' 'ORIF' 'ENDIF'
 	KW,←'WHILE' 'ENDWHILE' 'UNTIL' 'REPEAT' 'ENDREPEAT' 'LEAVE' 'FOR' 'ENDFOR'
 	KW,←'IN' 'INEACH' 'SELECT' 'ENDSELECT' 'CASE' 'CASELIST' 'ELSE' 'WITH'
 	KW,←'ENDWITH' 'HOLD' 'ENDHOLD' 'TRAP' 'ENDTRAP' 'GOTO' 'RETURN' 'CONTINUE'
-	KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE'
+	KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE' 'CLASS' 'ENDCLASS'
+	KW,←⊂''
 	KW,¨⍨←':' ⋄ KW←⎕C KW
 	msk←~KW∊⍨kws←n⌿⍨km←t=K
 	∨⌿msk:2'UNRECOGNIZED KEYWORD(S)'SIGNAL SELECT ⍸km⍀msk
 
 	⍝ Check that all namespaces/sections are top level
-	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':SECTION' ':ENDSECTION'
+	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':CLASS' ':ENDCLASS' ':SECTION' ':ENDSECTION'(,':')
 	msk←(kws∊nssec)∧km⌿tm
 	∨⌿msk:2'INVALID NAMESPACE/SECTION CONTEXT'SIGNAL SELECT ⍸km⍀msk
 
