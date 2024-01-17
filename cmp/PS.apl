@@ -27,7 +27,7 @@ PS←{
 	t[⍸(≠p)∧t[p]=T]←H
 	ERR←'UNEXPECTED TOKEN IN TRAD-FNS HEADER'
 	_←p[i]{ti←p[⍺] ⋄ ki←ti,⍺,⍵
-		nt←'←()V'['←()'⍳⊃¨sym[|n[⍵]]]
+		nt←'←(){}V'['←(){}'⍳⊃¨sym[|n[⍵]]]
 		∨⌿msk←(nt='V')∧t[⍵]≠V:ERR SIGNAL SELECT msk⌿⍵
 		nt≡,'V'       :n[ti]←n[  ⍵]⊣k[ki]←1  0 ¯1
 		nt≡'VV'       :n[ti]←n[0⊃⍵]⊣k[ki]←2  1 ¯1  1
@@ -41,6 +41,7 @@ PS←{
 		nt≡'(VVV)V'   :n[ti]←n[2⊃⍵]⊣k[ki]←4 25 ¯1  2 ¯1  2 ¯1  1
 		nt≡'V(VVV)V'  :n[ti]←n[3⊃⍵]⊣k[ki]←4 27  1 ¯1  2 ¯1  2 ¯1  1
 		nt≡'V←V(VVV)V':n[ti]←n[5⊃⍵]⊣k[ki]←4 31  1 ¯1  1 ¯1  2 ¯1  2 ¯1  1
+		nt≡'{V}VV'    :n[ti]←n[3⊃⍵]⊣k[ki]←2 33 ¯1  1 ¯1 ¯1  1
 		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
 	}⌸i←⍸t[p]=H
 	n t k pos end⌿⍨←⊂msk←(t∊0 P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p

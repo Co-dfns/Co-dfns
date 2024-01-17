@@ -109,6 +109,9 @@ TK←{
 	msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0
 	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL lineof msk⌿pos
 	
+	⍝ Flatten trad-fns headers
+	d[⍸msk←∊∨⍀¨(t=Z)⊂2<⌿tm⍪0]←0 ⋄ t[⍸msk∧x∊'{}']←P
+	
 	⍝ Parse trad-fns into T type
 	t[⍸msk←2<⌿tm⍪0]←T ⋄ d+←tm∧~msk
 

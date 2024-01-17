@@ -144,6 +144,17 @@ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'
  TAP TOKENIZE ':Class blah :X' ':EndClass'
  TAP TOKENIZE ':Class Blah:X' ':EndClass'
  TAP TOKENIZE ':Class Blah : X' ':EndClass'
+ ⎕←''
+ 
+ TAP PARSE NS '∇{X} FN Y' '∇'
+ TAP t=CD.(F T H V V)
+ TAP p d=(0 0 1 2 2)(0 1 2 3 3)
+ TAP k=0 2 33 1 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XY'
+ TAP lx=4 0 0 1 1
+ TAP pos end=(0 11 12 13 19)(36 22 20 14 20)
+ TAP xn xt≡¨(,⊂'FN')(,2)
+ ⎕←''
  
 ∇
 
