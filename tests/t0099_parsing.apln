@@ -206,6 +206,86 @@ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'
  TAP xn xt≡¨(,⊂'FN')(,4)
  ⎕←''
  
+ TAP PARSE NS '∇{Z}←FN' '∇'
+ TAP t=CD.(F T H V)
+ TAP p d=(0 0 1 2)(0 1 2 3)
+ TAP k=0 1 68 1
+ TAP n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
+ TAP lx=4 0 0 1
+ TAP pos end=(0 11 12 13)(34 20 18 14)
+ TAP xn xt≡¨(,⊂'FN')(,1)
+ ⎕←''
+ 
+ TAP PARSE NS '∇{Z}←FN X' '∇'
+ TAP t=CD.(F T H V V)
+ TAP p d=(0 0 1 2 2)(0 1 2 3 3)
+ TAP k=0 2 69 1 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
+ TAP lx=4 0 0 1 1
+ TAP pos end=(0 11 12 13 19)(36 22 20 14 20)
+ TAP xn xt≡¨(,⊂'FN')(,2)
+ ⎕←''
+ 
+ TAP PARSE NS '∇{Z}←X FN Y' '∇'
+ TAP t=CD.(F T H V V V)
+ TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ TAP k=0 2 71 1 1 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
+ TAP lx=4 0 0 1 1 1
+ TAP pos end=(0 11 12 13 16 21)(38 24 22 14 17 22)
+ TAP xn xt≡¨(,⊂'FN')(,2)
+ ⎕←''
+
+ TAP PARSE NS '∇{Z}←X(L FN)Y' '∇'
+ TAP t=CD.(F T H V V V V)
+ TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ TAP k=0 3 79 1 1 2 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
+ TAP lx=4 0 0 1 1 1 1
+ TAP pos end=(0 11 12 13 16 18 23)(40 26 24 14 17 19 24)
+ TAP xn xt≡¨(,⊂'FN')(,3)
+ ⎕←''
+
+ TAP PARSE NS '∇{Z}←X(L FN R)Y' '∇'
+ TAP t=CD.(F T H V V V V V)
+ TAP p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
+ TAP k=0 4 95 1 1 2 2 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
+ TAP lx=4 0 0 1 1 1 1 1
+ TAP pos end=(0 11 12 13 16 18 23 25)(42 28 26 14 17 19 24 26)
+ TAP xn xt≡¨(,⊂'FN')(,4)
+ ⎕←''
+ 
+ TAP PARSE NS '∇{Z}←{X}FN Y' '∇'
+ TAP t=CD.(F T H V V V)
+ TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ TAP k=0 2 103 1 1 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
+ TAP lx=4 0 0 1 1 1
+ TAP pos end=(0 11 12 13 17 22)(39 25 23 14 18 23)
+ TAP xn xt≡¨(,⊂'FN')(,2)
+ ⎕←''
+
+ TAP PARSE NS '∇{Z}←{X}(L FN)Y' '∇'
+ TAP t=CD.(F T H V V V V)
+ TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ TAP k=0 3 111 1 1 2 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
+ TAP lx=4 0 0 1 1 1 1
+ TAP pos end=(0 11 12 13 17 20 25)(42 28 26 14 18 21 26)
+ TAP xn xt≡¨(,⊂'FN')(,3)
+ ⎕←''
+
+ TAP PARSE NS '∇{Z}←{X}(L FN R)Y' '∇'
+ TAP t=CD.(F T H V V V V V)
+ TAP p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
+ TAP k=0 4 127 1 1 2 2 1
+ TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
+ TAP lx=4 0 0 1 1 1 1 1
+ TAP pos end=(0 11 12 13 17 20 25 27)(44 30 28 14 18 21 26 28)
+ TAP xn xt≡¨(,⊂'FN')(,4)
+ ⎕←''
+ 
 ∇
 
 :EndNamespace
