@@ -25,38 +25,32 @@ PS←{
 	
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
-	ERR←'UNEXPECTED TOKEN IN TRAD-FNS HEADER'
+	∨⌿msk←(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H:'EMPTY RETURN HEADER'SIGNAL SELECT ⍸msk
+	∨⌿msk←(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H:'MISSING SIGNATURE'SIGNAL SELECT ⍸msk
+	∨⌿msk←((t=V)⍱n∊-sym⍳,¨'←(){};')∧t[p]=H:'INVALID TRAD-FNS HEADER TOKEN'SIGNAL SELECT ⍸msk
 	_←p[i]{
-		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]]
-		∨⌿msk←(nt='V')∧t[⍵]≠V:ERR SIGNAL SELECT msk⌿⍵
-		k[⍵⌿⍨nt=';']←¯1 ⋄ nt↑⍨←nt⍳';' ⋄ ti←p[⍺] ⋄ ki←ti,⍺,(≢nt)↑⍵
-		nt≡,'V'           :n[ti]←n[0⊃⍵]⊣k[ki]←1   0 ¯1
-		nt≡'VV'           :n[ti]←n[0⊃⍵]⊣k[ki]←2   1 ¯1  1
-		nt≡'VVV'          :n[ti]←n[1⊃⍵]⊣k[ki]←2   3  1 ¯1  1
-		nt≡'V←V'          :n[ti]←n[2⊃⍵]⊣k[ki]←1   4  1 ¯1 ¯1
-		nt≡'V←VV'         :n[ti]←n[2⊃⍵]⊣k[ki]←2   5  1 ¯1 ¯1  1
-		nt≡'V←VVV'        :n[ti]←n[3⊃⍵]⊣k[ki]←2   7  1 ¯1  1 ¯1  1
-		nt≡'(VV)V'        :n[ti]←n[2⊃⍵]⊣k[ki]←3   9 ¯1  2 ¯1 ¯1  1
-		nt≡'V(VV)V'       :n[ti]←n[3⊃⍵]⊣k[ki]←3  11  1 ¯1  2 ¯1 ¯1  1
-		nt≡'V←V(VV)V'     :n[ti]←n[5⊃⍵]⊣k[ki]←3  15  1 ¯1  1 ¯1  2 ¯1 ¯1 1
-		nt≡'(VVV)V'       :n[ti]←n[2⊃⍵]⊣k[ki]←4  25 ¯1  2 ¯1  2 ¯1  1
-		nt≡'V(VVV)V'      :n[ti]←n[3⊃⍵]⊣k[ki]←4  27  1 ¯1  2 ¯1  2 ¯1  1
-		nt≡'V←V(VVV)V'    :n[ti]←n[5⊃⍵]⊣k[ki]←4  31  1 ¯1  1 ¯1  2 ¯1  2 ¯1  1
-		nt≡'{V}VV'        :n[ti]←n[3⊃⍵]⊣k[ki]←2  33 ¯1  1 ¯1 ¯1  1
-		nt≡'V←{V}VV'      :n[ti]←n[5⊃⍵]⊣k[ki]←2  39  1 ¯1 ¯1  1 ¯1 ¯1  1
-		nt≡'{V}(VV)V'     :n[ti]←n[5⊃⍵]⊣k[ki]←3  43 ¯1  1 ¯1 ¯1  2 ¯1 ¯1  1
-		nt≡'V←{V}(VV)V'   :n[ti]←n[7⊃⍵]⊣k[ki]←3  47  1 ¯1 ¯1  1 ¯1 ¯1  2 ¯1 ¯1 1
-		nt≡'{V}(VVV)V'    :n[ti]←n[5⊃⍵]⊣k[ki]←4  59 ¯1  1 ¯1 ¯1  2 ¯1  2 ¯1  1
-		nt≡'V←{V}(VVV)V'  :n[ti]←n[7⊃⍵]⊣k[ki]←4  63  1 ¯1 ¯1  1 ¯1 ¯1  2 ¯1  2 ¯1  1
-		nt≡'{V}←V'        :n[ti]←n[4⊃⍵]⊣k[ki]←1  68 ¯1  1 ¯1 ¯1 ¯1
-		nt≡'{V}←VV'       :n[ti]←n[4⊃⍵]⊣k[ki]←2  69 ¯1  1 ¯1 ¯1 ¯1  1
-		nt≡'{V}←VVV'      :n[ti]←n[5⊃⍵]⊣k[ki]←2  71 ¯1  1 ¯1 ¯1  1 ¯1  1
-		nt≡'{V}←V(VV)V'   :n[ti]←n[7⊃⍵]⊣k[ki]←3  79 ¯1  1 ¯1 ¯1  1 ¯1  2 ¯1 ¯1 1
-		nt≡'{V}←V(VVV)V'  :n[ti]←n[7⊃⍵]⊣k[ki]←4  95 ¯1  1 ¯1 ¯1  1 ¯1  2 ¯1  2 ¯1  1
-		nt≡'{V}←{V}VV'    :n[ti]←n[7⊃⍵]⊣k[ki]←2 103 ¯1  1 ¯1 ¯1 ¯1  1 ¯1 ¯1  1
-		nt≡'{V}←{V}(VV)V' :n[ti]←n[9⊃⍵]⊣k[ki]←3 111 ¯1  1 ¯1 ¯1 ¯1  1 ¯1 ¯1  2 ¯1 ¯1 1
-		nt≡'{V}←{V}(VVV)V':n[ti]←n[9⊃⍵]⊣k[ki]←4 127 ¯1  1 ¯1 ¯1 ¯1  1 ¯1 ¯1  2 ¯1  2 ¯1  1
-		'INVALID TRAD-FNS HEADER'SIGNAL SELECT ⍵
+		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯1
+		k[⍺]←0 ⋄ n[⍺]←0
+		~∧⌿msk←(nt↓⍨x←nt⍳';')∊'V;':'BAD LOCAL DECLARATION'SIGNAL SELECT msk⌿x↓⍵
+		⊃⌽+⍀('('=nt)-')'=nt←x↑nt:'UNBALANCED HEADER'SIGNAL SELECT (≢nt)↑⍵
+		ti←p[⍺] ⋄ ki←ti,⍺,(≢nt)↑⍵ ⋄ zt st←¯2↑(⊂''),'←'(≠⊆⊢)nt
+		0=≢st:'EMPTY SIGNATURE'SIGNAL SELECT (≢nt)↑⍵
+		k[⍺]+←4×hsz←'←'∊nt ⋄ k[⍺]+←64×shy←'{'=⊃zt ⋄ k[⍺]+←256×stz←'('∊zt
+		~∧⌿'V'=x↓(-x←shy+stz)↓zt:'BAD RETURN SPEC'SIGNAL SELECT (≢zt)↑⍵
+		n[⍺]+←stz×(2*16)×zc←+⌿'V'=zt
+		k[⍺]+←128×str←')'=⊃⌽st ⋄ k[⍺]+←32×amb←'{'=⊃st
+		k[⍺]+←hsr←1<≢st ⋄ n[⍺]+←str×rc←hsr⌈str×+⌿∧⍀'V'=1↓⌽st
+		st←(amb↑1↑1↓st),(3×amb)↓(-rc+2×str)↓st
+		6=cs←(,'V')'VV' '(VV)' 'V(VV)' '(VVV)' 'V(VVV)'⍳⊂st:{
+			'BAD TRAD-FNS HEADER'SIGNAL SELECT (≢nt)↑⍵
+		}⍵
+		k[⍺]+←cs⊃0 2 8 10 24 26
+		fi←zc++⌿1 1 2 2 2 2×(hk←⌽(9⍴2)⊤k[⍺])[1 2 3 5 6 8]
+		k[⍵[fi+1+(⌈⌿1 2×hk[3 4])+str+⍳rc]]←1
+		k[⍵[hk[1]↑fi-1+amb+2×hk[3]]]←1
+		k[⍵[shy+stz+⍳zc]]←1
+		n[p[⍺]]←n[fi⊃⍵] ⋄ k[fi⊃⍵]←¯1 ⋄ k[p[⍺]]←1++⌿hk[0 3 4]
+		0
 	}⌸i←⍸t[p]=H
 	n t k pos end⌿⍨←⊂msk←(t∊0 P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
@@ -422,7 +416,7 @@ PS←{
 	}⍬
 	
 	⍝ Merge simple arrays into single A1 nodes
-	msk←((t=A)∧0=≡¨sym[|n])∧(t[p]=A)∧k[p]=7
+	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
 	k[p[i←⍸msk]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
 	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
