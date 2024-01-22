@@ -41,7 +41,7 @@ assert←{
   
   ⎕THIS.EN←en ⋄ ⎕THIS.DM←en mkdm ⊃N
   dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
-  dmx,←⊂'Message'(msg,CR,quotelines N)
+  dmx,←⊂'Message'((⊢↑⍨(2*20)⌊≢)msg,CR,quotelines N)
   ⎕SIGNAL ⊂dmx
   Z←0
 ∇
