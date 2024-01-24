@@ -130,8 +130,8 @@ TK←{
 
 	⍝ Tokenize labels
 	ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
-	∨⌿msk←(Z≠t[li-1])∨V≠t[li←⍸1⌽t=L]:ERR SIGNAL pos[(msk⌿li)∘.+¯1 0 1]
-	t[li]←L ⋄ end[li]←end[li+1] ⋄ d tm t pos end(⌿⍨)←⊂t≠L
+	∨⌿msk←(Z≠t[li-1])∨V≠t[li←⍸1⌽lm←t=L]:ERR SIGNAL pos[(msk⌿li)∘.+¯1 0 1]
+	t[li]←L ⋄ d tm t pos end(⌿⍨)←⊂~lm
 
 	⍝ With tokens created, reify n field before tree-building
 	n←IN∘I¨pos+⍳¨end-pos
@@ -206,6 +206,6 @@ TK←{
 	⍝ Convert n field to symbols and add a symbol table
 	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
 	n←-sym⍳n
-
+	
 	(d t k n pos end)sym IN
 }

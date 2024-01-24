@@ -23,6 +23,9 @@ PS←{
 	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸t[p]∊T F
 	'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
 	
+	⍝ Lift Labels to their function root level
+	p[i]←p[p[i←⍸t=L]]
+	
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
 	∨⌿msk←(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H:'EMPTY RETURN HEADER'SIGNAL SELECT ⍸msk
