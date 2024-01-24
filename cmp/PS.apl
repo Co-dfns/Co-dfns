@@ -50,8 +50,7 @@ PS←{
 		k[⍵[hk[1]↑fi-1+amb+2×hk[3]]]←1
 		k[⍵[shy+stz+⍳zc]]←1
 		n[p[⍺]]←n[fi⊃⍵] ⋄ k[fi⊃⍵]←¯1 ⋄ k[p[⍺]]←1++⌿hk[0 3 4]
-		0
-	}⌸i←⍸t[p]=H
+	0}⌸i←⍸t[p]=H
 	n t k pos end⌿⍨←⊂msk←(t∊0 P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
