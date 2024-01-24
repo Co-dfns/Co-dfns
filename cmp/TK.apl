@@ -162,10 +162,6 @@ TK←{
 	msk←(kws∊nssec)∧km⌿tm
 	∨⌿msk:2'INVALID NAMESPACE/SECTION CONTEXT'SIGNAL SELECT ⍸km⍀msk
 
-	⍝ Verify that all structured statements appear within trad-fns
-	msk←(kws∊KW~nssec)∧~km⌿tm
-	∨⌿msk:2'STRUCTURED STATEMENT OUTSIDE TRAD-FN' SIGNAL SELECT ⍸km⍀msk
-
 	⍝ Verify system variables used
 	SYSV←,¨'Á' 'A' 'AI' 'AN' 'AV' 'AVU' 'BASE' 'CT' 'D' 'DCT' 'DIV' 'DM'
 	SYSV,←,¨'DMX' 'EXCEPTION' 'FAVAIL' 'FNAMES' 'FNUMS' 'FR' 'IO' 'LC' 'LX'
