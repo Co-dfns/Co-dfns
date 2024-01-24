@@ -116,7 +116,7 @@ TK←{
 	t[⍸msk←2<⌿tm⍪0]←T ⋄ d+←tm∧~msk
 
 	⍝ Identify colons belonging to Labels
-	t[⍸tm∧(d=1)∧∊(<⍀∧∘~⊃)¨':'=(t=Z)⊂x]←L
+	t[⍸tm∧(d=1)∧∊0,¨(<⍀∧∘~⊃)¨':'=1↓¨(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
 	t[⍸(':'=x)∧(t=0)∧(d=0)∨tm∧d=1]←K
