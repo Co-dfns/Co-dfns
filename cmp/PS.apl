@@ -29,6 +29,7 @@ PS←{
 	∨⌿msk←(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H:'MISSING SIGNATURE'SIGNAL SELECT ⍸msk
 	∨⌿msk←((t=V)⍱n∊-sym⍳,¨'←(){};')∧t[p]=H:'INVALID TRAD-FNS HEADER TOKEN'SIGNAL SELECT ⍸msk
 	_←p[i]{
+		0=≢i:0
 		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯1
 		k[⍺]←0 ⋄ n[⍺]←0
 		~∧⌿msk←(nt↓⍨x←nt⍳';')∊'V;':'BAD LOCAL DECLARATION'SIGNAL SELECT msk⌿x↓⍵
