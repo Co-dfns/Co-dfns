@@ -20,11 +20,8 @@ PS←{
 	'Non-Z top-level node'assert t[⍸p=⍳≢p]=Z:
 
 	⍝ Wrap all function expression bodies as Z nodes
-	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸t[p]∊T F
-	'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
-	
-	⍝ Lift Labels to their function root level
-	p[i]←p[p[i←⍸t=L]]
+	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t[p]∊T F)∧~t=L
+	'Non-Z/L dfns body node'assert t[⍸t[p]=F]∊Z L:
 	
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
