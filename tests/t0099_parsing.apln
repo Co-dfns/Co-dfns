@@ -1,6 +1,6 @@
 :Namespace t0099_parsing
 
-TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok - '⍪(4+⊃⍸'TAP'⍷x)↓x←(⎕CR'TEST')[1⊃⎕LC;]}
+TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok - '⍪x⌿⍨~∧⍀' '=x←(3+⊃⍸'TAP'⍷x)↓x←(⎕CR'TEST')[1⊃⎕LC;]}
 
 ∇{Z}←PARSE X
  (p d t k n lx pos end)(xn xt)sym IN←##.codfns.(PS TK) src←X
