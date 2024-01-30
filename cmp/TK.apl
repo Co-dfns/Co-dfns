@@ -1,5 +1,5 @@
-TK←{
-	IN←⍵
+TK←{⍺←⊢
+	IN←⍵ ⋄ ENVN ENVT←⍺⊣⍬ ⍬
 
 	err←'EXPECTED SCALAR OR VECTOR INPUT'
 	1<≢⍴IN:err ⎕SIGNAL 11
@@ -184,7 +184,7 @@ TK←{
 	SYSM←,¨,⊂'VEACH'
 	SYSD←,¨'OPT' 'R' 'S' 'AMBIV'
 	SYSV SYSF SYSM SYSD←⎕C '⎕',¨¨SYSV SYSF SYSM SYSD
-	msk←(t=S)∧~n∊SYSV,SYSF,SYSM,SYSD
+	msk←(t=S)∧~n∊SYSV,SYSF,SYSM,SYSD,⎕C¨ENVN
 	∨⌿msk:'INVALID SYSTEM NAME'SIGNAL SELECT ⍸msk
 
 	⍝ Introduce k field
