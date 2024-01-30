@@ -3,9 +3,9 @@ PS←{
 	
 	⍝ Verify some syntax for some keywords
 	msk←n∊-sym⍳⎕C¨':NAMESPACE' ':ENDNAMESPACE'
-	∨⌿(t≠Z)∧1⌽msk:'KEYWORD DOES NOT BEGIN LINE'SIGNAL SELECT ⍸msk
+	∨⌿msk←(t≠Z)∧1⌽msk:'KEYWORD DOES NOT BEGIN LINE'SIGNAL SELECT ⍸msk
 	msk←n∊-sym⍳⎕C¨⊂':ENDNAMESPACE'
-	∨⌿(t≠Z)∧¯1⌽msk:'KEYWORD DOES NOT END LINE'SIGNAL SELECT ⍸msk
+	∨⌿msk←(t≠Z)∧¯1⌽msk:'KEYWORD DOES NOT END LINE'SIGNAL SELECT ⍸msk
 	ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
 	msk←(Z≠t⌿⍨¯1⌽msk)∧(V≠t⌿⍨¯1⌽msk)∨Z≠t⌿⍨¯2⌽msk←n∊-sym⍳⊂⎕C':NAMESPACE'
 	∨⌿msk:ERR SIGNAL SELECT ⍸msk
