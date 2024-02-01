@@ -2,12 +2,12 @@ PS←{
 	(d t k n pos end)sym IN←⍵ ⋄ WS←⎕UCS 9 32
 	
 	⍝ Verify some syntax for some keywords
-	msk←n∊-sym⍳⎕C¨':NAMESPACE' ':ENDNAMESPACE'
+	msk←(t=K)∧n∊-sym⍳⎕C¨':NAMESPACE' ':ENDNAMESPACE'
 	∨⌿msk←(t≠Z)∧1⌽msk:'KEYWORD DOES NOT BEGIN LINE'SIGNAL SELECT ⍸msk
-	msk←n∊-sym⍳⎕C¨⊂':ENDNAMESPACE'
+	msk←(t=K)∧n∊-sym⍳⎕C¨⊂':ENDNAMESPACE'
 	∨⌿msk←(t≠Z)∧¯1⌽msk:'KEYWORD DOES NOT END LINE'SIGNAL SELECT ⍸msk
 	ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
-	msk←(Z≠t⌿⍨¯1⌽msk)∧(V≠t⌿⍨¯1⌽msk)∨Z≠t⌿⍨¯2⌽msk←n∊-sym⍳⊂⎕C':NAMESPACE'
+	msk←(Z≠t⌿⍨¯1⌽msk)∧(V≠t⌿⍨¯1⌽msk)∨Z≠t⌿⍨¯2⌽msk←(t=K)∧n∊-sym⍳⊂⎕C':NAMESPACE'
 	∨⌿msk:ERR SIGNAL SELECT ⍸msk
 	
 	⍝ Split expressions and lines at Keyword boundaries

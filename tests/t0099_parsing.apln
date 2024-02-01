@@ -386,9 +386,8 @@ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'
  ⎕←''
  
  TAP (,⊂'⎕SOUND')(,⊂2)TOKENIZE NS '∇FN' '⎕SOUND 5' '∇' 
+ TAP PARSE NS '('':namespace'')' ''
  ⎕←''
- 
- 
  
 ∇
 
