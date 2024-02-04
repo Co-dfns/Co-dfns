@@ -18,19 +18,19 @@ TK←{⍺←⊢
 	prms←prmfs,prmmo,prmdo,prmfo
 
 	⍝ Guarantee everything is LF-terminated
-	IN←LF@{⍵=CR}(~CR LF⍷IN)⌿IN←∊(⊆IN),¨⎕UCS 10
+	IN←LF@{⍵=CR}(~CR LF⍷IN)⌿IN←∊(⊆IN),¨LF
 
 	err←'PARSER EXPECTS CHARACTER ARRAY'
 	0≠10|⎕DR IN:err ⎕SIGNAL 11
 
 	⍝ Group input into lines as a nested vector
-	pos←(⍳≢IN)⊆⍨~IN∊CR LF
+	pos←(IN≠LF)⊆⍳≢IN
 
 	⍝ Mask potential strings
 	msk←(''''''∘⍷¨x)∨≠⍀¨''''=x←IN∘I¨pos
 
 	⍝ Remove comments
-	pos msk⌿¨⍨←⊂∧⍀¨(~msk)⍲'⍝'=IN∘I¨pos
+	pos msk⌿¨⍨←⊂∧⍀¨msk∨'⍝'≠IN∘I¨pos
 
 	⍝ Check for unbalanced strings
 	lin←⍸⊃∘⌽¨msk
@@ -41,7 +41,7 @@ TK←{⍺←⊢
 
 	⍝ Tokenize strings
 	end←1+pos ⋄ t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←1+end[⍸2>⌿msk⍪0]
-	t pos end⌿⍨←⊂(t≠0)∨~¯1⌽msk
+	t pos end⌿⍨←⊂(t=0)⍲¯1⌽msk
 
 	⍝ ⋄ should be Z nodes/groups
 	t[⍸'⋄'=IN[pos]]←Z
@@ -68,7 +68,7 @@ TK←{⍺←⊢
 	dm∨←(msk←x∊'Jj')∧(¯1⌽dm)∧1⌽dm
 	dm←dm⍀∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	(msk⌿dm)←∊∧⍀¨(msk←x∊alp,num)⊆dm
-	dm[⍸dm∧(x='.')∧~(¯1⌽dm)∨1⌽dm]←0
+	dm[⍸dm∧(x='.')∧(¯1⌽dm)⍱1⌽dm]←0
 	msk←∨⌿¨dm⊆dm∧(x='.')∧¯1⌽(~dm)∧x∊num
 	∨⌿msk:'AMBIGUOUS PLACEMENT OF NUMERIC FORM'SIGNAL ∊msk⌿dm⊆pos
 	msk←∨⌿¨'.'={1⊃(⍵⊆⍨~⍵∊'Ee'),2⍴⊂''}¨x⊆⍨rm←dm∧~x∊'Jj'
