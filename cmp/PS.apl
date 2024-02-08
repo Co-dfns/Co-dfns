@@ -1,21 +1,6 @@
 PS←{
 	(d t k n pos end)sym IN←⍵ ⋄ WS←⎕UCS 9 32
-	
-	⍝ Verify some syntax for some keywords
-	msk←(t=K)∧n∊-sym⍳⎕C¨':NAMESPACE' ':ENDNAMESPACE'
-	∨⌿msk←(t≠Z)∧1⌽msk:'KEYWORD DOES NOT BEGIN LINE'SIGNAL SELECT ⍸msk
-	msk←(t=K)∧n∊-sym⍳⎕C¨⊂':ENDNAMESPACE'
-	∨⌿msk←(t≠Z)∧¯1⌽msk:'KEYWORD DOES NOT END LINE'SIGNAL SELECT ⍸msk
-	ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
-	msk←(Z≠t⌿⍨¯1⌽msk)∧(V≠t⌿⍨¯1⌽msk)∨Z≠t⌿⍨¯2⌽msk←(t=K)∧n∊-sym⍳⊂⎕C':NAMESPACE'
-	∨⌿msk:ERR SIGNAL SELECT ⍸msk
-	
-	⍝ Split expressions and lines at Keyword boundaries
-	d t k n pos end msk⌿⍨←⊂1+msk←(t=K)∧¯1⌽t≠Z
-	t[i←⍸≠⍀msk]←Z ⋄ k[i]←0 ⋄ n[i]←0
-	j←¯1+i←⍸(t=K)∧d=0 ⋄ t[ij←i,j]←t[ji←j,i] ⋄ k[ij]←k[ji] ⋄ n[ij]←n[ji]
-	pos[ij]←pos[ji] ⋄ end[ij]←end[ji]
-	
+
 	⍝ Compute parent vector from d
 	p←D2P d
 
@@ -31,12 +16,12 @@ PS←{
 	}
 
 	⍝ Nest top-level root lines as Z nodes
-	_←(gz 1⌽⊢)¨(t[i]=Z)⊂i←⍸(d=0)∧t≠K
-	'Non-Z/K top-level node'assert t[⍸p=⍳≢p]∊Z K:
+	_←(gz 1⌽⊢)¨(t[i]=Z)⊂i←⍸d=0
+	'Non-Z top-level node'assert t[⍸p=⍳≢p]=Z:
 
 	⍝ Wrap all function expression bodies as Z nodes
-	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t[p]∊T F)∧~t∊L K
-	'Non-Z/L/K fns body node'assert t[⍸t[p]=F]∊Z L K:
+	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t[p]∊T F)∧~t=L
+	'Non-Z/L dfns body node'assert t[⍸t[p]=F]∊Z L:
 	
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
@@ -77,13 +62,20 @@ PS←{
 
 	⍝ Parse :Namespace syntax into M nodes
 	nss←n∊-sym⍳⎕C⊂':NAMESPACE' ⋄ nse←n∊-sym⍳⎕C⊂':ENDNAMESPACE'
-	t[nsi←⍸nss]←M ⋄ t[nei←⍸nse]←-M
-	n[nsi]←0 ⋄ n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ end[nsi]←end[nei]
+	ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE'
+	∨⌿msk←Z≠t⌿⍨1⌽nss:ERR SIGNAL SELECT ⍸msk
+	ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
+	msk←(Z≠t⌿⍨¯1⌽nss)∧(V≠t⌿⍨¯1⌽nss)∨Z≠t⌿⍨¯2⌽nss
+	∨⌿msk:ERR SIGNAL SELECT ⍸msk
+	ERR←':ENDNAMESPACE KEYWORD MUST APPEAR ALONE ON A LINE'
+	∨⌿msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR SIGNAL SELECT ⍸msk
+	t[nsi←⍸1⌽nss]←M ⋄ t[nei←⍸1⌽nse]←-M
+	n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ end[nsi]←end[nei]
 	x←⍸p=⍳≢p ⋄ d←+⍀(t[x]=M)+-t[x]=-M
-	0<⊃⌽d:':NAMESPACE NOT CLOSED'SIGNAL SELECT x[⊃⌽⍸(d=⊃⌽d)∧2<⌿0⍪d]
-	∨⌿0>d:'EXCESSIVE :ENDNAMESPACE'SIGNAL SELECT x[⊃⍸d<0]
+	0<⊃⌽d:':NAMESPACE NOT CLOSED'SIGNAL lineof pos[x[⊃⌽⍸(d=⊃⌽d)∧2<⌿0⍪d]]
+	∨⌿0>d:'EXCESSIVE :ENDNAMESPACE'SIGNAL lineof pos[x[⊃⍸d<0]]
 	p[x]←x[D2P ¯1⌽d]
-	msk←~nse∨(¯1⌽nss)∨(¯2⌽nss)∧t=V
+	msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Parse guards to (G (Z ...) (Z ...))
