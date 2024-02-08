@@ -227,8 +227,7 @@ PS←{
 
 	⍝ Infer the type of bindings, groups, and variables
 	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	y←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x
-	∨⌿msk←0=≢¨y:{
+	∨⌿msk←0=≢¨y←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x:{
 		EM←'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'
 		EM SIGNAL SELECT ∊msk⌿x
 	}⍬
