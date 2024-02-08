@@ -119,8 +119,10 @@ TK←{⍺←⊢
 	t[⍸tm∧(d=1)∧∊0,¨(<⍀∧∘~⊃)¨':'=1↓¨(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
-	t[⍸(':'=x)∧(t=0)∧(d=0)∨tm∧d=1]←K
-	end[ki]←end[1+ki←⍸(t=K)∧1⌽t=V] ⋄ t[ki+1]←0
+	∨⌿msk←3∧⌿(':'=x)∧t=0:'TOO MANY COLONS'SIGNAL SELECT ⍸msk
+	t[⍸(':'=x)∧t=0]←K
+	ki←⍸(t=K)∧((1⌽t=K)∧~msk)∨(1⌽t=V)∧msk←(d=0)∨tm∧d=1
+	end[ki]←end[1+ki] ⋄ t[ki+1]←0
 
 	⍝ Tokenize system variables
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
@@ -152,7 +154,7 @@ TK←{⍺←⊢
 	KW,←'ENDWITH' 'HOLD' 'ENDHOLD' 'TRAP' 'ENDTRAP' 'GOTO' 'RETURN' 'CONTINUE'
 	KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE' 'CLASS' 'ENDCLASS'
 	KW,←'IMPLEMENTS' 'BASE' 'ACCESS' 'PROPERTY' 'ENDPROPERTY' 'FIELD' 'USING'
-	KW,←⊂''
+	KW,←':' ''
 	KW,¨⍨←':' ⋄ KW←⎕C KW
 	msk←~KW∊⍨kws←n⌿⍨km←t=K
 	∨⌿msk:2'UNRECOGNIZED KEYWORD(S)'SIGNAL SELECT ⍸km⍀msk
