@@ -201,11 +201,8 @@ TK←{⍺←⊢
 	k[⍸n∊⊂'⌶⌶⌶⌶']←¯1
 
 	⍝ Convert n field to symbols and add a symbol table
-	⍝ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
-	⍝ n←-sym⍳n
-	nx←(symhd←('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';')),n
-	nx sym←{((⍋⍋m⌿i)[¯1++⍀m][j])(⍵⌿⍨(⊂j←⍋i)⌷m←1,2≢⌿⍵[i←⍋⍵])}nx
-	n←-(≢symhd)↓nx
+	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
+	n←-sym⍳n
 	
 	(d t k n pos end)sym IN
 }
