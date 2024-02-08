@@ -22,7 +22,7 @@ PS←{
 	⍝ Wrap all function expression bodies as Z nodes
 	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t[p]∊T F)∧~t=L
 	'Non-Z/L dfns body node'assert t[⍸t[p]=F]∊Z L:
-	
+
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
 	∨⌿msk←(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H:'EMPTY RETURN HEADER'SIGNAL SELECT ⍸msk
@@ -119,12 +119,12 @@ PS←{
 
 	⍝ Unify A1, N, and C tokens to A1 nodes
 	t k(⊣@(⍸t∊N C))⍨←A 1
-	
+
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊-sym⍳,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
-	
+
 	⍝ Mark binding primitives
 	bp←n∊-sym⍳,¨'←' '⍠←' '∘←'
 
@@ -136,7 +136,7 @@ PS←{
 
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸t[p]=H
-	
+
 	⍝ Treat ⍺ as V node for assignment parsing
 	t[⍸n=¯2]←V
 
@@ -154,7 +154,7 @@ PS←{
 
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	
+
 	⍝ Return bindable ⍺ to P node
 	t[⍸n=¯2]←P
 
@@ -173,8 +173,7 @@ PS←{
 
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
 	lx←(≢p)⍴0 ⋄ lx[⍸t[p]=H]←1 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
-	
-	
+
 	⍝ Link local variables with their local bindings
 	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
 	vb[j]←fb[fr⍳r  mk⊢j←⍸(t=V)∧vb=¯1]
@@ -190,11 +189,11 @@ PS←{
 		i←⍵⌿⍨k[0⌈r[⍵]]≠0 ⋄ ci←p[r[i]] ⋄ vb[i]←fv←(≢p)+⍳≢i
 		p,←ci ⋄ vb lx,←(≢ci)⍴¨¯1 0 ⋄ rz rf r(⊣,I)←⊂ci
 		t k n pos end(⊣,I)←⊂i
-		
+
 		⍝ Bind new closure variables
 		vb[fv]←fb[fr⍳rf mk⊢fv]
 		vb[fv]←fb[fr⍳r  mk⊢fv←fv⌿⍨vb[fv]=¯1]
-		
+
 		⍝ Continue with remaining unlinked free variables
 		fv⌿⍨vb[fv]=¯1
 	}⍣{0=≢⍺}⍸(t=V)∧vb=¯1
@@ -215,7 +214,7 @@ PS←{
 	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r lx vb rc pos end⌿⍨←⊂x
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
 	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]
-	
+
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
 	ab←r mk⊢i←⍸(bm←t[0⌈vb]=B)∧msk←(n=¯2)∧k[r]∊2+2×⍳7
 	vb[j]←(i,¯1)[ab⍳r mk⊢j←⍸msk∧~bm]
@@ -243,10 +242,10 @@ PS←{
 
 		k[msk⌿z]←|lk⌿⍨msk←¯3 ¯4∊⍨lk←k[⊃∘⌽¨x]
 		z x⌿⍨←⊂~msk
-		
+
 		k[z⌿⍨msk←{(2 3 5∊⍨⊃⍵)∨4=|(⍵,0)[0⍳⍨∧⍀⍵=1]}∘{k[⌽⍵]}¨x]←2
 		z x⌿⍨←⊂~msk
-		
+
 		k[z⌿⍨msk←{(1=|k⌷⍨⊃⍵)∧(V=i⌷t)⍲0=k⌷⍨i←(0⍳⍨∧⍀k[⍵]=1)⌷⍵,0}∘⌽¨x]←1
 		z x⌿⍨←⊂~msk
 
@@ -257,7 +256,7 @@ PS←{
 		msg←'FAILED TYPE INFERENCE'
 		msg SIGNAL SELECT z
 	}⍬
-	
+
 	⍝ Compute exports
 	msk←(t=T)∨(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
 	xn←sym[|msk⌿n] ⋄ xt←msk⌿k
@@ -288,7 +287,7 @@ PS←{
 		msg SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
 	}msk⌿p[j]
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
-	
+
 	⍝ Parse ⌶* nodes to V nodes
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
 	∨⌿msk←(i∊j)∧¯1⌽km∧(t[i]=A)⍲k[i]=1:{
@@ -369,7 +368,7 @@ PS←{
 
 	⍝ SELECTIVE MODIFIED ASSIGNMENT
 	⍝ SELECTIVE ASSIGNMENT
-	
+
 	∨⌿msk←(t=0)∧n=bn←-sym⍳⊂,'←':{
 		msg←'INVALID ASSIGNMENT TARGET'
 		msg SIGNAL SELECT ∊p[i]{⊂⍵⌿⍨⌽∨⍀⌽n[⍵]=bn}⌸i←⍸p∊p[⍸msk]
@@ -389,7 +388,7 @@ PS←{
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
 	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴3 0
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
-	
+
 	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
 	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p⊣msk←(t[p]=Z)⍲k[p]=¯2
@@ -416,7 +415,7 @@ PS←{
 		ERR←'⍠← MUST BE THE LEFTMOST FORM IN AN UNGUARDED EXPRESSION'
 		ERR SIGNAL SELECT ⍸msk
 	}⍬
-	
+
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
