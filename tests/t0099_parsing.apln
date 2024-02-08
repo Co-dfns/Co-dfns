@@ -390,6 +390,14 @@ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'
  TAP PARSE NS '∇FN;⎕IO' '∇'
  ⎕←''
  
+ TAP PARSE NS 'FN←{0:5}' ''
+ TAP t=CD.(F B C F G A A F G A A)
+ ⎕←''
+ 
+ TAP PARSE NS 'FN←{0::5}' ''
+ TAP t=CD.(F F G A A)
+ ⎕←'' 
+ 
 ∇
 
 :EndNamespace
