@@ -61,6 +61,7 @@ TK←{⍺←⊢
 	dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm←x∊num
 	∨⌿msk←1<+⌿¨dm⊆'.'=x:'MULTIPLE . IN FLOAT'SIGNAL ∊msk/dm⊆pos
 	dm∨←('¯'=x)∧1⌽dm
+	∨⌿msk←('¯'=x)∧¯1⌽dm:'¯ CANNOT APPEAR BETWEEN DIGITS'SIGNAL msk⌿pos
 	∨⌿msk←1<+⌿¨dm⊆'¯'=x:'MULTIPLE ¯ IN NUMBER'SIGNAL ∊msk⌿dm⊆pos
 	∨⌿msk←('¯'=x)∧~dm:'ORPHANED ¯'SIGNAL msk⌿pos
 	dm∨←(msk←x∊'Ee')∧(¯1⌽dm)∧1⌽dm

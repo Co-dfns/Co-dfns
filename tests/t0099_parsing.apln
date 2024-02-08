@@ -2,6 +2,8 @@
 
 TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok - '⍪x⌿⍨~∧⍀' '=x←(3+⊃⍸'TAP'⍷x)↓x←(⎕CR'TEST')[1⊃⎕LC;]}
 
+ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
+
 ∇{Z}←{E}PARSE X
  (p d t k n lx pos end)(xn xt)sym IN←##.codfns.(PS TK) src←X
  Z←1
@@ -383,6 +385,9 @@ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'
  TAP PARSE NS '('':namespace'')' ''
  TAP PARSE NS '∇FN;⎕IO' '∇'
  TAP TOKENIZE NS'∇FN' '{5:6}⍬' '∇'
+ TAP TOKENIZE ,⊂'1 ¯2'
+ TAP TOKENIZE ERRS 2 ,⊂'1¯2'
+ TAP TOKENIZE ERRS 2 ,⊂'1.¯2'
  ⎕←''
  
  TAP PARSE NS 'FN←{0:5}' ''
