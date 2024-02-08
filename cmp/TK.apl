@@ -160,7 +160,7 @@ TK←{⍺←⊢
 	∨⌿msk:2'UNRECOGNIZED KEYWORD(S)'SIGNAL SELECT ⍸km⍀msk
 
 	⍝ Check that all namespaces/sections are top level
-	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':CLASS' ':ENDCLASS' ':SECTION' ':ENDSECTION'(,':')
+	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':CLASS' ':ENDCLASS' ':SECTION' ':ENDSECTION'
 	msk←(kws∊nssec)∧km⌿tm
 	∨⌿msk:2'INVALID NAMESPACE/SECTION CONTEXT'SIGNAL SELECT ⍸km⍀msk
 
