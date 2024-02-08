@@ -128,7 +128,7 @@ TK←{⍺←⊢
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
 
 	⍝ Delete all characters we no longer need from the tree
-	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{}:;'
+	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{};'
 
 	⍝ Tokenize labels
 	ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
