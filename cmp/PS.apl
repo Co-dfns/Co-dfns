@@ -80,7 +80,7 @@ PS←{
 
 	⍝ Parse guards to (G (Z ...) (Z ...))
 	_←p[i]{
-		0=+⌿m←':'=IN[pos[⍵]]:⍬
+		0=+⌿m←K=t[⍵]:⍬
 		⊃m:'EMPTY GUARD TEST EXPRESSION'SIGNAL pos[⊃⍵]
 		1<+⌿m:'TOO MANY GUARDS'SIGNAL pos[m⌿⍵]
 		t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
