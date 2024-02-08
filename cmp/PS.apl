@@ -86,6 +86,9 @@ PS←{
 		t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
 		ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←0 ⋄ k[gz cq,ci]←1
 	0}⌸i←⍸t[p[p]]=F
+	
+	⍝ Delete keywords we can't handle
+	t k n pos end⌿⍨←⊂msk←t≠K ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Parse brackets and parentheses into ¯1 and Z nodes
 	_←p[i]{
