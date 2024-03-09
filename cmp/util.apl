@@ -12,38 +12,38 @@ assert←{
 ∇
 
 ∇ {Z}←{MSG}SIGNAL N;CR;LF;linestarts;lineof;mkdm;quotelines;en;msg;dmx
-  CR LF←⎕UCS 13 10
-  linestarts←⍸1⍪IN∊CR LF
- 
-  lineof←{∊b+⍳¨linestarts[l+1]-b←linestarts[l←linestarts⍸⍵]}
- 
-  mkdm←{⍺←2
-  	line←linestarts⍸⍵
-  	no←'[',(⍕1+line),'] '
-  	beg←linestarts[line]
-  	i←(~IN[i]∊CR LF)⌿i←beg+⍳linestarts[line+1]-beg
-  	(⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)
-  }
-  
-  tabify←{1 8[⍺]⌿' '@(⍺⍨)⍵}
-  
-  quotelines←{
-  	lines←∪linestarts⍸,⍵
-  	nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
-  	beg←linestarts[lines] ⋄ end←linestarts[lines+1]
-  	m←∊∘⍵¨i←beg+⍳¨end-beg ⋄ t←(⎕UCS 9)=txt←IN∘I¨i
-  	¯1↓∊nos,(~∘CR LF¨⍪,(t tabify¨txt),⍪t tabify¨' ▔'∘I¨m),CR
-  }
-  
-  →HAS_MSG⌿⍨0≠⎕NC'MSG' ⋄ MSG←2 ''
- 
- HAS_MSG:en msg←¯2↑2,⊆MSG
-  
-  ⎕THIS.EN←en ⋄ ⎕THIS.DM←en mkdm ⊃N
-  dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
-  dmx,←⊂'Message'((⊢↑⍨(2*20)⌊≢)msg,CR,quotelines N)
-  ⎕SIGNAL ⊂dmx
-  Z←0
+	CR LF←⎕UCS 13 10
+	linestarts←⍸1⍪IN∊CR LF
+
+	lineof←{∊b+⍳¨linestarts[l+1]-b←linestarts[l←linestarts⍸⍵]}
+
+	mkdm←{⍺←2
+		line←linestarts⍸⍵
+		no←'[',(⍕1+line),'] '
+		beg←linestarts[line]
+		i←(~IN[i]∊CR LF)⌿i←beg+⍳linestarts[line+1]-beg
+		(⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)
+	}
+
+	tabify←{1 8[⍺]⌿' '@(⍺⍨)⍵}
+
+	quotelines←{
+		lines←∪linestarts⍸,⍵
+		nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
+		beg←linestarts[lines] ⋄ end←linestarts[lines+1]
+		m←∊∘⍵¨i←beg+⍳¨end-beg ⋄ t←(⎕UCS 9)=txt←IN∘I¨i
+		¯1↓∊nos,(~∘CR LF¨⍪,(t tabify¨txt),⍪t tabify¨' ▔'∘I¨m),CR
+	}
+
+	→HAS_MSG⌿⍨0≠⎕NC'MSG' ⋄ MSG←2 ''
+
+	HAS_MSG:en msg←¯2↑2,⊆MSG
+
+	⎕THIS.EN←en ⋄ ⎕THIS.DM←en mkdm ⊃N
+	dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
+	dmx,←⊂'Message'((⊢↑⍨(2*20)⌊≢)msg,CR,quotelines N)
+	⎕SIGNAL ⊂dmx
+	Z←0
 ∇
 
 D2P←{0=≢⍵:⍬ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←⍳≢⍵}
