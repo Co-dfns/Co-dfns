@@ -400,6 +400,9 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  TAP t=CD.(F B V C F G A A F G A A)
  ⎕←''
 
+ TAP PARSE ERRS 2 NS '∇FN;' '∇'
+ TAP PARSE ERRS 2 NS '∇FN;A B' '∇'
+
 ∇
 
 :EndNamespace
