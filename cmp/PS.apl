@@ -20,8 +20,8 @@ PS←{
 	'Non-Z top-level node'assert t[⍸p=⍳≢p]=Z:
 
 	⍝ Wrap all function expression bodies as Z nodes
-	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t[p]∊T F)∧~t=L
-	'Non-Z/L dfns body node'assert t[⍸t[p]=F]∊Z L:
+	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t=L)<t[p]∊T F
+	'Non-Z/L fn body node'assert t[⍸t[p]∊T F]∊Z L:
 
 	⍝ Parse the first line of a trad-fn as an H node
 	t[⍸(≠p)∧t[p]=T]←H
@@ -34,7 +34,7 @@ PS←{
 		0=≢i:0
 		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯99
 		k[⍺]←0 ⋄ n[⍺]←0
-		~∧⌿msk←(nt↓⍨x←nt⍳';')∊'V;':'BAD LOCAL DECLARATION'SIGNAL SELECT msk⌿x↓⍵
+		∨⌿msk←2=⌿0⍪⍨';V'⍳nt↓⍨x←nt⍳';':'BAD LOCAL DECLARATION'SIGNAL SELECT msk⌿x↓⍵
 		⊃⌽+⍀('('=nt)-')'=nt←x↑nt:'UNBALANCED HEADER'SIGNAL SELECT (≢nt)↑⍵
 		ti←p[⍺] ⋄ ki←ti,⍺,(≢nt)↑⍵ ⋄ zt st←¯2↑(⊂''),'←'(≠⊆⊢)nt
 		0=≢st:'EMPTY SIGNATURE'SIGNAL SELECT (≢nt)↑⍵
