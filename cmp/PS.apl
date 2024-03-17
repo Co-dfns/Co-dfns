@@ -32,7 +32,7 @@ PS←{
 	∨⌿msk:'INVALID TRAD-FNS HEADER TOKEN'SIGNAL SELECT ⍸msk
 	_←p[i]{
 		0=≢i:0
-		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯1
+		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯99
 		k[⍺]←0 ⋄ n[⍺]←0
 		~∧⌿msk←(nt↓⍨x←nt⍳';')∊'V;':'BAD LOCAL DECLARATION'SIGNAL SELECT msk⌿x↓⍵
 		⊃⌽+⍀('('=nt)-')'=nt←x↑nt:'UNBALANCED HEADER'SIGNAL SELECT (≢nt)↑⍵
@@ -52,9 +52,9 @@ PS←{
 		k[⍵[fi+1+(⌈⌿1 2×hk[3 4])+str+⍳rc]]←1
 		k[⍵[hk[1]↑fi-1+amb+2×hk[3]]]←1
 		k[⍵[shy+stz+⍳zc]]←1
-		n[p[⍺]]←n[fi⊃⍵] ⋄ k[fi⊃⍵]←¯1 ⋄ k[p[⍺]]←1++⌿hk[0 3 4]
+		n[p[⍺]]←n[fi⊃⍵] ⋄ k[fi⊃⍵]←¯99 ⋄ k[p[⍺]]←1++⌿hk[0 3 4]
 	0}⌸i←⍸t[p]=H
-	n t k pos end⌿⍨←⊂msk←(t∊0 P V)⍲k=¯1 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+	n t k pos end⌿⍨←⊂msk←(t∊0 P V)⍲k=¯99 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Drop/eliminate any Z nodes that are empty or blank
 	_←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(t[p]=Z)∧p≠⍳≢p⊣msk←t≠Z
