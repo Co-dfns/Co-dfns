@@ -6,6 +6,16 @@ f∆←'ptknfsrdx'
 N∆←'∘ABCEFGHKLMNOPSTVZ'
 (A B C E F G H K L M N O P S T V Z)←1+⍳17
 
+Compile←{
+	m←(-≢2⊃⎕NPARTS ⍵)↓⍵
+	_←    ⊃⎕NGET ⍵ 1⊣⍞←'R'
+	_←          TK _⊣⍞←'T'
+	_←a n s src←PS _⊣⍞←'P'
+	_←          TT _⊣⍞←'C'
+	_←        m GC _⊣⍞←'G'
+	          m CX _⊣⍞←'B'
+}
+
 Fix←{
 	_←          TK ⍵⊣⍞←'T'
 	_←a n s src←PS _⊣⍞←'P'
