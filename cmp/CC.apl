@@ -71,8 +71,8 @@ CX←{
 		vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
 		vsc,←'    /OUT:"',⍺,'.exe" > "',⍺,'.log""'
 		
-		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc
-		⎕NEXISTS f←⍺,'.exe':f
+		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc
+		⎕NEXISTS f←⍺,'.exe':f log
 		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
 	'linux'≡ostype:⍺{
@@ -83,8 +83,8 @@ CX←{
 		gcc,←' -L. -o ''',⍺,''' ''',⍺,'.c'' -lcodfns'
 		gcc,←' > ''',⍺,'.log'' 2>&1'
 		
-		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc
-		⎕NEXISTS f←⍺:f
+		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc
+		⎕NEXISTS f←⍺:f log
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 	'mac'≡ostype:⍺{
@@ -96,8 +96,8 @@ CX←{
 		clang,←' -Wl,-rpath,. ./libcodfns.dylib'
 		clang,←' > ''',⍺,'.log'' 2>&1'
 		
-		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
-		⎕NEXISTS f←⍺:f
+		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
+		⎕NEXISTS f←⍺:f log
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 }

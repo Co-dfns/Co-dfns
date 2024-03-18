@@ -13,7 +13,19 @@ Compile←{
 	_←a n s src←PS _⊣⍞←'P'
 	_←          TT _⊣⍞←'C'
 	_←        m GC _⊣⍞←'G'
-	          m CX _⊣⍞←'B'
+	f l←      m CX _⊣⍞←'B'
+	f⊣⎕←l
+}
+
+Exec←{
+	m←(-≢2⊃⎕NPARTS ⍵)↓⍵
+	_←    ⊃⎕NGET ⍵ 1
+	_←          TK _
+	_←a n s src←PS _
+	_←          TT _
+	_←        m GC _
+	f l←      m CX _
+	⎕CMD f
 }
 
 Fix←{
