@@ -27,7 +27,7 @@ debug_trace(int err, const char *file, int line, const char *func,
 	size_t msgcnt;
 	wchar_t *dbg, *fmt;
 	
-	fmt = L"%ws%hs:%d(%hs) %ws\r";
+	fmt = L"%ws%hs:%d(%hs) %ws\n";
 	dbg = L"";
 	
 	if (debug_info)
