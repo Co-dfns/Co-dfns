@@ -474,6 +474,8 @@ GC←{
 	main,←⊂'	};'
 	main,←⊂''
 	main,←⊂'	cdf_main(&ret, NULL, &rgt);'
+	main,←⊂'	release_array(ret);'
+	main,←⊂''
 	main,←⊂'	return 0;'
 	main,←⊂'}'
 	main,←⊂''
