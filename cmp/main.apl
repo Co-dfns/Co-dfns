@@ -36,8 +36,6 @@ Fix←{
 ∇
 
 ∇ Run(cmd input);Convert;in;out;src
- ⍝ Parameters
- ⍝      AF∆LIB        ArrayFire backend to use
   Convert←{⍺(⎕SE.SALT.Load'[SALT]/lib/NStoScript -noname').ntgennscode ⍵}
   in out←input.Arguments
   src←(⊂':Namespace ',out),2↓0 0 0 out Convert ##.THIS.⍎in
