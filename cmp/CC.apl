@@ -73,6 +73,7 @@ CX←{
 		
 		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc
 		⎕NEXISTS f←⍺,'.exe':f log
+		⎕←log
 		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
 	'linux'≡ostype:⍺{
@@ -85,6 +86,7 @@ CX←{
 		
 		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc
 		⎕NEXISTS f←⍺:f log
+		⎕←log
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 	'mac'≡ostype:⍺{
@@ -98,6 +100,7 @@ CX←{
 		
 		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
 		⎕NEXISTS f←⍺:f log
+		⎕←log
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 }
