@@ -461,6 +461,24 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	
+	main ←⊂'int'
+	main,←⊂'main(int argc, char *argv[])'
+	main,←⊂'{'
+	main,←⊂'	static struct cell_array *ret;'
+	main,←⊂'	static int8_t cdat[] = {0};'
+	main,←⊂'	static unsigned int vrefc = 1;'
+	main,←⊂'	static struct cell_array rgt = {'
+	main,←⊂'		CELL_ARRAY, 1, STG_HOST, ARR_BOOL,'
+	main,←⊂'		cdat, &vrefc, 1, 0'
+	main,←⊂'	};'
+	main,←⊂''
+	main,←⊂'	cdf_main(&ret, NULL, &rgt);'
+	main,←⊂'	return 0;'
+	main,←⊂'}'
+	main,←⊂''
+	
+	exp,←{main}⍣(((⊂'cdf_main')∊var_names i)∧1=+⌿(t=F)∧k=0)⊢⍬
 
 	⍝ Warn about nodes that appear which we haven't generated
 	⍞←(∨⌿msk)↑(⎕UCS 10)(⊣,⍨,)⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
