@@ -117,8 +117,7 @@ PS←{
 	t←F@{t=M}t
 
 	⍝ Parse niladic tokens to A0 nodes
-	i←⍸n∊-sym⍳,¨'⎕⍞'
-	p,←i ⋄ t k n pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 0 0
+	t[i←⍸n∊-sym⍳,¨'⎕⍞']←A ⋄ k[i]←0
 
 	⍝ Unify A1, N, and C tokens to A1 nodes
 	t k(⊣@(⍸t∊N C))⍨←A 1
