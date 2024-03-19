@@ -123,7 +123,7 @@ PS←{
 	t k(⊣@(⍸t∊N C))⍨←A 1
 
 	⍝ Mark bindable nodes
-	bm←(t=V)∨(t=A)∧n∊-sym⍳,¨'⎕⍞'
+	bm←(t=V)∨(t=A)∧k=0
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
 
