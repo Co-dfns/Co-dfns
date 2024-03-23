@@ -29,7 +29,7 @@ cast_values_device(struct cell_array *arr, enum array_type type)
 	int err;
 	
 	if (arr->type == ARR_NESTED)
-		CHK(99, fail, L"Unexpected nested device array.");
+		CHK(99, fail, "Unexpected nested device array.");
 	
 	CHKAF(af_cast(&newv, arr->values, array_type_af_dtype(type)), fail);
 	CHKFN(release_array_data(arr), fail);
@@ -60,10 +60,10 @@ cast_values_host(struct cell_array *arr, enum array_type type)
 		reuse = 0;
 	
 	buf = reuse ? arr->values : malloc(out_size + sizeof(int));
-	CHK(buf == NULL, fail, L"Failed to alloc squeeze buffer.");
+	CHK(buf == NULL, fail, "Failed to alloc squeeze buffer.");
 	
 	#define CAST_FAIL(ts, as, fail) \
-		CHK(99, fail, L"Cannot cast" as L" to " ts);
+		CHK(99, fail, "Cannot cast" as " to " ts);
 	#define CAST_LOOP(stmt, tt, at) {			\
 		at *rv = arr->values;				\
 		tt *tv = (tt *)buf;				\
@@ -97,7 +97,7 @@ cast_values_host(struct cell_array *arr, enum array_type type)
 		
 	if (reuse) {
 		buf = realloc(buf, out_size + sizeof(int));
-		CHK(buf == NULL, fail, L"Failed to realloc squeeze.");
+		CHK(buf == NULL, fail, "Failed to realloc squeeze.");
 	} else {
 		CHKFN(release_array_data(arr), fail);
 	}
@@ -139,7 +139,7 @@ cast_values(struct cell_array *arr, enum array_type type)
 		CHKFN(cast_values_host(arr, type), fail);
 		break;
 	default:
-		CHK(99, fail, L"Unexpected storage type.");
+		CHK(99, fail, "Unexpected storage type.");
 	}
 
 fail:
@@ -181,7 +181,7 @@ find_minmax(double *min, double *max,
 	}
 	
 	if (arr->storage != STG_HOST)
-		CHK(99, fail, L"Expected host storage");
+		CHK(99, fail, "Expected host storage");
 	
 	*is_real = 1;
 	*is_int = 1;
@@ -229,7 +229,7 @@ find_minmax(double *min, double *max,
 		})
 		break;
 	default:
-		CHK(99, fail, L"Unexpected array type");
+		CHK(99, fail, "Unexpected array type");
 	}
 	
 	return 0;

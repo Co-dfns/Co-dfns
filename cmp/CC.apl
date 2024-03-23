@@ -19,7 +19,7 @@ CC←{
 		vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
 		vsc,←'    /TLBID:1 /OUT:"',⍺,'.dll" > "',⍺,'.log""'
 		
-		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc
+		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc⊣1 ⎕NDELETE ⍺,'.dll'
 		⎕NEXISTS f←⍺,'.dll':f
 		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
@@ -31,7 +31,7 @@ CC←{
 		gcc,←' -L. -o ''',⍺,'.so'' ''',⍺,'.c'' -lcodfns'
 		gcc,←' > ''',⍺,'.log'' 2>&1'
 		
-		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc
+		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc⊣1 ⎕NDELETE ⍺,'.so'
 		⎕NEXISTS f←⍺,'.so':f
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
@@ -44,8 +44,8 @@ CC←{
 		clang,←' -Wl,-rpath,. ./libcodfns.dylib'
 		clang,←' > ''',⍺,'.log'' 2>&1'
 		
-		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
-		⎕NEXISTS f←⍺,'.so':f
+		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang⊣1 ⎕NDELETE ⍺,'.dylib'
+		⎕NEXISTS f←⍺,'.dylib':f
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 }
@@ -71,7 +71,7 @@ CX←{
 		vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
 		vsc,←'    /OUT:"',⍺,'.exe" > "',⍺,'.log""'
 		
-		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc
+		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc⊣1 ⎕NDELETE ⍺,'.exe'
 		⎕NEXISTS f←⍺,'.exe':f log
 		⎕←log
 		'COMPILE ERROR' ⎕SIGNAL 22
@@ -84,7 +84,7 @@ CX←{
 		gcc,←' -L. -o ''',⍺,''' ''',⍺,'.c'' -lcodfns'
 		gcc,←' > ''',⍺,'.log'' 2>&1'
 		
-		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc
+		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc⊣1 ⎕NDELETE ⍺
 		⎕NEXISTS f←⍺:f log
 		⎕←log
 		'COMPILE ERROR' ⎕SIGNAL 22		
@@ -98,7 +98,7 @@ CX←{
 		clang,←' -Wl,-rpath,. ./libcodfns.dylib'
 		clang,←' > ''',⍺,'.log'' 2>&1'
 		
-		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang
+		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang⊣1 ⎕NDELETE ⍺
 		⎕NEXISTS f←⍺:f log
 		⎕←log
 		'COMPILE ERROR' ⎕SIGNAL 22		

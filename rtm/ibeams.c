@@ -3,6 +3,8 @@
 #include <limits.h>
 #include <math.h>
 #include <string.h>
+#include <stdio.h>
+#include <wchar.h>
 
 #include "internal.h"
 #include "prim.h"
@@ -71,12 +73,12 @@ q_signal_dya(struct cell_array **z,
 	int err;
 	
 	if (!is_char_array(l))
-		CHK(11, fail, L"EXPECTED CHARACTER LEFT ARGUMENT");
+		CHK(11, fail, "EXPECTED CHARACTER LEFT ARGUMENT");
 	
 	if (l->rank > 1)
-		CHK(4, fail, L"EXPECTED VECTOR LEFT ARGUMENT");
+		CHK(4, fail, "EXPECTED VECTOR LEFT ARGUMENT");
 	
-	TRC(16, L"LEFT ARGUMENT NOT SUPPORTED FOR ⎕SIGNAL YET");
+	TRC(16, "LEFT ARGUMENT NOT SUPPORTED FOR ⎕SIGNAL YET");
 
 fail:
 	return err;
@@ -193,16 +195,16 @@ shape_func(struct cell_array **z,
 			if (type < ARR_DBL) 
 				type = ARR_DBL;
 		} else {
-			CHK(10, fail, L"Shape exceeds DBL range");
+			CHK(10, fail, "Shape exceeds DBL range");
 		}
 	}
 	
 	CHK(mk_array(&t, type, STG_HOST, 1), fail,
-	    L"mk_array(&t, type, STG_HOST, 1)");
+	    "mk_array(&t, type, STG_HOST, 1)");
 	
 	t->shape[0] = r->rank;
 	
-	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	CHK(alloc_array(t), fail, "alloc_array(t)");
 	
 #define SHAPE_CASE(vt) {			\
 	vt *shp = t->values;			\
@@ -219,7 +221,7 @@ shape_func(struct cell_array **z,
 	case ARR_INT:SHAPE_CASE(int32_t);
 	case ARR_DBL:SHAPE_CASE(double);
 	default:
-		CHK(99, fail, L"Unexpected type");
+		CHK(99, fail, "Unexpected type");
 	}
 	
 	*z = t;
@@ -267,7 +269,7 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	if (r->type != ARR_BOOL) {
 		#define ANY_ERROR(oper, kind, type, sfx, fail)		\
 			CHK(99, fail,					\
-			    L"Expected Boolean, found " #sfx L" type");
+			    "Expected Boolean, found " #sfx " type");
 		MONADIC_TYPE_SWITCH(r->type, ANY_ERROR,, done);
 	}
 	
@@ -281,7 +283,7 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	}
 	
 	if (r->storage != STG_HOST)
-		CHK(99, done, L"Unknown storage type.");
+		CHK(99, done, "Unknown storage type.");
 	
 	count = array_count(r);
 	vals = r->values;
@@ -342,19 +344,19 @@ disclose_func(struct cell_array **z,
 	
 	t = NULL;
 	
-	CHK(mk_array(&t, r->type, r->storage, 0), fail, L"mk_array");
+	CHK(mk_array(&t, r->type, r->storage, 0), fail, "mk_array");
 	
 	switch (r->storage) {
 	case STG_DEVICE:
 		af_seq idx = {0, 0, 1};
 		CHK(af_index(&t->values, r->values, 1, &idx), fail,
-		    L"af_index");
+		    "af_index");
 		break;
 	case STG_HOST:
-		CHK(fill_array(t, r->values), fail, L"fill_array");
+		CHK(fill_array(t, r->values), fail, "fill_array");
 		break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = t;
@@ -377,9 +379,9 @@ enclose_func(struct cell_array **z,
 	int err;
 	
 	CHK(mk_array(&tmp, ARR_NESTED, STG_HOST, 0), done, 
-	    L"Enclose non-simple array");
+	    "Enclose non-simple array");
 	
-	CHK(fill_array(tmp, &r), done, L"Store array to enclose");
+	CHK(fill_array(tmp, &r), done, "Store array to enclose");
 	retain_cell(r);
 	
 	*z = tmp;
@@ -407,7 +409,7 @@ reshape_func(struct cell_array **z,
 	
 	if (l->rank == 1) {
 		if (l->shape[0] > UINT_MAX)
-			CHK(10, fail, L"Rank exceeds UINT range");
+			CHK(10, fail, "Rank exceeds UINT range");
 
 		rank = (unsigned int)l->shape[0];
 	}
@@ -441,12 +443,12 @@ reshape_func(struct cell_array **z,
 			case ARR_INT:RESHAPE_SHAPE_CASE(int32_t);
 			case ARR_DBL:RESHAPE_SHAPE_CASE(double);
 			default:
-				CHK(99, fail, L"Unexpected shape type");
+				CHK(99, fail, "Unexpected shape type");
 			}
 		
 			break;
 		default:
-			CHK(99, fail, L"Unknown storage type");
+			CHK(99, fail, "Unknown storage type");
 		}
 	}
 	
@@ -518,16 +520,16 @@ reshape_func(struct cell_array **z,
 	
 	if (t->storage == STG_DEVICE) {
 		if (t->type == ARR_NESTED)
-			CHK(99, fail, L"Unexpected nested array");
+			CHK(99, fail, "Unexpected nested array");
 		
 		if (tc > DBL_MAX)
-			CHK(10, fail, L"Count exceeds DBL range");
+			CHK(10, fail, "Count exceeds DBL range");
 		
 		af_seq idx = {0, (double)tc - 1, 1};
 		size_t tiles = (tc + rc - 1) / rc;
 		
 		if (tiles > UINT_MAX)
-			CHK(10, fail, L"Tiles exceed UINT range");
+			CHK(10, fail, "Tiles exceed UINT range");
 		
 		CHKAF(
 		    af_tile(&rvals, r->values, (unsigned int)tiles, 1, 1, 1), 
@@ -539,7 +541,7 @@ reshape_func(struct cell_array **z,
 	}
 
 	if (t->storage != STG_HOST)
-		CHK(99, fail, L"Unexpected storage type");
+		CHK(99, fail, "Unexpected storage type");
 	
 	CHKFN(alloc_array(t), fail);
 	
@@ -626,7 +628,7 @@ veach_monadic(struct cell_array **z,
 	tv	= NULL;
 	
 	if (r->type == ARR_SPAN || r->type == ARR_MIXED)
-		CHK(99, fail, L"Unexpected (SPAN | MIXED) type array");
+		CHK(99, fail, "Unexpected (SPAN | MIXED) type array");
 	
 	CHKFN(array_get_host_buffer(&buf, &fb, r), fail);
 	CHKFN(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail);
@@ -679,7 +681,7 @@ veach_dyadic(struct cell_array **z,
 		
 	if (l->type == ARR_SPAN || r->type == ARR_SPAN ||
 	    l->type == ARR_MIXED || r->type == ARR_MIXED)
-		CHK(99, fail, L"Unexpected (SPAN | MIXED) type array");
+		CHK(99, fail, "Unexpected (SPAN | MIXED) type array");
 		
 	CHKFN(array_get_host_buffer(&lbuf, &fl, l), fail);
 	CHKFN(array_get_host_buffer(&rbuf, &fr, r), fail);
@@ -810,11 +812,11 @@ index_gen_func(struct cell_array **z, struct cell_array *r, struct cell_func *se
 		case ARR_INT:INDEX_GEN_LOOP(int32_t);break;
 		case ARR_DBL:INDEX_GEN_LOOP(double);break;
 		default:
-			CHK(99, fail, L"Unexpected non-real type");
+			CHK(99, fail, "Unexpected non-real type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = t;
@@ -853,7 +855,7 @@ simple_index_offset(size_t *res, struct cell_array *tgt, struct cell_array *l)
 	case ARR_INT:IDX_SIMP_OFFSET(int32_t);break;
 	case ARR_DBL:IDX_SIMP_OFFSET(double);break;
 	default:
-		CHK(99, fail, L"Unexpected non-real type");
+		CHK(99, fail, "Unexpected non-real type");
 	}
 	
 	*res = idx;
@@ -895,16 +897,16 @@ merge_indices(size_t *ic_p, size_t *bc_p, struct cell_array ***idx_p, size_t **s
 		sp = cnt = ci = NULL;
 		
 		idx = calloc(ic, sizeof(struct cell_array *));
-		CHK(idx == NULL, fail, L"Cannot allocate memory for idx");
+		CHK(idx == NULL, fail, "Cannot allocate memory for idx");
 		
 		sp = calloc(ic, sizeof(size_t));
-		CHK(sp == NULL, fail, L"Cannot allocate memory for sp");
+		CHK(sp == NULL, fail, "Cannot allocate memory for sp");
 
 		cnt = calloc(ic, sizeof(size_t));
-		CHK(cnt == NULL, fail, L"Cannot allocate memory for cnt");
+		CHK(cnt == NULL, fail, "Cannot allocate memory for cnt");
 
 		ci = calloc(ic, sizeof(size_t));
-		CHK(ci == NULL, fail, L"Cannot allocate memory for ci");
+		CHK(ci == NULL, fail, "Cannot allocate memory for ci");
 	}
 	
 	for (size_t i = 0; i < ic; i++) {
@@ -1027,7 +1029,7 @@ index_func(struct cell_array **z,
 			memcpy(arr->values, src + byte_offset, byte_count);
 		}break;
 		default:
-			CHK(99, fail, L"Unknown storage type");
+			CHK(99, fail, "Unknown storage type");
 		}
 		
 		goto done;
@@ -1171,7 +1173,7 @@ index_func(struct cell_array **z,
 	}
 	
 	if (arr->storage != STG_HOST)
-		CHK(99, fail, L"Unknown storage type.");
+		CHK(99, fail, "Unknown storage type.");
 	
 	CHKFN(alloc_array(arr), fail);
 	
@@ -1253,14 +1255,14 @@ set_func(struct cell_array **z,
 	
 	idx_rnk_check = cdf_prim.cdf_idx_rnk_check->value;
 	CHK((idx_rnk_check->fptr_dya)(&arr, tgt, l, idx_rnk_check), fail,
-	    L"z idx_rnk_check ⍺:");
+	    "z idx_rnk_check ⍺:");
 	CHKFN(release_array(arr), fail);arr = NULL;
 	
 	CHKFN(shape_func(&sp, tgt, NULL), fail);
 	
 	idx_rng_check = cdf_prim.cdf_idx_rng_check->value;
 	CHK((idx_rng_check->fptr_dya)(&arr, sp, l, idx_rng_check), fail,
-	    L"(⍴z) idx_rng_check ⍺:");
+	    "(⍴z) idx_rng_check ⍺:");
 	CHKFN(release_array(sp), fail);sp = NULL;
 	CHKFN(release_array(arr), fail);arr = NULL;
 	
@@ -1283,14 +1285,14 @@ set_func(struct cell_array **z,
 			
 			if (zr != r->rank)
 				CHK(4, fail, 
-				    L"Index rank does not match value rank");
+				    "Index rank does not match value rank");
 
 			rsp = r->shape;
 			
 			for (size_t i = 0; i < lc; i++) {
 				size_t lr, *ls;
-				wchar_t msg[] = 
-				    L"Index shape does not match value shape.";
+				char msg[] = 
+				    "Index shape does not match value shape.";
 				
 				if (lv[i]->type == ARR_SPAN) {
 					if (tgt->shape[i] != *rsp++)
@@ -1322,7 +1324,7 @@ set_func(struct cell_array **z,
 		}
 	} else {
 		if (r->rank)
-			CHK(4, fail, L"Non-scalar assigned to scalar index");
+			CHK(4, fail, "Non-scalar assigned to scalar index");
 	}
 	
 	if (tgt->refc > 1) {
@@ -1376,7 +1378,7 @@ set_func(struct cell_array **z,
 				retain_cell(*(struct cell_array **)r->values);
 		}break;
 		default:
-			CHK(99, fail, L"Unknown storage type.");
+			CHK(99, fail, "Unknown storage type.");
 		}
 		
 		goto done;
@@ -1469,11 +1471,11 @@ set_func(struct cell_array **z,
 	}
 	
 	if (tgt->storage == STG_DEVICE) {
-		CHK(16, fail, L"High rank device indexing not finished.");
+		CHK(16, fail, "High rank device indexing not finished.");
 	}
 	
 	if (tgt->storage != STG_HOST)
-		CHK(99, fail, L"Unknown storage type.");
+		CHK(99, fail, "Unknown storage type.");
 	
 	zv = tgt->values;
 	rv = r->values;
@@ -1549,9 +1551,9 @@ mst_oper(struct cell_array **z,
 	
 	CHK(apply_dop(&get_idx_vals, mst_vals,
 	    mst_vals->fptr_fam, mst_vals->fptr_fad, l, oper),
-	    fail, L"get_idx_vals←idx mst_vals op");
+	    fail, "get_idx_vals←idx mst_vals op");
 	CHK((get_idx_vals->fptr_dya)(&idx_vals, *z, r, get_idx_vals), fail,
-	    L"(idx vals)←(*z)(idx mst_vals op)⍵");
+	    "(idx vals)←(*z)(idx mst_vals op)⍵");
 
 	iv = idx_vals->values;
 	idx = iv[0];
@@ -1579,7 +1581,7 @@ monadic_scalar_apply(struct cell_array **z, struct cell_array *r,
 	t = NULL;
 	
 	CHK(mk_array(&t, ARR_SPAN, r->storage, r->rank), fail,
-	     L"mk_array(&t, ARR_SPAN, r->storage, r->rank)");
+	     "mk_array(&t, ARR_SPAN, r->storage, r->rank)");
 		
 	for (unsigned int i = 0; i < r->rank; i++)
 		t->shape[i] = r->shape[i];
@@ -1611,10 +1613,10 @@ dyadic_scalar_apply(struct cell_array **z,
 	
 	t = NULL;
 	
-	CHK(array_promote_storage(l, r), fail, L"array_promote_storage(l, r)");
-	CHK(scl_type(&ztype, l, r), fail, L"scl_type(&ztype, l, r)");
+	CHK(array_promote_storage(l, r), fail, "array_promote_storage(l, r)");
+	CHK(scl_type(&ztype, l, r), fail, "scl_type(&ztype, l, r)");
 	CHK(mk_array(&t, ztype, l->storage, 1), fail, 
-	    L"mk_array(&t, ztype, l->storage, 1)");
+	    "mk_array(&t, ztype, l->storage, 1)");
 	
 	lc = array_values_count(l);
 	rc = array_values_count(r);
@@ -1639,7 +1641,7 @@ dyadic_scalar_apply(struct cell_array **z,
 		type = array_type_af_dtype(etype);
 		
 		if (rc > UINT_MAX || lc > UINT_MAX)
-			CHK(10, fail, L"Count out of range for device");
+			CHK(10, fail, "Count out of range for device");
 		
 		CHKAF(af_tile(&ltile, l->values, ltc, 1, 1, 1), device_done);
 		CHKAF(af_tile(&rtile, r->values, rtc, 1, 1, 1), device_done);
@@ -1662,11 +1664,11 @@ device_done:
 	}
 	
 	if (t->storage != STG_HOST)
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	
-	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	CHK(alloc_array(t), fail, "alloc_array(t)");
 	CHK(scl_host(t, t->shape[0], l, lc, r, rc), fail,
-	    L"scl_host(t, t->shape[0], l, lc, r, rc)");
+	    "scl_host(t, t->shape[0], l, lc, r, rc)");
 
 done:
 	*z = t;
@@ -2067,9 +2069,9 @@ exp_values(struct cell_array *t, struct cell_array *r)
 	}
 	
 	if (r->storage != STG_HOST)
-		CHK(99, done, L"Unknown storage type");
+		CHK(99, done, "Unknown storage type");
 	
-	CHK(alloc_array(t), done, L"alloc_array(t)");
+	CHK(alloc_array(t), done, "alloc_array(t)");
 	
 	size_t count = array_values_count(t);
 	
@@ -2127,9 +2129,9 @@ nlg_values(struct cell_array *t, struct cell_array *r)
 	}
 	
 	if (r->storage != STG_HOST)
-		CHK(99, done, L"Unknown storage type");
+		CHK(99, done, "Unknown storage type");
 	
-	CHK(alloc_array(t), done, L"alloc_array(t)");
+	CHK(alloc_array(t), done, "alloc_array(t)");
 	
 	size_t count = array_values_count(t);
 	
@@ -2162,7 +2164,7 @@ floor_values(struct cell_array *t, struct cell_array *r)
 		break;
 	case STG_HOST:
 		size_t count = array_values_count(t);
-		CHK(alloc_array(t), done, L"alloc_array(t)");
+		CHK(alloc_array(t), done, "alloc_array(t)");
 		
 		double *tv = t->values;
 	
@@ -2171,12 +2173,12 @@ floor_values(struct cell_array *t, struct cell_array *r)
 			MONADIC_SCALAR_LOOP(double, floor(x));
 			break;
 		default:
-			TRC(99, L"Expected double numeric type");
+			TRC(99, "Expected double numeric type");
 		}
 		
 		break;
 	default:
-		TRC(99, L"Unknown storage type");
+		TRC(99, "Unknown storage type");
 	}
 	
 done:
@@ -2199,7 +2201,7 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 		break;
 	case STG_HOST:
 		size_t count = array_values_count(t);
-		CHK(alloc_array(t), done, L"alloc_array(t)");
+		CHK(alloc_array(t), done, "alloc_array(t)");
 		
 		double *tv = t->values;
 	
@@ -2208,12 +2210,12 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 			MONADIC_SCALAR_LOOP(double, ceil(x));
 			break;
 		default:
-			TRC(99, L"Expected double numeric type");
+			TRC(99, "Expected double numeric type");
 		}
 		
 		break;
 	default:
-		TRC(99, L"Unknown storage type");
+		TRC(99, "Unknown storage type");
 	}
 	
 done:
@@ -2232,10 +2234,10 @@ not_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->storage) {
 	case STG_DEVICE:
-		CHK(af_not(&t->values, r->values), done, L"~⍵ ⍝ DEVICE");
+		CHK(af_not(&t->values, r->values), done, "~⍵ ⍝ DEVICE");
 		break;
 	case STG_HOST:
-		CHK(alloc_array(t), done, L"alloc_array(t)");
+		CHK(alloc_array(t), done, "alloc_array(t)");
 
 		size_t count = array_values_count(t);
 		
@@ -2245,7 +2247,7 @@ not_values(struct cell_array *t, struct cell_array *r)
 		
 		break;
 	default:
-		TRC(99, L"Unknown storage type");
+		TRC(99, "Unknown storage type");
 	}
 	
 done:
@@ -2308,7 +2310,7 @@ abs_values(struct cell_array *t, struct cell_array *r)
 		CHKFN(abs_values_host(t, r), fail);
 		break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 
 fail:
@@ -2378,7 +2380,7 @@ factorial_values(struct cell_array *t, struct cell_array *r)
 	int err;
 	
 	if (!is_real_array(r))
-		CHK(16, fail, L"Complex gamma not implemented yet.");
+		CHK(16, fail, "Complex gamma not implemented yet.");
 	
 	t->type = ARR_DBL;
 	
@@ -2390,7 +2392,7 @@ factorial_values(struct cell_array *t, struct cell_array *r)
 		CHKFN(factorial_values_host(t, r), fail);
 		break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 
 fail:
@@ -2409,10 +2411,10 @@ imagpart_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->storage) {
 	case STG_DEVICE:
-		CHK(af_imag(&t->values, r->values), done, L"11○⍵ ⍝ DEVICE");
+		CHK(af_imag(&t->values, r->values), done, "11○⍵ ⍝ DEVICE");
 		break;
 	case STG_HOST:
-		CHK(alloc_array(t), done, L"alloc_array(t)");
+		CHK(alloc_array(t), done, "alloc_array(t)");
 		size_t count = array_values_count(t);
 		
 		double *tv = t->values;
@@ -2421,7 +2423,7 @@ imagpart_values(struct cell_array *t, struct cell_array *r)
 
 		break;
 	default:
-		TRC(99, L"Unknown storage type");
+		TRC(99, "Unknown storage type");
 	}
 	
 done:
@@ -2440,10 +2442,10 @@ realpart_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->storage) {
 	case STG_DEVICE:
-		CHK(af_real(&t->values, r->values), done, L"11○⍵ ⍝ DEVICE");
+		CHK(af_real(&t->values, r->values), done, "11○⍵ ⍝ DEVICE");
 		break;
 	case STG_HOST:
-		CHK(alloc_array(t), done, L"alloc_array(t)");
+		CHK(alloc_array(t), done, "alloc_array(t)");
 		size_t count = array_values_count(t);
 		
 		double *tv = t->values;
@@ -2452,7 +2454,7 @@ realpart_values(struct cell_array *t, struct cell_array *r)
 
 		break;
 	default:
-		TRC(99, L"Unknown storage type");
+		TRC(99, "Unknown storage type");
 	}
 	
 done:
@@ -2493,7 +2495,7 @@ af_done:								\
 		break;							\
 	}								\
 	case STG_HOST:							\
-		CHK(alloc_array(t), done, L"alloc_array(t)");		\
+		CHK(alloc_array(t), done, "alloc_array(t)");		\
 		size_t count = array_values_count(t);			\
 									\
 		double *tv = t->values;					\
@@ -2501,7 +2503,7 @@ af_done:								\
 		MONADIC_TYPE_SWITCH(r->type, TRIG_LOOP, stdc_fun, done);\
 		break;							\
 	default:							\
-		TRC(99, L"Unknown storage type");			\
+		TRC(99, "Unknown storage type");			\
 	}								\
 									\
 done:									\
@@ -2645,7 +2647,7 @@ af_done:
 		break;
 	}
 	default:
-		CHK(99, done, L"Unknown storage type");
+		CHK(99, done, "Unknown storage type");
 	}
 	
 	if (!err)
@@ -2782,7 +2784,7 @@ count_vec_func(struct cell_array **z, struct cell_array *r,
 		sum = (double)accum;
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	return mk_array_real(z, sum);
@@ -2840,11 +2842,11 @@ sum_vec_func(struct cell_array **z, struct cell_array *r,
 			imag = accum.imag;
 		}break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	if (r->type == ARR_CMPX) {
@@ -2920,11 +2922,11 @@ product_vec_func(struct cell_array **z, struct cell_array *r,
 			imag = accum.imag;
 		}break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	if (r->type == ARR_CMPX) {
@@ -2977,11 +2979,11 @@ min_vec_func(struct cell_array **z, struct cell_array *r,
 				real = min_real(real, vals[i]);
 		}break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	return mk_array_real(z, real);
@@ -3029,11 +3031,11 @@ max_vec_func(struct cell_array **z, struct cell_array *r,
 				real = max_real(real, vals[i]);
 		}break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	return mk_array_real(z, real);
@@ -3075,7 +3077,7 @@ all_true_vec_func(struct cell_array **z, struct cell_array *r,
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	return mk_array_int8(z, result);
@@ -3117,7 +3119,7 @@ any_true_vec_func(struct cell_array **z, struct cell_array *r,
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	return mk_array_int8(z, result);
@@ -3202,7 +3204,7 @@ count_array_func(struct cell_array **z, struct cell_array *r,
 			COUNT_ARRAY_LOOP(double, ARR_DBL)
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -3302,11 +3304,11 @@ sum_array_func(struct cell_array **z, struct cell_array *r,
 			SUM_ARRAY_LOOP(struct apl_cmpx, ARR_CMPX, 
 			    struct apl_cmpx, MT_CMPX, cmpx);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -3405,11 +3407,11 @@ product_array_func(struct cell_array **z, struct cell_array *r,
 			PRODUCT_ARRAY_LOOP(struct apl_cmpx, ARR_CMPX, 
 			    struct apl_cmpx, MT_CMPX, cmpx);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -3485,7 +3487,7 @@ all_true_array_func(struct cell_array **z, struct cell_array *r,
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -3561,7 +3563,7 @@ any_true_array_func(struct cell_array **z, struct cell_array *r,
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -3644,11 +3646,11 @@ min_array_func(struct cell_array **z, struct cell_array *r,
 		case ARR_DBL:
 			MIN_ARRAY_LOOP(double, ARR_DBL, DBL_MAX);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -3731,11 +3733,11 @@ max_array_func(struct cell_array **z, struct cell_array *r,
 		case ARR_DBL:
 			MAX_ARRAY_LOOP(double, ARR_DBL, DBL_MIN);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -3799,7 +3801,7 @@ plus_scan_vec_func(struct cell_array **z, struct cell_array *r,
 			dtype = c64;
 			break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 		
 		CHKFN(mk_array(&arr, type, STG_DEVICE, 1), fail);
@@ -3847,11 +3849,11 @@ plus_scan_vec_func(struct cell_array **z, struct cell_array *r,
 			    struct apl_cmpx, cmpx);
 			break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -3916,7 +3918,7 @@ plus_scan_array_func(struct cell_array **z, struct cell_array *r,
 			dtype = c64;
 			break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 		
 		CHKFN(mk_array(&arr, type, STG_DEVICE, 1), fail);
@@ -3988,11 +3990,11 @@ plus_scan_array_func(struct cell_array **z, struct cell_array *r,
 			    struct apl_cmpx, cmpx);
 			break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -4076,11 +4078,11 @@ times_scan_vec_func(struct cell_array **z, struct cell_array *r,
 			    struct apl_cmpx, cmpx);
 			break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -4185,11 +4187,11 @@ times_scan_array_func(struct cell_array **z, struct cell_array *r,
 			    struct apl_cmpx, cmpx);
 			break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -4258,11 +4260,11 @@ min_scan_vec_func(struct cell_array **z, struct cell_array *r,
 		case ARR_INT:MIN_SCAN_VEC_LOOP(int32_t, ARR_INT, real);break;
 		case ARR_DBL:MIN_SCAN_VEC_LOOP(double, ARR_DBL, real);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -4350,11 +4352,11 @@ min_scan_array_func(struct cell_array **z, struct cell_array *r,
 		case ARR_INT:MIN_SCAN_ARRAY_LOOP(ARR_INT, int32_t, real);break;
 		case ARR_DBL:MIN_SCAN_ARRAY_LOOP(ARR_DBL, double, real);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -4423,11 +4425,11 @@ max_scan_vec_func(struct cell_array **z, struct cell_array *r,
 		case ARR_INT:MAX_SCAN_VEC_LOOP(int32_t, ARR_INT, real);break;
 		case ARR_DBL:MAX_SCAN_VEC_LOOP(double, ARR_DBL, real);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -4515,11 +4517,11 @@ max_scan_array_func(struct cell_array **z, struct cell_array *r,
 		case ARR_INT:MAX_SCAN_ARRAY_LOOP(ARR_INT, int32_t, real);break;
 		case ARR_DBL:MAX_SCAN_ARRAY_LOOP(ARR_DBL, double, real);break;
 		default:
-			CHK(99, fail, L"Unexpected array type");
+			CHK(99, fail, "Unexpected array type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage device");
+		CHK(99, fail, "Unknown storage device");
 	}
 	
 	*z = arr;
@@ -4640,11 +4642,11 @@ dot_prod_func(struct cell_array **z, struct cell_array *l, struct cell_array *r,
 			DOT_PROD_LOOP_CMPX(struct apl_cmpx, struct apl_cmpx,,);
 			break;
 		default:
-			CHK(99, fail, L"Unexpected non-numeric type");
+			CHK(99, fail, "Unexpected non-numeric type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unexpected storage type");
+		CHK(99, fail, "Unexpected storage type");
 	}
 	
 	if (!imag) {
@@ -4808,11 +4810,11 @@ matmul_func(struct cell_array **z, struct cell_array *l, struct cell_array *r,
 			MATMUL_LOOP_CMPX(struct apl_cmpx, struct apl_cmpx,,);
 			break;
 		default:
-			CHK(99, fail, L"Unexpected non-numeric type");
+			CHK(99, fail, "Unexpected non-numeric type");
 		}
 	}break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 	
 	*z = arr;
@@ -4951,3 +4953,39 @@ fail:
 }
 
 DECL_FUNC(rational_ibeam, rational_func, error_dya_syntax)
+
+int
+print_arr_func(struct cell_array **z, 
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	size_t count;
+	int err;
+	
+	count = array_count(r);
+	
+	switch (r->type) {
+	case ARR_CHAR8:
+		print_cp8(r->values, count);
+		break;
+	case ARR_CHAR16:
+		print_cp16(r->values, count);
+		break;
+	case ARR_CHAR32:
+		print_cp32(r->values, count);
+		break;
+	default:
+		CHK(99, fail, "Unexpected non-character array");
+	}
+
+	if (*(int8_t *)l->values)
+		putchar('\n');
+	
+	*z = retain_cell(r);
+	
+	err = 0;
+	
+fail:
+	return err;
+}
+
+DECL_FUNC(print_arr, error_mon_syntax, print_arr_func)

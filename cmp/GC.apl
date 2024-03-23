@@ -13,7 +13,7 @@ GC←{
 		s←pos[⍵] ⋄ e←end[⍵] ⋄ lineno←linestarts⍸s
 		line←IN[b+⍳te←linestarts[lineno+1]-b←linestarts[lineno]]
 		ls le←s e-b ⋄ line←∊'╠'⊂⍤,@ls⊢'╣'⊂⍤,⍨@(¯1+le⌊te)⊢line
-		'\\'⎕R'\\\\'⊢'L"[',(⍕1+lineno),'] ',(line~CR LF),'"'
+		'\\'⎕R'\\\\'⊢'"[',(⍕1+lineno),'] ',(line~CR LF),'"'
 	}
 
 
@@ -34,9 +34,9 @@ GC←{
 	}
 
 	var_nmvec←{
-		0=≢⍵:'wchar_t **',⍺,' = NULL;'
-		z←'wchar_t *',⍺,'[] = {'
-		z,←⊃{⍺,', ',⍵}⌿'L"'∘,¨sym[|n[⍵]],¨'"'
+		0=≢⍵:'char **',⍺,' = NULL;'
+		z←'char *',⍺,'[] = {'
+		z,←⊃{⍺,', ',⍵}⌿'"'∘,¨sym[|n[⍵]],¨'"'
 		z,'};'
 	}
 
@@ -61,7 +61,7 @@ GC←{
 		i←⍸~mu[⍵] ⋄ z[i],←⊂¨(var_refs ⍵[i]),¨⊂' = NULL;'
 		i←⍸mu[⍵]
 		z[i],←(var_ckinds ⍵[i]){
-			msg←'L"Init mutable variable: ',⍵,'"'
+			msg←'"Init mutable variable: ',⍵,'"'
 			⊂'CHK(mk_',⍺,'_box(&',⍵,', NULL), cleanup, ',msg,');'
 		}¨var_refs ⍵[i]
 		⊃⍪⌿z
@@ -354,7 +354,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	if (!err && stk != stkhd)'
-		z,←⊂'		CHK(99, cleanup, L"Stack not empty");'
+		z,←⊂'		CHK(99, cleanup, "Stack not empty");'
 		z,←⊂''
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨haslvs
@@ -419,7 +419,7 @@ GC←{
 		pref,←⊂'EXPORT struct ',id,'_loc ',id,';'
 		z ←⊂'struct ',id,'_loc {'
 		z,←⊂'	unsigned int __count;'
-		z,←⊂'	wchar_t **__names;'
+		z,←⊂'	char **__names;'
 		z,←(⊂'	'),¨decl_vars ⊃lv[⍵]
 		z,←⊂'};'
 		z,←⊂''
@@ -457,7 +457,7 @@ GC←{
 		z,←⊂'EXPORT int'
 		z,←⊂fn,'_dwa(void *z, void *l, void *r)'
 		z,←⊂'{'
-		z,←⊂'	return call_dwa(',fn,', z, l, r, L"',fn,'");'
+		z,←⊂'	return call_dwa(',fn,', z, l, r, "',fn,'");'
 		z,←⊂'}'
 		z,⊂''
 	}¨i
@@ -473,6 +473,7 @@ GC←{
 	main,←⊂'		CELL_ARRAY, 1, STG_HOST, ARR_BOOL,'
 	main,←⊂'		cdat, &vrefc, 1, 0'
 	main,←⊂'	};'
+	main,←⊂'	struct cell_func *println = cdf_prim.cdf_println;'
 	main,←⊂''
 	main,←⊂'	CHKFN(cdf_main(&ret, NULL, &rgt), fail);'
 	main,←⊂'	release_array(ret);'
@@ -482,7 +483,7 @@ GC←{
 	main,←⊂'fail:'
 	main,←⊂'	release_array(ret);'
 	main,←⊂'	ret = get_debug_info();'
-	main,←⊂'	wprintf(L"%ws", (wchar_t *)ret->values);'
+	main,←⊂'	printf("%s\n", (char *)ret->values);'
 	main,←⊂'	printf("ERROR %d\n", err);'
 	main,←⊂'	release_debug_info();'
 	main,←⊂'	return err;'

@@ -1,6 +1,6 @@
 struct cdf_prim_loc {
 	unsigned int __count;
-	wchar_t **__names;
+	char **__names;
 	struct cell_func *cdf_q_signal;
 	struct cell_func *cdf_q_dr;
 	struct cell_array *cdf_spn;
@@ -180,5 +180,7 @@ struct cdf_prim_loc {
 	struct cell_doper *cdf_rnk;
 	struct cell_doper *cdf_at;
 	struct cell_moper *cdf_key;
+	struct cell_func *cdf_println;
+	struct cell_func *cdf_print;
 };
 

@@ -25,7 +25,7 @@ Exec←{
 	_←          TT _
 	_←        m GC _
 	f l←      m CX _
-	⎕CMD f
+	'UTF-8'⎕UCS ⎕UCS ∊(⎕UCS 13),¨⍨⎕CMD f
 }
 
 Fix←{

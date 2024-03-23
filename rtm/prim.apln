@@ -914,4 +914,19 @@ key←{op←⍺⍺ ⋄ ⍺←⊢
 	1↓¨k{⊂⍵}∇∇ v
 }
 
+⍝ ⎕⍞: Printing
+println←{
+	1<≢⍴⍵:⎕SIGNAL 16
+	1<≡⍵:⎕SIGNAL 16
+	0≠10|⎕DR ⍵:⎕SIGNAL 16
+	1('print_arr'⌶)⍵
+}
+
+print←{
+	1<≢⍴⍵:⎕SIGNAL 16
+	1<≡⍵:⎕SIGNAL 16
+	0≠10|⎕DR ⍵:⎕SIGNAL 16
+	0('print_arr'⌶)⍵
+}
+
 :EndNamespace

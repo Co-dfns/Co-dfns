@@ -305,12 +305,12 @@ guard_check(void ***stkhd)
 	x = *--*stkhd;
 	
 	if (array_count(x) != 1)
-		CHK(5, fail, L"Non-singleton test expression.");
+		CHK(5, fail, "Non-singleton test expression.");
 	
 	CHKFN(squeeze_array(x), fail);
 	
 	if (x->type != ARR_BOOL)
-		CHK(11, fail, L"Test expression is not Boolean.");
+		CHK(11, fail, "Test expression is not Boolean.");
 
 	CHKFN(get_scalar_int32(&val, x, 0), fail);
 

@@ -61,6 +61,10 @@ TT←{
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
+	
+	⍝ Convert print bindings to E1(P2(⎕⍞), ∘∘∘)
+	i←p[j←⍸(≠p)∧(t[p]=B)∧(t=A)∧k=0]
+	t[i]←E ⋄ k[i]←1 ⋄ t[j]←P ⋄ k[j]←2 ⋄ lx[j]←3
 
 	⍝ Lift guard tests
 	p[i]←p[x←p[i←⍸(≠p)∧t[p]=G]] ⋄ ix←i,x ⋄ xi←x,i ⋄ p←(xi@ix⊢⍳≢p)[p]
@@ -112,6 +116,8 @@ TT←{
 	nams,←  'mst' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'self'
 	syms,←,¨'//'  '⌿⌿'  '\\'  '⍀⍀'  '←←'  '⌸'   '⍸'   '⌺'   '@'
 	nams,←  'rep' 'rpf' 'xpd' 'xpf' 'set' 'key' 'iou' 'stn' 'at'
+	syms,←,¨'⎕'         '⍞'
+	nams,←  'println'   'print'
 	syms,←,¨';'   '⎕FFT'  '⎕IFFT' '⎕CONV'  '⎕NC'  '⎕SIGNAL'  '⎕DR'
 	nams,←  'spn' 'q_fft' 'q_ift' 'q_conv' 'q_nc' 'q_signal' 'q_dr'
 	syms,←,¨'⍺'     '⍵'     '⍺⍺'         '⍵⍵'         '∇∇'     '%u'

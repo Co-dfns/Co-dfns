@@ -242,12 +242,12 @@ retain_array_data(struct cell_array *arr)
 		break;
 	case STG_HOST:
 		if (arr->vrefc == NULL)
-			CHK(99, done, L"Null value refcount.");
+			CHK(99, done, "Null value refcount.");
 		
 		++*arr->vrefc;
 		break;
 	default:
-		CHK(99, done, L"Unknown storage device");		
+		CHK(99, done, "Unknown storage device");		
 	}
 	
 done:
@@ -294,7 +294,7 @@ release_host_data(struct cell_array *arr)
 
 		for (size_t i = 0; i < count; i++)
 			CHK(release_array(ptrs[i]), done,
-			    L"Failed to release nested value");
+			    "Failed to release nested value");
 	}
 
 	free(arr->values);
@@ -337,7 +337,7 @@ release_array(struct cell_array *arr)
 
 	if (arr->values)
 		CHK(release_array_data(arr), fail,
-		    L"release_array_data(arr)");
+		    "release_array_data(arr)");
 
 	free(arr);
 	
@@ -378,20 +378,20 @@ int
 chk_array_valid(struct cell_array *arr) {
 	int err;
 	
-	CHK(!arr, fail, L"NULL array");
-	CHK(arr->ctyp >= CELL_MAX, fail, L"Invalid cell type");
-	CHK(arr->refc == 0, fail, L"Zero array refcount");
-	CHK(arr->storage >= STG_MAX, fail, L"Invalid storage type");
-	CHK(arr->type >= ARR_MAX, fail, L"Invalid element type");
+	CHK(!arr, fail, "NULL array");
+	CHK(arr->ctyp >= CELL_MAX, fail, "Invalid cell type");
+	CHK(arr->refc == 0, fail, "Zero array refcount");
+	CHK(arr->storage >= STG_MAX, fail, "Invalid storage type");
+	CHK(arr->type >= ARR_MAX, fail, "Invalid element type");
 	
 	if (arr->type == ARR_SPAN)
 		return 0;
 	
-	CHK(arr->values == NULL, fail, L"NULL values");
+	CHK(arr->values == NULL, fail, "NULL values");
 	
 	if (arr->storage == STG_HOST) {
-		CHK(arr->vrefc == NULL, fail, L"NULL values refcount");
-		CHK(*arr->vrefc == 0, fail, L"Zero values refcount");
+		CHK(arr->vrefc == NULL, fail, "NULL values refcount");
+		CHK(*arr->vrefc == 0, fail, "Zero values refcount");
 	}
 	
 	return 0;
@@ -567,7 +567,7 @@ has_natural_values(int *res, struct cell_array *arr)
 	int err, is_int;
 	
 	CHK(has_integer_values(&is_int, arr), done,
-	    L"has_integer_values(&is_int, arr)");
+	    "has_integer_values(&is_int, arr)");
 	
 	if (!is_int) {
 		*res = 0;
@@ -607,7 +607,7 @@ has_natural_values(int *res, struct cell_array *arr)
 	case ARR_INT:NATURAL_CASE(int32_t)
 	case ARR_DBL:NATURAL_CASE(double)
 	default:
-		TRC(99, L"Unexpected array type");
+		TRC(99, "Unexpected array type");
 	}
 	
 	*res = 1;
@@ -653,7 +653,7 @@ get_scalar_data(void **val, void *buf, struct cell_array *arr, size_t i)
 	switch (arr->storage) {
 	case STG_DEVICE:
 		if (i)
-			CHK(99, fail, L"Cannot index beyond first element of device buffer");
+			CHK(99, fail, "Cannot index beyond first element of device buffer");
 		
 		CHKAF(af_get_scalar(buf, arr->values), fail);
 		
@@ -663,7 +663,7 @@ get_scalar_data(void **val, void *buf, struct cell_array *arr, size_t i)
 		*val = arr->values;
 		break;
 	default:
-		CHK(99, fail, L"Unknown storage type");
+		CHK(99, fail, "Unknown storage type");
 	}
 
 fail:
@@ -873,7 +873,7 @@ array_get_host_buffer(void **res, int *flag, struct cell_array *arr)
 	
 	buf = malloc(array_values_count(arr) * array_element_size(arr));
 	
-	CHK(buf == NULL, fail, L"Failed to allocate buffer");
+	CHK(buf == NULL, fail, "Failed to allocate buffer");
 	
 	CHKAF(af_eval(arr->values), fail);
 	CHKAF(af_get_data_ptr(buf, arr->values), fail);
@@ -905,10 +905,10 @@ array_migrate_storage(struct cell_array *arr, enum array_storage stg)
 		return 0;
 	
 	if (arr->type == ARR_NESTED && stg == STG_DEVICE)
-		CHK(99, fail, L"Cannot migrate nested array to device.");
+		CHK(99, fail, "Cannot migrate nested array to device.");
 	
 	if (arr->type == ARR_MIXED)
-		CHK(16, fail, L"Cannot migrate mixed arrays right now.");
+		CHK(16, fail, "Cannot migrate mixed arrays right now.");
 	
 	if (arr->type == ARR_SPAN)
 		return 0;
@@ -930,7 +930,7 @@ array_migrate_storage(struct cell_array *arr, enum array_storage stg)
 	}
 	
 	if (stg != STG_HOST)
-		CHK(99, fail, L"Unexpected storage type.");
+		CHK(99, fail, "Unexpected storage type.");
 	
 	t = arr->values;
 	arr->storage = STG_HOST;

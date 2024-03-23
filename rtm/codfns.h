@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#define UNICODE
+#define _UNICODE
+
 #ifdef _WIN32
  #define EXPORT __declspec(dllexport)
  #ifdef BUILD_CODFNS
@@ -143,7 +146,7 @@ DECL_BOX_STRUCT(doper);
 /* Error Handling */
 DECLSPEC struct cell_array *get_debug_info(void);
 DECLSPEC void release_debug_info(void);
-DECLSPEC void debug_trace(int, const char *, int, const char *, const wchar_t *);
+DECLSPEC void debug_trace(int, const char *, int, const char *, const char *);
 
 #define CHK(expr, fail, msg)					\
 if (0 < (err = (expr))) {					\
@@ -151,32 +154,17 @@ if (0 < (err = (expr))) {					\
 	goto fail;						\
 }								\
 
-#define CHKFN(expr, fail) CHK(expr, fail, L"" #expr)
+#define CHKFN(expr, fail) CHK(expr, fail, "" #expr)
 #define CHKIG(expr, fail) if (0 < (err = (expr))) goto fail;
-
-#define CHKAF(expr, fail)					\
-if (0 < (err = (expr))) {					\
-	wchar_t *msg = get_aferr_msg(err);			\
-	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
-	free(msg);						\
-	goto fail;						\
-}								\
 
 #define TRC(expr, msg)						\
 if (0 < (err = (expr))) {					\
 	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
 }								\
 
-#define TRCAF(expr)					\
-if (0 < (err = (expr))) {					\
-	wchar_t *msg = get_aferr_msg(err);			\
-	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
-	free(msg);						\
-}								\
-
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);
-DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *, const wchar_t *);
+DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *, char *);
 
 /* Generic cell handlers */
 DECLSPEC void release_cell(void *);
@@ -252,7 +240,7 @@ DECLSPEC int cdf_prim_init(void);
 #ifndef BUILD_CODFNS
 struct cdf_prim_loc {
 	unsigned int __count;
-	wchar_t **__names;
+	char **__names;
 	struct cell_func *cdf_q_signal;
 	struct cell_func *cdf_q_dr;
 	struct cell_array *cdf_spn;
@@ -432,6 +420,8 @@ struct cdf_prim_loc {
 	struct cell_doper *cdf_rnk;
 	struct cell_doper *cdf_at;
 	struct cell_moper *cdf_key;
+	struct cell_func *cdf_println;
+	struct cell_func *cdf_print;
 };
 
 

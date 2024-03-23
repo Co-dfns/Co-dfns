@@ -4,7 +4,7 @@
 
 #define STORAGE_DEVICE_THRESHOLD 1024
 
-wchar_t *get_aferr_msg(int);
+char *get_aferr_msg(int);
 
 void print_cp8(uint8_t *, size_t);
 void print_cp16(uint16_t *, size_t);
@@ -68,6 +68,17 @@ int array_migrate_storage(struct cell_array *, enum array_storage);
 
 struct apl_cmpx cast_cmpx(double x);
 
+#define CHKAF(expr, fail)							\
+if (0 < (err = (expr))) {							\
+	debug_trace(err, __FILE__, __LINE__, __func__, af_err_to_string(err));	\
+	goto fail;								\
+}										\
+
+#define TRCAF(expr)								\
+if (0 < (err = (expr))) {							\
+	debug_trace(err, __FILE__, __LINE__, __func__, af_err_to_string(err));	\
+}										\
+
 #define cast_real_real(x)	(x)
 #define cast_real_cmpx(x)	(x).real
 #define cast_real_char(x)	((double)(x))
@@ -111,7 +122,7 @@ case ARR_CHAR16:expr(oper, char, uint16_t,	      char16, fail);break;	\
 case ARR_CHAR32:expr(oper, char, uint32_t,	      char32, fail);break;	\
 case ARR_NESTED:expr(oper, cell, struct cell_array *, nested, fail);break;	\
 default:									\
-	CHK(99, fail, L"Unknown array type.");					\
+	CHK(99, fail, "Unknown array type.");					\
 }										\
 
 #define DYADIC_TYPE_SWITCH(lt, rt, expr, oper, fail)											\
@@ -198,10 +209,10 @@ case type_pair(ARR_NESTED, ARR_CHAR16):expr(oper, cell, struct cell_array *, nes
 case type_pair(ARR_NESTED, ARR_CHAR32):expr(oper, cell, struct cell_array *, nested, char, uint32_t	      , char32, fail);break;	\
 case type_pair(ARR_NESTED, ARR_NESTED):expr(oper, cell, struct cell_array *, nested, cell, struct cell_array *, nested, fail);break;	\
 default:																\
-	CHK(99, fail, L"Unknown type pair.");												\
+	CHK(99, fail, "Unknown type pair.");												\
 }																	\
 
-#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
+#define BAD_ELEM(sfx, fail) CHK(99, fail, "Unexpected element type " #sfx)
 
 #define MONADIC_SCALAR_LOOP(rt, expr) {		\
 	rt *rv = r->values;			\
@@ -282,7 +293,7 @@ fn##_func(struct cell_array **z,						\
 										\
 DECL_FUNC(fn##_vec_ibeam, error_mon_syntax, fn##_func)				\
 
-#define CMP_TYPE_FAIL(op, zk, zt, zs, fail) CHK(99, fail, L"Unexpected type " #zs)
+#define CMP_TYPE_FAIL(op, zk, zt, zs, fail) CHK(99, fail, "Unexpected type " #zs)
 
 #define DEF_CMP_IBEAM(name, cmp_dev, oper)						\
 int											\

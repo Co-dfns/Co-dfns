@@ -171,8 +171,8 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	storage	= dwa_array_storage(pkt);
 	type	= dwa_array_type(pkt->eltype);
 	
-	CHK(storage == -1, done, L"Unsupported DWA type");
-	CHK(type == -1, done, L"Unsupported DWA element type");
+	CHK(storage == -1, done, "Unsupported DWA type");
+	CHK(type == -1, done, "Unsupported DWA element type");
 
 	CHKFN(mk_array(&arr, type, storage, pkt->rank), done);
 	
@@ -180,7 +180,7 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 		arr->shape[i] = pkt->shape[i];
 	
 	if (arr->storage == STG_DEVICE && arr->type == ARR_NESTED)
-		CHK(10, done, L"Cannot store nested data on device");
+		CHK(10, done, "Cannot store nested data on device");
 	
 	if (!(count = array_count(arr))) {
 		proto	= is_char_array(arr) ? 32 : 0;
@@ -196,7 +196,7 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 			res	= calloc(count, sizeof(char));
 			
 			CHK(res == NULL, done, 
-			    L"Failed to allocate APLU8 buffer");
+			    "Failed to allocate APLU8 buffer");
 
 			for (size_t i = 0; i < count; i++)
 				res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
@@ -214,7 +214,7 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 			res	= calloc(count, sizeof(int16_t));
 			
 			CHK(res == NULL, done, 
-			    L"Failed to allocate APLTI buffer");
+			    "Failed to allocate APLTI buffer");
 			
 			for (size_t i = 0; i < count; i++)
 				res[i] = buf[i];
@@ -273,7 +273,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 	}
 
 	if (arr->rank > 15 || arr->type == ARR_SPAN)
-		CHK(16, done, L"Dyalog does not support rank or type");
+		CHK(16, done, "Dyalog does not support rank or type");
 	
 	pkt = getarray(array_dwa_type(arr->type), arr->rank, arr->shape, lp);
 	
@@ -285,7 +285,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 		CHKAF(af_get_type(&typ, arr->values), done);
 		
 		if (array_af_dtype(arr) != typ)
-			CHK(99, done, L"Inconsistent AF array type");
+			CHK(99, done, "Inconsistent AF array type");
 		
 		CHKAF(af_get_data_ptr(DATA(pkt), arr->values), done);
 	} else if (arr->type != ARR_NESTED) {
@@ -299,7 +299,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 		for (size_t i = 0; i < count; i++)
 			CHKFN(array2dwa(&pkts[i], ptrs[i], NULL), done);
 	} else {
-		CHK(99, done, L"Unexpected array type");
+		CHK(99, done, "Unexpected array type");
 	}
 
 	if (dst)
@@ -310,7 +310,7 @@ done:
 }
 
 DECLSPEC int
-call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr, const wchar_t *name)
+call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr, char *name)
 {
 	struct localp *zp, *lp, *rp;
 	struct cell_array *z, *l, *r, *dbg;
@@ -323,10 +323,10 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr, const wchar_t *name)
 	z = l = r = NULL;
 	
 	if (lp)
-		CHK(dwa2array(&l, lp->pocket), cleanup, L"Convert ⍺");
+		CHK(dwa2array(&l, lp->pocket), cleanup, "Convert ⍺");
 	
 	if (rp)
-		CHK(dwa2array(&r, rp->pocket), cleanup, L"Convert ⍵");
+		CHK(dwa2array(&r, rp->pocket), cleanup, "Convert ⍵");
 
 	CHK(fn(&z, l, r), cleanup, name);
 	
@@ -335,7 +335,7 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr, const wchar_t *name)
 		goto cleanup;
 	}
 	
-	CHK(array2dwa(NULL, z, zp), cleanup, L"Convert result");
+	CHK(array2dwa(NULL, z, zp), cleanup, "Convert result");
 	
 cleanup:
 	release_array(l);
