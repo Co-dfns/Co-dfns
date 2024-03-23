@@ -43,3 +43,4 @@ woven/*.toc
 woven/codfns+mp*
 woven/mpxerr.tex
 *.exe
+/tests/.vs
