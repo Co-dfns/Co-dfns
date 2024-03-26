@@ -180,6 +180,7 @@ struct cdf_prim_loc {
 	struct cell_doper *cdf_rnk;
 	struct cell_doper *cdf_at;
 	struct cell_moper *cdf_key;
+	struct cell_func *cdf_fmt;
 	struct cell_func *cdf_println;
 	struct cell_func *cdf_print;
 };

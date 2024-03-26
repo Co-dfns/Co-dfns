@@ -544,8 +544,8 @@ dec←{
 
 ⍝ ∊: Membership
 enlist←{
-	1≥≡⍵:,⍵
-	⊃⍪⌿∇¨⍵
+	1≥|≡⍵:,⍵
+	⊃⍪⌿∇¨,⍵
 }
 member←{(≢,⍵)≠(,⍵)⍳⍺}
 mem←enlist ambiv member
@@ -914,11 +914,16 @@ key←{op←⍺⍺ ⋄ ⍺←⊢
 	1↓¨k{⊂⍵}∇∇ v
 }
 
+⍝ ⍕: Formatting
+fmt←{
+	∊' ',⍨⍪{'0123456789'[⍵⊤⍨10⍴⍨⌈10⍟2⌈⍵]}¨⍵
+}
+
 ⍝ ⎕⍞: Printing
 println←{
 	1<≢⍴⍵:⎕SIGNAL 16
 	1<≡⍵:⎕SIGNAL 16
-	0≠10|⎕DR ⍵:⎕SIGNAL 16
+	0≠10|⎕DR ⍵:⍵⊣⎕←⍕,⍵
 	1('print_arr'⌶)⍵
 }
 
