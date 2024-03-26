@@ -4958,26 +4958,32 @@ int
 print_arr_func(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
+	void *buf;
 	size_t count;
-	int err;
+	int err, f;
+	int8_t ln;
 	
 	count = array_count(r);
 	
+	CHKFN(array_get_host_buffer(&buf, &f, r), fail);
+	
 	switch (r->type) {
 	case ARR_CHAR8:
-		print_cp8(r->values, count);
+		print_cp8(buf, count);
 		break;
 	case ARR_CHAR16:
-		print_cp16(r->values, count);
+		print_cp16(buf, count);
 		break;
 	case ARR_CHAR32:
-		print_cp32(r->values, count);
+		print_cp32(buf, count);
 		break;
 	default:
 		CHK(99, fail, "Unexpected non-character array");
 	}
+	
+	CHKFN(get_scalar_int8(&ln, l, 0), fail);
 
-	if (*(int8_t *)l->values)
+	if (ln)
 		putchar('\n');
 	
 	*z = retain_cell(r);
@@ -4985,6 +4991,9 @@ print_arr_func(struct cell_array **z,
 	err = 0;
 	
 fail:
+	if (f)
+		free(buf);
+	
 	return err;
 }
 
