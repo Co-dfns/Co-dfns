@@ -28,8 +28,8 @@ cast_values_device(struct cell_array *arr, enum array_type type)
 	af_array newv;
 	int err;
 	
-	if (arr->type == ARR_NESTED)
-		CHK(99, fail, "Unexpected nested device array.");
+	if (type == ARR_NESTED)
+		CHK(99, fail, "Cannot cast device array to nested type.");
 	
 	CHKAF(af_cast(&newv, arr->values, array_type_af_dtype(type)), fail);
 	CHKFN(release_array_data(arr), fail);
