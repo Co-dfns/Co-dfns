@@ -25,6 +25,9 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆depth∆02_TEST←'depth' MK∆T1 0
 ∆depth∆03_TEST←'depth' MK∆T1 (⍳5)
 ∆depth∆04_TEST←'depth' MK∆T1 (2 3 4⍴⍳5)
+∆depth∆05_TEST←'depth' MK∆T1 (0)(1 2 3)
+∆depth∆06_TEST←'depth' MK∆T1 (1 2 3)(1 2 3)
+∆depth∆07_TEST←'depth' MK∆T1 (,⍳5)(,⊂⍳10)
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
