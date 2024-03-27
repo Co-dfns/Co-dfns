@@ -37,8 +37,13 @@ cp_utf8(unsigned char *buf, unsigned int point)
 void
 print_cp8(uint8_t *pts, size_t count)
 {
+	unsigned char buf[4];
+	
 	for (size_t i = 0; i < count; i++) {
-		putchar(*pts++);
+		int w = cp_utf8(buf, *pts++);
+		
+		for (int j = 0; j < w; j++)
+			putchar(buf[j]);
 	}
 }
 
