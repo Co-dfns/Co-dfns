@@ -966,7 +966,7 @@ array_promote_storage(struct cell_array *l, struct cell_array *r)
 	
 	CHKFN(array_migrate_storage(r, stg), fail);
 	CHKFN(array_migrate_storage(l, stg), fail);
-
+	
 fail:
 	return err;
 }
