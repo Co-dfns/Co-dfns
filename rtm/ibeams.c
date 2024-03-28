@@ -1333,6 +1333,14 @@ set_func(struct cell_array **z,
 		retain_cell(tgt);
 	}
 	
+	CHKFN(array_promote_storage(tgt, r), fail);
+	
+	if (zc > STORAGE_DEVICE_THRESHOLD && 
+	    tgt->type != ARR_NESTED && r->type != ARR_NESTED) {
+		CHKFN(array_migrate_storage(tgt, STG_DEVICE), fail);
+		CHKFN(array_migrate_storage(r, STG_DEVICE), fail);
+	}
+	
 	if (tgt->storage == STG_HOST && *tgt->vrefc > 1) {
 		void *vals = tgt->values;
 		
@@ -1345,14 +1353,14 @@ set_func(struct cell_array **z,
 	
 	if (r->type != mtype)
 		CHKFN(array_shallow_copy(&r, r), fail);
+
+	CHKFN(cast_values(tgt, mtype), fail);
+	CHKFN(cast_values(r, mtype), fail);
 	
 	if (l->type != ARR_NESTED) {
 		size_t idx;
 		
 		CHKFN(simple_index_offset(&idx, tgt, l), fail);
-		CHKFN(array_migrate_storage(r, tgt->storage), fail);
-		CHKFN(cast_values(tgt, mtype), fail);
-		CHKFN(cast_values(r, mtype), fail);
 		
 		switch (tgt->storage) {
 		case STG_DEVICE:{
@@ -1383,13 +1391,6 @@ set_func(struct cell_array **z,
 		
 		goto done;
 	}
-	
-	if (zc > STORAGE_DEVICE_THRESHOLD && tgt->type != ARR_NESTED)
-		CHKFN(array_migrate_storage(tgt, STG_DEVICE), fail);
-	
-	CHKFN(array_promote_storage(tgt, r), fail);
-	CHKFN(cast_values(tgt, mtype), fail);
-	CHKFN(cast_values(r, mtype), fail);
 	
 	for (size_t i = 0; i < lc; i++)
 		if (lv[i]->type != ARR_SPAN)
