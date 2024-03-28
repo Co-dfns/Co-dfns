@@ -25,13 +25,25 @@ closest_numeric_array_type(double x)
 int
 cast_values_device(struct cell_array *arr, enum array_type type)
 {
-	af_array newv;
+	af_array newv, v;
 	int err;
+	unsigned char is_cmpx;
 	
 	if (type == ARR_NESTED)
 		CHK(99, fail, "Cannot cast device array to nested type.");
 	
-	CHKAF(af_cast(&newv, arr->values, array_type_af_dtype(type)), fail);
+	is_cmpx = 0;
+	v = NULL;
+	
+	CHKAF(af_is_complex(&is_cmpx, arr->values), fail);
+	
+	if (is_cmpx) {
+		CHKAF(af_real(&v, arr->values), fail);
+	} else {
+		v = arr->values;
+	}
+	
+	CHKAF(af_cast(&newv, v, array_type_af_dtype(type)), fail);
 	CHKFN(release_array_data(arr), fail);
 	
 	arr->type = type;
@@ -40,6 +52,9 @@ cast_values_device(struct cell_array *arr, enum array_type type)
 	err = 0;
 	
 fail:
+	if (is_cmpx)
+		af_release_array(v);
+		
 	return err;
 }
 
@@ -159,6 +174,7 @@ find_minmax(double *min, double *max,
 	
 	if (arr->storage == STG_DEVICE) {
 		double real, imag;
+		unsigned char is_cmpx;
 		
 		CHKAF(af_min_all(&real, &imag, vals), fail);
 		
@@ -175,7 +191,15 @@ find_minmax(double *min, double *max,
 			return 0;
 		}
 		
+		CHKAF(af_is_complex(&is_cmpx, vals), fail);
+		
+		if (is_cmpx)
+			CHKAF(af_real(&vals, vals), fail);
+		
 		CHKFN(is_integer_device(is_int, vals), fail);
+		
+		if (is_cmpx)
+			CHKAF(af_release_array(vals), fail);
 		
 		return 0;
 	}
