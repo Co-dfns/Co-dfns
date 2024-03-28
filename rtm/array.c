@@ -476,34 +476,31 @@ is_integer_dbl(double x)
 int
 is_integer_device(unsigned char *res, af_array vals)
 {
-	af_array t;
+	af_array t, u;
 	double real, imag;
 	int err;
 	unsigned char is_int;
 	
-	if (err = af_is_integer(&is_int, vals))
-		return err;
+	t = u = NULL;
+	
+	CHKAF(af_is_integer(&is_int, vals), fail);
 	
 	if (is_int) {
 		*res = 1;
 		return 0;
 	}
-
-	if (err = af_trunc(&t, vals))
-		return err;
 	
-	if (err = af_eq(&t, t, vals, 0))
-		return err;
-	
-	if (err = af_all_true_all(&real, &imag, t))
-		return err;
-	
-	if (err = af_release_array(t))
-		return err;
+	CHKAF(af_trunc(&t, vals), fail);
+	CHKAF(af_eq(&u, t, vals, 0), fail);
+	CHKAF(af_all_true_all(&real, &imag, u), fail);
 	
 	*res = (int)real;
+
+fail:
+	af_release_array(u);
+	af_release_array(t);
 	
-	return 0;
+	return err;
 }
 
 int
