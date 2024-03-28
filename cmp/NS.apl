@@ -36,7 +36,8 @@ NS←{
 		z,←⊂':EndIf'
 		z,←⊂'→0⌿⍨err<0'
 		z,←⊂'→ret⌿⍨err=0'
-		z,←⊂'((''UTF-8''⎕UCS ⎕UCS res),(⎕UCS 10),⎕EM err)⎕SIGNAL err'
+		z,←⊂'emsg←(⎕UCS 13)@{⍵=⎕UCS 10}''UTF-8''⎕UCS ⎕UCS res'
+		z,←⊂'(emsg,(⎕UCS 13),⎕EM err)⎕SIGNAL err'
 		z,←⊂'ret:Z←res'
 		z
 	}
