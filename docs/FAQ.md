@@ -6,6 +6,10 @@ This is probably the question that I get asked the most. I have even created a b
 
 https://www.sacrideo.us/getting-started-with-apl/
 
+You can also check out Dyalog's getting started page:
+
+https://www.dyalog.com/getting-started.htm
+
 **What does the Co-dfns compiler do/buy me?**
 
 The Co-dfns compiler is designed to enable you as an APL programmer to use Dyalog APL and write standard APL code, and then relatively seamlessly compile that code for better performance on vector machines, particularly high-performance GPUs. 
