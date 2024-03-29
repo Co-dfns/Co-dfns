@@ -171,46 +171,56 @@ find_minmax(double *min, double *max,
 	
 	count = array_values_count(arr);
 	vals = arr->values;
+	*is_real = 1;
+	*is_int = 1;
+	*min = DBL_MAX;
+	*max = DBL_MIN;
 	
 	if (arr->storage == STG_DEVICE) {
 		double real, imag;
 		unsigned char is_cmpx;
+
+		CHKAF(af_is_complex(&is_cmpx, vals), fail);
+		
+		if (is_cmpx) {
+			af_array t, u;
+			
+			t = u = NULL;
+			
+			CHKAF(af_imag(&t, vals), cmpx_done);
+			CHKAF(af_iszero(&u, t), cmpx_done);
+			CHKAF(af_all_true_all(&real, &imag, u), cmpx_done);
+			
+			*is_real = (real == 1);
+			
+		cmpx_done:
+			af_release_array(t);
+			af_release_array(u);
+			
+			if (err)
+				return err;
+			
+			if (!*is_real) {
+				*is_int = 0;
+				return 0;
+			}
+		}
 		
 		CHKAF(af_min_all(&real, &imag, vals), fail);
 		
 		*min = real;
-		*is_real = (imag == 0);
 		
 		CHKAF(af_max_all(&real, &imag, vals), fail);
 		
 		*max = real;
-		*is_real = (*is_real && (imag == 0));
-		
-		if (!*is_real) {
-			*is_int = 0;
-			return 0;
-		}
-		
-		CHKAF(af_is_complex(&is_cmpx, vals), fail);
-		
-		if (is_cmpx)
-			CHKAF(af_real(&vals, vals), fail);
 		
 		CHKFN(is_integer_device(is_int, vals), fail);
-		
-		if (is_cmpx)
-			CHKAF(af_release_array(vals), fail);
 		
 		return 0;
 	}
 	
 	if (arr->storage != STG_HOST)
 		CHK(99, fail, "Expected host storage");
-	
-	*is_real = 1;
-	*is_int = 1;
-	*min = DBL_MAX;
-	*max = DBL_MIN;
 	
 #define MINMAX_LOOP(type, tx, expr)		\
 	for (size_t i = 0; i < count; i++) {	\
