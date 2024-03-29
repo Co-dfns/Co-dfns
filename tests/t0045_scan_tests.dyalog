@@ -11,6 +11,8 @@
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
  MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
   ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
+ MK∆T4←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)⍵⍵
+  ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 
  X←⍉⍪¯35.5 ¯41.5 ¯29.5 7.5 34.5 ¯11.5 31.5 ¯0.5 32.5 12.5
  I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
@@ -58,8 +60,8 @@
 ∆scan∆039_TEST←'scan∆R2' MK∆T1 (?2048⍴2)
 ∆scan∆040_TEST←'scan∆R2' MK∆T1 (2048⍴⍳5)
 ∆scan∆041_TEST←'scan∆R2' MK∆T1 ((2*16),1+?1500⍴2)
-∆scan∆042_TEST←'scan∆R2' MK∆T1 (?2048⍴0)
-∆scan∆043_TEST←'scan∆R2' MK∆T1 ((?2048⍴0)+0j1×?2048⍴0)
+∆scan∆042_TEST←'scan∆R2' (1e¯20) MK∆T4 (?2048⍴0)
+∆scan∆043_TEST←'scan∆R2' (1e¯20) MK∆T4 ((?2048⍴0)+0j1×?2048⍴0)
 ∆scan∆044_TEST←'scan∆R2' MK∆T1 (?3 3⍴2)
 ∆scan∆045_TEST←'scan∆R2' MK∆T1 ((2*8)+1+?3 3⍴2)
 ∆scan∆046_TEST←'scan∆R2' MK∆T1 ((2*16)+1+?3 3⍴2)
