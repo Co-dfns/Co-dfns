@@ -1,16 +1,16 @@
 :Namespace t0029_strand_assignment
 
-TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok - '⍪x⌿⍨~∧⍀' '=x←(3+⊃⍸'TAP'⍷x)↓x←(⎕CR'main')[1⊃⎕LC;]}
+CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8⊣⎕←'✗' ⋄ _←0⊣⍞←'✓'}
 ⍝ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
 t1←{x y z←⍵ ⋄ x y z}
 
-main←{
-	TAP x≡t1⊢x←1 2 3:
-	TAP x≡t1⊢x←(1 2 3)(3 4 5)(5 6 7):
-	TAP x≡t1⊢x←1(1 2 3)4:
-	TAP x≡t1⊢x←'abc':
-	TAP x≡t1⊢x←'abc' 'def' (1 2 3):
-}
+⍞←'Strand Assignment: '
+CHK x≡t1⊢x←1 2 3
+CHK x≡t1⊢x←(1 2 3)(3 4 5)(5 6 7)
+CHK x≡t1⊢x←1(1 2 3)4
+CHK x≡t1⊢x←'abc'
+CHK x≡t1⊢x←'abc' 'def' (1 2 3)
+⎕←''
 
 :EndNamespace
