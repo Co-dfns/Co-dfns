@@ -32,14 +32,14 @@ TT←{
 	⍝ 	ERR←2 'FUNCTION DOES NOT SUPPORT AXIS OPERATOR' 
 	⍝	ERR SIGNAL SELECT i
 	⍝ }⍬
-	
+
 	⍝ Mark ⍠← bindings as kind 7
 	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
-	
+
 	⍝ Merge B node bindings
 	n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
-	
+
 	⍝ Mark mutated bindings 
 	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊B E V)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(t[p]=C)∨(t=E)∧k=4
