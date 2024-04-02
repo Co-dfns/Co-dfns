@@ -254,7 +254,9 @@ PS←{
 		k[z⌿⍨msk←isa∘⌽¨x]←1
 		z x⌿⍨←⊂~msk
 
-		⊢k[i]←k[vb[i←⍸(t∊B V)∨(t=P)∧vb≥0]]
+		k[i]←k[vb[i←⍸(t∊B V)∨(t=P)∧vb≥0]]
+		
+		k[i,z]
 	}⍣≡⍬
 
 	0≠≢z:{
