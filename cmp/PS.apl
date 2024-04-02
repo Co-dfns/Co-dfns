@@ -148,7 +148,7 @@ PS←{
 		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓(t[⍵]∊F P B)∨t[⍵]=¯1])
 		∨⌿m←~bm[∊v]:'INVALID ASSIGNMENT TARGET'SIGNAL pos[m⌿∊v]
 
-		p[∊v]←(≢¨v)⌿(≢p)+⍳≢v ⋄ vb[m⌿∊v]←(m←t[∊v]=V)⌿(≢¨v)⌿b
+		p[∊v]←(≢¨v)⌿(≢p)+⍳≢v
 		p t k n vb pos end,←(≢v)⍴¨b Z 0 0 ¯1(pos[⊃¨v])(end[⊃∘⌽¨v])
 
 		p[m⌿⍵]←(⍺,zi←(≢p)+⍳≢b)[(m←~⍵∊∊v)⌿0,¯1↓+⍀t[⍵]=B]
@@ -156,6 +156,9 @@ PS←{
 
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	
+	⍝ Associate bound variables with their B node ancestor
+	j←p I@{msk[⍵]}⍣≡i←⍸t=V⊣msk←~(≠p)∧t[p]=B ⋄ vb[msk⌿i]←p[j⌿⍨msk←~msk[j]]
 
 	⍝ Return bindable ⍺ to P node
 	t[⍸n=¯2]←P
