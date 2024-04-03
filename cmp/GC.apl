@@ -143,6 +143,17 @@ GC←{
 		z
 	}¨i
 	
+	⍝ S0: Initial strand assignment
+	i←⍸(t=S)∧k=0
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		dbg←highlight ⍵
+		z ←⊂'*stkhd++ = retain_cell(stkhd[-1]);'
+		z,←⊂'CHK(strand_assign_push(&stkhd, ',(⍕n[⍵]),'), cleanup,'
+		z,←⊂'	',dbg,');'
+		z,⊂''
+	}¨i
+	
 	⍝ S1: Strand binding
 	i←⍸(t=S)∧k=1
 	zz[i],←{
