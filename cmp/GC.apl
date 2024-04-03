@@ -143,6 +143,27 @@ GC←{
 		z
 	}¨i
 	
+	⍝ S1: Strand binding
+	i←⍸(t=S)∧k=1
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		tgt←var_values ⍵
+		dbg←highlight ⍵
+		z ←⊂'bind_value(&stkhd, &',tgt,');'
+		z,←⊂'release_cell(*--stkhd);'
+		z
+	}¨i
+	
+	⍝ S7: Strand assignment
+	i←⍸(t=S)∧k=7
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		dbg←highlight ⍵
+		z ←⊂'CHK(strand_assign_push(&stkhd, ',(⍕n[⍵]),'), cleanup,'
+		z,←⊂'	',dbg,');'
+		z
+	}¨i
+	
 	⍝ V: Variable reference
 	i←⍸t=V
 	zz[i],←{
@@ -152,8 +173,8 @@ GC←{
 		⊂'CHK(var_ref(&stkhd, ',tgt,'), cleanup, ',dbg,');'
 	}¨i
 
-	⍝ B: Non-option bindings
-	i←⍸(t=B)∧k≠7
+	⍝ B: Non-option, non-null bindings
+	i←⍸(t=B)∧~k∊0 7
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
