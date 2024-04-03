@@ -151,7 +151,7 @@ GC←{
 		dbg←highlight ⍵
 		z ←⊂'bind_value(&stkhd, &',tgt,');'
 		z,←⊂'release_cell(*--stkhd);'
-		z
+		z,⊂''
 	}¨i
 	
 	⍝ S7: Strand assignment
@@ -161,7 +161,7 @@ GC←{
 		dbg←highlight ⍵
 		z ←⊂'CHK(strand_assign_push(&stkhd, ',(⍕n[⍵]),'), cleanup,'
 		z,←⊂'	',dbg,');'
-		z
+		z,⊂''
 	}¨i
 	
 	⍝ V: Variable reference
