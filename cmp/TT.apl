@@ -36,6 +36,11 @@ TT←{
 	⍝ Mark ⍠← bindings as kind 7
 	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
 
+	⍝ Convert B strand targets to B0, S0, S7 and S1 nodes
+	msk←~(≠p)∧(t[p]=B)∧(t=A)∧k=7
+	i⌿⍨←~msk[p I@{msk[⍵]}⍣≡i←⍸((t=A)∧k=7)∨(t=V)∧k=1]
+	t[i]←S ⋄ k[i,p[i←⍸(t=S)∧t[p]=B]]←0
+	
 	⍝ Merge B node bindings
 	n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
@@ -71,17 +76,26 @@ TT←{
 	t[ix]←t[xi] ⋄ k[ix]←k[xi] ⋄ n[x]←n[i] ⋄ n[i]←x ⋄ lx[xi]←lx[ix]
 	mu[ix]←mu[xi] ⋄ pos[xi]←pos[ix] ⋄ end[xi]←end[ix]
 	
-	⍝ Count children for E6, and A7 nodes
-	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=A)∧k[p]=7)∨(t[p]=E)∧k[p]=6
+	⍝ Count children for E6, S7, and A7 nodes
+	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=S)∧k[p]=0)∨((t[p]∊A S)∧k[p]=7)∨(t[p]=E)∧k[p]=6
+
+	⍝ Lift strand binding nodes
+	i←⍸~msk[p I@{msk[⍵]}⍣≡⍳≢p⊣msk←~(≠p)∧(t[p]=B)∧k[p]=0]
+	p[i]←p I@{msk[⍵]}⍣≡p[i]⊣msk←~(t=B)∧k=0
+	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽p[i]] ⋄ p←(i@j⍳≢p)[p]	
 	
 	⍝ Lift and flatten expressions
-	i←⍸(t∊A B C E G O P Z)∨(t=V)∧t[p]≠C
+	i←⍸(t∊A B C E G O P S Z)∨(t=V)∧t[p]≠C
 	p[i]←p[x←p I@{(t[x]∊F G)⍱(t[x]=B)∧k[x←p[⍵]]=7}⍣≡i]
-	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⊢⍳≢p)[p]
+	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]
+	
+	⍝ Remove unnecessary B0 nodes
+	p t k n lx mu r pos end⌿⍨←⊂~msk←(t=B)∧k=0 ⋄ p r(⊣-1+⍸⍨)←⊂j←⍸msk
+	n[i]←j(⊢-1+⍸)n[i←⍸(n>0)∧~((t=E)∧k=6)∨((t∊S A)∧k=7)∨(t=S)∧k=0]
 
 	⍝ Compute a function's local and free variables
 	lv←(≢p)⍴⊂⍬ ⋄ fv←(≢p)⍴⊂⍬
-	lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B V)∧(lx=0)∧n<0;]
+	lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B S V)∧(lx=0)∧n<0;]
 	fv[p[i]],←i←⍸(t=V)∧(t[p]=C)∧n<0
 	fv[n[i]]←fv[p[i←⍸(t=V)∧(t[p]=C)∧n≥0]]
 
