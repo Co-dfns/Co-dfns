@@ -4,13 +4,30 @@ CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8⊣⎕←'✗' ⋄ _
 ⍝ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
 t1←{x y z←⍵ ⋄ x y z}
+t2←{(x y z)((a b c)d e f)g h←⍵}
+t3←{(x y z)((a b c)d e f)g h←⍵ ⋄ (x y z)((a b c)d e f)g h}
 
 ⍞←'Strand Assignment: '
+CHK x x x≡t1⊢x←5
 CHK x≡t1⊢x←1 2 3
 CHK x≡t1⊢x←(1 2 3)(3 4 5)(5 6 7)
 CHK x≡t1⊢x←1(1 2 3)4
 CHK x≡t1⊢x←'abc'
 CHK x≡t1⊢x←'abc' 'def' (1 2 3)
+⍞←' '
+CHK x≡t2⊢x←4
+CHK x≡t2⊢x←1 2 3 4
+CHK x≡t2⊢x←(1 2 3)2 3 4
+CHK x≡t2⊢x←1 (2 3 4 5) 7 8
+CHK x≡t2⊢x←1 ((2 3 4)5 6 7)8 9
+CHK x≡t2⊢x←1 2 (3 4 5)(6 7 8)
+⍞←' '
+CHK (x x x)((x x x)x x x)x x≡t3⊢x←4
+CHK x≡t3⊢x←1 2 3 4
+CHK x≡t3⊢x←(1 2 3)2 3 4
+CHK x≡t3⊢x←1 (2 3 4 5) 7 8
+CHK x≡t3⊢x←1 ((2 3 4)5 6 7)8 9
+CHK x≡t3⊢x←1 2 (3 4 5)(6 7 8)
 ⎕←''
 
 :EndNamespace
