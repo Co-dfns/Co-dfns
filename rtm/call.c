@@ -328,3 +328,37 @@ release_env(void *start[], void *end[])
 	for (void **cur = start; cur != end; cur++)
 		release_cell(*cur);
 }
+
+DECLSPEC int
+strand_assign_push(void ***stkhd, int count)
+{
+	int cdf_pick(struct cell_array **, struct cell_array *, struct cell_array *);
+	struct cell_array *arr, *idx;
+	int32_t *idxv;
+	int err;
+	
+	err = 0;
+	arr = *--*stkhd;
+	
+	if (!arr->rank) {
+		for (size_t i = 0; i < count; i++)
+			*(*stkhd)++ = retain_cell(arr);
+		
+		goto done;
+	}
+
+	CHKFN(mk_array_int32(&idx, 0), done);
+	idxv = idx->values;
+	
+	for (int i = count - 1; i >= 0; i--) {
+		*idxv = i;
+		
+		CHKFN(cdf_pick((struct cell_array **)(*stkhd)++, idx, arr), done);
+	}
+	
+	CHKFN(release_array(idx), done);
+	CHKFN(release_array(arr), done);
+	
+done:	
+	return err;
+}

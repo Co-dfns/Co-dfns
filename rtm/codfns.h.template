@@ -232,6 +232,7 @@ DECLSPEC int apply_dop_fa(void ***);
 DECLSPEC int apply_dop_ff(void ***);
 DECLSPEC int apply_variant(void ***);
 DECLSPEC int guard_check(void ***);
+DECLSPEC int strand_assign_push(void ***, int);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);
