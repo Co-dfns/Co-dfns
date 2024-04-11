@@ -138,10 +138,10 @@ TT←{
 	nams,←  'alpha' 'omega' 'alphaalpha' 'omegaomega' 'deldel' ''
 	syms←⎕C syms
 
-	⍝ Convert all primitives to variables; P → V
-	i←⍸t=P ⋄ t[i]←V ⋄ si←syms⍳sym[ni←|n[i]]
+	⍝ Convert all primitives to variables; P → V|E
+	i←⍸t=P ⋄ si←syms⍳sym[ni←|n[i]]
 	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
-	sym[ni]←nams[si]
+	t[i]←V E[msk←(k[i]=1)∧'⎕⍞'∊⍨⊃¨sym[ni]] ⋄ k[i⌿⍨msk]←3 ⋄ sym[ni]←nams[si]
 
 	p t k n lx mu lv fv pos end sym IN
 }
