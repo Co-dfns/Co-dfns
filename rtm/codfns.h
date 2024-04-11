@@ -217,6 +217,7 @@ DECLSPEC int mk_closure_moper(void ***, func_mon, func_dya, func_mon, func_dya,
     unsigned int, void **);
 DECLSPEC int mk_closure_doper(void ***, func_mon, func_dya, func_mon, func_dya, 
     func_mon, func_dya, func_mon, func_dya, unsigned int, void **);
+DECLSPEC int apply_niladic(void ***, struct cell_func *);
 DECLSPEC int apply_monadic(void ***);
 DECLSPEC int apply_dyadic(void ***);
 DECLSPEC int apply_assign(void ***, struct cell_array_box *);
@@ -424,6 +425,7 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_fmt;
 	struct cell_func *cdf_println;
 	struct cell_func *cdf_print;
+	struct cell_func *cdf_q_ts;
 };
 
 
