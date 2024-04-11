@@ -941,4 +941,7 @@ print←{
 	0('print_arr'⌶)⍵
 }
 
+⍝ ⎕TS: Time stamp
+q_ts←'q_ts_ibeam'⌶
+
 :EndNamespace

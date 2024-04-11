@@ -183,5 +183,6 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_fmt;
 	struct cell_func *cdf_println;
 	struct cell_func *cdf_print;
+	struct cell_func *cdf_q_ts;
 };
 

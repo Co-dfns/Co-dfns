@@ -4,6 +4,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 #include <wchar.h>
 
 #include "internal.h"
@@ -4999,3 +5000,43 @@ fail:
 }
 
 DECL_FUNC(print_arr, error_mon_syntax, print_arr_func)
+
+int
+q_ts_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	struct timespec ts;
+	struct tm lts;
+	struct cell_array *res;
+	int16_t *vals;
+	int err;
+	
+	timespec_get(&ts, TIME_UTC);
+	
+#ifdef _MSC_VER
+	localtime_s(&lts, &ts.tv_sec);
+#else
+	localtime_s(&ts.tv_sec, &lts);
+#endif
+	
+	CHKFN(mk_array(&res, ARR_SINT, STG_HOST, 1), fail);
+	
+	res->shape[0] = 7;
+	
+	CHKFN(alloc_array(res), fail);
+	
+	vals = res->values;
+	vals[0] = 1900 + lts.tm_year;
+	vals[1] = 1 + lts.tm_mon;
+	vals[2] = lts.tm_mday;
+	vals[3] = lts.tm_hour;
+	vals[4] = lts.tm_min;
+	vals[5] = lts.tm_sec;
+	vals[6] = (int16_t)(ts.tv_nsec / 1000000);
+	
+	*z = res;
+	
+fail:
+	return err;
+}
+
+DECL_FUNC(q_ts_ibeam, q_ts_func, error_dya_syntax)
