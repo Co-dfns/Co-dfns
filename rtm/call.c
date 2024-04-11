@@ -106,6 +106,20 @@ fail:
 }
 
 DECLSPEC int
+apply_niladic(void ***stkhd, struct cell_func *fn)
+{
+	struct cell_array *dst;
+	int err;
+
+	CHKIG((fn->fptr_mon)(&dst, NULL, fn), fail);
+	
+	*(*stkhd)++ = dst;
+	
+fail:
+	return err;
+}
+
+DECLSPEC int
 apply_monadic(void ***stkhd)
 {
 	struct cell_func *fn;
