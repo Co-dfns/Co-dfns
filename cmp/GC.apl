@@ -246,6 +246,15 @@ GC←{
 		⊂'CHK(apply_dyadic(&stkhd), cleanup, ',dbg,');'
 	}¨i
 	
+	⍝ E3: Niladic application
+	i←⍸(t=E)∧k=3
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		dbg←highlight ⍵
+		fn←var_values ⍵
+		⊂'CHK(apply_niladic(&stkhd, ',fn,'), cleanup, ',dbg,');'
+	}¨i
+	
 	⍝ E4: Assignment
 	i←⍸(t=E)∧k=4
 	zz[i],←{
