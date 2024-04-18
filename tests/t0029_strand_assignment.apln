@@ -3,11 +3,8 @@
 CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8⊣⎕←'✗' ⋄ _←0⊣⍞←'✓'}
 ⍝ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
-t1←{x y z←⍵ ⋄ x y z}
-t2←{(x y z)((a b c)d e f)g h←⍵}
-t3←{(x y z)((a b c)d e f)g h←⍵ ⋄ (x y z)((a b c)d e f)g h}
-
 ⍞←'Strand Assignment: '
+t1←{x y z←⍵ ⋄ x y z}
 CHK x x x≡t1⊢x←5
 CHK x≡t1⊢x←1 2 3
 CHK x≡t1⊢x←(1 2 3)(3 4 5)(5 6 7)
@@ -15,6 +12,7 @@ CHK x≡t1⊢x←1(1 2 3)4
 CHK x≡t1⊢x←'abc'
 CHK x≡t1⊢x←'abc' 'def' (1 2 3)
 ⍞←' '
+t2←{(x y z)((a b c)d e f)g h←⍵}
 CHK x≡t2⊢x←4
 CHK x≡t2⊢x←1 2 3 4
 CHK x≡t2⊢x←(1 2 3)2 3 4
@@ -22,12 +20,21 @@ CHK x≡t2⊢x←1 (2 3 4 5) 7 8
 CHK x≡t2⊢x←1 ((2 3 4)5 6 7)8 9
 CHK x≡t2⊢x←1 2 (3 4 5)(6 7 8)
 ⍞←' '
+t3←{(x y z)((a b c)d e f)g h←⍵ ⋄ (x y z)((a b c)d e f)g h}
 CHK (x x x)((x x x)x x x)x x≡t3⊢x←4
 CHK (a a a)((b b b)b b b)c d≡t3⊢a b c d←1 2 3 4
 CHK (1 2 3)((2 2 2)2 2 2)3 4≡t3⊢x←(1 2 3)2 3 4
 CHK (1 1 1)((2 2 2)3 4 5)7 8≡t3⊢x←1 (2 3 4 5) 7 8
 CHK (1 1 1)((2 3 4)5 6 7)8 9≡t3⊢x←1 ((2 3 4)5 6 7)8 9
 CHK (1 1 1)((2 2 2)2 2 2)(3 4 5)(6 7 8)≡t3⊢x←1 2 (3 4 5)(6 7 8)
-⎕←''
+⍞←' '
+t4←{x y z←⍵ ⋄ {x y z}⍬}
+CHK x x x≡t1⊢x←5
+CHK x≡t4⊢x←1 2 3
+CHK x≡t4⊢x←(1 2 3)(3 4 5)(5 6 7)
+CHK x≡t4⊢x←1(1 2 3)4
+CHK x≡t4⊢x←'abc'
+CHK x≡t4⊢x←'abc' 'def' (1 2 3)
+⎕←'☺'
 
 :EndNamespace

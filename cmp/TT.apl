@@ -46,7 +46,7 @@ TT←{
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Mark mutated bindings 
-	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊B E V)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
+	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊B E V S)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(t[p]=C)∨(t=E)∧k=4
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
 	ci←p[fi←⍸(t=F)∧k≠0]
