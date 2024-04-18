@@ -1,0 +1,16 @@
+:Namespace t0100_format
+
+CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8⊣⎕←'✗' ⋄ _←0⊣⍞←'✓'}
+⍝ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
+
+⍞←'Format: '
+fmt←{⍕⍵}
+CHK (,'0')≡fmt 0
+CHK (,'1')≡fmt 1
+CHK '31415'≡fmt 31415
+CHK '¯31415'≡fmt ¯31415
+CHK '3.1415'≡fmt 3.1415
+CHK '¯3.1415'≡fmt ¯3.1415
+⎕←'☺'
+
+:EndNamespace
