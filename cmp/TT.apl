@@ -134,6 +134,8 @@ TT←{
 	nams,←  'println'   'print'     'fmt' 'spn' 
 	syms,←,¨'⎕FFT'  '⎕IFFT' '⎕CONV'  '⎕NC'  '⎕SIGNAL'  '⎕DR'  '⎕TS'
 	nams,←  'q_fft' 'q_ift' 'q_conv' 'q_nc' 'q_signal' 'q_dr' 'q_ts'
+	syms,←⊂,'⎕PRINT_MEMSTATS'
+	nams,←⊂,'q_print_memstats'
 	syms,←,¨'⍺'     '⍵'     '⍺⍺'         '⍵⍵'         '∇∇'     '%u'
 	nams,←  'alpha' 'omega' 'alphaalpha' 'omegaomega' 'deldel' ''
 	syms←⎕C syms

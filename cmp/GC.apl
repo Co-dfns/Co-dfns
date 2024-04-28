@@ -511,6 +511,8 @@ GC←{
 	exp,←⊂''
 	exp,←⊃⍪⌿{⊂'	CHKFN(',(⊃var_names ⍵),'_init(), fail);'}¨⍸(t=F)∧k=0
 	exp,←⊂''
+	exp,←⊂'	print_memstats();'
+	exp,←⊂''
 	exp,←⊂'	return 0;'
 	exp,←⊂''
 	exp,←⊂'fail:'

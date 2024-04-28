@@ -1,5 +1,7 @@
 :Namespace prim
 
+q_print_memstats←'print_memstats_ibeam'⌶
+
 ⍝ Basic system functions
 q_signal←'q_signal_ibeam'⌶
 q_dr←'q_dr_ibeam'⌶

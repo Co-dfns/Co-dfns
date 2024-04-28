@@ -161,6 +161,7 @@ if (0 < (err = (expr))) {					\
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);
 DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *, char *);
+DECLSPEC void print_memstats(void);
 
 /* Generic cell handlers */
 DECLSPEC void release_cell(void *);
@@ -239,6 +240,7 @@ DECLSPEC int cdf_prim_init(void);
 struct cdf_prim_loc {
 	unsigned int __count;
 	char **__names;
+	struct cell_func *cdf_q_print_memstats;
 	struct cell_func *cdf_q_signal;
 	struct cell_func *cdf_q_dr;
 	struct cell_array *cdf_spn;

@@ -5041,3 +5041,15 @@ fail:
 }
 
 DECL_FUNC(q_ts_ibeam, q_ts_func, error_dya_syntax)
+
+int
+print_memstats_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	*z = retain_cell(r);
+	
+	print_memstats();
+	
+	return 0;
+}
+
+DECL_FUNC(print_memstats_ibeam, print_memstats_func, error_dya_syntax)
