@@ -161,7 +161,9 @@ int								\
 name##_func(struct cell_array **z, struct cell_array *r,	\
     struct cell_func *self)					\
 {								\
-	return mk_array_int8(z, (expr));			\
+	*z = retain_cell((expr) ? &NUM_1 : &NUM_0);		\
+								\
+	return 0;						\
 }								\
 								\
 DECL_FUNC(name##_ibeam, name##_func, error_dya_syntax)		\
