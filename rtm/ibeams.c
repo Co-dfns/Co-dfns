@@ -91,44 +91,43 @@ int
 q_dr_mon(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
-	int16_t val;
-	
 	switch (r->type) {
 	case ARR_SPAN:
-		val = 323;
+		*z = retain_cell(&NUM_323);
 		break;
 	case ARR_BOOL:
-		val = 11;
+		*z = retain_cell(&NUM_11);
 		break;
 	case ARR_SINT:
-		val = 163;
+		*z = retain_cell(&NUM_163);
+		break;
 	case ARR_INT:
-		val = 323;
+		*z = retain_cell(&NUM_323);
 		break;
 	case ARR_DBL:
-		val = 645;
+		*z = retain_cell(&NUM_645);
 		break;
 	case ARR_CMPX:
-		val = 1289;
+		*z = retain_cell(&NUM_1289);
 		break;
 	case ARR_CHAR8:
-		val = 80;
+		*z = retain_cell(&NUM_80);
 		break;
 	case ARR_CHAR16:
-		val = 160;
+		*z = retain_cell(&NUM_160);
 		break;
 	case ARR_CHAR32:
-		val = 320;
+		*z = retain_cell(&NUM_320);
 		break;
 	case ARR_MIXED:
 	case ARR_NESTED:
-		val = 326;
+		*z = retain_cell(&NUM_326);
 		break;
 	default:
 		return 99;
 	}
 	
-	return mk_array_int16(z, val);
+	return 0;
 }
 
 DECL_FUNC(q_dr_ibeam, q_dr_mon, error_dya_nonce)
@@ -589,7 +588,9 @@ same_func(struct cell_array **z,
 	int8_t is_same;
 	
 	CHKFN(array_is_same(&is_same, l, r), done);
-	CHKFN(mk_array_int8(z, is_same), done);
+	
+	*z = is_same ? &NUM_1 : &NUM_0;
+	retain_cell(*z);
 	
 done:
 	return err;

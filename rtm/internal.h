@@ -21,6 +21,18 @@ int stab_init(struct stab *, size_t, size_t, size_t);
 void *stab_alloc(struct stab *);
 void stab_free(struct stab *, void *);
 
+extern struct cell_array NUM_0;
+extern struct cell_array NUM_1;
+extern struct cell_array NUM_11;
+extern struct cell_array NUM_80;
+extern struct cell_array NUM_160;
+extern struct cell_array NUM_163;
+extern struct cell_array NUM_320;
+extern struct cell_array NUM_323;
+extern struct cell_array NUM_326;
+extern struct cell_array NUM_645;
+extern struct cell_array NUM_1289;
+
 char *get_aferr_msg(int);
 
 void print_cp8(uint8_t *, size_t);
