@@ -146,7 +146,9 @@ eq_func(struct cell_array **z, struct cell_array *r,
 	aa = self->fv[1];
 	ww = self->fv[2];
 	
-	return mk_array_int8(z, aa == ww);
+	*z = retain_cell(aa == ww ? &NUM_1 : &NUM_0);
+	
+	return 0;
 }
 
 DECL_DOPER(eq_ibeam, 
@@ -277,7 +279,8 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 		double real, imag;
 		
 		CHKAF(af_any_true_all(&real, &imag, r->values), done);
-		CHKFN(mk_array_int8(z, (int8_t)real), done);
+		
+		*z = retain_cell(real ? &NUM_1 : &NUM_0);
 		    
 		return 0;
 	}
@@ -290,13 +293,13 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	
 	for (size_t i = 0; i < count; i++) {
 		if (vals[i]) {
-			CHKFN(mk_array_int8(z, 1), done);
+			*z = retain_cell(&NUM_1);
 			
 			return 0;
 		}
 	}
 	
-	CHKFN(mk_array_int8(z, 0), done);
+	*z = retain_cell(&NUM_0);
 	
 done:
 	return err;
@@ -606,7 +609,8 @@ nqv_func(struct cell_array **z,
 	int8_t is_same;
 	
 	CHKFN(array_is_same(&is_same, l, r), done);
-	CHKFN(mk_array_int8(z, !is_same), done);
+	
+	*z = retain_cell(is_same ? &NUM_0 : &NUM_1);
 	
 done:
 	return err;
@@ -753,7 +757,8 @@ has_nat_vals_func(struct cell_array **z,
 	int err, is_nat;
 	
 	CHKFN(has_natural_values(&is_nat, r), fail);
-	CHKFN(mk_array_int8(z, is_nat), fail);
+	
+	*z = retain_cell(is_nat ? &NUM_1 : &NUM_0);
 	
 fail:
 	return err;
@@ -3083,7 +3088,9 @@ all_true_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, "Unknown storage device");
 	}
 	
-	return mk_array_int8(z, result);
+	*z = retain_cell(result ? &NUM_1 : &NUM_0);
+
+	return 0;
 	
 fail:
 	return err;
@@ -3125,7 +3132,9 @@ any_true_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, "Unknown storage device");
 	}
 	
-	return mk_array_int8(z, result);
+	*z = retain_cell(result ? &NUM_1 : &NUM_0);
+	
+	return 0;
 	
 fail:
 	return err;
