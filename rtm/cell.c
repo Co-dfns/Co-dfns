@@ -2,36 +2,13 @@
 
 #include "internal.h"
 
-DECLSPEC int
-mk_void(struct cell_void **cell)
+DECLSPEC void *
+retain_cell(void *cell)
 {
-        struct cell_void *ptr;
+        if (cell != NULL)
+                ((struct cell_void *)cell)->refc++;
 
-        ptr = malloc(sizeof(struct cell_void));
-
-        if (ptr == NULL)
-                return 1;
-
-        ptr->ctyp = CELL_VOID;
-        ptr->refc = 1;
-        *cell = ptr;
-
-        return 0;
-}
-
-DECLSPEC void
-release_void(struct cell_void *cell)
-{
-        if (cell == NULL)
-                return;
-	
-	if (!cell->refc)
-		return;
-
-        if (--cell->refc)
-                return;
-
-        free(cell);
+        return cell;
 }
 
 DECLSPEC void
@@ -76,11 +53,34 @@ release_cell(void *cell)
         }
 }
 
-DECLSPEC void *
-retain_cell(void *cell)
+DECLSPEC int
+mk_void(struct cell_void **cell)
 {
-        if (cell != NULL)
-                ((struct cell_void *)cell)->refc++;
+        struct cell_void *ptr;
 
-        return cell;
+        ptr = malloc(sizeof(struct cell_void));
+
+        if (ptr == NULL)
+                return 1;
+
+        ptr->ctyp = CELL_VOID;
+        ptr->refc = 1;
+        *cell = ptr;
+
+        return 0;
+}
+
+DECLSPEC void
+release_void(struct cell_void *cell)
+{
+        if (cell == NULL)
+                return;
+	
+	if (!cell->refc)
+		return;
+
+        if (--cell->refc)
+                return;
+
+        free(cell);
 }
