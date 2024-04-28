@@ -1,7 +1,6 @@
 #include <math.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <arrayfire.h>
@@ -11,80 +10,6 @@
 #if AF_API_VERSION < 38
 #error "Your ArrayFire version is too old."
 #endif
-
-#define POOL_OBJECTS 1024
-#define POOL_PAGES 16
-
-struct stab array_pool = {0};
-
-void
-print_array_pool_stats(void)
-{
-	size_t remaining, gaps, acc, frags;
-	
-	remaining = gaps = acc = frags = 0;
-	
-	for (struct stab_page *page = array_pool.start; page != array_pool.end && page->start != NULL; page++) {
-		for (char *buf = page->start; buf != page->end; buf += array_pool.obj_size) {
-			struct cell_void *cell = (struct cell_void *)buf;
-			
-			if (cell->refc) {
-				remaining++;
-				
-				if (acc) {
-					gaps++;
-					frags += acc;
-					acc = 0;
-				}
-			} else {
-				acc++;
-			}
-		}
-	}
-	
-	printf("array pool stats:\n");
-	printf("\tremaining: %zd\n", remaining);
-	printf("\tgaps: %zd frags: %zd\n", gaps, frags);
-}
-
-DECLSPEC int
-mk_array(struct cell_array **dest,
-    enum array_type type, enum array_storage storage, unsigned int rank)
-{
-	struct		cell_array *arr;
-	size_t		size;
-	
-	size = sizeof(struct cell_array) + 4 * sizeof(size_t);
-	
-	if (!array_pool.start)
-		if (stab_init(&array_pool, POOL_PAGES, POOL_OBJECTS, size))
-			return 1;
-	
-	if (rank <= 4) {
-		arr = stab_alloc(&array_pool);
-	} else {
-		size = sizeof(struct cell_array) + rank * sizeof(size_t);
-		arr = malloc(size);
-	}
-
-	if (arr == NULL)
-		return 1;
-	
-	if (rank > 4)
-		arr->stab_page = NULL;
-
-	arr->ctyp	= CELL_ARRAY;
-	arr->refc	= 1;
-	arr->type	= type;
-	arr->storage	= storage;
-	arr->rank	= rank;
-	arr->values	= NULL;
-	arr->vrefc	= NULL;
-
-	*dest = arr;
-
-	return 0;
-}
 
 size_t
 array_count_shape(unsigned int rank, size_t shape[])
@@ -271,6 +196,33 @@ fill_array(struct cell_array *arr, void *data)
 	return err;
 }
 
+DECLSPEC int
+mk_array(struct cell_array **dest,
+    enum array_type type, enum array_storage storage, unsigned int rank)
+{
+	struct		cell_array *arr;
+	size_t		size;
+	
+	size = sizeof(struct cell_array) + rank * sizeof(size_t);
+
+	arr = malloc(size);
+
+	if (arr == NULL)
+		return 1;
+
+	arr->ctyp	= CELL_ARRAY;
+	arr->refc	= 1;
+	arr->type	= type;
+	arr->storage	= storage;
+	arr->rank	= rank;
+	arr->values	= NULL;
+	arr->vrefc	= NULL;
+
+	*dest = arr;
+
+	return 0;
+}
+
 int
 retain_array_data(struct cell_array *arr)
 {
@@ -387,10 +339,7 @@ release_array(struct cell_array *arr)
 		CHK(release_array_data(arr), fail,
 		    "release_array_data(arr)");
 
-	if (arr->stab_page)
-		stab_free(&array_pool, arr);
-	else
-		free(arr);
+	free(arr);
 	
 	return 0;
 
