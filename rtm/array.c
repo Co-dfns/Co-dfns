@@ -17,6 +17,36 @@
 
 struct stab array_pool = {0};
 
+void
+print_array_pool_stats(void)
+{
+	size_t remaining, gaps, acc, frags;
+	
+	remaining = gaps = acc = frags = 0;
+	
+	for (struct stab_page *page = array_pool.start; page != array_pool.end && page->start != NULL; page++) {
+		for (char *buf = page->start; buf != page->end; buf += array_pool.obj_size) {
+			struct cell_void *cell = (struct cell_void *)buf;
+			
+			if (cell->refc) {
+				remaining++;
+				
+				if (acc) {
+					gaps++;
+					frags += acc;
+					acc = 0;
+				}
+			} else {
+				acc++;
+			}
+		}
+	}
+	
+	printf("array pool stats:\n");
+	printf("\tremaining: %zd\n", remaining);
+	printf("\tgaps: %zd frags: %zd\n", gaps, frags);
+}
+
 DECLSPEC int
 mk_array(struct cell_array **dest,
     enum array_type type, enum array_storage storage, unsigned int rank)

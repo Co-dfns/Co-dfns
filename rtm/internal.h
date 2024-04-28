@@ -21,6 +21,8 @@ int stab_init(struct stab *, size_t, size_t, size_t);
 void *stab_alloc(struct stab *);
 void stab_free(struct stab *, void *);
 
+void print_array_pool_stats(void);
+
 extern struct cell_array NUM_0;
 extern struct cell_array NUM_1;
 extern struct cell_array NUM_11;
