@@ -4,25 +4,6 @@
 
 #define STORAGE_DEVICE_THRESHOLD 1024
 
-struct stab_page {
-	char *start;
-	char *end;
-	char *next;
-};
-
-struct stab {
-	size_t obj_size;
-	struct stab_page *start;
-	struct stab_page *end;
-	struct stab_page *cur;
-};
-
-int stab_init(struct stab *, size_t, size_t, size_t);
-void *stab_alloc(struct stab *);
-void stab_free(struct stab *, void *);
-
-void print_array_pool_stats(void);
-
 extern struct cell_array NUM_0;
 extern struct cell_array NUM_1;
 extern struct cell_array NUM_11;
@@ -34,6 +15,11 @@ extern struct cell_array NUM_323;
 extern struct cell_array NUM_326;
 extern struct cell_array NUM_645;
 extern struct cell_array NUM_1289;
+
+void *cell_malloc(size_t);
+void *cell_calloc(size_t, size_t);
+void *cell_realloc(void *, size_t);
+void cell_free(void *);
 
 char *get_aferr_msg(int);
 
