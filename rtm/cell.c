@@ -84,3 +84,12 @@ release_void(struct cell_void *cell)
 
         free(cell);
 }
+
+DECLSPEC void
+print_cell_stats(void)
+{
+	printf("Cell Statistics:\n");
+	print_array_stats();
+	print_func_stats();
+	print_box_stats();
+}

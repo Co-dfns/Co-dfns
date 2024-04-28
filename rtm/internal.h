@@ -17,10 +17,9 @@ extern struct cell_array NUM_326;
 extern struct cell_array NUM_645;
 extern struct cell_array NUM_1289;
 
-void *cell_malloc(size_t);
-void *cell_calloc(size_t, size_t);
-void *cell_realloc(void *, size_t);
-void cell_free(void *);
+void print_array_stats(void);
+void print_func_stats(void);
+void print_box_stats(void);
 
 char *get_aferr_msg(int);
 

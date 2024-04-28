@@ -196,6 +196,9 @@ fill_array(struct cell_array *arr, void *data)
 	return err;
 }
 
+size_t mk_array_count = 0;
+size_t free_array_count = 0;
+
 DECLSPEC int
 mk_array(struct cell_array **dest,
     enum array_type type, enum array_storage storage, unsigned int rank)
@@ -203,9 +206,10 @@ mk_array(struct cell_array **dest,
 	struct		cell_array *arr;
 	size_t		size;
 	
+	mk_array_count++;
+	
 	size = sizeof(struct cell_array) + rank * sizeof(size_t);
-
-	arr = cell_malloc(size);
+	arr = malloc(size);
 
 	if (arr == NULL)
 		return 1;
@@ -339,7 +343,9 @@ release_array(struct cell_array *arr)
 		CHK(release_array_data(arr), fail,
 		    "release_array_data(arr)");
 
-	cell_free(arr);
+	free_array_count++;
+	
+	free(arr);
 	
 	return 0;
 
@@ -1139,4 +1145,11 @@ cast_cmpx(double x)
 	struct apl_cmpx z = {x, 0};
 	
 	return z;
+}
+
+void
+print_array_stats(void)
+{
+	printf("\tarrays alloc: %zd freed: %zd\n", 
+	    mk_array_count, free_array_count);
 }

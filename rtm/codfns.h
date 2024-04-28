@@ -161,7 +161,8 @@ if (0 < (err = (expr))) {					\
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);
 DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *, char *);
-DECLSPEC void print_memstats(void);
+DECLSPEC void print_cell_stats(void);
+DECLSPEC void print_ibeam_stats(void);
 
 /* Generic cell handlers */
 DECLSPEC void release_cell(void *);

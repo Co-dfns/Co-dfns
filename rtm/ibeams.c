@@ -174,6 +174,8 @@ DEFN_PRED_IBEAM(is_char, is_char_array(r))
 DEFN_PRED_IBEAM(is_integer, is_integer_array(r))
 DEFN_PRED_IBEAM(is_span, r->type == ARR_SPAN)
 
+size_t shape_count = 0;
+
 int
 shape_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
@@ -181,6 +183,8 @@ shape_func(struct cell_array **z,
 	struct cell_array *t;
 	enum array_type type;
 	int err;
+	
+	shape_count++;
 	
 	if (!r->rank) {
 		*z = retain_cell(&ZILDE);
@@ -314,12 +318,16 @@ done:
 
 DECL_FUNC(any_ibeam, any_monadic, error_dya_nonce)
 
+size_t ravel_count = 0;
+
 int
 ravel_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *t;
 	int err;
+
+	ravel_count++;
 
 	if (err = mk_array(&t, r->type, r->storage, 1))
 		return err;
@@ -5063,9 +5071,17 @@ print_memstats_func(struct cell_array **z, struct cell_array *r, struct cell_fun
 {
 	*z = retain_cell(r);
 	
-	print_memstats();
+	print_cell_stats();
 	
 	return 0;
 }
 
 DECL_FUNC(print_memstats_ibeam, print_memstats_func, error_dya_syntax)
+
+DECLSPEC void
+print_ibeam_stats(void)
+{
+	printf("Ibeam statistics:\n");
+	printf("\travel count: %zd\n", ravel_count);
+	printf("\tshape_count: %zd\n", shape_count);
+}

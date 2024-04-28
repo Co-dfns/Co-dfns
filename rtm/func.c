@@ -3,11 +3,20 @@
 
 #include "internal.h"
 
+size_t mk_func_count = 0;
+size_t mk_moper_count = 0;
+size_t mk_doper_count = 0;
+size_t free_func_count = 0;
+size_t free_moper_count = 0;
+size_t free_doper_count = 0;
+
 DECLSPEC int
 mk_func(struct cell_func **k, func_mon fm, func_dya fd, unsigned int fs)
 {
 	size_t sz;
 	struct cell_func *ptr;
+	
+	mk_func_count++;
 
 	sz = sizeof(struct cell_func) + fs * sizeof(void *);
 	ptr = malloc(sz);
@@ -38,6 +47,8 @@ mk_moper(struct cell_moper **k,
 {
 	size_t sz;
 	struct cell_moper *ptr;
+	
+	mk_moper_count++;
 
 	sz = sizeof(struct cell_moper) + fs * sizeof(void *);
 	ptr = malloc(sz);
@@ -69,6 +80,8 @@ mk_doper(struct cell_doper **k,
 {
 	size_t sz;
 	struct cell_doper *ptr;
+	
+	mk_doper_count++;
 
 	sz = sizeof(struct cell_doper) + fs * sizeof(void *);
 	ptr = malloc(sz);
@@ -113,6 +126,8 @@ release_func(struct cell_func *k)
 	for (unsigned int i = 0; i < k->fs; i++)
 		release_cell(k->fv_[i]);
 	
+	free_func_count++;
+	
 	free(k);
 }
 
@@ -132,6 +147,10 @@ release_moper(struct cell_moper *k)
 	
 	for (unsigned int i = 0; i < k->fs; i++)
 		release_cell(k->fv[i]);
+	
+	free_moper_count++;
+	
+	free(k);
 }
 
 DECLSPEC void
@@ -150,4 +169,19 @@ release_doper(struct cell_doper *k)
 	
 	for (unsigned int i = 0; i < k->fs; i++)
 		release_cell(k->fv[i]);
+	
+	free_doper_count++;
+	
+	free(k);
+}
+
+void
+print_func_stats(void)
+{
+	printf("\tfunc alloc: %zd freed: %zd\n",
+	    mk_func_count, free_func_count);
+	printf("\tmoper alloc: %zd freed: %zd\n",
+	    mk_moper_count, free_moper_count);
+	printf("\tdoper alloc: %zd freed: %zd\n",
+	    mk_doper_count, free_doper_count);
 }
