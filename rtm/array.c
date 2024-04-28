@@ -205,7 +205,7 @@ mk_array(struct cell_array **dest,
 	
 	size = sizeof(struct cell_array) + rank * sizeof(size_t);
 
-	arr = malloc(size);
+	arr = cell_malloc(size);
 
 	if (arr == NULL)
 		return 1;
@@ -339,7 +339,7 @@ release_array(struct cell_array *arr)
 		CHK(release_array_data(arr), fail,
 		    "release_array_data(arr)");
 
-	free(arr);
+	cell_free(arr);
 	
 	return 0;
 
