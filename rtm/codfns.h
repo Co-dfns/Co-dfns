@@ -75,6 +75,7 @@ typedef int (*topfn_ptr)(struct cell_array **,
 struct cell_void {
 	enum cell_type ctyp;
 	unsigned int refc;
+	void *stab_page;
 };
 
 struct apl_cmpx {
@@ -83,8 +84,7 @@ struct apl_cmpx {
 };
 
 struct cell_array {
-	enum cell_type ctyp;
-	unsigned int refc;
+	struct cell_void;
 	enum array_storage storage;
 	enum array_type type;
 	void *values;
@@ -94,8 +94,7 @@ struct cell_array {
 };
 
 struct cell_func {
-	enum cell_type ctyp;
-	unsigned int refc;
+	struct cell_void;
 	func_mon fptr_mon;
 	func_dya fptr_dya;
 	void **opts;
@@ -105,8 +104,7 @@ struct cell_func {
 };
 
 struct cell_moper {
-	enum cell_type ctyp;
-	unsigned int refc;
+	struct cell_void;
 	func_mon fptr_am;
 	func_dya fptr_ad;
 	func_mon fptr_fm;
@@ -116,8 +114,7 @@ struct cell_moper {
 };
 
 struct cell_doper {
-	enum cell_type ctyp;
-	unsigned int refc;
+	struct cell_void;
 	func_mon fptr_aam;
 	func_dya fptr_aad;
 	func_mon fptr_afm;
@@ -132,8 +129,7 @@ struct cell_doper {
 
 #define DECL_BOX_STRUCT(type)		\
 struct cell_##type##_box {		\
-	enum cell_type ctyp;		\
-	unsigned int refc;		\
+	struct cell_void;		\
 	struct cell_##type *value;	\
 };
 

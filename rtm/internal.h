@@ -97,15 +97,15 @@ if (0 < (err = (expr))) {							\
 #define cast_cell_cell(x)	(x)
 
 #define DECL_FUNC(name, mon, dya)						\
-struct cell_func name##_closure = {CELL_FUNC, 1, mon, dya, NULL, NULL, 0};	\
+struct cell_func name##_closure = {CELL_FUNC, 1, NULL, mon, dya, NULL, NULL, 0};\
 struct cell_func *cdf_##name = &name##_closure;					\
 
-#define DECL_MOPER(name, am, ad, fm, fd)				\
-struct cell_moper name##_closure = {CELL_MOPER, 1, am, ad, fm, fd, 0};	\
+#define DECL_MOPER(name, am, ad, fm, fd)					\
+struct cell_moper name##_closure = {CELL_MOPER, 1, NULL, am, ad, fm, fd, 0};	\
 struct cell_moper *cdf_##name = &name##_closure;				\
 
 #define DECL_DOPER(name, aam, aad, afm, afd, fam, fad, ffm, ffd)	\
-struct cell_doper name##_closure = {CELL_DOPER, 1,			\
+struct cell_doper name##_closure = {CELL_DOPER, 1, NULL, 		\
 	aam, aad, afm, afd, fam, fad, ffm, ffd, 0			\
 };									\
 struct cell_doper *cdf_##name = &name##_closure;				\
