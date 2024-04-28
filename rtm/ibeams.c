@@ -182,6 +182,11 @@ shape_func(struct cell_array **z,
 	enum array_type type;
 	int err;
 	
+	if (!r->rank) {
+		*z = retain_cell(&ZILDE);
+		return 0;
+	}
+	
 	type = ARR_BOOL;
 	t = NULL;
 	

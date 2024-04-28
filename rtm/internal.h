@@ -4,6 +4,7 @@
 
 #define STORAGE_DEVICE_THRESHOLD 1024
 
+extern struct cell_array ZILDE;
 extern struct cell_array NUM_0;
 extern struct cell_array NUM_1;
 extern struct cell_array NUM_11;
