@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <arrayfire.h>
@@ -10,6 +11,50 @@
 #if AF_API_VERSION < 38
 #error "Your ArrayFire version is too old."
 #endif
+
+#define POOL_OBJECTS 1024
+#define POOL_PAGES 16
+
+struct stab array_pool = {0};
+
+DECLSPEC int
+mk_array(struct cell_array **dest,
+    enum array_type type, enum array_storage storage, unsigned int rank)
+{
+	struct		cell_array *arr;
+	size_t		size;
+	
+	size = sizeof(struct cell_array) + 4 * sizeof(size_t);
+	
+	if (!array_pool.start)
+		if (stab_init(&array_pool, POOL_PAGES, POOL_OBJECTS, size))
+			return 1;
+	
+	if (rank <= 4) {
+		arr = stab_alloc(&array_pool);
+	} else {
+		size = sizeof(struct cell_array) + rank * sizeof(size_t);
+		arr = malloc(size);
+	}
+
+	if (arr == NULL)
+		return 1;
+	
+	if (rank > 4)
+		arr->stab_page = NULL;
+
+	arr->ctyp	= CELL_ARRAY;
+	arr->refc	= 1;
+	arr->type	= type;
+	arr->storage	= storage;
+	arr->rank	= rank;
+	arr->values	= NULL;
+	arr->vrefc	= NULL;
+
+	*dest = arr;
+
+	return 0;
+}
 
 size_t
 array_count_shape(unsigned int rank, size_t shape[])
@@ -196,33 +241,6 @@ fill_array(struct cell_array *arr, void *data)
 	return err;
 }
 
-DECLSPEC int
-mk_array(struct cell_array **dest,
-    enum array_type type, enum array_storage storage, unsigned int rank)
-{
-	struct		cell_array *arr;
-	size_t		size;
-	
-	size = sizeof(struct cell_array) + rank * sizeof(size_t);
-
-	arr = malloc(size);
-
-	if (arr == NULL)
-		return 1;
-
-	arr->ctyp	= CELL_ARRAY;
-	arr->refc	= 1;
-	arr->type	= type;
-	arr->storage	= storage;
-	arr->rank	= rank;
-	arr->values	= NULL;
-	arr->vrefc	= NULL;
-
-	*dest = arr;
-
-	return 0;
-}
-
 int
 retain_array_data(struct cell_array *arr)
 {
@@ -339,7 +357,10 @@ release_array(struct cell_array *arr)
 		CHK(release_array_data(arr), fail,
 		    "release_array_data(arr)");
 
-	free(arr);
+	if (arr->stab_page)
+		stab_free(&array_pool, arr);
+	else
+		free(arr);
 	
 	return 0;
 
