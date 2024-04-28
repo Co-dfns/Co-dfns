@@ -4,6 +4,23 @@
 
 #define STORAGE_DEVICE_THRESHOLD 1024
 
+struct stab_page {
+	char *start;
+	char *end;
+	char *next;
+};
+
+struct stab {
+	size_t obj_size;
+	struct stab_page *start;
+	struct stab_page *end;
+	struct stab_page *cur;
+};
+
+int stab_init(struct stab *, size_t, size_t, size_t);
+void *stab_alloc(struct stab *);
+void stab_free(struct stab *, void *);
+
 char *get_aferr_msg(int);
 
 void print_cp8(uint8_t *, size_t);
