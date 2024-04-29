@@ -133,7 +133,7 @@ q_dr_mon(struct cell_array **z,
 DECL_FUNC(q_dr_ibeam, q_dr_mon, error_dya_nonce)
 
 struct cell_array span_array_value = {
-	CELL_ARRAY, 1, NULL, STG_HOST, ARR_SPAN, NULL, NULL, 0
+	CELL_ARRAY, 1, STG_HOST, ARR_SPAN, NULL, NULL, 0
 };
 struct cell_array *cdf_span_array = &span_array_value;
 

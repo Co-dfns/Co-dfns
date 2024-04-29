@@ -122,7 +122,7 @@ GC←{
 		z,←⊂'	static ',ctp,' dat[] = {',(csep dat),'};'
 		z,←⊂'	static unsigned vrefc = 1;'
 		z,←⊂'	static struct cell_array val = {'
-		z,←⊂'		CELL_ARRAY, 1, NULL, STG_HOST, ARR_',atp,','
+		z,←⊂'		CELL_ARRAY, 1, STG_HOST, ARR_',atp,','
 		z,←⊂'		dat, &vrefc, ',(⍕rnk),','
 		z,←⊂'		',(csep shp,0)
 		z,←⊂'	};'

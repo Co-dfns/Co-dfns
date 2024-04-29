@@ -75,7 +75,6 @@ typedef int (*topfn_ptr)(struct cell_array **,
 struct cell_void {
 	enum cell_type ctyp;
 	unsigned int refc;
-	void *stab_page;
 };
 
 struct apl_cmpx {
