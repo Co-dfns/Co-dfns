@@ -93,35 +93,35 @@ q_dr_mon(struct cell_array **z,
 {
 	switch (r->type) {
 	case ARR_SPAN:
-		*z = retain_cell(&NUM_323);
+		*z = retain_cell(NUM_323);
 		break;
 	case ARR_BOOL:
-		*z = retain_cell(&NUM_11);
+		*z = retain_cell(NUM_11);
 		break;
 	case ARR_SINT:
-		*z = retain_cell(&NUM_163);
+		*z = retain_cell(NUM_163);
 		break;
 	case ARR_INT:
-		*z = retain_cell(&NUM_323);
+		*z = retain_cell(NUM_323);
 		break;
 	case ARR_DBL:
-		*z = retain_cell(&NUM_645);
+		*z = retain_cell(NUM_645);
 		break;
 	case ARR_CMPX:
-		*z = retain_cell(&NUM_1289);
+		*z = retain_cell(NUM_1289);
 		break;
 	case ARR_CHAR8:
-		*z = retain_cell(&NUM_80);
+		*z = retain_cell(NUM_80);
 		break;
 	case ARR_CHAR16:
-		*z = retain_cell(&NUM_160);
+		*z = retain_cell(NUM_160);
 		break;
 	case ARR_CHAR32:
-		*z = retain_cell(&NUM_320);
+		*z = retain_cell(NUM_320);
 		break;
 	case ARR_MIXED:
 	case ARR_NESTED:
-		*z = retain_cell(&NUM_326);
+		*z = retain_cell(NUM_326);
 		break;
 	default:
 		return 99;
@@ -146,7 +146,7 @@ eq_func(struct cell_array **z, struct cell_array *r,
 	aa = self->fv[1];
 	ww = self->fv[2];
 	
-	*z = retain_cell(aa == ww ? &NUM_1 : &NUM_0);
+	*z = retain_cell(aa == ww ? NUM_1 : NUM_0);
 	
 	return 0;
 }
@@ -161,7 +161,7 @@ int								\
 name##_func(struct cell_array **z, struct cell_array *r,	\
     struct cell_func *self)					\
 {								\
-	*z = retain_cell((expr) ? &NUM_1 : &NUM_0);		\
+	*z = retain_cell((expr) ? NUM_1 : NUM_0);		\
 								\
 	return 0;						\
 }								\
@@ -187,7 +187,7 @@ shape_func(struct cell_array **z,
 	shape_count++;
 	
 	if (!r->rank) {
-		*z = retain_cell(&ZILDE);
+		*z = retain_cell(ZILDE);
 		return 0;
 	}
 	
@@ -291,7 +291,7 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 		
 		CHKAF(af_any_true_all(&real, &imag, r->values), done);
 		
-		*z = retain_cell(real ? &NUM_1 : &NUM_0);
+		*z = retain_cell(real ? NUM_1 : NUM_0);
 		    
 		return 0;
 	}
@@ -304,13 +304,13 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	
 	for (size_t i = 0; i < count; i++) {
 		if (vals[i]) {
-			*z = retain_cell(&NUM_1);
+			*z = retain_cell(NUM_1);
 			
 			return 0;
 		}
 	}
 	
-	*z = retain_cell(&NUM_0);
+	*z = retain_cell(NUM_0);
 	
 done:
 	return err;
@@ -607,7 +607,7 @@ same_func(struct cell_array **z,
 	
 	CHKFN(array_is_same(&is_same, l, r), done);
 	
-	*z = is_same ? &NUM_1 : &NUM_0;
+	*z = is_same ? NUM_1 : NUM_0;
 	retain_cell(*z);
 	
 done:
@@ -625,7 +625,7 @@ nqv_func(struct cell_array **z,
 	
 	CHKFN(array_is_same(&is_same, l, r), done);
 	
-	*z = retain_cell(is_same ? &NUM_0 : &NUM_1);
+	*z = retain_cell(is_same ? NUM_0 : NUM_1);
 	
 done:
 	return err;
@@ -773,7 +773,7 @@ has_nat_vals_func(struct cell_array **z,
 	
 	CHKFN(has_natural_values(&is_nat, r), fail);
 	
-	*z = retain_cell(is_nat ? &NUM_1 : &NUM_0);
+	*z = retain_cell(is_nat ? NUM_1 : NUM_0);
 	
 fail:
 	return err;
@@ -3103,7 +3103,7 @@ all_true_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, "Unknown storage device");
 	}
 	
-	*z = retain_cell(result ? &NUM_1 : &NUM_0);
+	*z = retain_cell(result ? NUM_1 : NUM_0);
 
 	return 0;
 	
@@ -3147,7 +3147,7 @@ any_true_vec_func(struct cell_array **z, struct cell_array *r,
 		CHK(99, fail, "Unknown storage device");
 	}
 	
-	*z = retain_cell(result ? &NUM_1 : &NUM_0);
+	*z = retain_cell(result ? NUM_1 : NUM_0);
 	
 	return 0;
 	

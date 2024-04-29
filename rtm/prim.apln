@@ -8,6 +8,18 @@ q_dr←'q_dr_ibeam'⌶
 
 ⍝ System constants
 spn←'span_array'⌶⌶⌶⌶
+ZILDE←⍬
+NUM_0←0
+NUM_1←1
+NUM_11←11
+NUM_80←80
+NUM_160←160
+NUM_163←163
+NUM_320←320
+NUM_323←323
+NUM_326←326
+NUM_645←645
+NUM_1289←1289
 
 ⍝ Utilities
 eq←'eq_ibeam'⌶⌶⌶

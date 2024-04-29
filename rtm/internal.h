@@ -4,18 +4,18 @@
 
 #define STORAGE_DEVICE_THRESHOLD 1024
 
-extern struct cell_array ZILDE;
-extern struct cell_array NUM_0;
-extern struct cell_array NUM_1;
-extern struct cell_array NUM_11;
-extern struct cell_array NUM_80;
-extern struct cell_array NUM_160;
-extern struct cell_array NUM_163;
-extern struct cell_array NUM_320;
-extern struct cell_array NUM_323;
-extern struct cell_array NUM_326;
-extern struct cell_array NUM_645;
-extern struct cell_array NUM_1289;
+#define ZILDE    (cdf_prim.cdf_ZILDE)
+#define NUM_0    (cdf_prim.cdf_NUM_0)
+#define NUM_1    (cdf_prim.cdf_NUM_1)
+#define NUM_11   (cdf_prim.cdf_NUM_11)
+#define NUM_80   (cdf_prim.cdf_NUM_80)
+#define NUM_160  (cdf_prim.cdf_NUM_160)
+#define NUM_163  (cdf_prim.cdf_NUM_163)
+#define NUM_320  (cdf_prim.cdf_NUM_320)
+#define NUM_323  (cdf_prim.cdf_NUM_323)
+#define NUM_326  (cdf_prim.cdf_NUM_326)
+#define NUM_645  (cdf_prim.cdf_NUM_645)
+#define NUM_1289 (cdf_prim.cdf_NUM_1289)
 
 void print_array_stats(void);
 void print_func_stats(void);

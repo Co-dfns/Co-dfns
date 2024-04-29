@@ -5,6 +5,18 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_q_signal;
 	struct cell_func *cdf_q_dr;
 	struct cell_array *cdf_spn;
+	struct cell_array *cdf_ZILDE;
+	struct cell_array *cdf_NUM_0;
+	struct cell_array *cdf_NUM_1;
+	struct cell_array *cdf_NUM_11;
+	struct cell_array *cdf_NUM_80;
+	struct cell_array *cdf_NUM_160;
+	struct cell_array *cdf_NUM_163;
+	struct cell_array *cdf_NUM_320;
+	struct cell_array *cdf_NUM_323;
+	struct cell_array *cdf_NUM_326;
+	struct cell_array *cdf_NUM_645;
+	struct cell_array *cdf_NUM_1289;
 	struct cell_doper_box *cdf_eq;
 	struct cell_func_box *cdf_squeeze;
 	struct cell_func_box *cdf_is_simple;
