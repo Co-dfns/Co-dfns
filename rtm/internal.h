@@ -1,6 +1,9 @@
 #include <arrayfire.h>
 
 #include "codfns.h"
+#include "prim.h"
+
+extern struct cdf_prim_loc cdf_prim;
 
 #define STORAGE_DEVICE_THRESHOLD 1024
 
