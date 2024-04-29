@@ -279,6 +279,8 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	int err;
 	int8_t *vals;
 	
+	err = 0;
+	
 	if (r->type != ARR_BOOL) {
 		#define ANY_ERROR(oper, kind, type, sfx, fail)		\
 			CHK(99, fail,					\
