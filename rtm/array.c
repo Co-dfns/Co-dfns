@@ -980,6 +980,11 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 	size_t count;
 	int err;
 	
+	if (l == r) {
+		*is_same = 1;
+		return 0;
+	}
+	
 	if (l->rank != r->rank) {
 		*is_same = 0;
 		return 0;
