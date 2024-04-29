@@ -318,19 +318,29 @@ guard_check(void ***stkhd)
 	
 	x = *--*stkhd;
 	
-	if (array_count(x) != 1)
-		CHK(5, fail, "Non-singleton test expression.");
+	if (NUM_1 == x) {
+		err = 0;
+		goto done;
+	}
 	
-	CHKFN(squeeze_array(x), fail);
+	if (NUM_0 == x) {
+		err = -1;
+		goto done;
+	}
+	
+	if (array_count(x) != 1)
+		CHK(5, done, "Non-singleton test expression.");
+	
+	CHKFN(squeeze_array(x), done);
 	
 	if (x->type != ARR_BOOL)
-		CHK(11, fail, "Test expression is not Boolean.");
+		CHK(11, done, "Test expression is not Boolean.");
 
-	CHKFN(get_scalar_int32(&val, x, 0), fail);
+	CHKFN(get_scalar_int32(&val, x, 0), done);
 
 	err = val - 1;
 
-fail:
+done:
 	release_array(x);
 	
 	return err;
