@@ -40,7 +40,7 @@ GC←{
 		z,'};'
 	}
 
-	decl_vars←{
+	decl_vars←{⍺←0
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
 		∨⌿(k[⍵]=6)∧lx[⍵]>3:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
@@ -48,7 +48,7 @@ GC←{
 		z,¨←'' 'struct cell_'[lx[⍵]≠4]
 		z,¨←var_ckinds ⍵
 		z,¨←'' '_ptr'[lx[⍵]=4]
-		z,¨←' ' '_box '[mu[⍵]]
+		z,¨←' ' ' *'[⍺]
 		z,¨←'' '*'[lx[⍵]≠4]
 		z,¨←var_names ⍵
 		z,¨';'
@@ -58,12 +58,7 @@ GC←{
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT INITIALIZE STACK VARIABLE'SIGNAL 99
 		z←(≢⍵)⍴⊂''
-		i←⍸~mu[⍵] ⋄ z[i],←⊂¨(var_refs ⍵[i]),¨⊂' = NULL;'
-		i←⍸mu[⍵]
-		z[i],←(var_ckinds ⍵[i]){
-			msg←'"Init mutable variable: ',⍵,'"'
-			⊂'CHK(mk_',⍺,'_box(&',⍵,', NULL), cleanup, ',msg,');'
-		}¨var_refs ⍵[i]
+		(var_refs ⍵),¨⊂' = NULL;'
 		⊃⍪⌿z
 	}
 
@@ -73,10 +68,15 @@ GC←{
 	}
 
 	var_values←{
-		z←(var_scopes,¨var_names)⍵
-		z,¨←'' '->value'[mu[⍵]]
+		z←'' '*'[lx[⍵]=1]
+		z,¨←(var_scopes,¨var_names)⍵
 		z[⍸0=k[,⍵]]←⊂'*--stkhd'
 		z
+	}
+	
+	release_vars←{
+		0∊k[⍵]:'CANNOT RELEASE STACK VARIABLE'SIGNAL 99
+		'release_'∘,¨(var_ckinds ⍵),¨'(',¨(var_values ⍵),¨⊂');'
 	}
 
 	⍝ All code has an initial prefix
@@ -158,9 +158,9 @@ GC←{
 	i←⍸(t=S)∧k=1
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tgt←var_values ⍵
+		tgt←'&' ''[lx[⍵]=1],¨var_refs ⍵
 		dbg←highlight ⍵
-		z ←⊂'bind_value(&stkhd, &',tgt,');'
+		z ←⊂'bind_value(&stkhd, ',tgt,');'
 		z,←⊂'release_cell(*--stkhd);'
 		z,⊂''
 	}¨i
@@ -188,9 +188,9 @@ GC←{
 	i←⍸(t=B)∧~k∊0 7
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tgt←var_values ⍵
+		tgt←'&' ''[lx[⍵]=1],¨var_refs ⍵
 		dbg←highlight ⍵
-		⊂'bind_value(&stkhd, &',tgt,');'
+		⊂'bind_value(&stkhd, ',tgt,');'
 	}¨i
 	
 	⍝ C: Closures for functions
@@ -201,7 +201,7 @@ GC←{
 		vc←(≢⍵)-fc←0 1 2 4 8[k[⍺]]
 		fs vs←{(fc↑⍵)(fc↓⍵)}⍵
 		fids←var_refs fs
-		vids←var_refs vs[⍋n[vs]]
+		vids←{'&' ''[lx[⍵]=1],¨var_refs ⍵}vs[⍋n[vs]]
 		dbg←highlight ⍺
 		call←'mk_closure_',ctyp,'(&stkhd, ',(csep fids),', ',(⍕vc),', fvs)'
 		z ←⊂'{'
@@ -260,7 +260,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		tgt←var_refs ⍵
+		tgt←'' '&'[lx[⍵]=0],¨var_refs ⍵
 		⊂'CHK(apply_assign(&stkhd, ',tgt,'), cleanup, ',dbg,');'
 	}¨i
 	
@@ -375,7 +375,7 @@ GC←{
 		z,←(⊂'	loc = &loc_frm;')⌿⍨haslvs
 		z,←(⊂'')⌿⍨haslvs
 		z,←(⊂'	struct lex_vars {')⌿⍨hasfvs
-		z,←'		'∘,¨decl_vars fvs
+		z,←'		'∘,¨1 decl_vars fvs
 		z,←(⊂'	} *lex;')⌿⍨hasfvs
 		z,←(⊂'')⌿⍨hasfvs
 		z,←(⊂'	lex = (struct lex_vars *)',self,'->fv;')⌿⍨hasfvs
@@ -397,8 +397,7 @@ GC←{
 		z,←⊂'	if (!err && stk != stkhd)'
 		z,←⊂'		CHK(99, cleanup, "Stack not empty");'
 		z,←⊂''
-		z,←⊂'	release_env(stk, stkhd);'
-		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨haslvs
+		z,←'	'∘,¨release_vars lvs
 		z,←(⊂'	release_',atyp,'(cdf_alpha);')⌿⍨ism
 		z,←⊂''
 		z,←⊂'	if (err)'
@@ -447,7 +446,9 @@ GC←{
 		z,←(⊂'	'),¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
 		z,←⊂'cleanup:'
-		z,←⊂'	release_env(stk, stkhd);'
+		z,←⊂'	if (!err && stk != stkhd)'
+		z,←⊂'		CHK(99, cleanup, "Stack not empty");'
+		z,←⊂''
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''

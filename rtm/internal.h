@@ -22,7 +22,6 @@ extern struct cdf_prim_loc cdf_prim;
 
 void print_array_stats(void);
 void print_func_stats(void);
-void print_box_stats(void);
 
 char *get_aferr_msg(int);
 

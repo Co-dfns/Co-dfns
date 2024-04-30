@@ -159,9 +159,6 @@ release_func(struct cell_func *k)
 	if (k->refc)
 		return;
 
-	for (unsigned int i = 0; i < k->fs; i++)
-		release_cell(k->fv_[i]);
-	
 	free_func_count++;
 	
 	free(k);
@@ -203,9 +200,6 @@ release_moper(struct cell_moper *k)
 	if (k->refc)
 		return;
 	
-	for (unsigned int i = 0; i < k->fs; i++)
-		release_cell(k->fv[i]);
-	
 	free_moper_count++;
 	
 	free(k);
@@ -224,9 +218,6 @@ release_doper(struct cell_doper *k)
 	
 	if (k->refc)
 		return;
-	
-	for (unsigned int i = 0; i < k->fs; i++)
-		release_cell(k->fv[i]);
 	
 	free_doper_count++;
 	

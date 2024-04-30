@@ -1274,14 +1274,14 @@ set_func(struct cell_array **z,
 	zc = 0;
 	lc = 0;
 	
-	idx_rnk_check = cdf_prim.cdf_idx_rnk_check->value;
+	idx_rnk_check = cdf_prim.cdf_idx_rnk_check;
 	CHK((idx_rnk_check->fptr_dya)(&arr, tgt, l, idx_rnk_check), fail,
 	    "z idx_rnk_check ⍺:");
 	CHKFN(release_array(arr), fail);arr = NULL;
 	
 	CHKFN(shape_func(&sp, tgt, NULL), fail);
 	
-	idx_rng_check = cdf_prim.cdf_idx_rng_check->value;
+	idx_rng_check = cdf_prim.cdf_idx_rng_check;
 	CHK((idx_rng_check->fptr_dya)(&arr, sp, l, idx_rng_check), fail,
 	    "(⍴z) idx_rng_check ⍺:");
 	CHKFN(release_array(sp), fail);sp = NULL;

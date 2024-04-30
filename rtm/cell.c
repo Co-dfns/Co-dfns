@@ -36,21 +36,6 @@ release_cell(void *cell)
 	case CELL_DERF:
 		release_derf(cell);
 		break;
-        case CELL_ARRAY_BOX:
-                release_array_box(cell);
-                break;
-        case CELL_FUNC_BOX:
-                release_func_box(cell);
-                break;
-        case CELL_MOPER_BOX:
-                release_moper_box(cell);
-                break;
-        case CELL_DOPER_BOX:
-                release_doper_box(cell);
-                break;
-        case CELL_VOID_BOX:
-                release_void_box(cell);
-                break;
         default:
                 exit(99);
         }
@@ -94,5 +79,4 @@ print_cell_stats(void)
 	printf("Cell Statistics:\n");
 	print_array_stats();
 	print_func_stats();
-	print_box_stats();
 }

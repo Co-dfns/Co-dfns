@@ -57,7 +57,7 @@ mk_closure_func(void ***stkhd, func_mon fm, func_dya fd, unsigned int fc, void *
 	CHKFN(mk_func(&func, fm, fd, fc), fail);
 	
 	for (unsigned int i = 0; i < fc; i++)
-		func->fv[i] = retain_cell(fvs[i]);
+		func->fv[i] = fvs[i];
 	
 	*(*stkhd)++ = func;
 
@@ -76,7 +76,7 @@ mk_closure_moper(void ***stkhd,
 	CHKFN(mk_moper(&mopr, fam, fad, ffm, ffd, fc), fail);
 	
 	for (unsigned int i = 0; i < fc; i++)
-		mopr->fv[i] = retain_cell(fvs[i]);
+		mopr->fv[i] = fvs[i];
 	
 	*(*stkhd)++ = mopr;
 fail:
@@ -97,7 +97,7 @@ mk_closure_doper(void ***stkhd,
 	    fail);
 	    
 	for (unsigned int i = 0; i < fc; i++)
-		dopr->fv[i] = retain_cell(fvs[i]);
+		dopr->fv[i] = fvs[i];
 	
 	*(*stkhd)++ = dopr;
 
@@ -166,7 +166,7 @@ fail:
 }
 
 DECLSPEC int
-apply_assign(void ***stkhd, struct cell_array_box *bx)
+apply_assign(void ***stkhd, struct cell_array **bx)
 {
 	struct cell_array *x, *y, *orig;
 	struct cell_func *fn;
@@ -175,9 +175,9 @@ apply_assign(void ***stkhd, struct cell_array_box *bx)
 	x = (*stkhd)[-1];
 	fn = (*stkhd)[-2];
 	y = (*stkhd)[-3];
-	orig = bx->value;
+	orig = *bx;
 	
-	CHKIG((fn->fptr_dya)(&bx->value, x, y, fn), fail);
+	CHKIG((fn->fptr_dya)(bx, x, y, fn), fail);
 	
 	release_array(orig);
 	release_array(x);

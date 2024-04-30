@@ -230,7 +230,7 @@ DECLSPEC int mk_closure_doper(void ***, func_mon, func_dya, func_mon, func_dya,
 DECLSPEC int apply_niladic(void ***, struct cell_func *);
 DECLSPEC int apply_monadic(void ***);
 DECLSPEC int apply_dyadic(void ***);
-DECLSPEC int apply_assign(void ***, struct cell_array_box *);
+DECLSPEC int apply_assign(void ***, struct cell_array **);
 DECLSPEC int apply_mop(struct cell_func **, struct cell_moper *, 
     func_mon, func_dya, void *);
 DECLSPEC int apply_mop_a(void ***);
