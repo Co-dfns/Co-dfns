@@ -37,6 +37,7 @@ enum cell_type {
 	CELL_MOPER_BOX,
 	CELL_DOPER,
 	CELL_DOPER_BOX,
+	CELL_DERF,
 	CELL_ENV_BOX,
 	CELL_MAX
 };
@@ -96,9 +97,19 @@ struct cell_func {
 	struct cell_void;
 	func_mon fptr_mon;
 	func_dya fptr_dya;
-	void **opts;
 	void **fv;
 	unsigned int fs;
+	void **opts;
+	void *fv_[];
+};
+
+struct cell_derf {
+	struct cell_void;
+	func_mon fptr_mon;
+	func_dya fptr_dya;
+	void **fv;
+	unsigned int fs;
+	void **opts;
 	void *fv_[];
 };
 
@@ -188,7 +199,9 @@ DECLSPEC int squeeze_array(struct cell_array *);
 DECLSPEC int mk_func_box(struct cell_func_box **, struct cell_func *);
 DECLSPEC void release_func_box(struct cell_func_box *);
 DECLSPEC int mk_func(struct cell_func **, func_mon, func_dya, unsigned int);
+DECLSPEC int mk_derf(struct cell_derf **, func_mon, func_dya, unsigned int);
 DECLSPEC void release_func(struct cell_func *);
+DECLSPEC void release_derf(struct cell_derf *);
 DECLSPEC void release_env(void **, void **);
 DECLSPEC int mk_moper(struct cell_moper **, 
     func_mon, func_dya, func_mon, func_dya,

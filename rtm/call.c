@@ -193,15 +193,15 @@ DECLSPEC int
 apply_mop(struct cell_func **z, struct cell_moper *op, 
     func_mon fm, func_dya fd, void *x)
 {
-	struct cell_func *dst;
+	struct cell_derf *dst;
 	int err;
 	
-	CHKIG(mk_func(&dst, fm, fd, 2), fail);
+	CHKIG(mk_derf(&dst, fm, fd, 2), fail);
 	
 	dst->fv[0] = retain_cell(op);
 	dst->fv[1] = retain_cell(x);
 	
-	*z = dst;
+	*z = (struct cell_func *)dst;
 	
 fail:
 	return err;
@@ -238,16 +238,16 @@ DECLSPEC int
 apply_dop(struct cell_func **z, struct cell_doper *op, 
     func_mon fm, func_dya fd, void *l, void *r)
 {
-	struct cell_func *dst;
+	struct cell_derf *dst;
 	int err;
 	
-	CHKIG(mk_func(&dst, fm, fd, 3), fail);
+	CHKIG(mk_derf(&dst, fm, fd, 3), fail);
 
 	dst->fv[0] = retain_cell(op);
 	dst->fv[1] = retain_cell(l);
 	dst->fv[2] = retain_cell(r);
 
-	*z = dst;
+	*z = (struct cell_func *)dst;
 	
 fail:	
 	return err;
@@ -287,14 +287,15 @@ DEF_APPLY_DOP(f, f)
 DECLSPEC int
 apply_variant(void ***stkhd)
 {
-	struct cell_func *aa, *dst;
+	struct cell_func *aa;
+	struct cell_derf *dst;
 	struct cell_array *axis;
 	int err;
 	
 	aa = (*stkhd)[-1];
 	axis = (*stkhd)[-2];
 	
-	CHKIG(mk_func(&dst, aa->fptr_mon, aa->fptr_dya, 2), fail);
+	CHKIG(mk_derf(&dst, aa->fptr_mon, aa->fptr_dya, 2), fail);
 	
 	dst->fv = aa->fv;
 	dst->opts = &dst->fv_[1];

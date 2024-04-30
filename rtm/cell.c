@@ -33,6 +33,9 @@ release_cell(void *cell)
         case CELL_DOPER:
                 release_doper(cell);
                 break;
+	case CELL_DERF:
+		release_derf(cell);
+		break;
         case CELL_ARRAY_BOX:
                 release_array_box(cell);
                 break;

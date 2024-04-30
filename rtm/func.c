@@ -4,9 +4,11 @@
 #include "internal.h"
 
 size_t mk_func_count = 0;
+size_t mk_derf_count = 0;
 size_t mk_moper_count = 0;
 size_t mk_doper_count = 0;
 size_t free_func_count = 0;
+size_t free_derf_count = 0;
 size_t free_moper_count = 0;
 size_t free_doper_count = 0;
 
@@ -29,11 +31,40 @@ mk_func(struct cell_func **k, func_mon fm, func_dya fd, unsigned int fs)
 	ptr->fptr_mon = fm;
 	ptr->fptr_dya = fd;
 	ptr->fs = fs;
-	ptr->opts = NULL;
 	ptr->fv = ptr->fv_;
 	
 	for (unsigned int i = 0; i < fs; i++)
 		ptr->fv[i] = NULL;
+
+	*k = ptr;
+
+	return 0;
+}
+
+DECLSPEC int
+mk_derf(struct cell_derf **k, func_mon fm, func_dya fd, unsigned int fs)
+{
+	size_t sz;
+	struct cell_derf *ptr;
+	
+	mk_derf_count++;
+
+	sz = sizeof(struct cell_func) + fs * sizeof(void *);
+	ptr = malloc(sz);
+
+	if (ptr == NULL)
+		return 1;
+
+	ptr->ctyp = CELL_DERF;
+	ptr->refc = 1;
+	ptr->fptr_mon = fm;
+	ptr->fptr_dya = fd;
+	ptr->fs = fs;
+	ptr->fv = ptr->fv_;
+	ptr->opts = NULL;
+	
+	for (unsigned int i = 0; i < fs; i++)
+		ptr->fv_[i] = NULL;
 
 	*k = ptr;
 
@@ -115,6 +146,11 @@ release_func(struct cell_func *k)
 	if (k == NULL)
 		return;
 	
+	if (k->ctyp == CELL_DERF) {
+		release_derf((struct cell_derf *)k);
+		return;
+	}
+	
 	if (!k->refc)
 		return;
 
@@ -127,6 +163,28 @@ release_func(struct cell_func *k)
 		release_cell(k->fv_[i]);
 	
 	free_func_count++;
+	
+	free(k);
+}
+
+DECLSPEC void
+release_derf(struct cell_derf *k)
+{
+	if (k == NULL)
+		return;
+	
+	if (!k->refc)
+		return;
+
+	k->refc--;
+
+	if (k->refc)
+		return;
+
+	for (unsigned int i = 0; i < k->fs; i++)
+		release_cell(k->fv_[i]);
+	
+	free_derf_count++;
 	
 	free(k);
 }
@@ -180,6 +238,8 @@ print_func_stats(void)
 {
 	printf("\tfunc alloc: %zd freed: %zd\n",
 	    mk_func_count, free_func_count);
+	printf("\tderf alloc: %zd freed: %zd\n",
+	    mk_derf_count, free_derf_count);
 	printf("\tmoper alloc: %zd freed: %zd\n",
 	    mk_moper_count, free_moper_count);
 	printf("\tdoper alloc: %zd freed: %zd\n",
