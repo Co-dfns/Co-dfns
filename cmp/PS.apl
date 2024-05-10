@@ -214,7 +214,7 @@ PS←{
 	p t k n r lx vb pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1
 	p vb r(⊣-1+⍸⍨)←⊂⍸~msk
 
-	⍝ Specialize function to specific formal binding types
+	⍝ Specialize functions to specific formal binding types
 	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t=F)⊢(≢p)⍴1
 	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r lx vb rc pos end⌿⍨←⊂x
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
