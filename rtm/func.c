@@ -32,6 +32,7 @@ mk_func(struct cell_func **k, func_mon fm, func_dya fd, unsigned int fs)
 	ptr->fptr_dya = fd;
 	ptr->fs = fs;
 	ptr->fv = ptr->fv_;
+	ptr->opts = NULL;
 	
 	for (unsigned int i = 0; i < fs; i++)
 		ptr->fv[i] = NULL;
