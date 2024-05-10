@@ -4,6 +4,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <wchar.h>
 
@@ -2572,6 +2573,9 @@ roll_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	CHKAF(af_get_default_random_engine(&engine), fail);
 	CHKAF(af_random_uniform(&arr->values, 1, &count, f64, engine), fail);
 
+	if (count <= STORAGE_DEVICE_THRESHOLD)
+		CHKFN(array_migrate_storage(arr, STG_HOST), fail);
+	
 	*z = arr;
 	
 fail:
@@ -2684,8 +2688,177 @@ done:
 
 DECL_FUNC(where_nz_ibeam, where_nz_func, error_dya_syntax)
 
+struct grade_pair {
+	void *v;
+	void *i;
+};
+
+#define GRADE_CMP_FUNC(atyp, ctyp) 					\
+int gradeup_cmp_##atyp(struct grade_pair *a, struct grade_pair *b) {	\
+	ctyp *av, *bv;							\
+	int res;							\
+									\
+	av = a->v;							\
+	bv = b->v;							\
+									\
+	res = (*av > *bv) - (*av < *bv);				\
+									\
+	if (res)							\
+		return res;						\
+									\
+	return (av > bv) - (av < bv);					\
+}									\
+int gradedown_cmp_##atyp(struct grade_pair *a, struct grade_pair *b) {	\
+	ctyp *av, *bv;							\
+	int res;							\
+									\
+	av = a->v;							\
+	bv = b->v;							\
+									\
+	res = (*av < *bv) - (*av > *bv);				\
+									\
+	if (res)							\
+		return res;						\
+									\
+	return (av > bv) - (av < bv);					\
+}
+
+GRADE_CMP_FUNC(bool, int8_t)
+GRADE_CMP_FUNC(sint, int16_t)
+GRADE_CMP_FUNC(int, int32_t)
+GRADE_CMP_FUNC(dbl, double)
+GRADE_CMP_FUNC(char8, uint8_t)
+GRADE_CMP_FUNC(char16, uint16_t)
+GRADE_CMP_FUNC(char32, uint32_t)
+
+int gradeup_cmp_cmpx(struct grade_pair *a, struct grade_pair *b) {
+	struct apl_cmpx *av, *bv;
+	int res;
+	
+	av = a->v;
+	bv = b->v;
+	
+	res = (av->real > bv->real) - (av->real < bv->real);
+	
+	if (!res)
+		res = (av->imag > bv->imag) - (av->imag < bv->imag);
+	
+	if (res)
+		return res;
+	
+	return (av > bv) - (av < bv);
+}
+
+int gradedown_cmp_cmpx(struct grade_pair *a, struct grade_pair *b) {
+	struct apl_cmpx *av, *bv;
+	int res;
+	
+	av = a->v;
+	bv = b->v;
+	
+	res = (av->real < bv->real) - (av->real > bv->real);
+	
+	if (!res)
+		res = (av->imag < bv->imag) - (av->imag > bv->imag);
+	
+	if (res)
+		return res;
+	
+	return (av > bv) - (av < bv);
+}
+
+int (*grade_cmp_fptr(int up, struct cell_array *arr))(const void *, const void *)
+{
+	int (*fn)(struct grade_pair *, struct grade_pair *);
+	
+	switch (arr->type) {
+	case ARR_BOOL:
+		fn = up ? gradeup_cmp_bool : gradedown_cmp_bool;
+		break;
+	case ARR_SINT:
+		fn = up ? gradeup_cmp_sint : gradedown_cmp_sint;
+		break;
+	case ARR_INT:
+		fn = up ? gradeup_cmp_int : gradedown_cmp_int;
+		break;
+	case ARR_DBL:
+		fn = up ? gradeup_cmp_dbl : gradedown_cmp_dbl;
+		break;
+	case ARR_CMPX:
+		fn = up ? gradeup_cmp_cmpx : gradedown_cmp_cmpx;
+		break;
+	case ARR_CHAR8:
+		fn = up ? gradeup_cmp_char8 : gradedown_cmp_char8;
+		break;
+	case ARR_CHAR16:
+		fn = up ? gradeup_cmp_char16 : gradedown_cmp_char16;
+		break;
+	case ARR_CHAR32:
+		fn = up ? gradeup_cmp_char16 : gradedown_cmp_char16;
+		break;
+	default:
+		fn = NULL;
+	}
+	
+	return (int (*)(const void *, const void *))fn;
+}
+
 int
-grade_vec(int up, struct cell_array **z, 
+grade_vec_host(int up, struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct grade_pair data[STORAGE_DEVICE_THRESHOLD];
+	struct cell_array *arr;
+	char *idx, *vals;
+	size_t count, isize, vsize;
+	int err;
+	
+	err = 0;
+	arr = NULL;
+	count = array_count(l);
+	idx = r->values;
+	vals = l->values;
+	isize = array_element_size(r);
+	vsize = array_element_size(l);
+	
+	if (count > STORAGE_DEVICE_THRESHOLD)
+		CHK(99, fail, "Oversized array found");
+	
+	for (size_t i = 0; i < count; i++) {
+		data[i].i = idx;
+		data[i].v = vals;
+		
+		idx += isize;
+		vals += vsize;
+	}
+	
+	qsort(data, count, sizeof(*data), grade_cmp_fptr(up, l));
+	
+	CHKFN(mk_array(&arr, r->type, STG_HOST, 1), fail);
+	
+	arr->shape[0] = r->shape[0];
+	
+	CHKFN(alloc_array(arr), fail);
+	
+	idx = arr->values;
+	
+	for (size_t i = 0; i < count; i++) {
+		memcpy(idx, data[i].i, isize);
+		
+		idx += isize;
+	}
+	
+	*z = arr;
+	
+fail:
+	if (err)
+		release_array(arr);
+	
+	return err;
+}
+
+int
+grade_vec_device(int up, struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *arr;
@@ -2718,6 +2891,29 @@ fail:
 		af_release_array(iv);
 	}
 
+	return err;
+}
+
+int
+grade_vec(int up, struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	
+	CHKFN(array_promote_storage(l, r), fail);
+	
+	switch (l->storage) {
+	case STG_HOST:
+		CHKFN(grade_vec_host(up, z, l, r, self), fail);
+		break;
+	case STG_DEVICE:
+		CHKFN(grade_vec_device(up, z, l, r, self), fail);
+		break;
+	default:
+		CHK(99, fail, "Unknown storage type");
+	}
+	
+fail:
 	return err;
 }
 

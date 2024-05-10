@@ -397,6 +397,7 @@ GC←{
 		z,←⊂'	if (!err && stk != stkhd)'
 		z,←⊂'		CHK(99, cleanup, "Stack not empty");'
 		z,←⊂''
+		z,←⊂'	release_env(stk, stkhd);'
 		z,←'	'∘,¨release_vars lvs
 		z,←(⊂'	release_',atyp,'(cdf_alpha);')⌿⍨ism
 		z,←⊂''
@@ -519,7 +520,7 @@ GC←{
 	exp,←⊂''
 	exp,←⊂'fail:'
 	exp,←⊂'	dbg = get_debug_info();'
-	exp,←⊂'	printf("%s\n", (char *)dbg->values);'
+	exp,←⊂'	printf("\n%s\n", (char *)dbg->values);'
 	exp,←⊂'	printf("ERROR %d\n", err);'
 	exp,←⊂'	release_debug_info();'
 	exp,←⊂'	return err;'
