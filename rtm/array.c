@@ -1024,6 +1024,11 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 	if (err = array_promote_storage(l, r))
 		return err;
 	
+	if (l->type != r->type) {
+		*is_same = 0;
+		return 0;
+	}
+	
 	if (l->storage == STG_DEVICE) {
 		af_array t;
 		double real, imag;
@@ -1068,19 +1073,6 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 		return 0;
 	}
 	
-	if (l->type == ARR_CMPX)
-		if (err = squeeze_array(l))
-			return err;
-	
-	if (r->type == ARR_CMPX)
-		if (err = squeeze_array(r))
-			return err;
-	
-	if ((l->type == ARR_CMPX) != (r->type == ARR_CMPX)) {
-		*is_same = 0;
-		return 0;
-	}
-	
 	if (l->type == ARR_CMPX) {
 		struct apl_cmpx *lvals = l->values;
 		struct apl_cmpx *rvals = r->values;
@@ -1096,9 +1088,9 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 		return 0;
 	}
 	
-#define ARRAY_SAME_LOOP(ltype, rtype) {		\
-	ltype *lvals = l->values;		\
-	rtype *rvals = r->values;		\
+#define ARRAY_SAME_LOOP(type) {			\
+	type *lvals = l->values;		\
+	type *rvals = r->values;		\
 						\
 	for (size_t i = 0; i < count; i++) {	\
 		if (lvals[i] != rvals[i]) {	\
@@ -1106,36 +1098,16 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 			return 0;		\
 		}				\
 	}					\
-						\
-	break;					\
 }
 
-	switch (type_pair(l->type, r->type)) {
-	case type_pair(ARR_BOOL, ARR_BOOL):ARRAY_SAME_LOOP(int8_t, int8_t);
-	case type_pair(ARR_BOOL, ARR_SINT):ARRAY_SAME_LOOP(int8_t, int16_t);
-	case type_pair(ARR_BOOL, ARR_INT):ARRAY_SAME_LOOP( int8_t, int32_t);
-	case type_pair(ARR_BOOL, ARR_DBL):ARRAY_SAME_LOOP( int8_t, double);
-	case type_pair(ARR_SINT, ARR_BOOL):ARRAY_SAME_LOOP(int16_t, int8_t);
-	case type_pair(ARR_SINT, ARR_SINT):ARRAY_SAME_LOOP(int16_t, int16_t);
-	case type_pair(ARR_SINT, ARR_INT):ARRAY_SAME_LOOP( int16_t, int32_t);
-	case type_pair(ARR_SINT, ARR_DBL):ARRAY_SAME_LOOP( int16_t, double);
-	case type_pair(ARR_INT, ARR_BOOL):ARRAY_SAME_LOOP(int32_t, int8_t);
-	case type_pair(ARR_INT, ARR_SINT):ARRAY_SAME_LOOP(int32_t, int16_t);
-	case type_pair(ARR_INT, ARR_INT):ARRAY_SAME_LOOP( int32_t, int32_t);
-	case type_pair(ARR_INT, ARR_DBL):ARRAY_SAME_LOOP( int32_t, double);
-	case type_pair(ARR_DBL, ARR_BOOL):ARRAY_SAME_LOOP(double, int8_t);
-	case type_pair(ARR_DBL, ARR_SINT):ARRAY_SAME_LOOP(double, int16_t);
-	case type_pair(ARR_DBL, ARR_INT):ARRAY_SAME_LOOP( double, int32_t);
-	case type_pair(ARR_DBL, ARR_DBL):ARRAY_SAME_LOOP( double, double);
-	case type_pair(ARR_CHAR8, ARR_CHAR8):ARRAY_SAME_LOOP(uint8_t, uint8_t);
-	case type_pair(ARR_CHAR8, ARR_CHAR16):ARRAY_SAME_LOOP(uint8_t, uint16_t);
-	case type_pair(ARR_CHAR8, ARR_CHAR32):ARRAY_SAME_LOOP(uint8_t, uint32_t);
-	case type_pair(ARR_CHAR16, ARR_CHAR8):ARRAY_SAME_LOOP( uint16_t, uint8_t);
-	case type_pair(ARR_CHAR16, ARR_CHAR16):ARRAY_SAME_LOOP(uint16_t, uint16_t);
-	case type_pair(ARR_CHAR16, ARR_CHAR32):ARRAY_SAME_LOOP(uint16_t, uint32_t);
-	case type_pair(ARR_CHAR32, ARR_CHAR8):ARRAY_SAME_LOOP( uint32_t, uint8_t);
-	case type_pair(ARR_CHAR32, ARR_CHAR16):ARRAY_SAME_LOOP(uint32_t, uint16_t);
-	case type_pair(ARR_CHAR32, ARR_CHAR32):ARRAY_SAME_LOOP(uint32_t, uint32_t);
+	switch (l->type) {
+	case ARR_BOOL:  ARRAY_SAME_LOOP(int8_t);   break;
+	case ARR_SINT:  ARRAY_SAME_LOOP(int16_t);  break;
+	case ARR_INT:   ARRAY_SAME_LOOP(int32_t);  break;
+	case ARR_DBL:   ARRAY_SAME_LOOP(double);   break;
+	case ARR_CHAR8: ARRAY_SAME_LOOP(uint8_t);  break;
+	case ARR_CHAR16:ARRAY_SAME_LOOP(uint16_t); break;
+	case ARR_CHAR32:ARRAY_SAME_LOOP(uint32_t); break;
 	default:
 		return 99;
 	}
