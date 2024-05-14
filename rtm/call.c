@@ -19,8 +19,6 @@ mk_nested_array(void ***stkhd, size_t count)
 	for (size_t i = 0; i < count; i++)
 		dat[i] = *--*stkhd;
 	
-	CHKFN(squeeze_array(arr), fail);
-	
 	*(*stkhd)++ = arr;
 	
 fail:
