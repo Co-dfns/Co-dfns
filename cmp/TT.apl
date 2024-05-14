@@ -85,15 +85,15 @@ TT←{
 	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽p[i]] ⋄ p←(i@j⍳≢p)[p]
 
 	⍝ Mark arity contexts
-	ac←(≢p)⍴0 ⋄ ac[i]←k[p[i←⍸(t=P)∧(k=2)∧t[p]=E]]	
+	ac←(≢p)⍴0 ⋄ ac[i]←2⌊k[p[i←⍸(t=P)∧(k=2)∧t[p]=E]]
 	
 	⍝ Lift and flatten expressions
 	i←⍸(t∊A B C E G O P S Z)∨(t=V)∧t[p]≠C
 	p[i]←p[x←p I@{(t[x]∊F G)⍱(t[x]=B)∧k[x←p[⍵]]=7}⍣≡i]
-	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]
+	p t k n lx mu r ac pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]
 	
 	⍝ Remove unnecessary B0 nodes
-	p t k n lx mu r pos end⌿⍨←⊂~msk←(t=B)∧k=0 ⋄ p r(⊣-1+⍸⍨)←⊂j←⍸msk
+	p t k n lx mu r ac pos end⌿⍨←⊂~msk←(t=B)∧k=0 ⋄ p r(⊣-1+⍸⍨)←⊂j←⍸msk
 	n[i]←j(⊢-1+⍸)n[i←⍸(n>0)∧~((t=E)∧k=6)∨((t∊S A)∧k=7)∨(t=S)∧k=0]
 
 	⍝ Compute a function's local and free variables
@@ -163,18 +163,18 @@ TT←{
 	syms,←⊂,'⍷'       ⋄ nams⍪←'fnd'        'fnd'           'fnd'
 	syms,←⊂,'↑'       ⋄ nams⍪←'tke'        'mix'           'take'
 	syms,←⊂,'↓'       ⋄ nams⍪←'drp'        'split'         'drop'
-	syms,←⊂,'⊢'      ⋄ nams⍪←'rgt'        'rgt'           'rgt'
-	syms,←⊂,'⊣'      ⋄ nams⍪←'lft'        'lftid'         'left'
-	syms,←⊂,'⊤'      ⋄ nams⍪←'enc'        'encmon'        'enc'
-	syms,←⊂,'⊥'      ⋄ nams⍪←'dec'        'decmon'        'dec'
+	syms,←⊂,'⊢'       ⋄ nams⍪←'rgt'        'rgt'           'rgt'
+	syms,←⊂,'⊣'       ⋄ nams⍪←'lft'        'lftid'         'left'
+	syms,←⊂,'⊤'       ⋄ nams⍪←'enc'        'encmon'        'enc'
+	syms,←⊂,'⊥'       ⋄ nams⍪←'dec'        'decmon'        'dec'
 	syms,←⊂,'?'       ⋄ nams⍪←'rol'        'roll'          'deal'
 	syms,←⊂,'⌹'       ⋄ nams⍪←'mdv'        'matinv'        'matdiv'
 	syms,←⊂,'⎕'       ⋄ nams⍪←'println'    'println'       'println'
 	syms,←⊂,'⍞'       ⋄ nams⍪←'print'      'print'         'print'
 	syms,←⊂,'⍕'       ⋄ nams⍪←'fmt'        'fmt'           'fmt'
 	syms,←⊂,';'       ⋄ nams⍪←'spn'        'spn'           'spn'
-	syms,←⊂,'←'      ⋄ nams⍪←'mst'        'mst'           'mst'
-	syms,←⊂,'←←'    ⋄ nams⍪←'set'        'set'           'set'
+	syms,←⊂,'←'       ⋄ nams⍪←'mst'        'mst'           'mst'
+	syms,←⊂,'←←'      ⋄ nams⍪←'set'        'set'           'set'
 	syms,←⊂,'/'       ⋄ nams⍪←'red'        'reduce_last'   'nwreduce_last'
 	syms,←⊂,'⌿'       ⋄ nams⍪←'rdf'        'reduce_first'  'nwreduce_first'
 	syms,←⊂,'\'       ⋄ nams⍪←'scn'        'scn'           'scndya'
@@ -214,7 +214,8 @@ TT←{
 	⍝ Convert all primitives to variables; P → V|E
 	i←⍸t=P ⋄ si←syms⍳sym[ni←|n[i]]
 	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
-	t[i]←V E[msk←(k[i]=1)∧'⎕⍞'∊⍨⊃¨sym[ni]] ⋄ k[i⌿⍨msk]←3 ⋄ sym[ni]←nams[si;0]
+	t[i]←V E[msk←(k[i]=1)∧'⎕⍞'∊⍨⊃¨sym[ni]] ⋄ k[i⌿⍨msk]←3
+	sym[ni]←nams[si;0] ⋄ n[i]←-sym⍳sym∪←nams[si,¨ac[i]]
 
 	p t k n lx mu lv fv pos end sym IN
 }
