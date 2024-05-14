@@ -20,6 +20,7 @@ NUM_323←323
 NUM_326←326
 NUM_645←645
 NUM_1289←1289
+VEC_0←1('reshape_ibeam'⌶)0
 
 ⍝ Utilities
 eq←'eq_ibeam'⌶⌶⌶
@@ -40,12 +41,12 @@ both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 bitand←'bitand_vec_ibeam'⌶
+scl_and←{⍺:⍵ ⋄ NUM_0} ⋄ scl_or←{⍺:NUM_1 ⋄ ⍵}
 any←'any_ibeam'⌶
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 ambiv←{
-	⍺←⊢ ⋄ hax←1 ⋄ axis⍠←hax←0 ⋄ mon←1 same ⍺ 1 ⋄ lop←⍺⍺ ⋄ rop←⍵⍵
-	hax:⍺{mon:lop[axis] ⍵ ⋄ ⍺ rop[axis] ⍵}⍵
-	mon:⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵
+	mon←VEC_0 same ⎕NC'⍺' ⋄ nax←NUM_0 ⋄ axis⍠←nax←NUM_1
+	mon scl_and nax:⍺⍺ ⍵ ⋄ mon:⍺⍺[axis] ⍵ ⋄ nax:⍺ ⍵⍵ ⍵ ⋄ ⍺ ⍵⍵[axis] ⍵
 }
 veach←'veach_ibeam'⌶⌶
 scalar←{op←⍺⍺
