@@ -74,15 +74,16 @@ chk_axis←{axis←⍺⍺ ⋄ ~⍺:0
 }
 
 ⍝ ⍴: Shape / Reshape
+shape←'shape_ibeam'⌶
 chk_valid_shape←{
 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4
 	0≡≢,⍵:0
-	{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
+	{has_nat_vals squeeze ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
 	0
 }
 prototype←{is_numeric squeeze ⍵:(⍴⍵)⍴0 ⋄ is_char ⍵:(⍴⍵)⍴' ' ⋄ ∇¨⍵}
 reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
-rho←('shape_ibeam'⌶) ambiv reshape
+rho←shape ambiv reshape
 
 ⍝ X[]←Y: Bracket Assignment
 idx_rnk_check←{(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4 ⋄ 0}
@@ -133,13 +134,16 @@ sqd_idx←{
 sqd←materialize ambiv sqd_idx
 
 ⍝ X[]: Bracket Indexing
+brkmon←{⎕SIGNAL 2}
 brk←{⍺ idx_rnk_check ⍵: ⋄ ⍵⌷⍺}
 
 ⍝ ⊢: Right
 rgt←{⍵}
 
 ⍝ ⊣: Left
-lft←{⍵} ambiv {⍺}
+lftid←{⍵}
+left←{⍺}
+lft←lftid ambiv left
 
 ⍝ ,: Ravel / Catenate
 ravel←{
@@ -202,13 +206,15 @@ same←'same_ibeam'⌶
 eqv←depth ambiv same
 
 ⍝ ≢: Tally / Not Same
-nqv←{⍬≡⍴⍵:1 ⋄ ⊃⍴⍵} ambiv ('nqv_ibeam'⌶)
+tally←{⍬≡⍴⍵:1 ⋄ ⊃⍴⍵}
+notsame←'nqv_ibeam'⌶
+nqv←tally ambiv notsame
 
 ⍝ ⍳: Index Generate | Index Of
 index_gen←{
 	chk_valid_shape ⍵: 
 	0≡≢,⍵:⊂⍬
-	(,0)≡,⍵:⍬
+	VEC_0≡,⍵:⍬
 	1≡≢,⍵:'index_gen_vec'⌶ ⍵
 	⊃∘.,⌿⍳¨⍵
 }
@@ -225,9 +231,9 @@ index_of←{
 iot←index_gen ambiv index_of
 
 ⍝ ⊃: First / Pick
-disclose←'disclose_ibeam'⌶
+first←'disclose_ibeam'⌶
 pick←{0≡≢,⍺:⍵ ⋄ (1↓⍺)∇⊃(⊃⍺)⌷⍵}
-dis←disclose ambiv pick
+dis←first ambiv pick
 
 ⍝ ⊂: Enclose / Partition
 enclose←{
@@ -271,28 +277,38 @@ nst←nest ambiv partition
 
 ⍝ +: Conjugate | Addition
 conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}
-add←conjugate ambiv ('add_vec_ibeam'⌶ numeric scalar)
+plus←'add_vec_ibeam'⌶ numeric scalar
+add←conjugate ambiv plus
 
 ⍝ -: Negate | Subtract
-sub←{0-⍵} ambiv ('sub_vec_ibeam'⌶ numeric scalar)
+negate←{0-⍵}
+minus←'sub_vec_ibeam'⌶ numeric scalar
+sub←negate ambiv minus
 
 ⍝ ×: Sign | Multiply
-sign←{
-	1289=⎕DR ⍵:⍵÷|⍵
-	(-⍵<0)+0<⍵
-}
-mul←sign ambiv ('mul_vec_ibeam'⌶ numeric scalar)
+sign←{1289=⎕DR ⍵:⍵÷|⍵ ⋄ (-⍵<0)+0<⍵}
+times←'mul_vec_ibeam'⌶ numeric scalar
+mul←sign ambiv times
 
 ⍝ ÷: Reciprocal | Divide
-div←{1÷⍵} ambiv ('div_vec_ibeam'⌶ numeric scalar)
+recip←{1÷⍵}
+divide←'div_vec_ibeam'⌶ numeric scalar
+div←recip ambiv divide
+
+⍝ *: Exponent | Power
+exponent←'exp_vec_ibeam'⌶ numeric scl_mon
+power←'pow_vec_ibeam'⌶ numeric scalar
+exp←exponent ambiv power
+
+⍝ ⍟: Natural Logarithm | Logarithm
+natlog←'nlg_vec_ibeam'⌶ numeric scl_mon
+logarithm←'log_vec_ibeam'⌶ numeric scalar
+log←natlog ambiv logarithm
 
 ⍝ |: Absolute Value | Residue
-absolute←{1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 'abs_vec_ibeam'⌶ ⍵}
-residue←{
-	2≡⍺:(⍴⍵)⍴1 bitand ⍵
-	⍵-⍺×⌊⍵÷⍺+0=⍺
-}
-res←absolute numeric scl_mon ambiv (residue numeric scalar)
+absolute←{1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 'abs_vec_ibeam'⌶ ⍵} numeric scl_mon
+residue←{2≡⍺:(⍴⍵)⍴1 bitand ⍵ ⋄ ⍵-⍺×⌊⍵÷⍺+0=⍺} numeric scalar
+res←absolute ambiv residue
 
 ⍝ ⌊: Floor | Minimum
 floor_array←{
@@ -303,25 +319,21 @@ floor_array←{
 		(fa+m×t)+0J1×fb+m×~t←ad≥bd
 	}⍵
 	'floor_vec_ibeam'⌶ ⍵
-}
-min←floor_array numeric scl_mon ambiv ('min_vec_ibeam'⌶ numeric scalar)
+} numeric scl_mon
+minimum←'min_vec_ibeam'⌶ numeric scalar
+min←floor_array ambiv minimum
 
 ⍝ ⌈: Ceiling | Maximum
 ceil_array←{
 	is_integer ⍵:⍵
 	1289=⎕DR ⍵:-⌊-⍵
 	'ceil_vec_ibeam'⌶ ⍵
-}
-max←ceil_array numeric scl_mon ambiv ('max_vec_ibeam'⌶ numeric scalar)
-
-⍝ *: Exponent | Power
-exp←'exp_vec_ibeam'⌶ numeric scl_mon ambiv ('pow_vec_ibeam'⌶ numeric scalar)
-
-⍝ ⍟: Natural Logarithm | Logarithm
-log←'nlg_vec_ibeam'⌶ numeric scl_mon ambiv ('log_vec_ibeam'⌶ numeric scalar)
+} numeric scl_mon
+maximum←'max_vec_ibeam'⌶ numeric scalar
+max←ceil_array ambiv maximum
 
 ⍝ ○: Pi Times | Trigonometric Functions
-pitimes←{3.14159265358979323846×⍵}
+pitimes←{3.14159265358979323846×⍵} numeric scl_mon
 trig←{
 	0≠≡⍺:⍺ ∇¨⍵
 	0=⍺:(1-⍵*2)*.5
@@ -350,29 +362,32 @@ trig←{
 	12=⍺:'PHASE(⍵) NOT IMPLEMENTED'⎕SIGNAL 16
 	¯12=⍺:*⍵×0J1
 	⎕SIGNAL 11
-}
-cir←pitimes numeric scl_mon ambiv (trig numeric scalar)
+} numeric scalar
+cir←pitimes ambiv trig
 
 ⍝ !: Factorial | Binomial
+factorial←'factorial_vec_ibeam'⌶ numeric scl_mon
 binomial←{
 	∨⌿,(⍵=⌊⍵)∧(⍵<0)∧⍺≠⌊⍺:⎕SIGNAL 11
 	(!⍵)÷(!⍺)×!⍵-⍺
-}
-fac←'factorial_vec_ibeam'⌶ numeric scl_mon ambiv (binomial numeric scalar)
+} numeric scalar
+fac←factorial ambiv binomial
 
 ⍝ ~: Not | Without
-notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
+notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11} scl_mon
 without←{1<≢⍴⍺:⎕SIGNAL 11 ⋄ (~⍺∊⍵)⌿⍺}
-not←notscl scl_mon ambiv without
+not←notscl ambiv without
 
 ⍝ ∧: And
+andmon←{⎕SIGNAL 2}
 logand←{
 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵
 	⍺×⍵÷⍺∨⍵
-}
-and←{⎕SIGNAL 2}ambiv (logand numeric scalar)
+} numeric scalar
+and←andmon ambiv logand
 
 ⍝ ∨: Or
+lormon←{⎕SIGNAL 2}
 rational←{
 	r←⍵ ⋄ s←⍴⍵ ⋄ c20←s⍴0 ⋄ c21←s⍴1 ⋄ c10←s⍴1 ⋄ c11←s⍴0
 	{
@@ -393,51 +408,60 @@ logor←{
 	y←rational |,⍺ ⋄ a←(⍴⍺)⍴0⊃y ⋄ b←(⍴⍺)⍴1⊃y
 	x←rational |,⍵ ⋄ c←(⍴⍵)⍴0⊃x ⋄ d←(⍴⍵)⍴1⊃x
         (a gcd c)÷b lcm d
-}
-lor←{⎕SIGNAL 2}ambiv (logor numeric scalar)
+} numeric scalar
+lor←lormon ambiv logor
 
 ⍝ ⍲: Not and
-nan←{⎕SIGNAL 2}ambiv ({⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11} scalar)
+nanmon←{⎕SIGNAL 2}
+lognan←{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11} scalar
+nan←nanmon ambiv lognan
 
 ⍝ ⍱: Not Or
-nor←{⎕SIGNAL 2}ambiv ({⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11} scalar)
+normon←{⎕SIGNAL 2}
+lognor←{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11} scalar
+nor←normon ambiv lognor
 
 ⍝ <: Less than
+lthmon←{⎕SIGNAL 2}
 lessthan←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('lth_vec_ibeam'⌶)⍵
-}
-lth←{⎕SIGNAL 2} ambiv (lessthan numeric scalar)
+} numeric scalar
+lth←lthmon ambiv lessthan
 
 ⍝ ≤: Less than or equal
+ltemon←{⎕SIGNAL 2}
 lesseql←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('lte_vec_ibeam'⌶)⍵
-}
-lte←{⎕SIGNAL 2}ambiv (lesseql numeric scalar)
+} numeric scalar
+lte←ltemon ambiv lesseql
 
 ⍝ =: Equal
+eqlmon←{⎕SIGNAL 2}
 eql_vec←'eql_vec_ibeam'⌶
 equal←{
 	⍺ both_numeric ⍵:⍺ eql_vec ⍵
 	⍺ both_char ⍵:⍺ eql_vec ⍵
 	0
-}
-eql←{⎕SIGNAL 2}ambiv (equal scalar)
+} scalar
+eql←eqlmon ambiv equal
 
 ⍝ ≥: Greater than or equal
+gtemon←{⎕SIGNAL 2}
 greatereql←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('gte_vec_ibeam'⌶)⍵
-}
-gte←{⎕SIGNAL 2}ambiv (greatereql numeric scalar)
+} numeric scalar
+gte←gtemon ambiv greatereql
 
 ⍝ >: Greater than
+gthmon←{⎕SIGNAL 2}
 greaterthan←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('gth_vec_ibeam'⌶)⍵
-}
-gth←{⎕SIGNAL 2}ambiv (greaterthan numeric scalar)
+} numeric scalar
+gth←gthmon ambiv greaterthan
 
 ⍝ ≠: Not Equal | First Occurrence
 firstocc←{(⍳≢⍵)=⍵⍳⍵}
@@ -446,8 +470,8 @@ noteq←{
 	⍺ both_numeric ⍵:⍺ neq_vec ⍵
 	⍺ both_char ⍵:⍺ neq_vec ⍵
 	1
-}
-neq←firstocc ambiv (noteq scalar)
+} scalar
+neq←firstocc ambiv noteq
 
 ⍝ ↑: Mix | Take
 mix←{
@@ -516,7 +540,7 @@ transpose_target←{
 	ts←tr⍴1 ⋄ ts[⍺]←0 ⋄ any 0≠ts:⎕SIGNAL 5
 	1≥≢⍴⍵:⍵
 	ts[⍺]←⍴⍵ ⋄ _←⍺{ts[⍺]⌊←⍵}¨⍴⍵
-	ts⍴(,⍵)[(⍴⍵)⊥(⊂⍺)⌷ts⊤⍳×⌿ts]
+ 	ts⍴(,⍵)[(⍴⍵)⊥(⊂⍺)⌷ts⊤⍳×⌿ts]
 }
 trn←transpose ambiv transpose_target
 
@@ -539,6 +563,7 @@ gdd←{
 }
 
 ⍝ ⊤: Encode
+encmon←{⎕SIGNAL 2}
 enc←{
 	~is_numeric ⍺:⎕SIGNAL 11 ⋄ ~is_numeric ⍵:⎕SIGNAL 11
 	d←⍪⍺ ⋄ z←((⍴d),≢,⍵)⍴0⍴⍵ ⋄ sd←(⍳≢d),⊂,⍵
@@ -547,6 +572,7 @@ enc←{
 }
 
 ⍝ ⊥: Decode
+decmon←{⎕SIGNAL 2}
 dec←{
 	(0≢≢⍴⍺)∧(0≢≢⍴⍵)∧(1≢lc)∧(1≢rc)∧(rc←≢⍵)≢lc←1⌈⊃⌽⍴⍺:⎕SIGNAL 5
 	s←(¯1↓⍴⍺),1↓⍴⍵
@@ -577,6 +603,7 @@ union←{1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1<≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺⍪⍵⌿⍨
 unq←unique ambiv union
 
 ⍝ ∩: Intersection
+intmon←{⎕SIGNAL 2}
 int←{1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1<≢⍴⍵:⎕SIGNAL 4 ⋄ ⍺⌿⍨⍺∊⍵}
 
 ⍝ ⌺: Stencil
@@ -695,7 +722,7 @@ identity←{
 	⍺⍺ eq ⊖ ⍬:0
 	⎕SIGNAL 16
 }
-reduce←{axis←⍵⍵ ⋄ op←⍺⍺
+reduce_axis←{axis←⍵⍵ ⋄ op←⍺⍺
 	0≡≢⍴⍵:0∇,⍵ ⋄ s←⍴⍵
 	0≡≢,⍵:((axis↑s),(axis+1)↓s)⍴⍺⍺ identity ⍬
 	1≡c←s[axis]:((axis↑s),(axis+1)↓s)⍴⍵
@@ -724,21 +751,25 @@ reduce←{axis←⍵⍵ ⋄ op←⍺⍺
 	ib∧⍺⍺ eq ≠ ⍬:zs⍴1 bitand 'count_array'⌶ lc c rc⍴⍵
 	gen_red ⍵
 }
-nwreduce←{op←⍺⍺¨ ⋄ axis←⍵⍵ ⋄ rc←1+(⍴⍵)[axis]
-	1≢≢,⍺:⎕SIGNAL 5 ⋄ 0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc:⎕SIGNAL 5
+nwreduce_axis←{op←⍺⍺¨ ⋄ axis←⍵⍵ ⋄ rc←1+(⍴⍵)[axis]
+	1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5
+	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ (|⍺)>rc:⎕SIGNAL 5
 	0=⍺:(s⊣s[axis]+←1⊣s←⍴⍵)⍴⍺⍺ identity ⍬ ⋄ 1=|⍺:⍵
 	rc-←|⍺ ⋄ stp←{z⊢←((⊂⍺+⍳rc)⌷[axis]⍵)op z}
 	⍺<0:z⊣(1+⍳¯1+|⍺)stp¨⊂⍵⊣z←rc↑[axis]⍵
 	z⊣(⌽⍳⍺-1)stp¨⊂⍵⊣z←(⍺-1)↓[axis]⍵
 }
-red_check←{⍺←0 ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ 1≢≢,⍺:⎕SIGNAL 5 ⋄ 0}
-rdf←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⊣hax←0 ⋄ hax(axis chk_axis)⍵:
-	1≡⍺ 1:(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
+reduce_first←{hax←1 ⋄ axis⍠←0⊣hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ (⍺⍺ reduce_axis axis)⍵}
+nwreduce_first←{hax←1 ⋄ axis⍠←0⊣hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ ⍺(⍺⍺ nwreduce_axis axis)⍵}
+rdf←{⍺←⊢ ⋄ hax←1 ⋄ axis⍠←0⊣hax←0 ⋄ hax(axis chk_axis)⍵:
+	1≡⍺ 1:(⍺⍺ reduce_axis axis)⍵ ⋄ ⍺(⍺⍺ nwreduce_axis axis)⍵
 }
 
 ⍝ /: Reduce | N-wise Reduce
-red←{⍺←⊢ ⋄ ⍺ red_check ⍵: ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
-	1≡⍺ 1:hax(⍺⍺ reduce axis)⍵ ⋄ ⍺(⍺⍺ nwreduce axis)⍵
+reduce_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ (⍺⍺ reduce_axis axis)⍵}
+nwreduce_last←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵: ⋄ ⍺(⍺⍺ nwreduce_axis axis)⍵}
+red←{⍺←⊢ ⋄ hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
+	1≡⍺ 1:hax(⍺⍺ reduce_axis axis)⍵ ⋄ ⍺(⍺⍺ nwreduce_axis axis)⍵
 }
 
 ⍝ ⍸: Where/Interval Index
@@ -763,6 +794,7 @@ interval_idx←{
 iou←where ambiv interval_idx
 
 ⍝ ⌿⌿: Replicate First
+rpfmon←{⎕SIGNAL 2}
 rpf←{
 	hax←1 ⋄ axis⍠←hax←0 ⋄ hax(axis chk_axis)⍵:
 	noscl←{0≡≢⍴⍵:,⍵ ⋄ ⍵} ⋄ x←noscl ⍺ ⋄ y←noscl ⍵
@@ -774,6 +806,7 @@ rpf←{
 }
 
 ⍝ //: Replicate
+repmon←{⎕SIGNAL 2}
 rep←{
 	hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
 	noscl←{0≡≢⍴⍵:,⍵ ⋄ ⍵} ⋄ x←noscl ⍺ ⋄ y←x{1≡≢,⍵:(⍴⍺)⍴⍵ ⋄ ⍵}noscl ⍵
@@ -810,12 +843,15 @@ scan←{axis←⍵⍵ ⋄ fn←⍺⍺ ⋄ hax←⍺ ⋄ hax(axis chk_axis)⍵:
 	ib∧⍺⍺ eq ≠ ⍬:(⍴⍵)⍴1 bitand 'plus_scan_array'⌶ x
 	arr_gen ⍵
 }
+scfdya←{⎕SIGNAL 2}
 scf←{hax←1 ⋄ axis⍠←hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
 	
 ⍝ \: Scan
+scndya←{⎕SIGNAL 2}
 scn←{hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax ⍺⍺ scan axis⊢⍵}
 
 ⍝ ⍀⍀: Expand First
+xpfmon←{⎕SIGNAL 2}
 xpf←{
 	hax←1 ⋄ axis⍠←hax←0 ⋄ hax(axis chk_axis)⍵:
 	0≡≢⍴⍵:⍺∇,⍵ ⋄ 1<≢⍴⍺:⎕SIGNAL 4 ⋄ as←(⍴⍵)[axis]
@@ -826,6 +862,7 @@ xpf←{
 }
 
 ⍝ \\: Expand Last
+xpdmon←{⎕SIGNAL 2}
 xpd←{
 	hax←1 ⋄ axis⍠←0⌈¯1+≢⍴⍵⊣hax←0 ⋄ hax(axis chk_axis)⍵:
 	0≡≢⍴⍵:⍺∇,⍵ ⋄ ⍺⍀[axis]⍵

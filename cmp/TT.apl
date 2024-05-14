@@ -82,7 +82,10 @@ TT←{
 	⍝ Lift strand binding nodes
 	i←⍸~msk[p I@{msk[⍵]}⍣≡⍳≢p⊣msk←~(≠p)∧(t[p]=B)∧k[p]=0]
 	p[i]←p I@{msk[⍵]}⍣≡p[i]⊣msk←~(t=B)∧k=0
-	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽p[i]] ⋄ p←(i@j⍳≢p)[p]	
+	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽p[i]] ⋄ p←(i@j⍳≢p)[p]
+
+	⍝ Mark arity contexts
+	ac←(≢p)⍴0 ⋄ ac[i]←k[p[i←⍸(t=P)∧(k=2)∧t[p]=E]]	
 	
 	⍝ Lift and flatten expressions
 	i←⍸(t∊A B C E G O P S Z)∨(t=V)∧t[p]≠C
@@ -114,36 +117,104 @@ TT←{
 	sym∪←∪x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
 
 	⍝ Symbol mapping between primitives and runtime names
-	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'  
-	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min'
-	syms,←,¨'⌈'   '!'   '<'   '≤'   '='   '≥'   '>'   '≠'   '~'
-	nams,←  'max' 'fac' 'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'
-	syms,←,¨'∧'   '∨'   '⍲'   '⍱'   '⌷'   '['   '⍳'   '⍴'   ','  
-	nams,←  'and' 'lor' 'nan' 'nor' 'sqd' 'brk' 'iot' 'rho' 'cat' 
-	syms,←,¨'⍪'   '⌽'   '⍉'   '⊖'   '∊'   '⊃'   '≡'   '≢'   '⊢'
-	nams,←  'ctf' 'rot' 'trn' 'rtf' 'mem' 'dis' 'eqv' 'nqv' 'rgt'
-	syms,←,¨'⊣'   '⊤'   '⊥'   '/'   '⌿'   '\'   '⍀'   '?'   '↑'   
-	nams,←  'lft' 'enc' 'dec' 'red' 'rdf' 'scn' 'scf' 'rol' 'tke' 
-	syms,←,¨'↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'   '∘'   '∪'   '∩'
-	nams,←  'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
-	syms,←,¨'←'   '⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⊆'   '∇'
-	nams,←  'mst' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'self'
-	syms,←,¨'//'  '⌿⌿'  '\\'  '⍀⍀'  '←←'  '⌸'   '⍸'   '⌺'   '@'
-	nams,←  'rep' 'rpf' 'xpd' 'xpf' 'set' 'key' 'iou' 'stn' 'at'
-	syms,←,¨'⎕'         '⍞'         '⍕'   ';'   
-	nams,←  'println'   'print'     'fmt' 'spn' 
-	syms,←,¨'⎕FFT'  '⎕IFFT' '⎕CONV'  '⎕NC'  '⎕SIGNAL'  '⎕DR'  '⎕TS'
-	nams,←  'q_fft' 'q_ift' 'q_conv' 'q_nc' 'q_signal' 'q_dr' 'q_ts'
-	syms,←⊂,'⎕PRINT_MEMSTATS'
-	nams,←⊂,'q_print_memstats'
-	syms,←,¨'⍺'     '⍵'     '⍺⍺'         '⍵⍵'         '∇∇'     '%u'
-	nams,←  'alpha' 'omega' 'alphaalpha' 'omegaomega' 'deldel' ''
-	syms←⎕C syms
+	syms ←0⍴⊂''       ⋄ nams ←0 3⍴⊂''
+	syms,←⊂,'+'       ⋄ nams⍪←'add'        'conjugate'     'plus'
+	syms,←⊂,'-'       ⋄ nams⍪←'sub'        'negate'        'minus'
+	syms,←⊂,'×'       ⋄ nams⍪←'mul'        'sign'          'times'
+	syms,←⊂,'÷'       ⋄ nams⍪←'div'        'recip'         'divide'
+	syms,←⊂,'*'       ⋄ nams⍪←'exp'        'exponent'      'power'
+	syms,←⊂,'⍟'       ⋄ nams⍪←'log'        'natlog'        'logarithm'
+	syms,←⊂,'|'       ⋄ nams⍪←'res'        'absolute'      'residue'
+	syms,←⊂,'⌊'       ⋄ nams⍪←'min'        'floor_array'   'minimum'
+	syms,←⊂,'⌈'       ⋄ nams⍪←'max'        'ceil_array'    'maximum'
+	syms,←⊂,'○'       ⋄ nams⍪←'cir'        'pitimes'       'trig'
+	syms,←⊂,'!'       ⋄ nams⍪←'fac'        'factorial'     'binomial'
+	syms,←⊂,'~'       ⋄ nams⍪←'not'        'notscl'        'without'
+	syms,←⊂,'∧'       ⋄ nams⍪←'and'        'andmon'        'logand'
+	syms,←⊂,'∨'       ⋄ nams⍪←'lor'        'lormon'        'logor'
+	syms,←⊂,'⍲'       ⋄ nams⍪←'nan'        'nanmon'        'lognan'
+	syms,←⊂,'⍱'       ⋄ nams⍪←'nor'        'normon'        'lognor'
+	syms,←⊂,'<'       ⋄ nams⍪←'lth'        'lthmon'        'lessthan'
+	syms,←⊂,'≤'       ⋄ nams⍪←'lte'        'ltemon'        'lesseql'
+	syms,←⊂,'='       ⋄ nams⍪←'eql'        'eqlmon'        'equal'
+	syms,←⊂,'≥'       ⋄ nams⍪←'gte'        'gtemon'        'greatereql'
+	syms,←⊂,'>'       ⋄ nams⍪←'gth'        'gthmon'        'greaterthan'
+	syms,←⊂,'≠'       ⋄ nams⍪←'neq'        'firstocc'      'noteq'
+	syms,←⊂,'⌷'       ⋄ nams⍪←'sqd'        'materialize'   'sqd_idx'
+	syms,←⊂,'['       ⋄ nams⍪←'brk'        'brkmon'        'brk'
+	syms,←⊂,'⍴'       ⋄ nams⍪←'rho'        'shape'         'reshape'
+	syms,←⊂,'≡'       ⋄ nams⍪←'eqv'        'depth'         'same'
+	syms,←⊂,'≢'       ⋄ nams⍪←'nqv'        'tally'         'notsame'
+	syms,←⊂,'⍳'       ⋄ nams⍪←'iot'        'index_gen'     'index_of'
+	syms,←⊂,'⍸'       ⋄ nams⍪←'iou'        'where'         'interval_idx'
+	syms,←⊂,'⊃'       ⋄ nams⍪←'dis'        'first'         'pick'
+	syms,←⊂,'⊂'       ⋄ nams⍪←'par'        'enclose'       'part_enc'
+	syms,←⊂,'⊆'       ⋄ nams⍪←'nst'        'nest'          'partition'
+	syms,←⊂,','       ⋄ nams⍪←'cat'        'ravel'         'catenate'
+	syms,←⊂,'⍪'       ⋄ nams⍪←'ctf'        'table'         'catenatefirst'
+	syms,←⊂,'⌽'       ⋄ nams⍪←'rot'        'reverse_last'  'rotate_last'
+	syms,←⊂,'⊖'       ⋄ nams⍪←'rtf'        'reverse_first' 'rotate_first'
+	syms,←⊂,'⍉'       ⋄ nams⍪←'trn'        'transpose'     'transpose_target'
+	syms,←⊂,'⍋'       ⋄ nams⍪←'gdu'        'gdu'           'gdu'
+	syms,←⊂,'⍒'       ⋄ nams⍪←'gdd'        'gdd'           'gdd'
+	syms,←⊂,'∊'       ⋄ nams⍪←'mem'        'enlist'        'member'
+	syms,←⊂,'∪'       ⋄ nams⍪←'unq'        'unique'        'union'
+	syms,←⊂,'∩'       ⋄ nams⍪←'int'        'intmon'        'int'
+	syms,←⊂,'⍷'       ⋄ nams⍪←'fnd'        'fnd'           'fnd'
+	syms,←⊂,'↑'       ⋄ nams⍪←'tke'        'mix'           'take'
+	syms,←⊂,'↓'       ⋄ nams⍪←'drp'        'split'         'drop'
+	syms,←⊂,'⊢'      ⋄ nams⍪←'rgt'        'rgt'           'rgt'
+	syms,←⊂,'⊣'      ⋄ nams⍪←'lft'        'lftid'         'left'
+	syms,←⊂,'⊤'      ⋄ nams⍪←'enc'        'encmon'        'enc'
+	syms,←⊂,'⊥'      ⋄ nams⍪←'dec'        'decmon'        'dec'
+	syms,←⊂,'?'       ⋄ nams⍪←'rol'        'roll'          'deal'
+	syms,←⊂,'⌹'       ⋄ nams⍪←'mdv'        'matinv'        'matdiv'
+	syms,←⊂,'⎕'       ⋄ nams⍪←'println'    'println'       'println'
+	syms,←⊂,'⍞'       ⋄ nams⍪←'print'      'print'         'print'
+	syms,←⊂,'⍕'       ⋄ nams⍪←'fmt'        'fmt'           'fmt'
+	syms,←⊂,';'       ⋄ nams⍪←'spn'        'spn'           'spn'
+	syms,←⊂,'←'      ⋄ nams⍪←'mst'        'mst'           'mst'
+	syms,←⊂,'←←'    ⋄ nams⍪←'set'        'set'           'set'
+	syms,←⊂,'/'       ⋄ nams⍪←'red'        'reduce_last'   'nwreduce_last'
+	syms,←⊂,'⌿'       ⋄ nams⍪←'rdf'        'reduce_first'  'nwreduce_first'
+	syms,←⊂,'\'       ⋄ nams⍪←'scn'        'scn'           'scndya'
+	syms,←⊂,'⍀'       ⋄ nams⍪←'scf'        'scf'           'scfdya'
+	syms,←⊂,'//'      ⋄ nams⍪←'rep'        'repmon'        'rep'
+	syms,←⊂,'⌿⌿'      ⋄ nams⍪←'rpf'        'rpfmon'        'rep'
+	syms,←⊂,'\\'      ⋄ nams⍪←'xpd'        'xpdmon'        'xpd'
+	syms,←⊂,'⍀⍀'      ⋄ nams⍪←'xpf'        'xpfmon'        'xpf'
+	syms,←⊂,'¨'       ⋄ nams⍪←'map'        'map'           'map'
+	syms,←⊂,'⍨'       ⋄ nams⍪←'com'        'com'           'com'
+	syms,←⊂,'.'       ⋄ nams⍪←'dot'        'dot'           'dot'
+	syms,←⊂,'⍤'       ⋄ nams⍪←'rnk'        'rnk'           'rnk'
+	syms,←⊂,'⍣'       ⋄ nams⍪←'pow'        'pow'           'pow'
+	syms,←⊂,'∘'       ⋄ nams⍪←'jot'        'jot'           'jot'
+	syms,←⊂,'∘.'      ⋄ nams⍪←'oup'        'oup'           'oup'
+	syms,←⊂,'⌸'       ⋄ nams⍪←'key'        'key'           'key'
+	syms,←⊂,'⌺'       ⋄ nams⍪←'stn'        'stn'           'stn'
+	syms,←⊂,'@'       ⋄ nams⍪←'at'         'at'            'at'
+	syms,←⊂,'⎕FFT'    ⋄ nams⍪←'q_fft'      'q_fft'         'q_fft'
+	syms,←⊂,'⎕IFFT'   ⋄ nams⍪←'q_ift'      'q_ift'         'q_ift'
+	syms,←⊂,'⎕CONV'   ⋄ nams⍪←'q_conv'     'q_conv'        'q_conv'
+	syms,←⊂,'⎕NC'     ⋄ nams⍪←'q_nc'       'q_nc'          'q_nc'
+	syms,←⊂,'⎕SIGNAL' ⋄ nams⍪←'q_signal'   'q_signal'      'q_signal'
+	syms,←⊂,'⎕DR'     ⋄ nams⍪←'q_dr'       'q_dr'          'q_dr'
+	syms,←⊂,'⎕TS'     ⋄ nams⍪←'q_ts'       'q_ts'          'q_ts'
+	syms,←⊂,'⍺'       ⋄ nams⍪←'alpha'      'alpha'         'alpha'
+	syms,←⊂,'⍵'       ⋄ nams⍪←'omega'      'omega'         'omega'
+	syms,←⊂,'⍺⍺'      ⋄ nams⍪←'alphaalpha' 'alphaalpha'    'alphaalpha'
+	syms,←⊂,'⍵⍵'      ⋄ nams⍪←'omegaomega' 'omegaomega'    'omegaomega'
+	syms,←⊂,'∇'       ⋄ nams⍪←'self'       'self'          'self'
+	syms,←⊂,'∇∇'      ⋄ nams⍪←'deldel'     'deldel'        'deldel'
 
+	syms,←⊂,'⎕PRINT_MEMSTATS' ⋄ nams⍪←3⍴⊂'q_print_memstats'
+	syms,←⊂,'%u'      ⋄ nams⍪←''           ''              ''
+	syms←⎕C syms
+	
 	⍝ Convert all primitives to variables; P → V|E
 	i←⍸t=P ⋄ si←syms⍳sym[ni←|n[i]]
 	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
-	t[i]←V E[msk←(k[i]=1)∧'⎕⍞'∊⍨⊃¨sym[ni]] ⋄ k[i⌿⍨msk]←3 ⋄ sym[ni]←nams[si]
+	t[i]←V E[msk←(k[i]=1)∧'⎕⍞'∊⍨⊃¨sym[ni]] ⋄ k[i⌿⍨msk]←3 ⋄ sym[ni]←nams[si;0]
 
 	p t k n lx mu lv fv pos end sym IN
 }
