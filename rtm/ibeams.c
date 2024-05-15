@@ -247,13 +247,22 @@ fail:
 DECL_FUNC(shape_ibeam, shape_func, error_dya_syntax)
 
 int
-max_shp_func(struct cell_array **z,
+chk_scl_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	size_t lc, rc;
 	
 	lc = array_count(l);
 	rc = array_count(r);
+	
+	if (lc != 1 && rc != 1) {
+		if (l->rank != r->rank)
+			return 4;
+		
+		for (unsigned int i = 0; i < l->rank; i++)
+			if (l->shape[i] != r->shape[i])
+				return 5;
+	}
 	
 	if (lc != 1)
 		return shape_func(z, l, cdf_shape_ibeam);
@@ -267,7 +276,7 @@ max_shp_func(struct cell_array **z,
 	return shape_func(z, l, cdf_shape_ibeam);
 }
 
-DECL_FUNC(max_shp_ibeam, error_mon_syntax, max_shp_func)
+DECL_FUNC(chk_scl_ibeam, error_mon_syntax, chk_scl_func)
 
 int
 any_monadic(struct cell_array **z, struct cell_array *r, 

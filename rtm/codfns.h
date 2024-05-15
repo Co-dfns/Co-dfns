@@ -279,9 +279,7 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_is_bool;
 	struct cell_func *cdf_is_cmpx;
 	struct cell_func *cdf_is_span;
-	struct cell_func *cdf_max_shp;
 	struct cell_func *cdf_has_nat_vals;
-	struct cell_func *cdf_chk_scl;
 	struct cell_func *cdf_both_simple;
 	struct cell_func *cdf_both_numeric;
 	struct cell_func *cdf_both_integer;
@@ -292,6 +290,7 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_scl_or;
 	struct cell_func *cdf_any;
 	struct cell_moper *cdf_numeric;
+	struct cell_func *cdf_chk_scl;
 	struct cell_doper *cdf_ambiv;
 	struct cell_func *cdf_same;
 	struct cell_moper *cdf_veach;

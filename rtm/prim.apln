@@ -32,9 +32,7 @@ is_integer←'is_integer_ibeam'⌶
 is_bool←{11≡⎕DR squeeze ⍵}
 is_cmpx←{1289≡⎕DR squeeze ⍵}
 is_span←'is_span_ibeam'⌶
-max_shp←{⍺←0 ⋄ ⍺('max_shp_ibeam'⌶)⍵}
 has_nat_vals←'has_nat_vals_ibeam'⌶
-chk_scl←{⍺←0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
 both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
 both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
@@ -44,6 +42,7 @@ bitand←'bitand_vec_ibeam'⌶
 scl_and←{⍺:⍵ ⋄ NUM_0} ⋄ scl_or←{⍺:NUM_1 ⋄ ⍵}
 any←'any_ibeam'⌶
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
+chk_scl←'chk_scl_ibeam'⌶
 ambiv←{
 	mon←VEC_0 same ⎕NC'⍺' ⋄ nax←NUM_0 ⋄ axis⍠←nax←NUM_1
 	mon scl_and nax:⍺⍺ ⍵ ⋄ mon:⍺⍺[axis] ⍵ ⋄ nax:⍺ ⍵⍵ ⍵ ⋄ ⍺ ⍵⍵[axis] ⍵
@@ -59,8 +58,7 @@ scalar←{op←⍺⍺
 		h←t⍉h ⋄ l←(⍴h)⍴l ⋄ t←⍋t
 		hl:t⍉h op scalar l ⋄ t⍉l op scalar h
 	}⍵
-	⍺ chk_scl ⍵:
-	s←⍺ max_shp ⍵
+	s←⍺ chk_scl ⍵
 	0≡≢,⍺:s⍴0
 	0≡≢,⍵:s⍴0
 	⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵
@@ -147,7 +145,7 @@ lft←lftid ambiv left
 
 ⍝ ,: Ravel / Catenate
 ravel←{
-	noax←0 ⋄ rr←≢⍴⍵ ⋄ axis⍠←noax←1
+	noax←0 ⋄ axis⍠←noax←1
 	noax:'ravel_ibeam'⌶ ⍵
 	1≡≢,axis:{
 		axis≤¯1:⎕SIGNAL 11
@@ -689,8 +687,7 @@ map←{⍺←⊢ ⋄ op←⍺⍺
 		(⍴⍵)⍴squeeze op veach ⍵
 	}⍵
 	op is_scalar_dya ⍬:⍺ op ⍵
-	⍺ chk_scl ⍵:
-	(⍺ max_shp ⍵)⍴squeeze ⍺ ⍺⍺ veach ⍵
+	(⍺ chk_scl ⍵)⍴squeeze ⍺ ⍺⍺ veach ⍵
 }
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
