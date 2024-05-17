@@ -354,12 +354,16 @@ ravel_func(struct cell_array **z,
 
 DECL_FUNC(ravel_ibeam, ravel_func, error_dya_syntax)
 
+size_t disclose_count = 0;
+
 int
 disclose_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *t;
 	int err;
+	
+	disclose_count++;
 		
 	if (r->type == ARR_NESTED) {
 		struct cell_array **vals = r->values;
@@ -419,6 +423,8 @@ done:
 
 DECL_FUNC(enclose_ibeam, enclose_func, error_dya_syntax)
 
+size_t reshape_count = 0;
+
 int
 reshape_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
@@ -429,6 +435,8 @@ reshape_func(struct cell_array **z,
 	af_array rvals;
 	int err;
 	unsigned int rank;
+	
+	reshape_count++;
 	
 	rank = 1;
 	rvals = NULL;	
@@ -615,7 +623,7 @@ same_func(struct cell_array **z,
 	int8_t is_same;
 	
 	CHKFN(array_is_same(&is_same, l, r), done);
-	
+
 	*z = is_same ? NUM_1 : NUM_0;
 	retain_cell(*z);
 	
@@ -5286,6 +5294,8 @@ DECLSPEC void
 print_ibeam_stats(void)
 {
 	printf("Ibeam statistics:\n");
-	printf("\travel count: %zd\n", ravel_count);
 	printf("\tshape_count: %zd\n", shape_count);
+	printf("\tdisclose_count: %zd\n", disclose_count);
+	printf("\travel count: %zd\n", ravel_count);
+	printf("\treshape_count: %zd\n", reshape_count);
 }
