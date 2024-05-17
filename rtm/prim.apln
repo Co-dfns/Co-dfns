@@ -204,7 +204,7 @@ same←'same_ibeam'⌶
 eqv←depth ambiv same
 
 ⍝ ≢: Tally / Not Same
-tally←{⍬≡⍴⍵:1 ⋄ ⊃⍴⍵}
+tally←{⍬≡s←⍴⍵:1 ⋄ ⊃s}
 notsame←'nqv_ibeam'⌶
 nqv←tally ambiv notsame
 
