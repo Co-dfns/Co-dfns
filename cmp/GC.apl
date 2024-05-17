@@ -235,7 +235,22 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		⊂'CHK(apply_monadic(&stkhd), cleanup, ',dbg,');'
+		z ←⊂'{'
+		z,←⊂'	struct cell_func *fn;'
+		z,←⊂'	struct cell_array *y, *dst;'
+		z,←⊂''
+		z,←⊂'	fn = stkhd[-1];'
+		z,←⊂'	y = stkhd[-2];'
+		z,←⊂''
+		z,←⊂'	CHK((fn->fptr_mon)(&dst, y, fn), cleanup, ',dbg,');'
+		z,←⊂''
+		z,←⊂'	release_func(fn);'
+		z,←⊂'	release_array(y);'
+		z,←⊂''
+		z,←⊂'	stkhd -= 2;'
+		z,←⊂'	*stkhd++ = dst;'
+		z,⊂'}'
+		⍝ ⊂'CHK(apply_monadic(&stkhd), cleanup, ',dbg,');'
 	}¨i
 	
 	⍝ E2: Dyadic expression application
@@ -243,7 +258,24 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		⊂'CHK(apply_dyadic(&stkhd), cleanup, ',dbg,');'
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x, *y, *dst;'
+		z,←⊂'	struct cell_func *fn;'
+		z,←⊂''
+		z,←⊂'	x = stkhd[-1];'
+		z,←⊂'	fn = stkhd[-2];'
+		z,←⊂'	y = stkhd[-3];'
+		z,←⊂'	'
+		z,←⊂'	CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup, ',dbg,');'
+		z,←⊂''
+		z,←⊂'	release_array(x);'
+		z,←⊂'	release_func(fn);'
+		z,←⊂'	release_array(y);'
+		z,←⊂''
+		z,←⊂'	stkhd -= 3;'
+		z,←⊂'	*stkhd++ = dst;'
+		z,⊂'}'
+		⍝ ⊂'CHK(apply_dyadic(&stkhd), cleanup, ',dbg,');'
 	}¨i
 	
 	⍝ E3: Niladic application
