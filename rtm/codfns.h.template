@@ -83,6 +83,8 @@ struct apl_cmpx {
 	double imag;
 };
 
+#define STATIC_RANK_MAX 5
+
 struct cell_array {
 	struct cell_void;
 	enum array_storage storage;
@@ -90,7 +92,7 @@ struct cell_array {
 	void *values;
 	unsigned int *vrefc;
 	unsigned int rank;
-	size_t shape[];
+	size_t shape[STATIC_RANK_MAX];
 };
 
 struct cell_func {

@@ -129,6 +129,52 @@ array_af_dtype(struct cell_array *arr)
 	return array_type_af_dtype(arr->type);
 }
 
+size_t
+array_static_avail(struct cell_array *arr)
+{
+	if (arr->rank > STATIC_RANK_MAX)
+		return 0;
+	
+	return sizeof(size_t) * (STATIC_RANK_MAX - arr->rank);
+}
+
+size_t mk_array_count = 0;
+size_t free_array_count = 0;
+
+DECLSPEC int
+mk_array(struct cell_array **dest,
+    enum array_type type, enum array_storage storage, unsigned int rank)
+{
+	struct		cell_array *arr;
+	size_t		size;
+	
+	mk_array_count++;
+	
+	size = sizeof(*arr);
+	
+	if (rank > STATIC_RANK_MAX)
+		size += sizeof(size_t) * (rank - STATIC_RANK_MAX);
+	
+	arr = malloc(size);
+
+	if (arr == NULL)
+		return 1;
+
+	arr->ctyp	= CELL_ARRAY;
+	arr->refc	= 1;
+	arr->type	= type;
+	arr->storage	= storage;
+	arr->rank	= rank;
+	arr->values	= NULL;
+	arr->vrefc	= NULL;
+
+	*dest = arr;
+
+	return 0;
+}
+
+size_t alloc_array_malloc_count = 0;
+
 DECLSPEC int
 alloc_array(struct cell_array *arr)
 {
@@ -146,6 +192,8 @@ alloc_array(struct cell_array *arr)
 		break;
 	case STG_HOST:
 		size = count * array_element_size(arr);
+		
+		alloc_array_malloc_count++;
 		buf = malloc(size + sizeof(int));
 		
 		if (buf == NULL) {
@@ -194,37 +242,6 @@ fill_array(struct cell_array *arr, void *data)
 	}
 
 	return err;
-}
-
-size_t mk_array_count = 0;
-size_t free_array_count = 0;
-
-DECLSPEC int
-mk_array(struct cell_array **dest,
-    enum array_type type, enum array_storage storage, unsigned int rank)
-{
-	struct		cell_array *arr;
-	size_t		size;
-	
-	mk_array_count++;
-	
-	size = sizeof(struct cell_array) + rank * sizeof(size_t);
-	arr = malloc(size);
-
-	if (arr == NULL)
-		return 1;
-
-	arr->ctyp	= CELL_ARRAY;
-	arr->refc	= 1;
-	arr->type	= type;
-	arr->storage	= storage;
-	arr->rank	= rank;
-	arr->values	= NULL;
-	arr->vrefc	= NULL;
-
-	*dest = arr;
-
-	return 0;
 }
 
 int
@@ -1129,4 +1146,5 @@ print_array_stats(void)
 {
 	printf("\tarrays alloc: %zd freed: %zd\n", 
 	    mk_array_count, free_array_count);
+	printf("\talloc_array_malloc_count: %zd\n", alloc_array_malloc_count);
 }
