@@ -338,18 +338,16 @@ ravel_func(struct cell_array **z,
 
 	ravel_count++;
 
-	if (err = mk_array(&t, r->type, r->storage, 1))
-		return err;
+	CHKFN(mk_array(&t, r->type, r->storage, 1), fail);
 	
 	t->shape[0] = array_count(r);
-	t->values = r->values;
-	t->vrefc = r->vrefc;
 	
-	retain_array_data(t);
+	CHKFN(array_share_values(t, r), fail);
 	
 	*z = t;
-	
-	return 0;
+
+fail:
+	return err;
 }
 
 DECL_FUNC(ravel_ibeam, ravel_func, error_dya_syntax)
@@ -545,11 +543,8 @@ reshape_func(struct cell_array **z,
 	}
 	
 	if (tc == rc) {
-		t->values = r->values;
-		t->vrefc = r->vrefc;
-		
-		CHKFN(retain_array_data(t), fail);
-		
+		CHKFN(array_share_values(t, r), fail);
+
 		goto done;
 	}
 	
@@ -1380,7 +1375,7 @@ set_func(struct cell_array **z,
 		CHKFN(array_migrate_storage(r, STG_DEVICE), fail);
 	}
 	
-	if (tgt->storage == STG_HOST && *tgt->vrefc > 1) {
+	if (tgt->storage == STG_HOST && tgt->vrefc && *tgt->vrefc > 1) {
 		void *vals = tgt->values;
 		
 		CHKFN(release_array_data(tgt), fail);
