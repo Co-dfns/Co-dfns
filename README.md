@@ -44,6 +44,8 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[The Nano-parsing Architecture: Sane And Portable Parsing For Perverse Environments by Aaron Hsu](https://www.youtube.com/watch?v=uInwQEMYAP8)
+
 [Co-dfns Update 2023 // Aaron Hsu // Dyalog '23](https://www.youtube.com/watch?v=6yfBlNKw7Ug)
 
 [U-Net CNN in APL: Exploring Zero-Framework, Zero-Library Machine Learning. ARRAY 2023.](https://dl.acm.org/doi/10.1145/3589246.3595371)
