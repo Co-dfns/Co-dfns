@@ -268,6 +268,15 @@ PS←{
 	msk←(t=T)∨(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
 	xn←sym[|msk⌿n] ⋄ xt←msk⌿k
 
+	⍝ Enclose V+[X;...] in Z nodes for parsing
+	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
+	msk∧←(gm⌿km⍲k[i]=4)[0⌈¯1++⍀gm←2<⌿0⍪msk]
+	msk∧←((2>⌿msk⍪0)⌿1⌽km∧t[i]=¯1)[0⌈¯1++⍀2<⌿0⍪msk]
+	j←i⌿⍨jm←2>⌿0⍪msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
+	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
+	p[msk⌿i]←j[msk⌿¯1++⍀2<⌿0⍪msk]
+	
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
@@ -295,6 +304,10 @@ PS←{
 	}msk⌿p[j]
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
 
+	⍝ Wrap V[X;...] expressions as A¯1 nodes
+	i←i[⍋p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
+	t[j]←A ⋄ k[j]←¯1 ⋄ p[i⌿⍨1⌽jm]←j
+
 	⍝ Parse ⌶* nodes to V nodes
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
 	∨⌿msk←(i∊j)∧¯1⌽km∧(t[i]=A)⍲k[i]=1:{
@@ -304,10 +317,6 @@ PS←{
 	vi←i⌿⍨1⌽msk←i∊j ⋄ pi←msk⌿i
 	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←5 ⋄ end[vi]←end[pi]
 	p t k n lx pos end⌿⍨←⊂~pm ⋄ p(⊣-1+⍸⍨)←⍸pm
-
-	⍝ Enclose V[X;...] for expression parsing
-	i←i[⍋p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
-	t[j]←A ⋄ k[j]←¯1 ⋄ p[i⌿⍨1⌽jm]←j
 
 	⍝ Group function and value expressions
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
