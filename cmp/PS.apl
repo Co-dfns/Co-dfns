@@ -305,8 +305,8 @@ PS←{
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
-	i←i[⍋p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
-	t[j]←A ⋄ k[j]←¯1 ⋄ p[i⌿⍨1⌽jm]←j
+	i←⍸t=¯1 ⋄ p←(p[i]@i⍳≢p)[p] ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
+	p t k n lx pos end⌿⍨←⊂t≠¯1 ⋄ p(⊣-1+⍸⍨)←i
 
 	⍝ Parse ⌶* nodes to V nodes
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
