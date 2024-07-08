@@ -271,8 +271,8 @@ PS←{
 	⍝ Enclose V+[X;...] in Z nodes for parsing
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
-	msk∧←(gm⌿km⍲k[i]=4)[0⌈¯1++⍀gm←2<⌿0⍪msk]
-	msk∧←((2>⌿msk⍪0)⌿1⌽km∧t[i]=¯1)[0⌈¯1++⍀2<⌿0⍪msk]
+	msk∧←(0,gm⌿km⍲k[i]=4)[+⍀gm←2<⌿0⍪msk]
+	msk∧←(0,(2>⌿msk⍪0)⌿1⌽km∧t[i]=¯1)[+⍀2<⌿0⍪msk]
 	j←i⌿⍨jm←2>⌿0⍪msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
 	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿¯1++⍀2<⌿0⍪msk]
