@@ -39,12 +39,12 @@ both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 bitand←'bitand_vec_ibeam'⌶
-scl_and←{⍺:⍵ ⋄ NUM_0} ⋄ scl_or←{⍺:NUM_1 ⋄ ⍵}
+scl_and←{⍺:⍵ ⋄ 0} ⋄ scl_or←{⍺:1 ⋄ ⍵}
 any←'any_ibeam'⌶
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 chk_scl←'chk_scl_ibeam'⌶
 ambiv←{
-	mon←VEC_0 same ⎕NC'⍺' ⋄ nax←NUM_0 ⋄ axis⍠←nax←NUM_1
+	mon←VEC_0 same ⎕NC'⍺' ⋄ nax←0 ⋄ axis⍠←nax←1
 	mon scl_and nax:⍺⍺ ⍵ ⋄ mon:⍺⍺[axis] ⍵ ⋄ nax:⍺ ⍵⍵ ⍵ ⋄ ⍺ ⍵⍵[axis] ⍵
 }
 veach←'veach_ibeam'⌶⌶
