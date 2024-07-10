@@ -26,6 +26,7 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆mix∆03_TEST←'mix' MK∆T1 (⍳5)
 ∆mix∆04_TEST←'mix' MK∆T1 (2 3 4⍴⍳5)
 ∆mix∆05_TEST←'mix' MK∆T1 (2 3 4⍴0 1 1)
+∆mix∆06_TEST←'mix' MK∆T1 (0 1 2)(3 4 5)(6 7 8)
 
 ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
