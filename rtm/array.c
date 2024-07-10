@@ -1053,6 +1053,9 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 		}
 	}
 	
+	if (err = array_promote_storage(l, r))
+		return err;
+	
 	if (is_char_array(l) != is_char_array(r)) {
 		*is_same = 0;
 		return 0;
@@ -1076,9 +1079,6 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 	if (l->type == ARR_MIXED || r->type == ARR_MIXED) {
 		return 16;
 	}
-	
-	if (err = array_promote_storage(l, r))
-		return err;
 	
 	if (l->type != r->type) {
 		*is_same = 0;
