@@ -60,6 +60,15 @@ TT←{
 	msk←p(⊢∧I⍨)⍣≡~(t=B)∧(n=¯2)∧k[r]∊3+2×⍳7
 	p t k n lx mu r pos end⌿⍨←⊂msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸~msk
 
+	⍝ Mark functions with their internal ⍺ type
+	⍝    0 1 2 3 4 5 6  7  8  9 10 11 12 13 14 15
+	k[i]←0 1 2 4 5 7 8 10 11 13 14 16 17 19 20 22[k[i←⍸t=F]]
+	∨⌿msk←2<k[i←i⌿⍨≠r[i←⍸(t=B)∧n=¯2]]:{
+		ERR←'⍺ MAY ONLY BE BOUND TO ARRAYS OR FUNCTIONS'
+		16 ERR SIGNAL SELECT msk⌿i
+	}⍵
+	k[r[i]]+←2=k[i]
+	
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V
@@ -106,11 +115,6 @@ TT←{
 	fv[p[i]],←i←⍸(t=V)∧(t[p]=C)∧n<0
 	fv[n[i]]←fv[p[i←⍸(t=V)∧(t[p]=C)∧n≥0]]
 
-	⍝ Mark functions with their internal ⍺ type
-	⍝    0 1 2 3 4 5 6  7  8  9 10 11 12 13 14 15
-	k[i]←0 1 2 4 5 7 8 10 11 13 14 16 17 19 20 22[k[i←⍸t=F]]
-	k[r[i]]+←2≤k[i←i⌿⍨≠r[i←⍸(≠p)∧(t=P)∧(n=¯2)∧t[p]=B]]
-	
 	⍝ Disambiguate schizophrenic functions
 	i←⍸(t=P)∧(k=2)∧n∊ns←-sym⍳,¨'/⌿\⍀←'
 	sym∪←∪'//' '⌿⌿' '\\' '⍀⍀' '←←'[ns⍳∪n[i]]
