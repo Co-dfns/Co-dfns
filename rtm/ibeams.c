@@ -1584,9 +1584,14 @@ mst_oper(struct cell_array **z,
 	oper = self->fv[1];
 	mst_vals = cdf_prim.cdf_mst_vals;
 	
-	CHK(apply_dop(&get_idx_vals, mst_vals,
-	    mst_vals->fptr_fam, mst_vals->fptr_fad, l, oper),
-	    fail, "get_idx_vals←idx mst_vals op");
+	CHKFN(
+	    mk_derf((struct cell_derf **)&get_idx_vals, 
+	        mst_vals->fptr_fam, mst_vals->fptr_fad, 3), 
+	    fail);
+	get_idx_vals->fv[0] = retain_cell(mst_vals);
+	get_idx_vals->fv[1] = retain_cell(l);
+	get_idx_vals->fv[2] = retain_cell(oper);
+	
 	CHK((get_idx_vals->fptr_dya)(&idx_vals, *z, r, get_idx_vals), fail,
 	    "(idx vals)←(*z)(idx mst_vals op)⍵");
 
