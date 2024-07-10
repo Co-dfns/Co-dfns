@@ -121,10 +121,6 @@ TT←{
 	sym∪←∪'//' '⌿⌿' '\\' '⍀⍀' '←←'[ns⍳∪n[i]]
 	n[i]←(-sym⍳'//' '⌿⌿' '\\' '⍀⍀' '←←')[ns⍳n[i]]
 
-	⍝ Namify pointer variables
-	i←⍸(n≥0)∧(t∊B F O P V Z)∨(t=E)∧k≠6
-	sym∪←∪x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
-
 	⍝ Symbol mapping between primitives and runtime names
 	syms ←0⍴⊂''       ⋄ nams ←0 3⍴⊂''
 	syms,←⊂,'+'       ⋄ nams⍪←'add'        'conjugate'     'plus'
