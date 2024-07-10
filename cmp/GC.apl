@@ -1,5 +1,5 @@
 GC←{
-	p t k n lx mu lv fv pos end sym IN←⍵
+	p t k n lx mu lv fv sv pos end sym IN←⍵
 
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
@@ -20,17 +20,26 @@ GC←{
 	⍝ Variable generation utilities
 	var_ckinds←{
 		types←'' 'array' 'func' 'moper' 'doper' 'env' 'void' 'array'
-		types[1@(⍸t[⍵]=E)⊢k[⍵]]
+		isa←t[⍵]∊A E S
+		isfn←(t[⍵]=O)∨(t[⍵]=F)∧k[⍵]<5
+		isdop←(t[⍵]=F)∧k[⍵]≥11
+		ismop←(~isdop)∧(t[⍵]=F)∧k[⍵]≥5
+		types[4@{isdop}3@{ismop}2@{isfn}1@{isa}k[⍵]]
 	}
 
 	var_names←{
 		ceqv←'_del_' '_delubar_'
 		asym←'∆'     '⍙'
-		'cdf_'∘,¨(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
+		islit←(t[⍵]=A)∧k[⍵]=1
+		nam←⍵
+		nam[i]←'l',∘⍕¨|n[⍵[i←⍸islit]]
+		nam[i]←(⊃¨var_ckinds ⍵[i]),¨⍕¨n[⍵[i←⍸(~islit)∧n[⍵]≥0]]
+		nam[i]←sym[|n[⍵[i←⍸(~islit)∧n[⍵]<0]]]
+		'cdf_'∘,¨(,¨asym)⎕R ceqv⊢(0⍴⊂''),nam
 	}
 
 	var_scopes←{
-		(0⍴⊂''),'loc->' 'lex->' 'dyn->' 'cdf_prim.' '' ''[lx[⍵]]
+		(0⍴⊂''),'loc->' 'lex->' 'dyn->' 'cdf_prim.' '' '' ''[lx[⍵]]
 	}
 
 	var_nmvec←{
@@ -42,8 +51,7 @@ GC←{
 
 	decl_vars←{⍺←0
 		0=≢⍵:0⍴⊂''
-		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
-		∨⌿(k[⍵]=6)∧lx[⍵]>3:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
+		⍝ ∨⌿(k[⍵]=6)∧lx[⍵]>3:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
 		z  ←'' 'extern '[lx[⍵]=5]
 		z,¨←'' 'struct cell_'[lx[⍵]≠4]
 		z,¨←var_ckinds ⍵
@@ -56,26 +64,30 @@ GC←{
 
 	init_vars←{
 		0=≢⍵:0⍴⊂''
-		0∊k[⍵]:'CANNOT INITIALIZE STACK VARIABLE'SIGNAL 99
 		z←(≢⍵)⍴⊂''
-		(var_refs ⍵),¨⊂' = NULL;'
+		(var_values ⍵),¨⊂' = NULL;'
 		⊃⍪⌿z
 	}
 
 	var_refs←{
-		0∊k[⍵]:'CANNOT REFERENCE STACK VARIABLE'SIGNAL 99
-		(var_scopes,¨var_names) ⍵
+		z←'&' ''[lx[⍵]=1]
+		z,¨←(var_scopes,¨var_names)⍵
+		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'z'
+		'(',¨z,¨')'
 	}
 
 	var_values←{
 		z←'' '*'[lx[⍵]=1]
 		z,¨←(var_scopes,¨var_names)⍵
-		z[⍸0=k[,⍵]]←⊂'*--stkhd'
-		z
+		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'(*z)'
+		'(',¨z,¨')'
+	}
+	
+	check_vars←{
+		(highlight¨⍵){'CHK(var_ref(',⍵,'), cleanup, ',⍺,');'}¨var_values ⍵
 	}
 	
 	release_vars←{
-		0∊k[⍵]:'CANNOT RELEASE STACK VARIABLE'SIGNAL 99
 		'release_'∘,¨(var_ckinds ⍵),¨'(',¨(var_values ⍵),¨⊂');'
 	}
 
@@ -93,9 +105,32 @@ GC←{
 	⍝ We declare all external variables in the prefix
 	pref,←decl_vars ⍸msk∧msk⍀≠n⌿⍨msk←(t=V)∧lx=5
 	pref,←⊂''
+	
+	⍝ Define all literals as static values
+	atypes←'BOOL' 'SINT'    'SINT'    'INT'     'DBL'    'CMPX' 
+	ctypes←'char' 'int16_t' 'int16_t' 'int32_t' 'double' 'struct apl_cmpx'
+	drtypes←11     83        163       323       645      1289
+	atypes,←'CHAR8'   'CHAR16'   'CHAR32'
+	ctypes,←'uint8_t' 'uint16_t' 'uint32_t'
+	drtypes,←80        160        320
+	pref,←⊃⍪⌿{
+		rnk←≢shp←⍴dat←⍵⊃sym ⋄ dri←drtypes⍳⎕DR dat
+		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes
+		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
+		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
+		nam←'cdf_l',⍕⍵
+		z ←⊂ctp,' ',nam,'_dat[] = {',(csep dat),'};'
+		z,←⊂'struct cell_array ',nam,'_val = {'
+		z,←⊂'	CELL_ARRAY, 1, STG_HOST, ARR_',atp,','
+		z,←⊂'	',nam,'_dat, NULL, ',(⍕rnk),','
+		z,←⊂'	',(csep shp,0)
+		z,←⊂'};'
+		z,←⊂'struct cell_array *',nam,' = &',nam,'_val;'
+		z,⊂''
+	}¨∪|n⌿⍨(t=A)∧k=1
 
 	⍝ We have a vector output for each node in the AST
-	zz←(≢p)⍴⊂''
+	zz←(≢p)⍴⊂'' ⋄ kk←(≢p)⍴⊂⍬ ⋄ _←{kk[⍺]←⊂⍵~⍺}⌸p
 	
 	⍝ Z¯N: Error nodes
 	i←⍸(t=Z)∧k<0
@@ -104,128 +139,97 @@ GC←{
 		('CHK(',(⍕|k[⍵]),', cleanup, ',line,');') ''
 	}¨i
 	
-	⍝ A1: Simple arrays
-	i←⍸(t=A)∧k=1
-	atypes←'BOOL' 'SINT'    'SINT'    'INT'     'DBL'    'CMPX' 
-	ctypes←'char' 'int16_t' 'int16_t' 'int32_t' 'double' 'struct apl_cmpx'
-	drtypes←11     83        163       323       645      1289
-	atypes,←'CHAR8'   'CHAR16'   'CHAR32'
-	ctypes,←'uint8_t' 'uint16_t' 'uint32_t'
-	drtypes,←80        160        320
-	zz[i],←{
-		rnk←≢shp←⍴dat←(|n[⍵])⊃sym ⋄ dri←drtypes⍳⎕DR dat
-		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes
-		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
-		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
-		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	static ',ctp,' dat[] = {',(csep dat),'};'
-		z,←⊂'	static unsigned vrefc = 1;'
-		z,←⊂'	static struct cell_array val = {'
-		z,←⊂'		CELL_ARRAY, 1, STG_HOST, ARR_',atp,','
-		z,←⊂'		dat, &vrefc, ',(⍕rnk),','
-		z,←⊂'		',(csep shp,0)
-		z,←⊂'	};'
-		z,←⊂''
-		z,←⊂'	vrefc++;'
-		z,←⊂'	*stkhd++ = retain_cell(&val);'
-		z,←⊂'}'
-		z,⊂''
-	}¨i
-	
 	⍝ A7/E6: Stranded Arrays and Indexing
 	i←⍸((t=A)∧k=7)∨(t=E)∧k=6
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		z ←⊂'CHK(mk_nested_array(&stkhd, ',(⍕n[⍵]),'), cleanup,'
-		z,←⊂'    ',dbg,');'
-		z
-	}¨i
-	
-	⍝ S0: Initial strand assignment
-	i←⍸(t=S)∧k=0
-	zz[i],←{
-		0=≢i:0⍴⊂''
-		dbg←highlight ⍵
-		z ←⊂'*stkhd++ = retain_cell(stkhd[-1]);'
-		z,←⊂'CHK(strand_assign_push(&stkhd, ',(⍕n[⍵]),'), cleanup,'
-		z,←⊂'	',dbg,');'
+		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵
+		z ←check_vars⊢ks←⍵⊃kk
+		z,←⊂'CHK(mk_nested_array(',tref,', ',(⍕≢ks),'), cleanup, ',dbg,');'
+		z,←⊂''
+		z,←⊂'{'
+		z,←⊂'	struct cell_array **dat = ',tgt,'->values;'
+		z,←⊂''
+		z,←'	'∘,¨(⍳≢ks){'dat[',(⍕⍺),'] = retain_cell(',⍵,');'}¨var_values ks
+		z,←⊂'}'
 		z,⊂''
 	}¨i
 	
-	⍝ S1: Strand binding
-	i←⍸(t=S)∧k=1
+	⍝ S0/7: Initial and internal strand assignment
+	i←⍸t=S
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tgt←'&' ''[lx[⍵]=1],¨var_refs ⍵
-		dbg←highlight ⍵
-		z ←⊂'bind_value(&stkhd, ',tgt,');'
-		z,←⊂'release_cell(*--stkhd);'
+		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵
+		kc←⍕≢ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
+		z ←⊂'if (',tgt,'->rank) {'
+		z,←⊂'	struct cell_array *idx;'
+		z,←⊂'	struct cell_func *pick;'
+		z,←⊂'	int32_t *idxv;'
+		z,←⊂''
+		z,←⊂'	CHKFN(mk_array_int32(&idx, 0), cleanup);'
+		z,←⊂'	idxv = idx->values;'
+		z,←⊂'	pick = cdf_prim.cdf_pick;'
+		z,←⊂''
+		z,←kd{'	CHK(pick->fptr_dya(',⍵,', idx, ',tgt,', pick), cleanup, ',⍺,'); (*idxv)++;'}¨kr
+		z,←⊂''
+		z,←⊂'	release_array(idx);'
+		z,←⊂'} else {'
+		z,←⊂'	struct cell_array *arr;'
+		z,←⊂'	struct cell_func *first;'
+		z,←⊂''
+		z,←⊂'	first = cdf_prim.cdf_first;'
+		z,←⊂'	CHK(first->fptr_mon(&arr, ',tgt,', first), cleanup, ',dbg,');'
+		z,←'	'∘,¨kv,¨⊂' = retain_cell(arr);'
+		z,←⊂'	release_array(arr);'
+		z,←⊂'}'
+		z,←(k[⍵]≠0)⌿''('release_array(',tgt,'); ',tgt,' = NULL;')
 		z,⊂''
 	}¨i
 	
-	⍝ S7: Strand assignment
-	i←⍸(t=S)∧k=7
-	zz[i],←{
-		0=≢i:0⍴⊂''
-		dbg←highlight ⍵
-		z ←⊂'CHK(strand_assign_push(&stkhd, ',(⍕n[⍵]),'), cleanup,'
-		z,←⊂'	',dbg,');'
-		z,⊂''
-	}¨i
-	
-	⍝ V: Variable reference
-	i←⍸t=V
-	zz[i],←{
-		0=≢i:0⍴⊂''
-		tgt←var_values ⍵
-		dbg←highlight ⍵
-		⊂'CHK(var_ref(&stkhd, ',tgt,'), cleanup, ',dbg,');'
-	}¨i
-
 	⍝ B: Non-option, non-null bindings
 	i←⍸(t=B)∧~k∊0 7
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tgt←'&' ''[lx[⍵]=1],¨var_refs ⍵
-		dbg←highlight ⍵
-		⊂'bind_value(&stkhd, ',tgt,');'
+		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵ ⋄ kv←⊃var_values ⍵⊃kk
+		z ←check_vars ⍵⊃kk
+		z,←⊂'retain_cell(',kv,'); release_cell(',tgt,');'
+		z,←⊂tgt,' = ',kv,';'
+		z,⊂''
 	}¨i
 	
 	⍝ C: Closures for functions
-	i←⍸t[p]=C
-	zz[∪p[i]],←p[i]{
-		0=≢i:⊂0⍴⊂''
-		ctyp←k[⍺]⊃'func' 'func' 'func' 'moper' 'doper'
-		vc←(≢⍵)-fc←0 1 2 4 8[k[⍺]]
-		fs vs←{(fc↑⍵)(fc↓⍵)}⍵
-		fids←var_refs fs
-		vids←{'&' ''[lx[⍵]=1],¨var_refs ⍵}vs[⍋n[vs]]
-		dbg←highlight ⍺
-		call←'mk_closure_',ctyp,'(&stkhd, ',(csep fids),', ',(⍕vc),', fvs)'
-		z ←⊂'{'
-		z,←⊂'	void *fvs[] = {',(csep vids,0),'};'
+	i←⍸t=C
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		ks←⍵⊃kk
+		ctyp←k[⍵]⊃'func' 'func' 'func' 'moper' 'doper'
+		vc←(≢ks)-fc←0 1 2 4 8[k[⍵]]
+		fs vs←{(fc↑⍵)(fc↓⍵)}ks
+		fids←var_refs fs ⋄ vids←{var_refs ⍵}vs[⍋n[vs]]
+		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵ ⋄ dbg←highlight ⍵
+		z ←⊂'CHK(mk_',ctyp,'(',tref,', ',(csep fids),', ',(⍕vc),'), cleanup, ',dbg,');'
 		z,←⊂''
-		z,←⊂'	CHK(',call,', cleanup, '
-		z,←⊂'	    ',dbg,');'
-		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
+		z,←(⍳vc){tgt,'->fv[',(⍕⍺),'] = ',⍵,';'}¨vids
+		z,⊂''
+	}¨i
 
 	⍝ E¯1: Non-returning end of line statement
 	i←⍸(t=E)∧k=¯1
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		z ←⊂'release_cell(*--stkhd);'
-		z,⊂''
+		vv←⊃var_values⊢vi←⊃⍵⊃kk
+		(n[vi]>0)⌿('release_cell(',vv,'); ',vv,' = NULL;')''
 	}¨i
 
 	⍝ E0: Returning end of line statement
 	i←⍸(t=E)∧k=0
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		z ←⊂'*z = *--stkhd;'
+		0≡≢⍵⊃kk:⊂'goto cleanup;'
+		kv←⊃var_values⊢ki←⊃⍵⊃kk
+		z ←check_vars ki
+		z,←((t[ki]=A)∨(n[ki]≠0))⌿⊂'*z = retain_cell(',kv,');'
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
@@ -234,75 +238,81 @@ GC←{
 	i←⍸(t=E)∧k=1
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_func *fn;'
-		z,←⊂'	struct cell_array *y, *dst;'
-		z,←⊂''
-		z,←⊂'	fn = stkhd[-1];'
-		z,←⊂'	y = stkhd[-2];'
-		z,←⊂''
-		z,←⊂'	CHK((fn->fptr_mon)(&dst, y, fn), cleanup, ',dbg,');'
-		z,←⊂''
-		z,←⊂'	release_func(fn);'
-		z,←⊂'	release_array(y);'
-		z,←⊂''
-		z,←⊂'	stkhd -= 2;'
-		z,←⊂'	*stkhd++ = dst;'
-		z,⊂'}'
-		⍝ ⊂'CHK(apply_monadic(&stkhd), cleanup, ',dbg,');'
+		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		fn y←var_values⊢fi yi←⍵⊃kk
+		z ←check_vars fi yi
+		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z,←⊂'CHK((',fn,'->fptr_mon)(',tref,', ',y,', ',fn,'), cleanup, ',dbg,');'
+		z,←(n[⍵]<0)⌿⊂'release_array(tmp);'
+		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
+		z,⊂''
 	}¨i
 	
 	⍝ E2: Dyadic expression application
 	i←⍸(t=E)∧k=2
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		dbg←highlight ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_array *x, *y, *dst;'
-		z,←⊂'	struct cell_func *fn;'
-		z,←⊂''
-		z,←⊂'	x = stkhd[-1];'
-		z,←⊂'	fn = stkhd[-2];'
-		z,←⊂'	y = stkhd[-3];'
-		z,←⊂'	'
-		z,←⊂'	CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup, ',dbg,');'
-		z,←⊂''
-		z,←⊂'	release_array(x);'
-		z,←⊂'	release_func(fn);'
-		z,←⊂'	release_array(y);'
-		z,←⊂''
-		z,←⊂'	stkhd -= 3;'
-		z,←⊂'	*stkhd++ = dst;'
-		z,⊂'}'
-		⍝ ⊂'CHK(apply_dyadic(&stkhd), cleanup, ',dbg,');'
+		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		x fn y←var_values⊢xi fi yi←⍵⊃kk
+		z ←check_vars xi fi yi
+		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z,←⊂'CHK((',fn,'->fptr_dya)(',tref,', ',x,', ',y,', ',fn,'), cleanup, ',dbg,');'
+		z,←(n[⍵]<0)⌿⊂'release_array(tmp);'
+		z,←(n[xi]>0)⌿⊂'release_array(',x,'); ',x,' = NULL;'
+		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
+		z,⊂''
 	}¨i
 	
 	⍝ E3: Niladic application
 	i←⍸(t=E)∧k=3
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		dbg←highlight ⍵
-		fn←var_values ⍵
-		⊂'CHK(apply_niladic(&stkhd, ',fn,'), cleanup, ',dbg,');'
+		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		fn←⊃var_values⊢fi←⊃⍵⊃kk
+		z ←check_vars fi
+		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z,←⊂'CHK((',fn,'->fptr_mon)(',tref,', NULL, ',fn,'), cleanup, ',dbg,');'
+		z,←(n[⍵]<0)⌿⊂'release_array(tmp);'
+		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,⊂''
 	}¨i
 	
 	⍝ E4: Assignment
 	i←⍸(t=E)∧k=4
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		dbg←highlight ⍵
-		tgt←'' '&'[lx[⍵]=0],¨var_refs ⍵
-		⊂'CHK(apply_assign(&stkhd, ',tgt,'), cleanup, ',dbg,');'
+		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		bxr←⊃var_refs ⊃⍵⊃kk ⋄ bxv x fn y←var_values⊢bi xi fi yi←⍵⊃kk
+		z ←check_vars xi fi yi
+		z,←⊂'tmp = ',bxv,';'
+		z,←⊂tgt,' = retain_cell(',y,');'
+		z,←⊂'CHK((',fn,'->fptr_dya)(',bxr,', ',x,', ',tgt,', ',fn,'), cleanup, ',dbg,');'
+		z,←⊂'release_array(tmp);'
+		z,←(n[xi]>0)⌿⊂'release_array(',x,'); ',x,' = NULL;'
+		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
+		z,⊂''
 	}¨i
 	
 	⍝ Om: Monadic operators
 	i←⍸(t=O)∧k∊1 2
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		ltyp←'array' 'func'⊃⍨k[⍵]=2
+		lt←⊃ltyp←'array' 'func'⊃⍨k[⍵]=2
+		tref←'(struct cell_derf **)',⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵
 		dbg←highlight ⍵
-		⊂'CHK(apply_mop_',(⊃ltyp),'(&stkhd), cleanup, ',dbg,');'
+		x op←var_values⊢xi oi←⍵⊃kk
+		z ←check_vars xi oi
+		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z,←⊂'CHK(mk_derf(',tref,', ',op,'->fptr_',lt,'m, ',op,'->fptr_',lt,'d, 2), cleanup, ',dbg,');'
+		z,←⊂tgt,'->fv[0] = retain_cell(',op,');'
+		z,←⊂tgt,'->fv[1] = retain_cell(',x,');'
+		z,←(n[⍵]<0)⌿⊂'release_func(tmp);'
+		z,←(n[xi]>0)⌿⊂'release_',ltyp,'(',x,'); ',x,' = NULL;'
+		z,←(n[oi]>0)⌿⊂'release_moper(',op,'); ',op,' = NULL;'
+		z,⊂''
 	}¨i
 	
 	⍝ Od: Dyadic operators
@@ -311,33 +321,60 @@ GC←{
 		0=≢i:0⍴⊂''
 		ltyp←'array' 'func'⊃⍨k[⍵]∊5 8
 		rtyp←'array' 'func'⊃⍨k[⍵]∊7 8
-		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
+		tref←'(struct cell_derf **)',⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵
 		dbg←highlight ⍵
-		⊂'CHK(apply_dop_',(⊃rtyp),(⊃ltyp),'(&stkhd), cleanup, ',dbg,');'
+		x op y←var_values⊢xi oi yi←⍵⊃kk
+		fns←csep op∘,¨'->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
+		z ←check_vars xi oi yi
+		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z,←⊂'CHK(mk_derf(',tref,', ',fns,', 3), cleanup, ',dbg,');'
+		z,←⊂tgt,'->fv[0] = retain_cell(',op,');'
+		z,←⊂tgt,'->fv[1] = retain_cell(',x,');'
+		z,←⊂tgt,'->fv[2] = retain_cell(',y,');'
+		z,←(n[⍵]<0)⌿⊂'release_func(tmp);'
+		z,←(n[xi]>0)⌿⊂'release_',ltyp,'(',x,'); ',x,' = NULL;'
+		z,←(n[oi]>0)⌿⊂'release_doper(',op,'); ',op,' = NULL;'
+		z,←(n[yi]>0)⌿⊂'release_',rtyp,'(',y,'); ',y,' = NULL;'
+		z,⊂''
 	}¨i
 	
 	⍝ Ox: Axis Operator and Variant Operator
 	i←⍸(t=O)∧k=¯1
 	zz[i],←{
 		0=≢i:0⍴⊂''
+		tref←'(struct cell_derf **)',⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵
 		dbg←highlight ⍵
-		⊂'CHK(apply_variant(&stkhd), cleanup, ',dbg,');'
+		aa ax←var_values⊢ai xi←⍵⊃kk
+		z ←check_vars ai xi
+		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z,←⊂'CHK(mk_derf(',tref,', ',aa,'->fptr_mon, ',aa,'->fptr_dya, 2), cleanup, ',dbg,');'
+		z,←⊂tgt,'->fv = ',aa,'->fv;'
+		z,←⊂tgt,'->opts = &',tgt,'->fv_[1];'
+		z,←⊂tgt,'->fv_[0] = retain_cell(',aa,');'
+		z,←⊂tgt,'->opts[0] = retain_cell(',ax,');'
+		z,←(n[⍵]<0)⌿⊂'release_func(tmp);'
+		z,←(n[ai]>0)⌿⊂'release_func(',aa,'); ',aa,' = NULL;'
+		z,←(n[xi]>0)⌿⊂'release_array(',ax,'); ',ax,' = NULL;'
+		z,⊂''
 	}¨i
 
 	⍝ B7: Option bindings
 	i←⍸(t=B)∧k=7
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tgt←var_values ⍵
-		opt←var_names ⍵
-		dbg←highlight ⍵
+		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		opt←⊃var_names ⍵ ⋄ src←⊃var_values⊢si←⊃⍵⊃kk
 		z ←⊂'if (opts && opts->',opt,') {'
-		z,←⊂'	*stkhd++ = retain_cell(opts->',opt,');'
+		z,←⊂'	retain_cell(opts->',opt,');'
+		z,←⊂'	release_array(',tgt,');'
+		z,←⊂'	',tgt,' = opts->',opt,';'
 		z,←⊂'} else {'
 		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
+		z,←⊂'	retain_cell(',src,');'
+		z,←⊂'	release_array(',tgt,');'
+		z,←⊂'	',tgt,' = ',src,';'
+		z,←(n[si]>0)⌿⊂'	release_array(',src,'); ',src,' = NULL;'
 		z,←⊂'}'
-		z,←⊂''
-		z,←⊂'bind_value(&stkhd, &',tgt,'); /* ',dbg,' */'
 		z,⊂''
 	}¨i
 
@@ -345,8 +382,9 @@ GC←{
 	i←⍸t=G
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		dbg←highlight n[⍵]
-		z ←⊂'TRC(guard_check(&stkhd), ',dbg,');'
+		tgt←⊃var_values⊢ti←⊃⍵⊃kk ⋄ dbg←highlight ti
+		z ←⊂'TRC(guard_check(',tgt,'), ',dbg,');'
+		z,←(n[ti]>0)⌿⊂'release_array(',tgt,');'
 		z,←⊂''
 		z,←⊂'if (err > 0)'
 		z,←⊂'	goto cleanup;'
@@ -370,6 +408,7 @@ GC←{
 		ddtyp←'' 'moper' 'doper'⊃⍨0 5 11⍸k[⍵]
 		aatyp←'array' 'func'⊃⍨k[⍵]∊8 9 10 14 15 16 20 21 22
 		wwtyp←'array' 'func'⊃⍨k[⍵]∊17 18 19 20 21 22
+		hassvs←0≠≢svs←⊃sv[⍵]
 		haslvs←0≠≢lvs←⊃lv[⍵]
 		hasfvs←0≠≢fvs←{⍵[⍋n[⍵]]}⊃fv[⍵]
 		hasopts←0≠≢opts←lvs⌿⍨k[lvs]=7
@@ -387,14 +426,15 @@ GC←{
 		z,←⊂'    struct cell_array *cdf_omega,'
 		z,←⊂'    struct cell_func *cdf_self)'
 		z,←⊂'{'
-		z,←⊂'	void *stk[256];'
-		z,←⊂'	void **stkhd;'
-		z,←⊂'	int err;'
 		z,←(⊂'	struct cell_',atyp,' *cdf_alpha;')⌿⍨ism
 		z,←(⊂'	struct cell_',ddtyp,' *cdf_deldel;')⌿⍨isop
 		z,←(⊂'	struct cell_',aatyp,' *cdf_alphaalpha;')⌿⍨isop
 		z,←(⊂'	struct cell_',wwtyp,' *cdf_omegaomega;')⌿⍨isdop
+		z,←'	'∘,¨decl_vars svs
+		z,←⊂'	void *tmp;'
+		z,←⊂'	int err;'
 		z,←⊂''
+		z,←⊂'	tmp = NULL;'
 		z,←(⊂'	cdf_alpha = NULL;')⌿⍨ism
 		z,←(⊂'	cdf_deldel = cdf_self->fv[0];')⌿⍨isop
 		z,←(⊂'	cdf_alphaalpha = cdf_self->fv[1];')⌿⍨isop
@@ -418,26 +458,22 @@ GC←{
 		z,←(⊂'')⌿⍨hasopts
 		z,←(⊂'	opts = (struct opt_vars *)cdf_self->opts;')⌿⍨hasopts
 		z,←(⊂'')⌿⍨hasopts
-		z,←(⊂'	'),¨init_vars lvs
+		z,←'	'∘,¨init_vars svs
+		z,←'	'∘,¨init_vars lvs
 		z,←⊂'	err = 0;'
-		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂''
 		z,←(⊂'	'),¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,←⊂'cleanup:'
-		z,←⊂'	if (!err && stk != stkhd)'
-		z,←⊂'		CHK(99, cleanup, "Stack not empty");'
-		z,←⊂''
-		z,←⊂'	release_env(stk, stkhd);'
 		z,←'	'∘,¨release_vars lvs
 		z,←(⊂'	release_',atyp,'(cdf_alpha);')⌿⍨ism
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		return err;'
 		z,←⊂''
-		z,←⊂'	TRC(chk_array_valid(*z), '
-		z,←⊂'	    ',(highlight ⍵),');'
+		⍝ z,←⊂'	TRC(chk_array_valid(*z), '
+		⍝ z,←⊂'	    ',(highlight ⍵),');'
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
@@ -447,6 +483,7 @@ GC←{
 	⍝ F0: Initialization functions for namespaces
 	i←⍸(t=F)∧k=0
 	zz[i],←{
+
 		id←⊃var_names ⍵
 		z ←⊂'int ',id,'_flag = 0;'
 		z,←⊂''
@@ -456,16 +493,16 @@ GC←{
 		z,←⊂id,'_init(void)'
 		z,←⊂'{'
 		z,←⊂'	struct ',id,'_loc *loc;'
-		z,←⊂'	void *stk[256];'
-		z,←⊂'	void **stkhd;'
+		z,←'	'∘,¨decl_vars ⍵⊃sv
+		z,←⊂'	void *tmp;'
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	if (',id,'_flag)'
 		z,←⊂'		return 0;'
 		z,←⊂''
+		z,←⊂'	tmp = NULL;'
 		z,←⊂'	err = 0;'
 		z,←⊂'	',id,'_flag = 1;'
-		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	loc = &',id,';'
 		z,←⊂'	loc->__count = ',(⍕≢⊃lv[⍵]),';'
 		z,←⊂'	loc->__names = ',id,'_names;'
@@ -474,14 +511,12 @@ GC←{
 		z,←⊂''
 		z,←⊂'	CHKFN(cdf_prim_init(), cleanup);'
 		z,←⊂''
-		z,←(⊂'	'),¨init_vars ⊃lv[⍵]
+		z,←'	'∘,¨init_vars ⍵⊃sv
+		z,←'	'∘,¨init_vars ⍵⊃lv
 		z,←⊂''
-		z,←(⊂'	'),¨⊃⍪⌿(p=⍵)⌿zz
+		z,←'	'∘,¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
 		z,←⊂'cleanup:'
-		z,←⊂'	if (!err && stk != stkhd)'
-		z,←⊂'		CHK(99, cleanup, "Stack not empty");'
-		z,←⊂''
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
@@ -501,9 +536,9 @@ GC←{
 		z
 	}¨i
 	pref,←⊂''
-	
+
 	⍝ Export functions
-	i←⍸(t=B)∧(k=2)∧(t[p]=F)∧k[p]=0
+	i←⍸(n<0)∧(t[p]=F)∧(k[p]=0)∧(t=O)∨(t∊B C)∧(k=2)
 	exp←⊃⍪⌿{
 		fn ns←var_names ⍵,p[⍵]
 		fnv←⊃var_values ⍵
@@ -560,11 +595,11 @@ GC←{
 	exp,←⊂''
 	
 	⍝ Warn about nodes that appear which we haven't generated
-	⍞←(∨⌿msk)↑(⎕UCS 10)(⊣,⍨,)⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
+	⍝ ⍞←(∨⌿msk)↑(⎕UCS 10)(⊣,⍨,)⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
 
 	⍝ Assemble all the data together into a single character vector
 	data←∊(pref,(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
-	
+
 	⍝ Return data+headers
 	data header
 }

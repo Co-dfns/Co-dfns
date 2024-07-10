@@ -879,7 +879,7 @@ name(struct cell_array **z, ctype val)			\
 
 DEFN_MKARRAY(mk_array_int8, ARR_BOOL, int8_t)
 DEFN_MKARRAY(mk_array_int16, ARR_SINT, int16_t)
-DEFN_MKARRAY(mk_array_int32, ARR_INT, int32_t)
+DECLSPEC DEFN_MKARRAY(mk_array_int32, ARR_INT, int32_t)
 DEFN_MKARRAY(mk_array_dbl, ARR_DBL, double)
 DEFN_MKARRAY(mk_array_cmpx, ARR_CMPX, struct apl_cmpx)
 DEFN_MKARRAY(mk_array_char8, ARR_CHAR8, uint8_t)

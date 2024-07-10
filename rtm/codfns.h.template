@@ -221,31 +221,10 @@ DECLSPEC void release_doper_box(struct cell_doper_box *);
 DECLSPEC int derive_func_opts(struct cell_func **, struct cell_func *, int);
 
 /* Calling helpers */
-DECLSPEC int mk_nested_array(void ***, size_t count);
-DECLSPEC int var_ref(void ***, void *);
-DECLSPEC void bind_value(void ***, void **);
-DECLSPEC int mk_closure_func(void ***, func_mon, func_dya, unsigned int, void **);
-DECLSPEC int mk_closure_moper(void ***, func_mon, func_dya, func_mon, func_dya, 
-    unsigned int, void **);
-DECLSPEC int mk_closure_doper(void ***, func_mon, func_dya, func_mon, func_dya, 
-    func_mon, func_dya, func_mon, func_dya, unsigned int, void **);
-DECLSPEC int apply_niladic(void ***, struct cell_func *);
-DECLSPEC int apply_monadic(void ***);
-DECLSPEC int apply_dyadic(void ***);
-DECLSPEC int apply_assign(void ***, struct cell_array **);
-DECLSPEC int apply_mop(struct cell_func **, struct cell_moper *, 
-    func_mon, func_dya, void *);
-DECLSPEC int apply_mop_a(void ***);
-DECLSPEC int apply_mop_f(void ***);
-DECLSPEC int apply_dop(struct cell_func **, struct cell_doper *, 
-    func_mon, func_dya, void *, void *);
-DECLSPEC int apply_dop_aa(void ***);
-DECLSPEC int apply_dop_af(void ***);
-DECLSPEC int apply_dop_fa(void ***);
-DECLSPEC int apply_dop_ff(void ***);
-DECLSPEC int apply_variant(void ***);
-DECLSPEC int guard_check(void ***);
-DECLSPEC int strand_assign_push(void ***, int);
+DECLSPEC int mk_array_int32(struct cell_array **, int32_t);
+DECLSPEC int mk_nested_array(struct cell_array **, size_t count);
+DECLSPEC int var_ref(void *);
+DECLSPEC int guard_check(struct cell_array *);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);

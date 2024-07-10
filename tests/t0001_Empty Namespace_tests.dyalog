@@ -6,7 +6,7 @@
  ext←#.codfns.opsys '.dll' '.so' '.dylib'
 
  ∆0_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX'c0001' ⋄ 0⊣#.c0001←'t0001'#.codfns.Fix nc}
- ∆1_TEST←{#.UT.expect←0 ⋄ _←'init'⎕NA'I t0001',ext,'|cdf_ptr0_init' ⋄ (⎕EX'init')⊢init}
+ ∆1_TEST←{#.UT.expect←0 ⋄ _←'init'⎕NA'I t0001',ext,'|cdf_f0_init' ⋄ (⎕EX'init')⊢init}
  ∆2_TEST←{#.UT.expect←0 0⍴'' ⋄ #.c0001.⎕NL 3}
  ∆3_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX'c0001' ⋄ 0⊣#.c0001←'t0001'#.codfns.Fix lc}
  ∆4_TEST←{#.UT.expect←0 0⍴'' ⋄ #.c0001.⎕NL 3}

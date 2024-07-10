@@ -40,10 +40,9 @@ TT←{
 	⍝ Mark ⍠← bindings as kind 7
 	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
 
-	⍝ Convert B strand targets to B0, S0, S7 and S1 nodes
-	msk←~(≠p)∧(t[p]=B)∧(t=A)∧k=7
-	i⌿⍨←~msk[p I@{msk[⍵]}⍣≡i←⍸((t=A)∧k=7)∨(t=V)∧k=1]
-	t[i]←S ⋄ k[i,p[i←⍸(t=S)∧t[p]=B]]←0
+	⍝ Convert B strand targets to B0, S0, and S7 nodes
+	msk←~(≠p)∧(t[p]=B)∧(t=A)∧k=7 ⋄ i⌿⍨←~msk[p I@{msk[⍵]}⍣≡i←⍸(t=A)∧k=7]
+	t[i]←S ⋄ k[i,ip←p[i←⍸(t=S)∧t[p]=B]]←0 ⋄ n[ip]←0
 	
 	⍝ Merge B node bindings
 	n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
@@ -84,35 +83,63 @@ TT←{
 	k[j]←-(k[r[j]]=0)∨0@{(⌽≠⌽p×p≠⍳≢p)[j]}(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
 
+	⍝ Convert E4 nodes to have their assigned target as the first child
+	p t k n lx mu r pos end⌿⍨←⊂1+msk←(t=E)∧k=4
+	i←(+⍀1+msk)-1 ⋄ p r{⍵[⍺]}←⊂i ⋄ n[j]←i[n[j←⍸n>0]] ⋄ p[j←i-1]←i←msk⌿i
+	n[i]←0 ⋄ t[j]←V ⋄ k[j]←1 ⋄ mu[j]←1
 
-	⍝ Lift guard tests
-	p[i]←p[x←p[i←⍸(≠p)∧t[p]=G]] ⋄ ix←i,x ⋄ xi←x,i ⋄ p←(xi@ix⊢⍳≢p)[p]
-	t[ix]←t[xi] ⋄ k[ix]←k[xi] ⋄ n[x]←n[i] ⋄ n[i]←x ⋄ lx[xi]←lx[ix]
-	mu[ix]←mu[xi] ⋄ pos[xi]←pos[ix] ⋄ end[xi]←end[ix]
+	⍝ Allocate named targets in the n field for bound application nodes
+	msk←((t[p]=B)∧~k[p]∊0 7)∧(t∊C E O)∨((t=A)∧k=7)∨(t=B)∧~k∊0 7
+	msk[p⌿⍨(t[p]=B)∧(t∊V P)∨(t=A)∧k=1]←0 ⋄ i←⍸msk
+	n mu lx{⍺[⍵]@i⊢⍺}←⊂p[i] ⋄ i←⍸msk←(~msk)∧(⍳≢p)∊p[i] ⋄ p←(p[i]@i⍳≢p)[p]
+	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
 	
-	⍝ Count children for E6, S7, and A7 nodes
-	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=S)∧k[p]=0)∨((t[p]∊A S)∧k[p]=7)∨(t[p]=E)∧k[p]=6
+	⍝ Allocate frame variables for unbound application results
+	msk←((t=B)∧k=0)∨((t[p]=B)⍲k[p]=0)∧(k≠0)∧(t∊C E O)∨(t∊A S)∧k=7
+	pi←p[i←⍸msk∧n≥0] ⋄ d←⊃P2D p ⋄ msk←(t=E)∧k∊0 ¯1 ⋄ lx[i]←6
+	cg←(pi∘.=i)∨(∘.=⍨pi)∨(∘.<⍨i)∧(∘.>⍨d[i])∧∘.=⍨p I@{~msk[⍵]}⍣≡i
+	cg∨←i∘.=(t[ppi]=B)∧(k[ppi]=0)∧ppi←p[pi]
+	cg∧←∘.=⍨t[i]∊C O ⋄ cg∨←⍉cg ⋄ cg∧←~∘.=⍨⍳≢i
+	wgt←?0⍴⍨≢i
+	_←{
+		mis←wgt{wgt←⍺ ⋄ mis←⍵
+			wgt×←~mis∨←f←wgt>cg⌈.×wgt ⋄ 0=+⌿f:mis ⋄ wgt×←~cg∨.∧f
+			wgt ∇ mis}0⍴⍨≢i
+		0=+⌿mis:⍵ ⋄ wgt×←~mis ⋄ ⊢n[mis⌿i]←1+⍵
+	}⍣≡0
 
-	⍝ Lift strand binding nodes
-	i←⍸~msk[p I@{msk[⍵]}⍣≡⍳≢p⊣msk←~(≠p)∧(t[p]=B)∧k[p]=0]
-	p[i]←p I@{msk[⍵]}⍣≡p[i]⊣msk←~(t=B)∧k=0
-	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽p[i]] ⋄ p←(i@j⍳≢p)[p]
-
-	⍝ Mark arity contexts
-	ac←(≢p)⍴0 ⋄ ac[i]←2⌊k[p[i←⍸(t=P)∧(k=2)∧t[p]=E]]
+	⍝ Link miscellaneous nodes
+	n[i←⍸(t[p]=E)∧(k[p]=0)∧(t=E)∨((t=A)∧k=7)∨(t=B)∧k≠7]←0 ⋄ lx[i]←6
+	n[i]←n[p[i←⍸(t[p]=B)∧(k[p]=0)∧(~t∊V P)∧(t=A)⍲k=1]] ⋄ lx[i]←lx[p[i]]
+	n[p[i]]←n[i←⍸(t[p]=E)∧k[p]=¯1] ⋄ lx[p[i]]←lx[i]
 	
+	⍝ Add V nodes for each application node in preparation for lifting
+	msk←((t[p]=B)⍲k[p]=0)∧(t∊B C O S)∨((t=E)∧k>0)∨(t=A)∧k=7 ⋄ i←(+⍀1+msk)-1
+	p t k n lx mu r pos end⌿⍨←⊂1+msk ⋄ p r{⍵[⍺]}←⊂i ⋄ n[j]←i[n[j←⍸n>0]]
+	j←¯1+msk⌿i ⋄ k[j⌿⍨(t[j]∊A E S)∨(t[j]=B)∧k[j]=0]←1 ⋄ k[j⌿⍨t[j]=O]←2 ⋄ t[j]←V
+
 	⍝ Lift and flatten expressions
-	i←⍸(t∊A B C E G O P S Z)∨(t=V)∧t[p]≠C
-	p[i]←p[x←p I@{(t[x]∊F G)⍱(t[x]=B)∧k[x←p[⍵]]=7}⍣≡i]
-	p t k n lx mu r ac pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]
-	
-	⍝ Remove unnecessary B0 nodes
-	p t k n lx mu r ac pos end⌿⍨←⊂~msk←(t=B)∧k=0 ⋄ p r(⊣-1+⍸⍨)←⊂j←⍸msk
-	n[i]←j(⊢-1+⍸)n[i←⍸(n>0)∧~((t=E)∧k=6)∨((t∊S A)∧k=7)∨(t=S)∧k=0]
+	i←⍸(t∊B C E G O S Z)∨(t=A)∧k≠1
+	msk←~(t∊F G)∨((t=B)∧k=7)∨gm←(t[p]=G)∧~(t=V)∨((t=A)∧k=1)∨(t=E)∧k=0
+	p[i]←p[x←p[p] I@{gm[p[⍵]]}p I@{msk[p[⍵]]}⍣≡p I@{gm[⍵]}i]
+	⍝ j←p I@{(t[p[⍵]]=G)∧~(t[⍵]=V)∨((t[⍵]=A)∧k[⍵]=1)∨(t[⍵]=E)∧k[⍵]=0}i
+	⍝ p[i]←p[x←p I@{(t[x]∊F G)⍱(t[x]=B)∧k[x←p[⍵]]=7}⍣≡j]
+	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]
+	i←⍸(t=S)∨(t=B)∧k=0
+	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽+⍀¯1⌽t[i]=B] ⋄ p←(i@j⍳≢p)[p]
 
-	⍝ Compute a function's local and free variables
-	lv←(≢p)⍴⊂⍬ ⋄ fv←(≢p)⍴⊂⍬
+	⍝ Remove dead code paths: Empty B0; post-Z¯2 nodes
+	_←p[i]{msk[⍵]←∨⍀¯1⌽msk[⍵]}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←(t=Z)∧k=¯2
+	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0
+	msk←{1@(n⌿⍨⍵∧(t=V)∧(lx=4)∧n∊⍸t=F)⊢⍵∨⍵[p]}⍣≡msk
+	p t k n lx mu r pos end⌿⍨←⊂~msk
+	p r(⊣-1+⍸⍨)←⊂i←⍸msk ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
+
+	⍝ Compute a function's local, free, and stack variables
+	lv←(≢p)⍴⊂⍬ ⋄ fv←(≢p)⍴⊂⍬ ⋄ sv←(≢p)⍴⊂⍬
 	lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B S V)∧(lx=0)∧n<0;]
+	typ←1@(⍸(t∊A E S)∨(t=B)∧k=0)⊢2@(⍸t=O)⊢k[i]@(i←⍸t∊B C V)⊢(≢p)⍴0
+	sv[r[i]],←i←i⌿⍨≠(r,n,⍪typ)[i←⍸(lx=6)∧n>0;]
 	fv[p[i]],←i←⍸(t=V)∧(t[p]=C)∧n<0
 	fv[n[i]]←fv[p[i←⍸(t=V)∧(t[p]=C)∧n≥0]]
 
@@ -222,5 +249,6 @@ TT←{
 	t[i]←V ⋄ sym[ni]←nams[si;0]
 	n[i]←-sym⍳sym∪←nams[si,¨(t[p[i]]=E)∧2⌊k[p[i]]]
 
-	p t k n lx mu lv fv pos end sym IN
+	p t k n lx mu lv fv sv pos end sym IN
 }
+	
