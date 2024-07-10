@@ -91,7 +91,7 @@ GC←{
 	pref,←⊂''
 
 	⍝ We declare all external variables in the prefix
-	pref,←decl_vars ⍸(t=V)∧lx=5
+	pref,←decl_vars ⍸msk∧msk⍀≠n⌿⍨msk←(t=V)∧lx=5
 	pref,←⊂''
 
 	⍝ We have a vector output for each node in the AST
