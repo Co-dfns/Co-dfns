@@ -1,7 +1,7 @@
 :Namespace t0099_parsing
 
-TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok - '⍪x⌿⍨~∧⍀' '=x←(3+⊃⍸'TAP'⍷x)↓x←(⎕CR'TEST')[1⊃⎕LC;]}
-
+⍝ TAP←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0⊣⎕←'ok - '⍪x⌿⍨~∧⍀' '=x←(3+⊃⍸'CHK'⍷x)↓x←(⎕CR'TEST')[1⊃⎕LC;]}
+CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8⊣⎕←'✗' ⋄ _←0⊣⍞←'✓'}
 ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
 ∇{Z}←{E}PARSE X
@@ -24,381 +24,342 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  
  CD←##.codfns
  
- TAP PARSE NS '∇FN' '∇'
- TAP t=CD.(F T H)
- TAP p d=(0 0 1)(0 1 2)
- TAP k=0 1 0
- TAP n=0 (-sym⍳⊂'FN') 0
- TAP lx=4 0 0
- TAP pos end=(0 11 12)(30 16 14)
- TAP xn xt≡¨(,⊂'FN')(,1)
- ⎕←''
+ CHK PARSE NS '∇FN' '∇'
+ CHK t=CD.(F T H)
+ CHK p d=(0 0 1)(0 1 2)
+ CHK k=0 1 0
+ CHK n=0 (-sym⍳⊂'FN') 0
+ CHK lx=4 0 0
+ CHK pos end=(0 11 12)(30 16 14)
+ CHK xn xt≡¨(,⊂'FN')(,1)
  
- TAP PARSE NS '∇FN X' '∇'
- TAP t=CD.(F T H V)
- TAP p d=(0 0 1 2)(0 1 2 3)
- TAP k=0 2 1 1
- TAP n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'X')
- TAP lx=4 0 0 1
- TAP pos end=(0 11 12 15)(32 18 16 16)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇FN X' '∇'
+ CHK t=CD.(F T H V)
+ CHK p d=(0 0 1 2)(0 1 2 3)
+ CHK k=0 2 1 1
+ CHK n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'X')
+ CHK lx=4 0 0 1
+ CHK pos end=(0 11 12 15)(32 18 16 16)
+ CHK xn xt≡¨(,⊂'FN')(,2)
  
- TAP PARSE NS '∇X FN Y' '∇'
- TAP t=CD.(F T H V V)
- TAP p d=(0 0 1 2 2)(0 1 2 3 3)
- TAP k=0 2 3 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XY'
- TAP lx=4 0 0 1 1
- TAP pos end=(0 11 12 12 17)(34 20 18 13 18)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇X FN Y' '∇'
+ CHK t=CD.(F T H V V)
+ CHK p d=(0 0 1 2 2)(0 1 2 3 3)
+ CHK k=0 2 3 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XY'
+ CHK lx=4 0 0 1 1
+ CHK pos end=(0 11 12 12 17)(34 20 18 13 18)
+ CHK xn xt≡¨(,⊂'FN')(,2)
  
- TAP PARSE NS '∇Z←FN' '∇'
- TAP t=CD.(F T H V)
- TAP p d=(0 0 1 2)(0 1 2 3)
- TAP k=0 1 4 1
- TAP n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
- TAP lx=4 0 0 1
- TAP pos end=(0 11 12 12)(32 18 16 13)
- TAP xn xt≡¨(,⊂'FN')(,1)
- ⎕←''
+ CHK PARSE NS '∇Z←FN' '∇'
+ CHK t=CD.(F T H V)
+ CHK p d=(0 0 1 2)(0 1 2 3)
+ CHK k=0 1 4 1
+ CHK n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
+ CHK lx=4 0 0 1
+ CHK pos end=(0 11 12 12)(32 18 16 13)
+ CHK xn xt≡¨(,⊂'FN')(,1)
  
- TAP PARSE NS '∇Z←FN X' '∇'
- TAP t=CD.(F T H V V)
- TAP p d=(0 0 1 2 2)(0 1 2 3 3)
- TAP k=0 2 5 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
- TAP lx=4 0 0 1 1
- TAP pos end=(0 11 12 12 17)(34 20 18 13 18)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇Z←FN X' '∇'
+ CHK t=CD.(F T H V V)
+ CHK p d=(0 0 1 2 2)(0 1 2 3 3)
+ CHK k=0 2 5 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
+ CHK lx=4 0 0 1 1
+ CHK pos end=(0 11 12 12 17)(34 20 18 13 18)
+ CHK xn xt≡¨(,⊂'FN')(,2)
  
- TAP PARSE NS '∇Z←X FN Y' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 2 7 1 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 12 14 19)(36 22 20 13 15 20)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇Z←X FN Y' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 2 7 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 12 14 19)(36 22 20 13 15 20)
+ CHK xn xt≡¨(,⊂'FN')(,2)
 
- TAP PARSE NS '∇(L FN)Y' '∇'
- TAP t=CD.(F T H V V)
- TAP p d=(0 0 1 2 2)(0 1 2 3 3)
- TAP k=0 3 9 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'LY'
- TAP lx=4 0 0 1 1
- TAP pos end=(0 11 12 13 18)(35 21 19 14 19)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇(L FN)Y' '∇'
+ CHK t=CD.(F T H V V)
+ CHK p d=(0 0 1 2 2)(0 1 2 3 3)
+ CHK k=0 3 9 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'LY'
+ CHK lx=4 0 0 1 1
+ CHK pos end=(0 11 12 13 18)(35 21 19 14 19)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇X(L FN)Y' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 3 11 1 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLY'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 12 14 19)(36 22 20 13 15 20)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇X(L FN)Y' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 3 11 1 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLY'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 12 14 19)(36 22 20 13 15 20)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇Z←X(L FN)Y' '∇'
- TAP t=CD.(F T H V V V V)
- TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
- TAP k=0 3 15 1 1 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
- TAP lx=4 0 0 1 1 1 1
- TAP pos end=(0 11 12 12 14 16 21)(38 24 22 13 15 17 22)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇Z←X(L FN)Y' '∇'
+ CHK t=CD.(F T H V V V V)
+ CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ CHK k=0 3 15 1 1 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
+ CHK lx=4 0 0 1 1 1 1
+ CHK pos end=(0 11 12 12 14 16 21)(38 24 22 13 15 17 22)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇(L FN R)Y' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 4 25 0 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'LRY'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 13 18 20)(37 23 21 14 19 21)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇(L FN R)Y' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 4 25 0 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'LRY'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 13 18 20)(37 23 21 14 19 21)
+ CHK xn xt≡¨(,⊂'FN')(,4)
 
- TAP PARSE NS '∇X(L FN R)Y' '∇'
- TAP t=CD.(F T H V V V V)
- TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
- TAP k=0 4 27 1 0 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLRY'
- TAP lx=4 0 0 1 1 1 1
- TAP pos end=(0 11 12 12 14 19 21)(38 24 22 13 15 20 22)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇X(L FN R)Y' '∇'
+ CHK t=CD.(F T H V V V V)
+ CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ CHK k=0 4 27 1 0 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLRY'
+ CHK lx=4 0 0 1 1 1 1
+ CHK pos end=(0 11 12 12 14 19 21)(38 24 22 13 15 20 22)
+ CHK xn xt≡¨(,⊂'FN')(,4)
 
- TAP PARSE NS '∇Z←X(L FN R)Y' '∇'
- TAP t=CD.(F T H V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
- TAP k=0 4 31 1 1 0 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
- TAP lx=4 0 0 1 1 1 1 1
- TAP pos end=(0 11 12 12 14 16 21 23)(40 26 24 13 15 17 22 24)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇Z←X(L FN R)Y' '∇'
+ CHK t=CD.(F T H V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
+ CHK k=0 4 31 1 1 0 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
+ CHK lx=4 0 0 1 1 1 1 1
+ CHK pos end=(0 11 12 12 14 16 21 23)(40 26 24 13 15 17 22 24)
+ CHK xn xt≡¨(,⊂'FN')(,4)
  
- TAP TOKENIZE ':Class blah :X' ':EndClass'
- TAP TOKENIZE ':Class Blah:X' ':EndClass'
- TAP TOKENIZE ':Class Blah : X' ':EndClass'
- ⎕←''
+ CHK TOKENIZE ':Class blah :X' ':EndClass'
+ CHK TOKENIZE ':Class Blah:X' ':EndClass'
+ CHK TOKENIZE ':Class Blah : X' ':EndClass'
  
- TAP PARSE NS '∇{X} FN Y' '∇'
- TAP t=CD.(F T H V V)
- TAP p d=(0 0 1 2 2)(0 1 2 3 3)
- TAP k=0 2 35 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XY'
- TAP lx=4 0 0 1 1
- TAP pos end=(0 11 12 13 19)(36 22 20 14 20)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇{X} FN Y' '∇'
+ CHK t=CD.(F T H V V)
+ CHK p d=(0 0 1 2 2)(0 1 2 3 3)
+ CHK k=0 2 35 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XY'
+ CHK lx=4 0 0 1 1
+ CHK pos end=(0 11 12 13 19)(36 22 20 14 20)
+ CHK xn xt≡¨(,⊂'FN')(,2)
  
- TAP PARSE NS '∇Z←{X}FN Y' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 2 39 1 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 12 15 20)(37 23 21 13 16 21)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇Z←{X}FN Y' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 2 39 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 12 15 20)(37 23 21 13 16 21)
+ CHK xn xt≡¨(,⊂'FN')(,2)
 
- TAP PARSE NS '∇{X}(L FN)Y' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 3 43 1 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLY'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 13 16 21)(38 24 22 14 17 22)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇{X}(L FN)Y' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 3 43 1 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLY'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 13 16 21)(38 24 22 14 17 22)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇Z←{X}(L FN)Y' '∇'
- TAP t=CD.(F T H V V V V)
- TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
- TAP k=0 3 47 1 1 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
- TAP lx=4 0 0 1 1 1 1
- TAP pos end=(0 11 12 12 15 18 23)(40 26 24 13 16 19 24)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇Z←{X}(L FN)Y' '∇'
+ CHK t=CD.(F T H V V V V)
+ CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ CHK k=0 3 47 1 1 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
+ CHK lx=4 0 0 1 1 1 1
+ CHK pos end=(0 11 12 12 15 18 23)(40 26 24 13 16 19 24)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇{X}(L FN R)Y' '∇'
- TAP t=CD.(F T H V V V V)
- TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
- TAP k=0 4 59 1 0 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLRY'
- TAP lx=4 0 0 1 1 1 1
- TAP pos end=(0 11 12 13 16 21 23)(40 26 24 14 17 22 24)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇{X}(L FN R)Y' '∇'
+ CHK t=CD.(F T H V V V V)
+ CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ CHK k=0 4 59 1 0 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XLRY'
+ CHK lx=4 0 0 1 1 1 1
+ CHK pos end=(0 11 12 13 16 21 23)(40 26 24 14 17 22 24)
+ CHK xn xt≡¨(,⊂'FN')(,4)
 
- TAP PARSE NS '∇Z←{X}(L FN R)Y' '∇'
- TAP t=CD.(F T H V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
- TAP k=0 4 63 1 1 0 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
- TAP lx=4 0 0 1 1 1 1 1
- TAP pos end=(0 11 12 12 15 18 23 25)(42 28 26 13 16 19 24 26)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇Z←{X}(L FN R)Y' '∇'
+ CHK t=CD.(F T H V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
+ CHK k=0 4 63 1 1 0 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
+ CHK lx=4 0 0 1 1 1 1 1
+ CHK pos end=(0 11 12 12 15 18 23 25)(42 28 26 13 16 19 24 26)
+ CHK xn xt≡¨(,⊂'FN')(,4)
  
- TAP PARSE NS '∇{Z}←FN' '∇'
- TAP t=CD.(F T H V)
- TAP p d=(0 0 1 2)(0 1 2 3)
- TAP k=0 1 68 1
- TAP n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
- TAP lx=4 0 0 1
- TAP pos end=(0 11 12 13)(34 20 18 14)
- TAP xn xt≡¨(,⊂'FN')(,1)
- ⎕←''
+ CHK PARSE NS '∇{Z}←FN' '∇'
+ CHK t=CD.(F T H V)
+ CHK p d=(0 0 1 2)(0 1 2 3)
+ CHK k=0 1 68 1
+ CHK n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
+ CHK lx=4 0 0 1
+ CHK pos end=(0 11 12 13)(34 20 18 14)
+ CHK xn xt≡¨(,⊂'FN')(,1)
  
- TAP PARSE NS '∇{Z}←FN X' '∇'
- TAP t=CD.(F T H V V)
- TAP p d=(0 0 1 2 2)(0 1 2 3 3)
- TAP k=0 2 69 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
- TAP lx=4 0 0 1 1
- TAP pos end=(0 11 12 13 19)(36 22 20 14 20)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇{Z}←FN X' '∇'
+ CHK t=CD.(F T H V V)
+ CHK p d=(0 0 1 2 2)(0 1 2 3 3)
+ CHK k=0 2 69 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
+ CHK lx=4 0 0 1 1
+ CHK pos end=(0 11 12 13 19)(36 22 20 14 20)
+ CHK xn xt≡¨(,⊂'FN')(,2)
  
- TAP PARSE NS '∇{Z}←X FN Y' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 2 71 1 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 13 16 21)(38 24 22 14 17 22)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇{Z}←X FN Y' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 2 71 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 13 16 21)(38 24 22 14 17 22)
+ CHK xn xt≡¨(,⊂'FN')(,2)
 
- TAP PARSE NS '∇{Z}←X(L FN)Y' '∇'
- TAP t=CD.(F T H V V V V)
- TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
- TAP k=0 3 79 1 1 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
- TAP lx=4 0 0 1 1 1 1
- TAP pos end=(0 11 12 13 16 18 23)(40 26 24 14 17 19 24)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇{Z}←X(L FN)Y' '∇'
+ CHK t=CD.(F T H V V V V)
+ CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ CHK k=0 3 79 1 1 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
+ CHK lx=4 0 0 1 1 1 1
+ CHK pos end=(0 11 12 13 16 18 23)(40 26 24 14 17 19 24)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇{Z}←X(L FN R)Y' '∇'
- TAP t=CD.(F T H V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
- TAP k=0 4 95 1 1 0 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
- TAP lx=4 0 0 1 1 1 1 1
- TAP pos end=(0 11 12 13 16 18 23 25)(42 28 26 14 17 19 24 26)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇{Z}←X(L FN R)Y' '∇'
+ CHK t=CD.(F T H V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
+ CHK k=0 4 95 1 1 0 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
+ CHK lx=4 0 0 1 1 1 1 1
+ CHK pos end=(0 11 12 13 16 18 23 25)(42 28 26 14 17 19 24 26)
+ CHK xn xt≡¨(,⊂'FN')(,4)
  
- TAP PARSE NS '∇{Z}←{X}FN Y' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 2 103 1 1 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 13 17 22)(39 25 23 14 18 23)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇{Z}←{X}FN Y' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 2 103 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 13 17 22)(39 25 23 14 18 23)
+ CHK xn xt≡¨(,⊂'FN')(,2)
 
- TAP PARSE NS '∇{Z}←{X}(L FN)Y' '∇'
- TAP t=CD.(F T H V V V V)
- TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
- TAP k=0 3 111 1 1 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
- TAP lx=4 0 0 1 1 1 1
- TAP pos end=(0 11 12 13 17 20 25)(42 28 26 14 18 21 26)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇{Z}←{X}(L FN)Y' '∇'
+ CHK t=CD.(F T H V V V V)
+ CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ CHK k=0 3 111 1 1 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLY'
+ CHK lx=4 0 0 1 1 1 1
+ CHK pos end=(0 11 12 13 17 20 25)(42 28 26 14 18 21 26)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇{Z}←{X}(L FN R)Y' '∇'
- TAP t=CD.(F T H V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
- TAP k=0 4 127 1 1 0 0 1
- TAP n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
- TAP lx=4 0 0 1 1 1 1 1
- TAP pos end=(0 11 12 13 17 20 25 27)(44 30 28 14 18 21 26 28)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇{Z}←{X}(L FN R)Y' '∇'
+ CHK t=CD.(F T H V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2)(0 1 2 3 3 3 3 3)
+ CHK k=0 4 127 1 1 0 0 1
+ CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXLRY'
+ CHK lx=4 0 0 1 1 1 1 1
+ CHK pos end=(0 11 12 13 17 20 25 27)(44 30 28 14 18 21 26 28)
+ CHK xn xt≡¨(,⊂'FN')(,4)
  
- TAP PARSE NS '∇FN;blah;X;Y;nothing' '∇'
- TAP t=CD.(F T H V V V V)
- TAP p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
- TAP k=0 1 0 0 0 0 0
- TAP n=0 (-sym⍳⊂'FN') 0,-sym⍳,¨'blah' 'X' 'Y' 'nothing'
- TAP lx=4 0 0 1 1 1 1
- TAP pos end=(0 11 12 15 20 22 24)(47 33 31 19 21 23 31)
- TAP xn xt≡¨(,⊂'FN')(,1)
- ⎕←''
+ CHK PARSE NS '∇FN;blah;X;Y;nothing' '∇'
+ CHK t=CD.(F T H V V V V)
+ CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
+ CHK k=0 1 0 0 0 0 0
+ CHK n=0 (-sym⍳⊂'FN') 0,-sym⍳,¨'blah' 'X' 'Y' 'nothing'
+ CHK lx=4 0 0 1 1 1 1
+ CHK pos end=(0 11 12 15 20 22 24)(47 33 31 19 21 23 31)
+ CHK xn xt≡¨(,⊂'FN')(,1)
  
- TAP PARSE NS '∇FN(X Y Z)' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 2 129 1 1 1
- TAP n=0 (-sym⍳⊂'FN')3,-sym⍳,¨'XYZ'
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 15 17 19)(37 23 21 16 18 20)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇FN(X Y Z)' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 2 129 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')3,-sym⍳,¨'XYZ'
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 15 17 19)(37 23 21 16 18 20)
+ CHK xn xt≡¨(,⊂'FN')(,2)
  
- TAP PARSE NS '∇(Z1 Z2 Z3)←FN' '∇'
- TAP t=CD.(F T H V V V)
- TAP p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- TAP k=0 1 260 1 1 1
- TAP n=0 (-sym⍳⊂'FN')(3×2*16),(-sym⍳'Z1' 'Z2' 'Z3')
- TAP lx=4 0 0 1 1 1
- TAP pos end=(0 11 12 13 16 19)(41 27 25 15 18 21)
- TAP xn xt≡¨(,⊂'FN')(,1)
- ⎕←''
+ CHK PARSE NS '∇(Z1 Z2 Z3)←FN' '∇'
+ CHK t=CD.(F T H V V V)
+ CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
+ CHK k=0 1 260 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')(3×2*16),(-sym⍳'Z1' 'Z2' 'Z3')
+ CHK lx=4 0 0 1 1 1
+ CHK pos end=(0 11 12 13 16 19)(41 27 25 15 18 21)
+ CHK xn xt≡¨(,⊂'FN')(,1)
 
- TAP PARSE NS '∇(Z1 Z2 Z3)←FN(X Y Z)' '∇'
- TAP t=CD.(F T H V V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3)
- TAP k=0 2 389 1 1 1 1 1 1
- TAP n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'XYZ'
- TAP lx=4 0 0 1 1 1 1 1 1
- TAP pos end=(0 11 12 13 16 19 26 28 30)(48 34 32 15 18 21 27 29 31)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇(Z1 Z2 Z3)←FN(X Y Z)' '∇'
+ CHK t=CD.(F T H V V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3)
+ CHK k=0 2 389 1 1 1 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'XYZ'
+ CHK lx=4 0 0 1 1 1 1 1 1
+ CHK pos end=(0 11 12 13 16 19 26 28 30)(48 34 32 15 18 21 27 29 31)
+ CHK xn xt≡¨(,⊂'FN')(,2)
 
- TAP PARSE NS '∇{(Z1 Z2 Z3)}←FN(X Y Z)' '∇'
- TAP t=CD.(F T H V V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3)
- TAP k=0 2 453 1 1 1 1 1 1
- TAP n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'XYZ'
- TAP lx=4 0 0 1 1 1 1 1 1
- TAP pos end=(0 11 12 14 17 20 28 30 32)(50 36 34 16 19 22 29 31 33)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇{(Z1 Z2 Z3)}←FN(X Y Z)' '∇'
+ CHK t=CD.(F T H V V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3)
+ CHK k=0 2 453 1 1 1 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'XYZ'
+ CHK lx=4 0 0 1 1 1 1 1 1
+ CHK pos end=(0 11 12 14 17 20 28 30 32)(50 36 34 16 19 22 29 31 33)
+ CHK xn xt≡¨(,⊂'FN')(,2)
 
- TAP PARSE NS '∇{(Z1 Z2 Z3)}←{A}FN(X Y Z)' '∇'
- TAP t=CD.(F T H V V V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3 3)
- TAP k=0 2 487 1 1 1 1 1 1 1
- TAP n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'AXYZ'
- TAP lx=4 0 0 1 1 1 1 1 1 1
- TAP pos end=(0 11 12 14 17 20 26 31 33 35)(53 39 37 16 19 22 27 32 34 36)
- TAP xn xt≡¨(,⊂'FN')(,2)
- ⎕←''
+ CHK PARSE NS '∇{(Z1 Z2 Z3)}←{A}FN(X Y Z)' '∇'
+ CHK t=CD.(F T H V V V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3 3)
+ CHK k=0 2 487 1 1 1 1 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'AXYZ'
+ CHK lx=4 0 0 1 1 1 1 1 1 1
+ CHK pos end=(0 11 12 14 17 20 26 31 33 35)(53 39 37 16 19 22 27 32 34 36)
+ CHK xn xt≡¨(,⊂'FN')(,2)
 
- TAP PARSE NS '∇{(Z1 Z2 Z3)}←{A}(L FN)(X Y Z)' '∇'
- TAP t=CD.(F T H V V V V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3 3 3)
- TAP k=0 3 495 1 1 1 1 0 1 1 1
- TAP n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'ALXYZ'
- TAP lx=4 0 0 1 1 1 1 1 1 1 1
- TAP pos end=(0 11 12 14 17 20 26 29 35 37 39)(57 43 41 16 19 22 27 30 36 38 40)
- TAP xn xt≡¨(,⊂'FN')(,3)
- ⎕←''
+ CHK PARSE NS '∇{(Z1 Z2 Z3)}←{A}(L FN)(X Y Z)' '∇'
+ CHK t=CD.(F T H V V V V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3 3 3)
+ CHK k=0 3 495 1 1 1 1 0 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'ALXYZ'
+ CHK lx=4 0 0 1 1 1 1 1 1 1 1
+ CHK pos end=(0 11 12 14 17 20 26 29 35 37 39)(57 43 41 16 19 22 27 30 36 38 40)
+ CHK xn xt≡¨(,⊂'FN')(,3)
 
- TAP PARSE NS '∇{(Z1 Z2 Z3)}←{A}(L FN R)(X Y Z)' '∇'
- TAP t=CD.(F T H V V V V V V V V V)
- TAP p d=(0 0 1 2 2 2 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3 3 3 3)
- TAP k=0 4 511 1 1 1 1 0 0 1 1 1
- TAP n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'ALRXYZ'
- TAP lx=4 0 0 1 1 1 1 1 1 1 1 1
- TAP pos end=(0 11 12 14 17 20 26 29 34 37 39 41)(59 45 43 16 19 22 27 30 35 38 40 42)
- TAP xn xt≡¨(,⊂'FN')(,4)
- ⎕←''
+ CHK PARSE NS '∇{(Z1 Z2 Z3)}←{A}(L FN R)(X Y Z)' '∇'
+ CHK t=CD.(F T H V V V V V V V V V)
+ CHK p d=(0 0 1 2 2 2 2 2 2 2 2 2)(0 1 2 3 3 3 3 3 3 3 3 3)
+ CHK k=0 4 511 1 1 1 1 0 0 1 1 1
+ CHK n=0 (-sym⍳⊂'FN')(3+3×2*16),-sym⍳'Z1' 'Z2' 'Z3',,¨'ALRXYZ'
+ CHK lx=4 0 0 1 1 1 1 1 1 1 1 1
+ CHK pos end=(0 11 12 14 17 20 26 29 34 37 39 41)(59 45 43 16 19 22 27 30 35 38 40 42)
+ CHK xn xt≡¨(,⊂'FN')(,4)
  
- TAP PARSE NS '∇FN' 'L1:' '∇'
- TAP t=CD.(F T H L)
- TAP p d=(0 0 1 1)(0 1 2 2)
- TAP k=0 1 0 0
- TAP n=0 (-sym⍳⊂'FN') 0(-sym⍳⊂'L1')
- TAP lx=4 0 0 0
- TAP pos end=(0 11 12 15)(34 20 14 17)
- ⎕←''
+ CHK PARSE NS '∇FN' 'L1:' '∇'
+ CHK t=CD.(F T H L)
+ CHK p d=(0 0 1 1)(0 1 2 2)
+ CHK k=0 1 0 0
+ CHK n=0 (-sym⍳⊂'FN') 0(-sym⍳⊂'L1')
+ CHK lx=4 0 0 0
+ CHK pos end=(0 11 12 15)(34 20 14 17)
  
- TAP PARSE NS '∇FN' ':If 0' ':EndIf' '∇'
- ⎕←''
+ CHK PARSE NS '∇FN' ':If 0' ':EndIf' '∇'
  
- TAP (,⊂'⎕SOUND')(,⊂2)TOKENIZE NS '∇FN' '⎕SOUND 5' '∇' 
- TAP PARSE NS '('':namespace'')' ''
- TAP PARSE NS '∇FN;⎕IO' '∇'
- TAP TOKENIZE NS'∇FN' '{5:6}⍬' '∇'
- TAP TOKENIZE ,⊂'1 ¯2'
- TAP TOKENIZE ERRS 2 ,⊂'1¯2'
- TAP TOKENIZE ERRS 2 ,⊂'1.¯2'
- ⎕←''
+ CHK (,⊂'⍞SOUND')(,⊂2)TOKENIZE NS '∇FN' '⍞SOUND 5' '∇' 
+ CHK PARSE NS '('':namespace'')' ''
+ CHK PARSE NS '∇FN;⎕IO' '∇'
+ CHK TOKENIZE NS'∇FN' '{5:6}⍬' '∇'
+ CHK TOKENIZE ,⊂'1 ¯2'
+ CHK TOKENIZE ERRS 2 ,⊂'1¯2'
+ CHK TOKENIZE ERRS 2 ,⊂'1.¯2'
  
- TAP PARSE NS 'FN←{0:5}' ''
- TAP t=CD.(F B V C F G A A F G A A)
- TAP p d=(0 0 1 1 3 4 5 5 3 8 9 9)(0 1 2 2 3 4 5 5 3 4 5 5)
- TAP k=0 2 2 2 2 0 1 1 3 0 1 1
- ⎕←''
+ CHK PARSE NS 'FN←{0:5}' ''
+ CHK t=CD.(F B V C F G A A F G A A)
+ CHK p d=(0 0 1 1 3 4 5 5 3 8 9 9)(0 1 2 2 3 4 5 5 3 4 5 5)
+ CHK k=0 2 2 2 2 0 1 1 3 0 1 1
  
- TAP PARSE NS 'FN←{0::5}' ''
- TAP t=CD.(F B V C F G A A F G A A)
- ⎕←'' 
+ CHK PARSE NS 'FN←{0::5}' ''
+ CHK t=CD.(F B V C F G A A F G A A)
+ ⎕←'☺' 
  
 ∇
 
