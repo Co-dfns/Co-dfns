@@ -185,7 +185,7 @@ TT←{
 	syms,←⊂,'\'       ⋄ nams⍪←'scn'        'scn'           'scndya'
 	syms,←⊂,'⍀'       ⋄ nams⍪←'scf'        'scf'           'scfdya'
 	syms,←⊂,'//'      ⋄ nams⍪←'rep'        'repmon'        'rep'
-	syms,←⊂,'⌿⌿'      ⋄ nams⍪←'rpf'        'rpfmon'        'rep'
+	syms,←⊂,'⌿⌿'      ⋄ nams⍪←'rpf'        'rpfmon'        'rpf'
 	syms,←⊂,'\\'      ⋄ nams⍪←'xpd'        'xpdmon'        'xpd'
 	syms,←⊂,'⍀⍀'      ⋄ nams⍪←'xpf'        'xpfmon'        'xpf'
 	syms,←⊂,'¨'       ⋄ nams⍪←'map'        'map'           'map'
