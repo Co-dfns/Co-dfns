@@ -71,7 +71,7 @@ TT←{
 	
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
-	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V
+	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V ⋄ k[i]←3+5 11⍸k[i]
 
 	⍝ Wrap expressions as binding or return statements
 	i←(⍸(~t∊F G)∧t[p]=F),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
