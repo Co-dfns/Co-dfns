@@ -25,7 +25,7 @@ TT←{
 	ncmap←(0 0 0)(0 0 0)(0 0 0)(2 0 0),,⍉⊃∘.,⌿(0 2)(2 3)(0 2 3)
 	vx←x,j1←j⌿⍨k[j]=1 ⋄ vp←p[p[x]],p[j1]
 	_←vp{n[⍺]←-sym⍳sym∪←⊂(k[r[⍺]]⊃ncmap)[ncvar⍳sym[|n[⍵]]]}⌸⍣(0≠≢vx)⊢vx
-	t[pi]←A ⋄ k[pi]←1
+	t[pi]←A ⋄ k[pi]←1 ⋄ lx[pi]←6
 	p t k n lx r pos end⌿⍨←⊂~msk←mi∨mj∨mx ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Convert O*(F, [, A) to Ox(F, A)

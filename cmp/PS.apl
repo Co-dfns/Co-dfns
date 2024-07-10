@@ -438,6 +438,9 @@ PS←{
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
 	k[p[i←⍸msk]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
 	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
+	
+	⍝ All A1 nodes should be lexical scope 6
+	lx[⍸(t=A)∧k=1]←6
 
 	⍝ Sort AST by depth-first pre-order traversal
 	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p
