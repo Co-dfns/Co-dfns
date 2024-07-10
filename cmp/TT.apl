@@ -73,6 +73,10 @@ TT←{
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V ⋄ k[i]←3+5 11⍸k[i]
 
+	⍝ Convert print bindings to E1(P2(⎕⍞), ∘∘∘)
+	i←p[j←⍸(≠p)∧(t[p]=B)∧(t=A)∧k=0]
+	t[i]←E ⋄ k[i]←1 ⋄ n[i]←0 ⋄ t[j]←P ⋄ k[j]←2 ⋄ lx[j]←3
+
 	⍝ Wrap expressions as binding or return statements
 	i←(⍸(~t∊F G)∧t[p]=F),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
 	p t k n lx mu r pos end⌿⍨←⊂m←2@i⊢1⍴⍨≢p
@@ -80,9 +84,6 @@ TT←{
 	k[j]←-(k[r[j]]=0)∨0@{(⌽≠⌽p×p≠⍳≢p)[j]}(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
 
-	⍝ Convert print bindings to E1(P2(⎕⍞), ∘∘∘)
-	i←p[j←⍸(≠p)∧(t[p]=B)∧(t=A)∧k=0]
-	t[i]←E ⋄ k[i]←1 ⋄ t[j]←P ⋄ k[j]←2 ⋄ lx[j]←3
 
 	⍝ Lift guard tests
 	p[i]←p[x←p[i←⍸(≠p)∧t[p]=G]] ⋄ ix←i,x ⋄ xi←x,i ⋄ p←(xi@ix⊢⍳≢p)[p]
