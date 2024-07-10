@@ -1,6 +1,10 @@
 TT←{
 	(p d t k n lx pos end)exp sym IN←⍵
 
+	⍝ Convert primitive niladic references to E3(P2) forms
+	i←⍸(t=P)∧(k=1)∧'⎕⍞'∊⍨⊃¨sym[|n]
+	p,←i ⋄ t n lx pos end(⊣,I)←⊂i ⋄ k,←(≢i)⍴2 ⋄ t[i]←E ⋄ k[i]←3 ⋄ n[i]←0
+
 	⍝ Compute reference scope
 	r←I@{t[⍵]≠F}⍣≡⍨p
 
@@ -214,8 +218,8 @@ TT←{
 	⍝ Convert all primitives to variables; P → V|E
 	i←⍸t=P ⋄ si←syms⍳sym[ni←|n[i]]
 	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
-	t[i]←V E[msk←(k[i]=1)∧'⎕⍞'∊⍨⊃¨sym[ni]] ⋄ k[i⌿⍨msk]←3
-	sym[ni]←nams[si;0] ⋄ n[i]←-sym⍳sym∪←nams[si,¨ac[i]]
+	t[i]←V ⋄ sym[ni]←nams[si;0]
+	n[i]←-sym⍳sym∪←nams[si,¨(t[p[i]]=E)∧2⌊k[p[i]]]
 
 	p t k n lx mu lv fv pos end sym IN
 }
