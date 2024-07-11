@@ -376,11 +376,12 @@ disclose_func(struct cell_array **z,
 	CHK(mk_array(&t, r->type, r->storage, 0), fail, "mk_array");
 	
 	switch (r->storage) {
-	case STG_DEVICE:
+	case STG_DEVICE:{
 		af_seq idx = {0, 0, 1};
 		CHK(af_index(&t->values, r->values, 1, &idx), fail,
 		    "af_index");
 		break;
+	}
 	case STG_HOST:
 		CHK(fill_array(t, r->values), fail, "fill_array");
 		break;
@@ -451,7 +452,7 @@ reshape_func(struct cell_array **z,
 	
 	if (rank) {
 		switch (l->storage) {
-		case STG_DEVICE:
+		case STG_DEVICE:{
 			af_array l64;
 			
 			CHKAF(af_eval(l->values), fail);
@@ -460,6 +461,7 @@ reshape_func(struct cell_array **z,
 			CHKAF(af_release_array(l64), fail);
 
 			break;
+		}
 		case STG_HOST:
 		#define RESHAPE_SHAPE_CASE(tp) {			\
 			tp *vals = (tp *)l->values;			\
@@ -2049,7 +2051,7 @@ conjugate_values(struct cell_array *t, struct cell_array *r)
 	case STG_DEVICE:
 		CHKAF(af_conjg(&t->values, r->values), fail);
 		break;
-	case STG_HOST:
+	case STG_HOST:{
 		size_t count;
 		double *tv;
 		
@@ -2060,6 +2062,7 @@ conjugate_values(struct cell_array *t, struct cell_array *r)
 		
 		MONADIC_SCALAR_LOOP(struct apl_cmpx, x.real);
 		break;
+	}
 	default:
 		return 99;
 	}
@@ -2202,7 +2205,7 @@ floor_values(struct cell_array *t, struct cell_array *r)
 	case STG_DEVICE:
 		CHKAF(af_floor(&t->values, r->values), done);
 		break;
-	case STG_HOST:
+	case STG_HOST:{
 		size_t count = array_values_count(t);
 		CHK(alloc_array(t), done, "alloc_array(t)");
 		
@@ -2217,6 +2220,7 @@ floor_values(struct cell_array *t, struct cell_array *r)
 		}
 		
 		break;
+	}
 	default:
 		TRC(99, "Unknown storage type");
 	}
@@ -2239,7 +2243,7 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 	case STG_DEVICE:
 		CHKAF(af_ceil(&t->values, r->values), done);
 		break;
-	case STG_HOST:
+	case STG_HOST:{
 		size_t count = array_values_count(t);
 		CHK(alloc_array(t), done, "alloc_array(t)");
 		
@@ -2254,6 +2258,7 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 		}
 		
 		break;
+	}
 	default:
 		TRC(99, "Unknown storage type");
 	}
@@ -2616,6 +2621,7 @@ where_nz_func(struct cell_array **z, struct cell_array *r, struct cell_func *sel
 	case STG_DEVICE:{
 		af_array res, res32;
 		dim_t elems;
+		int err2;
 		
 		CHKAF(af_where(&res, r->values), done);
 		CHKAF(af_cast(&res32, res, s32), af_done);
@@ -2633,7 +2639,7 @@ where_nz_func(struct cell_array **z, struct cell_array *r, struct cell_func *sel
 		}
 		
 af_done:
-		int err2 = err;
+		err2 = err;
 		
 		TRCAF(af_release_array(res));
 		
