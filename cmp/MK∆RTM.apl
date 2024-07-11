@@ -5,8 +5,8 @@
   src←⊃⎕NGET path,'/rtm/prim.apln'
   echo←{⍺←⊢ ⋄ ⍺ ⍺⍺ ⍵⊣⍞←⍵⍵}
   data header←'prim'GC echo 'G' TT echo 'C' PS echo 'P' TK echo 'T' ⊢ src
-  (path,'\rtm\prim.c')put data
-  (path,'\rtm\prim.h')put header
+  (path,'/rtm/prim.c')put data
+  (path,'/rtm/prim.h')put header
   
   codfns_h←⊃⎕NGET path,'/rtm/codfns.h.template'
   codfns_h,←CR LF←⎕UCS 13 10
@@ -26,12 +26,13 @@
   	
   	vsc←'%comspec% /C ""',vsbat,'" amd64'
   	vsc,←'  && cd "',path,'\rtm"'
-  	vsc,←'  && cl /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
+  	vsc,←'  && cl /std:c17 /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
   	vsc,←'    /DEBUG /Od /Zc:inline /Zi /FS'
   	vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
   	vsc,←'    /WX /MD /EHsc /nologo'
   	vsc,←'    /I"%AF_PATH%\include"'
   	vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"BUILD_CODFNS"'
+	vsc,←'    /D"_CRT_SECURE_NO_WARNINGS"'
   	vsc,←'    "*.c" /link /DLL /OPT:REF'
   	vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
   	vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
@@ -49,7 +50,7 @@
   
   LINUX:
   	gcc ←'cd ''',path,'/rtm'''
-  	gcc,←'  && gcc -std=c99 -Ofast -g -Wall -fPIC -shared'
+  	gcc,←'  && gcc -std=c17 -Ofast -g -Wall -fPIC -shared'
   	gcc,←'    -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
   	gcc,←'    -Wno-incompatible-pointer-types -Wno-missing-braces'
   	gcc,←'    -Wno-unused-but-set-variable'
