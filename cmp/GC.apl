@@ -146,7 +146,7 @@ GC←{
 		dbg←highlight ⍵
 		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵
 		z ←check_vars⊢ks←⍵⊃kk
-		z,←⊂'CHK(mk_nested_array(',tref,', ',(⍕≢ks),'), cleanup, ',dbg,');'
+		z ←⊂'CHK(mk_nested_array(',tref,', ',(⍕≢ks),'), cleanup, ',dbg,');'
 		z,←⊂''
 		z,←⊂'{'
 		z,←⊂'	struct cell_array **dat = ',tgt,'->values;'
@@ -193,7 +193,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵ ⋄ kv←⊃var_values ⍵⊃kk
 		z ←check_vars ⍵⊃kk
-		z,←⊂'retain_cell(',kv,'); release_cell(',tgt,');'
+		z ←⊂'retain_cell(',kv,'); release_cell(',tgt,');'
 		z,←⊂tgt,' = ',kv,';'
 		z,⊂''
 	}¨i
@@ -229,7 +229,7 @@ GC←{
 		0≡≢⍵⊃kk:⊂'goto cleanup;'
 		kv←⊃var_values⊢ki←⊃⍵⊃kk
 		z ←check_vars ki
-		z,←((t[ki]=A)∨(n[ki]≠0))⌿⊂'*z = retain_cell(',kv,');'
+		z ←((t[ki]=A)∨(n[ki]≠0))⌿⊂'*z = retain_cell(',kv,');'
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
@@ -241,7 +241,7 @@ GC←{
 		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		fn y←var_values⊢fi yi←⍵⊃kk
 		z ←check_vars fi yi
-		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z ←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK((',fn,'->fptr_mon)(',tref,', ',y,', ',fn,'), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⌿⊂'release_array(tmp);'
 		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
@@ -256,7 +256,7 @@ GC←{
 		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		x fn y←var_values⊢xi fi yi←⍵⊃kk
 		z ←check_vars xi fi yi
-		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z ←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK((',fn,'->fptr_dya)(',tref,', ',x,', ',y,', ',fn,'), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⌿⊂'release_array(tmp);'
 		z,←(n[xi]>0)⌿⊂'release_array(',x,'); ',x,' = NULL;'
@@ -272,7 +272,7 @@ GC←{
 		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		fn←⊃var_values⊢fi←⊃⍵⊃kk
 		z ←check_vars fi
-		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z ←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK((',fn,'->fptr_mon)(',tref,', NULL, ',fn,'), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⌿⊂'release_array(tmp);'
 		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
@@ -286,7 +286,7 @@ GC←{
 		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		bxr←⊃var_refs ⊃⍵⊃kk ⋄ bxv x fn y←var_values⊢bi xi fi yi←⍵⊃kk
 		z ←check_vars xi fi yi
-		z,←⊂'tmp = ',bxv,';'
+		z ←⊂'tmp = ',bxv,';'
 		z,←⊂tgt,' = retain_cell(',y,');'
 		z,←⊂'CHK((',fn,'->fptr_dya)(',bxr,', ',x,', ',tgt,', ',fn,'), cleanup, ',dbg,');'
 		z,←⊂'release_array(tmp);'
@@ -305,7 +305,7 @@ GC←{
 		dbg←highlight ⍵
 		x op←var_values⊢xi oi←⍵⊃kk
 		z ←check_vars xi oi
-		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z ←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK(mk_derf(',tref,', ',op,'->fptr_',lt,'m, ',op,'->fptr_',lt,'d, 2), cleanup, ',dbg,');'
 		z,←⊂tgt,'->fv[0] = retain_cell(',op,');'
 		z,←⊂tgt,'->fv[1] = retain_cell(',x,');'
@@ -326,7 +326,7 @@ GC←{
 		x op y←var_values⊢xi oi yi←⍵⊃kk
 		fns←csep op∘,¨'->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
 		z ←check_vars xi oi yi
-		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z ←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK(mk_derf(',tref,', ',fns,', 3), cleanup, ',dbg,');'
 		z,←⊂tgt,'->fv[0] = retain_cell(',op,');'
 		z,←⊂tgt,'->fv[1] = retain_cell(',x,');'
@@ -346,7 +346,7 @@ GC←{
 		dbg←highlight ⍵
 		aa ax←var_values⊢ai xi←⍵⊃kk
 		z ←check_vars ai xi
-		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z ←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK(mk_derf(',tref,', ',aa,'->fptr_mon, ',aa,'->fptr_dya, 2), cleanup, ',dbg,');'
 		z,←⊂tgt,'->fv = ',aa,'->fv;'
 		z,←⊂tgt,'->opts = &',tgt,'->fv_[1];'
