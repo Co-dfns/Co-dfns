@@ -5242,18 +5242,13 @@ int
 q_ts_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 {
 	struct timespec ts;
-	struct tm lts;
+	struct tm *lts;
 	struct cell_array *res;
 	int16_t *vals;
 	int err;
 	
 	timespec_get(&ts, TIME_UTC);
-	
-#ifdef _MSC_VER
-	localtime_s(&lts, &ts.tv_sec);
-#else
-	localtime_s(&ts.tv_sec, &lts);
-#endif
+	lts = localtime(&ts.tv_sec);
 	
 	CHKFN(mk_array(&res, ARR_SINT, STG_HOST, 1), fail);
 	
@@ -5262,12 +5257,12 @@ q_ts_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	CHKFN(alloc_array(res), fail);
 	
 	vals = res->values;
-	vals[0] = 1900 + lts.tm_year;
-	vals[1] = 1 + lts.tm_mon;
-	vals[2] = lts.tm_mday;
-	vals[3] = lts.tm_hour;
-	vals[4] = lts.tm_min;
-	vals[5] = lts.tm_sec;
+	vals[0] = 1900 + lts->tm_year;
+	vals[1] = 1 + lts->tm_mon;
+	vals[2] = lts->tm_mday;
+	vals[3] = lts->tm_hour;
+	vals[4] = lts->tm_min;
+	vals[5] = lts->tm_sec;
 	vals[6] = (int16_t)(ts.tv_nsec / 1000000);
 	
 	*z = res;
