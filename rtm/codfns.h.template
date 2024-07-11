@@ -144,18 +144,6 @@ struct cell_doper {
 	void *fv[];
 };
 
-#define DECL_BOX_STRUCT(type)		\
-struct cell_##type##_box {		\
-	struct cell_void;		\
-	struct cell_##type *value;	\
-};
-
-DECL_BOX_STRUCT(void);
-DECL_BOX_STRUCT(array);
-DECL_BOX_STRUCT(func);
-DECL_BOX_STRUCT(moper);
-DECL_BOX_STRUCT(doper);
-
 /* Error Handling */
 DECLSPEC struct cell_array *get_debug_info(void);
 DECLSPEC void release_debug_info(void);
@@ -188,23 +176,17 @@ DECLSPEC void *retain_cell(void *);
 /* Basic VOID type */
 DECLSPEC int mk_void(struct cell_void **);
 DECLSPEC void release_void(struct cell_void *);
-DECLSPEC int mk_void_box(struct cell_void_box **, struct cell_void *);
-DECLSPEC void release_void_box(struct cell_void_box *);
 
 /* ARRAY type */
 DECLSPEC int mk_array(struct cell_array **, 
     enum array_type, enum array_storage, unsigned int);
 DECLSPEC int release_array(struct cell_array *);
-DECLSPEC int mk_array_box(struct cell_array_box **, struct cell_array *);
-DECLSPEC void release_array_box(struct cell_array_box *);
 DECLSPEC int alloc_array(struct cell_array *);
 DECLSPEC int fill_array(struct cell_array *, void *);
 DECLSPEC int chk_array_valid(struct cell_array *);
 DECLSPEC int squeeze_array(struct cell_array *);
 
 /* FUNC types */
-DECLSPEC int mk_func_box(struct cell_func_box **, struct cell_func *);
-DECLSPEC void release_func_box(struct cell_func_box *);
 DECLSPEC int mk_func(struct cell_func **, func_mon, func_dya, unsigned int);
 DECLSPEC int mk_derf(struct cell_derf **, func_mon, func_dya, unsigned int);
 DECLSPEC void release_func(struct cell_func *);
@@ -219,10 +201,6 @@ DECLSPEC int mk_doper(struct cell_doper **,
     unsigned int);
 DECLSPEC void release_moper(struct cell_moper *);
 DECLSPEC void release_doper(struct cell_doper *);
-DECLSPEC int mk_moper_box(struct cell_moper_box **, struct cell_moper *);
-DECLSPEC void release_moper_box(struct cell_moper_box *);
-DECLSPEC int mk_doper_box(struct cell_doper_box **, struct cell_doper *);
-DECLSPEC void release_doper_box(struct cell_doper_box *);
 DECLSPEC int derive_func_opts(struct cell_func **, struct cell_func *, int);
 
 /* Calling helpers */
