@@ -86,7 +86,8 @@ struct apl_cmpx {
 #define STATIC_RANK_MAX 5
 
 struct cell_array {
-	struct cell_void;
+	enum cell_type ctyp;
+	unsigned int refc;
 	enum array_storage storage;
 	enum array_type type;
 	void *values;
@@ -96,7 +97,8 @@ struct cell_array {
 };
 
 struct cell_func {
-	struct cell_void;
+	enum cell_type ctyp;
+	unsigned int refc;
 	func_mon fptr_mon;
 	func_dya fptr_dya;
 	void **fv;
@@ -106,7 +108,8 @@ struct cell_func {
 };
 
 struct cell_derf {
-	struct cell_void;
+	enum cell_type ctyp;
+	unsigned int refc;
 	func_mon fptr_mon;
 	func_dya fptr_dya;
 	void **fv;
@@ -116,7 +119,8 @@ struct cell_derf {
 };
 
 struct cell_moper {
-	struct cell_void;
+	enum cell_type ctyp;
+	unsigned int refc;
 	func_mon fptr_am;
 	func_dya fptr_ad;
 	func_mon fptr_fm;
@@ -126,7 +130,8 @@ struct cell_moper {
 };
 
 struct cell_doper {
-	struct cell_void;
+	enum cell_type ctyp;
+	unsigned int refc;
 	func_mon fptr_aam;
 	func_dya fptr_aad;
 	func_mon fptr_afm;
