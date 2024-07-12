@@ -163,25 +163,23 @@ GC←{
 		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵
 		kc←⍕≢ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
 		z ←⊂'if (',tgt,'->rank) {'
-		z,←⊂'	struct cell_array *idx;'
 		z,←⊂'	struct cell_func *pick;'
 		z,←⊂'	int32_t *idxv;'
 		z,←⊂''
-		z,←⊂'	CHKFN(mk_array_int32(&idx, 0), cleanup);'
-		z,←⊂'	idxv = idx->values;'
+		z,←⊂'	CHKFN(mk_array_int32((struct cell_array **)&tmp, 0), cleanup);'
+		z,←⊂'	idxv = ((struct cell_array *)tmp)->values;'
 		z,←⊂'	pick = cdf_prim.cdf_pick;'
 		z,←⊂''
-		z,←kd{'	CHK(pick->fptr_dya(',⍵,', idx, ',tgt,', pick), cleanup, ',⍺,'); (*idxv)++;'}¨kr
+		z,←kd{'	CHK(pick->fptr_dya(',⍵,', tmp, ',tgt,', pick), cleanup, ',⍺,'); (*idxv)++;'}¨kr
 		z,←⊂''
-		z,←⊂'	release_array(idx);'
+		z,←⊂'	release_array(tmp); tmp = NULL;'
 		z,←⊂'} else {'
-		z,←⊂'	struct cell_array *arr;'
 		z,←⊂'	struct cell_func *first;'
 		z,←⊂''
 		z,←⊂'	first = cdf_prim.cdf_first;'
-		z,←⊂'	CHK(first->fptr_mon(&arr, ',tgt,', first), cleanup, ',dbg,');'
-		z,←'	'∘,¨kv,¨⊂' = retain_cell(arr);'
-		z,←⊂'	release_array(arr);'
+		z,←⊂'	CHK(first->fptr_mon((struct cell_array **)&tmp, ',tgt,', first), cleanup, ',dbg,');'
+		z,←'	'∘,¨kv,¨⊂' = retain_cell(tmp);'
+		z,←⊂'	release_array(tmp); tmp = NULL;'
 		z,←⊂'}'
 		z,←(k[⍵]≠0)⌿''('release_array(',tgt,'); ',tgt,' = NULL;')
 		z,⊂''
