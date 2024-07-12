@@ -1393,8 +1393,10 @@ set_func(struct cell_array **z,
 
 	mtype = array_max_type(tgt->type, r->type);
 	
-	if (r->type != mtype)
+	if (r->type != mtype) {
 		CHKFN(array_shallow_copy(&r, r), fail);
+		arr = r;
+	}
 
 	CHKFN(cast_values(tgt, mtype), fail);
 	CHKFN(cast_values(r, mtype), fail);
@@ -1561,6 +1563,8 @@ done:
 	*z = tgt;
 	
 fail:
+	release_array(arr);
+
 	if (f) {
 		free(lv);
 		free(isp);
@@ -1570,7 +1574,6 @@ fail:
 	
 	if (err) {
 		release_array(sp);
-		release_array(arr);
 	}
 	
 	return err;
