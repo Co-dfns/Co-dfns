@@ -466,7 +466,9 @@ GC←{
 		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,←⊂'cleanup:'
+		z,←⊂'	release_array(tmp);'
 		z,←'	'∘,¨release_vars lvs
+		z,←'	'∘,¨release_vars svs
 		z,←(⊂'	release_',atyp,'(cdf_alpha);')⌿⍨ism
 		z,←⊂''
 		z,←⊂'	if (err)'
@@ -517,6 +519,13 @@ GC←{
 		z,←'	'∘,¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
 		z,←⊂'cleanup:'
+		z,←⊂'	release_array(tmp);'
+		z,←⊂''
+		z,←⊂'	if (err) {'
+		z,←'		'∘,¨release_vars ⍵⊃lv
+		z,←'		'∘,¨release_vars ⍵⊃sv
+		z,←⊂'	}'
+		z,←⊂''
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
