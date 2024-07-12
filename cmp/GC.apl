@@ -144,15 +144,16 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵
+		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵ ⋄ vs←var_values⊢ks←⍵⊃kk
 		z ←check_vars⊢ks←⍵⊃kk
-		z ←⊂'CHK(mk_nested_array(',tref,', ',(⍕≢ks),'), cleanup, ',dbg,');'
+		z,←⊂'CHK(mk_nested_array(',tref,', ',(⍕≢ks),'), cleanup, ',dbg,');'
 		z,←⊂''
 		z,←⊂'{'
 		z,←⊂'	struct cell_array **dat = ',tgt,'->values;'
 		z,←⊂''
-		z,←'	'∘,¨(⍳≢ks){'dat[',(⍕⍺),'] = retain_cell(',⍵,');'}¨var_values ks
+		z,←'	'∘,¨(⍳≢ks){'dat[',(⍕⍺),'] = retain_cell(',⍵,');'}¨vs
 		z,←⊂'}'
+		z,←(n[ks]>0)⌿{'release_array(',⍵,'); ',⍵,' = NULL;'}¨vs
 		z,⊂''
 	}¨i
 	
