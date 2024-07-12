@@ -1555,9 +1555,9 @@ set_func(struct cell_array **z,
 		
 		memcpy(zve, rve, csz);
 		
-		for (size_t j = ic - 1; j >= 0; j--)
-			if (++ci[j] == cnt[j])
-				ci[j] = 0;
+		for (size_t j = ic; j > 0; j--)
+			if (++ci[j-1] == cnt[j-1])
+				ci[j-1] = 0;
 			else
 				break;
 	}
