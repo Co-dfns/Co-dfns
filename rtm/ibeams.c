@@ -337,6 +337,7 @@ ravel_func(struct cell_array **z,
 	int err;
 
 	ravel_count++;
+	t = NULL;
 
 	CHKFN(mk_array(&t, r->type, r->storage, 1), fail);
 	
@@ -345,8 +346,13 @@ ravel_func(struct cell_array **z,
 	CHKFN(array_share_values(t, r), fail);
 	
 	*z = t;
+	
+	return 0;
 
 fail:
+	release_array(t);
+	*z = NULL;
+	
 	return err;
 }
 
