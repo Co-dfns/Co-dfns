@@ -667,6 +667,7 @@ veach_monadic(struct cell_array **z,
 	fb	= 0;
 	t	= NULL;
 	tv	= NULL;
+	x	= NULL;
 	
 	if (r->type == ARR_SPAN || r->type == ARR_MIXED)
 		CHK(99, fail, "Unexpected (SPAN | MIXED) type array");
@@ -686,7 +687,7 @@ veach_monadic(struct cell_array **z,
 		for (size_t i = 0; i < count; i++) {			\
 			CHKFN(mk_array_##sfx(&x, rv[i]), fail);		\
 			CHKFN((oper->fptr_mon)(tv + i, x, oper), fail);	\
-			CHKFN(release_array(x), fail);			\
+			CHKFN(release_array(x), fail); x = NULL;	\
 		}							\
 	}								\
 	
@@ -696,6 +697,8 @@ veach_monadic(struct cell_array **z,
 	*z = t;
 	
 fail:
+	release_array(x);
+	
 	if (fb)
 		free(buf);
 	
