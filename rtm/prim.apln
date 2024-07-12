@@ -978,7 +978,7 @@ fmt←{
 ⍝ ⎕⍞: Printing
 println←{
 	1<≡⍵:⎕SIGNAL 16
-	0≠10|⎕DR ⍵:⍵⊣⎕←⍕⍵
+	~is_char ⍵:⍵⊣⎕←⍕⍵
 	2<≢⍴⍵:{⎕←⍵ ⋄ ⎕←''}⍤¯1⊢⍵
 	2=≢⍴⍵:{⎕←⍵}⍤¯1⊢⍵
 	1('print_arr'⌶),⍵
@@ -987,7 +987,7 @@ println←{
 print←{
 	1<≢⍴⍵:⎕SIGNAL 16
 	1<≡⍵:⎕SIGNAL 16
-	0≠10|⎕DR ⍵:⎕SIGNAL 16
+	~is_char ⍵:⎕SIGNAL 16
 	0('print_arr'⌶)⍵
 }
 
