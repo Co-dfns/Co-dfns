@@ -163,7 +163,9 @@ GC←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵
 		kc←⍕≢ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
-		z ←⊂'if (',tgt,'->rank) {'
+		z ←{'release_array(',⍵,');'}¨kv
+		z,←⊂''
+		z,←⊂'if (',tgt,'->rank) {'
 		z,←⊂'	struct cell_func *pick;'
 		z,←⊂'	int32_t *idxv;'
 		z,←⊂''

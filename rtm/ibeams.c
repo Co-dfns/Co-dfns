@@ -2597,6 +2597,8 @@ roll_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	dim_t count;
 	int err;
 	
+	engine = NULL;
+	
 	CHKFN(mk_array(&arr, ARR_DBL, STG_DEVICE, r->rank), fail);
 	
 	for (unsigned int i = 0; i < r->rank; i++)
@@ -2613,6 +2615,8 @@ roll_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	*z = arr;
 	
 fail:
+	af_release_random_engine(engine);
+	
 	if (err)
 		release_array(arr);
 	
