@@ -27,7 +27,7 @@
   	vsc←'%comspec% /C ""',vsbat,'" amd64'
   	vsc,←'  && cd "',path,'\rtm"'
   	vsc,←'  && cl /std:c17 /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
-  	vsc,←'    /DEBUG /Od /Zc:inline /Zi /FS'
+  	vsc,←'    /DEBUG /O2 /Zc:inline /Zi /FS'
   	vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
   	vsc,←'    /WX /MD /EHsc /nologo'
   	vsc,←'    /I"%AF_PATH%\include"'
@@ -50,7 +50,7 @@
   
   LINUX:
   	gcc ←'cd ''',path,'/rtm'''
-  	gcc,←'  && gcc -std=c17 -Ofast -g -Wall -fPIC -shared'
+  	gcc,←'  && gcc -std=c17 -O2 -g -Wall -fPIC -shared'
   	gcc,←'    -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
   	gcc,←'    -Wno-incompatible-pointer-types -Wno-missing-braces'
   	gcc,←'    -Wno-unused-but-set-variable'
@@ -65,7 +65,7 @@
   
   MAC:
   	clang ←'cd ''',path,'/rtm'''
-  	clang,←'  && clang -std=c99 -Ofast -g -Wall -fPIC -shared'
+  	clang,←'  && clang -std=c99 -O2 -g -Wall -fPIC -shared'
   	clang,←'    -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
   	clang,←'    -Wno-incompatible-pointer-types -Wno-missing-braces'
   	clang,←'    -Wno-unused-but-set-variable'

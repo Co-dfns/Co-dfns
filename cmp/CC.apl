@@ -10,7 +10,7 @@ CC←{
 		vsc←'%comspec% /C ""',vsbat,'" amd64'
 		vsc,←'	&& cd "',(⊃⎕CMD'echo %CD%'),'"'
 		vsc,←'  && cl /std:c17 /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
-		vsc,←'    /DEBUG /Od /Zc:inline /Zi /FS'
+		vsc,←'    /DEBUG /O2 /Zc:inline /Zi /FS'
 		vsc,←'    /Fo".\\" /Fd"',⍺,'.pdb"'
 		vsc,←'    /WX /MD /EHsc /nologo'
 		vsc,←'    /D"_CRT_SECURE_NO_WARNINGS"'
@@ -25,7 +25,7 @@ CC←{
 		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
 	'linux'≡ostype:⍺{
-		gcc ←'gcc -std=c17 -Ofast -g -Wall -fPIC -shared'
+		gcc ←'gcc -std=c17 -O2 -g -Wall -fPIC -shared'
 		gcc,←' -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
 		gcc,←' -Wno-incompatible-pointer-types -Wno-missing-braces'
 		gcc,←' -Wno-unused-but-set-variable'
@@ -37,7 +37,7 @@ CC←{
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 	'mac'≡ostype:⍺{
-		clang ←'clang -arch x86_64 -std=c17 -Ofast -g -Wall -fPIC -shared'
+		clang ←'clang -arch x86_64 -std=c17 -O2 -g -Wall -fPIC -shared'
 		clang,←' -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
 		clang,←' -Wno-incompatible-pointer-types -Wno-missing-braces'
 		clang,←' -Wno-unused-but-set-variable'
