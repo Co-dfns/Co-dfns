@@ -119,13 +119,13 @@ GC←{
 		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
 		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
 		nam←'cdf_l',⍕⍵
-		z ←⊂ctp,' ',nam,'_dat[] = {',(csep dat),'};'
-		z,←⊂'struct cell_array ',nam,'_val = {'
+		z ←⊂'static ',ctp,' ',nam,'_dat[] = {',(csep dat),'};'
+		z,←⊂'static struct cell_array ',nam,'_val = {'
 		z,←⊂'	CELL_ARRAY, 1, STG_HOST, ARR_',atp,','
 		z,←⊂'	',nam,'_dat, NULL, ',(⍕rnk),','
 		z,←⊂'	',(csep shp,0)
 		z,←⊂'};'
-		z,←⊂'struct cell_array *',nam,' = &',nam,'_val;'
+		z,←⊂'static struct cell_array *',nam,' = &',nam,'_val;'
 		z,⊂''
 	}¨∪|n⌿⍨(t=A)∧k=1
 
