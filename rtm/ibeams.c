@@ -2615,8 +2615,6 @@ roll_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	*z = arr;
 	
 fail:
-	af_release_random_engine(engine);
-	
 	if (err)
 		release_array(arr);
 	
