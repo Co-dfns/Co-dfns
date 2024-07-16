@@ -1412,7 +1412,7 @@ set_func(struct cell_array **z,
 		switch (tgt->storage) {
 		case STG_DEVICE:{
 			af_seq seq = {(double)idx, (double)idx, 1};
-			af_array tmp;
+			af_array tmp = NULL;
 			
 			CHKAF(af_assign_seq(&tmp, tgt->values, 1, &seq, r->values),
 			    fail);
