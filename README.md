@@ -44,7 +44,9 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
-[The Nano-parsing Architecture: Sane And Portable Parsing For Perverse Environments by Aaron Hsu](https://www.youtube.com/watch?v=uInwQEMYAP8)
+[Living The Loopless Life: Techniques For Removing Explicit Loops And Recursion, LambdaConf 2024](https://www.youtube.com/watch?v=F1q-ZxXmYbo)
+
+[The Nano-parsing Architecture: Sane And Portable Parsing For Perverse Environments, LambdaConf 2024](https://www.youtube.com/watch?v=uInwQEMYAP8)
 
 [Co-dfns Update 2023 // Aaron Hsu // Dyalog '23](https://www.youtube.com/watch?v=6yfBlNKw7Ug)
 
