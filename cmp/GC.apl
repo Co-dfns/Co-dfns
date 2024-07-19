@@ -522,10 +522,10 @@ GC←{
 		z,←⊂''
 		z,←⊂'	release_debug_info();'
 		z,←⊂''
-		z,←⊂'	CHKFN(cdf_prim_init(), cleanup);'
-		z,←⊂''
 		z,←'	'∘,¨init_vars ⍵⊃sv
 		z,←'	'∘,¨init_vars ⍵⊃lv
+		z,←⊂''
+		z,←⊂'	CHKFN(cdf_prim_init(), cleanup);'
 		z,←⊂''
 		z,←'	'∘,¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
