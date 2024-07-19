@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <arrayfire.h>
 
 #include "internal.h"
 

@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <arrayfire.h>
 
 #include "internal.h"
 
