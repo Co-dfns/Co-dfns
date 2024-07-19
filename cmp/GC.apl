@@ -123,7 +123,7 @@ GC←{
 		z,←⊂'static struct cell_array ',nam,'_val = {'
 		z,←⊂'	CELL_ARRAY, 1, STG_HOST, ARR_',atp,','
 		z,←⊂'	',nam,'_dat, NULL, ',(⍕rnk),','
-		z,←⊂'	',(csep shp,0)
+		z,←⊂'	{',(csep shp,0),'}'
 		z,←⊂'};'
 		z,←⊂'static struct cell_array *',nam,' = &',nam,'_val;'
 		z,⊂''
