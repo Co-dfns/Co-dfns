@@ -353,7 +353,7 @@ PS←{
 
 	⍝ Wrap all assignment values as Z nodes
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]=1
-	j←i⌿⍨msk←(t[i]≠B)∧n[i]∊-sym⍳⊂,'←' ⋄ nz←(≢p)+⍳zc←+⌿msk
+	j←i⌿⍨msk←(t[i]≠B)∧n[i]∊-sym⍳⊂,'←' ⋄ nz←(≢p)+⍳zc←≢j
 	p,←nz ⋄ t k n lx,←zc⍴¨Z 1 0 0 ⋄ pos,←1+pos[j] ⋄ end,←end[p[j]]
 	zm←¯1⌽msk ⋄ p[km⌿i]←(zpm⌿(i×~km)+zm⍀nz)[km⌿¯1++⍀zpm←zm∨~km]
 
@@ -366,15 +366,14 @@ PS←{
 	pos n lx end{⍺[⍵]@j⊢⍺}←(3⍴⊂i⌿⍨2⌽m),⊂zi
 
 	⍝ Parse bracket modified assignment to E4(E6, O2(C, P3(←)), Z)
-	j←i⌿⍨m←msk∧(¯1⌽isfn i)∧¯2⌽(t[i]=A)∧k[i]=¯1
-	ei←⍸(≠p)∧((2⌽m)@i⊢(≢p)⍴0)[p]
+	j←i⌿⍨m←msk∧(¯1⌽isfn i)∧¯2⌽(t[i]=A)∧k[i]=¯1 ⋄ ei←p⍳i⌿⍨2⌽m
 	p[zi←nz⌿⍨msk⌿m]←ei ⋄ p t k end(⊣@ei⍨)←p[j] E 4(end[zi])
 	p t k lx n(⊣@(i⌿⍨2⌽m)⍨)←ei E 6 0 0
 	p t k lx,←(≢j)⍴¨j P 3 3 ⋄ ⋄ n pos end(⊣,I)←⊂j
 	p t k n lx pos(⊣@j⍨)←ei O 2 0 0(pos[fi←i⌿⍨1⌽m]) ⋄ p[fi]←j
 
 	⍝ Parse bracket assignment to E4(E6, P2(←), Z)
-	j←i⌿⍨m←msk∧¯1⌽(t[i]=A)∧k[i]=¯1 ⋄ ei←⍸(≠p)∧((1⌽m)@i⊢(≢p)⍴0)[p]
+	j←i⌿⍨m←msk∧¯1⌽(t[i]=A)∧k[i]=¯1 ⋄ ei←p⍳i⌿⍨1⌽m
 	p[zi←nz⌿⍨msk⌿m]←ei ⋄ p t k end(⊣@ei⍨)←p[j] E 4(end[zi])
 	p t k lx n(⊣@(i⌿⍨1⌽m)⍨)←ei E 6 0 0
 	p t k lx(⊣@j⍨)←ei P 2 3

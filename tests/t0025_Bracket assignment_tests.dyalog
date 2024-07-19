@@ -39,7 +39,8 @@
  ∆30_TEST←{#.UT.expect←dy.f30⍬ ⋄ cd.f30⍬}
  ∆31_TEST←{#.UT.expect←dy.f31⍬ ⋄ cd.f31⍬}
  ⍝ ∆32_TEST←{#.UT.expect←dy.f32⍬ ⋄ cd.f32⍬}
-
+ ∆33_TEST←{#.UT.expect←dy.f33⍬ ⋄ cd.f33⍬}
+ 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
 :EndNamespace
