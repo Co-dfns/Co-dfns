@@ -13,6 +13,5 @@
  src,←⊃⎕NGET (root,'/cmp/MK∆RTM.apl') 1
 
  src,←⊂':EndNamespace'
- 
+
  ⎕FIX src
- 

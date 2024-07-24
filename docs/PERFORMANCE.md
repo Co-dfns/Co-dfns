@@ -1,21 +1,21 @@
 ﻿# Performance Guidelines for Co-dfns
 
-The performance model for Co-dfns code differs from the interpreter's 
-performance model. For this reason, some code that might run acceptably 
+The performance model for Co-dfns code differs from the interpreter's
+performance model. For this reason, some code that might run acceptably
 in the interpreter may have an unreasonably high performance cost on the GPU.
-Understanding these pitfalls will help you to predict the performance 
-of your code on the GPU as well as isolate likely problem areas if you do 
+Understanding these pitfalls will help you to predict the performance
+of your code on the GPU as well as isolate likely problem areas if you do
 encounter performance issues.
 
 ## Overview
 
-Primitives are at the heart of what occurs on the GPU. Understanding how 
-the primitives map to the GPU will allow you to understand how the general 
-performance of the GPU will look. Because of the different design trade-offs 
-between CPU and GPU architectures, some primitives in Co-dfns will not have 
+Primitives are at the heart of what occurs on the GPU. Understanding how
+the primitives map to the GPU will allow you to understand how the general
+performance of the GPU will look. Because of the different design trade-offs
+between CPU and GPU architectures, some primitives in Co-dfns will not have
 the same performance behaviors that you are used to in the interpreter.
 
-We generally separate out the primitives based on how they compare in 
+We generally separate out the primitives based on how they compare in
 performance to the interpreter's primitive implementation:
 
 1. Embarrassingly Parallel that is Fused
@@ -30,76 +30,76 @@ performance to the interpreter's primitive implementation:
 It is important to understand how the GPU works at a high-level to
 understand how to intuit the behavior of various primitives.
 
-A GPU generally has a very high memory bandwidth (meaning that it can 
-read things in from memory faster than the CPU) and has many more processing 
+A GPU generally has a very high memory bandwidth (meaning that it can
+read things in from memory faster than the CPU) and has many more processing
 units able to compute in parallel. This comes at a cost.
 
-The GPU does not have fancy prediction circuitry that allows it to do 
-branch predicting or memory readahead, making sequential code with branching 
-such as an "if" statement very costly. The GPU instead relies on being able 
-to do a great deal of work in parallel to hide the cost of reading data in 
-from memory. This means that you need to have enough work for the GPU to do 
+The GPU does not have fancy prediction circuitry that allows it to do
+branch predicting or memory readahead, making sequential code with branching
+such as an "if" statement very costly. The GPU instead relies on being able
+to do a great deal of work in parallel to hide the cost of reading data in
+from memory. This means that you need to have enough work for the GPU to do
 with the data that it receives.
 
-The GPU also relies on parallel execution to achieve its execution speed. 
-This means that read dependencies in the code (such as with a Scan) 
-requires using a different, parallel algorithm that handles synchronizing 
-these dependencies. This can often add overhead and actually shift the 
+The GPU also relies on parallel execution to achieve its execution speed.
+This means that read dependencies in the code (such as with a Scan)
+requires using a different, parallel algorithm that handles synchronizing
+these dependencies. This can often add overhead and actually shift the
 computational complexity of a given primitive.
 
-Finally, data must be copied from the CPU main memory into the GPU in 
-order to be used. This overhead must be accounted for in a realistic way 
+Finally, data must be copied from the CPU main memory into the GPU in
+order to be used. This overhead must be accounted for in a realistic way
 in any given real application.
 
-Every time a GPU task must take place, a function with instructions to 
-run is generated to operate in parallel over a set of data. This function 
-is then run in parallel over different parts of the data to compute 
-the end result. We call this function a "kernel". It's important to note 
-that kernels can only communicate with one another through main memory, 
-so they have to be considered as part of the overall memory bandwidth 
+Every time a GPU task must take place, a function with instructions to
+run is generated to operate in parallel over a set of data. This function
+is then run in parallel over different parts of the data to compute
+the end result. We call this function a "kernel". It's important to note
+that kernels can only communicate with one another through main memory,
+so they have to be considered as part of the overall memory bandwidth
 requirements.
 
 ## Critical Path
 
-In addition to the general GPU computation model, it is very helpful to 
-think of computation in terms of its *Critical Path*. 
+In addition to the general GPU computation model, it is very helpful to
+think of computation in terms of its *Critical Path*.
 
-We can think of modeling computation as a tree of operations that need to 
-be executed, with edges drawn between dependencies (where one operation 
-needs to execute before another operation may continue). 
+We can think of modeling computation as a tree of operations that need to
+be executed, with edges drawn between dependencies (where one operation
+needs to execute before another operation may continue).
 
-The *Critical Path* is the longest path through this computation tree, 
-indicating the longest series of operations that must be executed 
-sequentially. 
+The *Critical Path* is the longest path through this computation tree,
+indicating the longest series of operations that must be executed
+sequentially.
 
 ## General Guidelines
 
-There are a few general guidelines that can help ensure that you are likely 
+There are a few general guidelines that can help ensure that you are likely
 to get reasonable results with Co-dfns.
 
-1. Make sure that you keep as much of your data on the GPU as long as you 
-can. This may mean that you generate data on the GPU to start, or that you 
-copy the data over once using the caching algorithm and avoid copying it 
-again. The less data you transfer and the more you do your work on the 
+1. Make sure that you keep as much of your data on the GPU as long as you
+can. This may mean that you generate data on the GPU to start, or that you
+copy the data over once using the caching algorithm and avoid copying it
+again. The less data you transfer and the more you do your work on the
 GPU without transferring data back to the CPU, the better you will do.
 
-2. Do not use if statements or other branching code inside of critical 
-inner loops. This is sometimes necessary, but requires careful consideration 
-before attempting it. Generally, it is better to lift the if statements 
+2. Do not use if statements or other branching code inside of critical
+inner loops. This is sometimes necessary, but requires careful consideration
+before attempting it. Generally, it is better to lift the if statements
 or any sort of branching to the top level.
 
-3. Work over large arrays, rather than doing a lot of repeated operations 
+3. Work over large arrays, rather than doing a lot of repeated operations
 over small arrays.
 
-4. Note what operations are likely to be fusable and arrange for them to be 
+4. Note what operations are likely to be fusable and arrange for them to be
 executed one after the other so that they can be fused more reliably.
 
 5. If you can work with embarrassingly parallel code, do so.
 
-6. Estimate the number of kernels that are going to be generated by your 
-computation, and think about the amount of memory usage it will involve. 
-If you can reduce the number of kernel calls, especially if you can compress 
-some things into a single kernel call instead of using two, this can be 
+6. Estimate the number of kernels that are going to be generated by your
+computation, and think about the amount of memory usage it will involve.
+If you can reduce the number of kernel calls, especially if you can compress
+some things into a single kernel call instead of using two, this can be
 faster than using more kernels.
 
 ## Primitives
@@ -110,11 +110,11 @@ Critical Path: 1
 
 Kernels: ≤1
 
-In general, scalar mathematical primitives are fused and considered 
-embarrassingly parallel. They represent some of the highest performance 
-primitives and have the high degree of effective parallelism in them. 
-They are important because fusable primitives that are executed next to 
-one another are likely to be fused together into a single kernel, instead 
+In general, scalar mathematical primitives are fused and considered
+embarrassingly parallel. They represent some of the highest performance
+primitives and have the high degree of effective parallelism in them.
+They are important because fusable primitives that are executed next to
+one another are likely to be fused together into a single kernel, instead
 of requiring a kernel per primitive call.
 
     +-÷×|*⍟⌈⌊<≤=≥>≠∧∨⍱⍲~○
@@ -125,9 +125,9 @@ Critical Path: 1
 
 Kernels: 1
 
-Some operations, particularly scans, out products, and reductions, are 
-embarrassingly parallel in one direction, and can be parallelized on this 
-dimension. This isn't always the fastest approach. These primitives are 
+Some operations, particularly scans, out products, and reductions, are
+embarrassingly parallel in one direction, and can be parallelized on this
+dimension. This isn't always the fastest approach. These primitives are
 not usually fused or are less likely to result in fusion.
 
     !?
@@ -138,10 +138,10 @@ Critical Path: 1 - ⍟N
 
 Kernels: 1 - 3
 
-These are functions which are not inherently parallel, but which do not 
-change complexity class when parallelizing them. A number of these are 
-basically memory bound operations that perform no alteration of the values 
-of the elements over which they work. 
+These are functions which are not inherently parallel, but which do not
+change complexity class when parallelizing them. A number of these are
+basically memory bound operations that perform no alteration of the values
+of the elements over which they work.
 
     ⌷⍴,⍪⌽⊖⍉⊢⊣↑↓⍋⍒⍳
 
@@ -151,8 +151,8 @@ Critical Path: ⍟N - N
 
 Kernels: 1 - 3
 
-These primitives are parallelized on the GPU, but do not make use of certain 
-implementation tricks that the interpreter uses. They use techniques that 
+These primitives are parallelized on the GPU, but do not make use of certain
+implementation tricks that the interpreter uses. They use techniques that
 shifts their complexity class into one of a higher class.
 
     ∊⍷⍳/⌿\⍀⊤⊥∪∩≡≢~
@@ -170,67 +170,67 @@ at this time in any meaningfully parallel way.
 
 ### Operators
 
-Each operator needs to be considered individually, as there is more going 
+Each operator needs to be considered individually, as there is more going
 on here than with the normal primitives:
 
 #### Rank, Power, Each, Compose
 
 Critical Path: 1 (Rank, Each, Compose), N (Power)
 
-For operations like Each, Rank, Power, and Compose, these operations make 
-an attempt to optimize cases where they are given scalar function arguments. 
-In these cases, the number of kernels generated may be reduced. In the 
-case of Each over scalar arguments, this is optimized down to a single 
-kernel. Depending on the options given to Rank, the computation may also 
-be reduced down to a single kernel. Power over scalars at best generates a 
-single kernel per iteration, if given a scalar argument, but generates 
-`I×K` kernels for `I` iterations of power and `K` inherent kernels in the 
-left operand. Compose will generate the sum of the number of kernels of 
-the operands with little to no overhead. 
+For operations like Each, Rank, Power, and Compose, these operations make
+an attempt to optimize cases where they are given scalar function arguments.
+In these cases, the number of kernels generated may be reduced. In the
+case of Each over scalar arguments, this is optimized down to a single
+kernel. Depending on the options given to Rank, the computation may also
+be reduced down to a single kernel. Power over scalars at best generates a
+single kernel per iteration, if given a scalar argument, but generates
+`I×K` kernels for `I` iterations of power and `K` inherent kernels in the
+left operand. Compose will generate the sum of the number of kernels of
+the operands with little to no overhead.
 
 #### Reductions, Scans
 
 Critical Path: ⍟N
 
-The reduction operations (`/⌿`) are fairly easy to parallelize, but they 
-go up the complexity class to `O(⍟N)` when using reduction on `+×⌊⌈` or 
-similar associative operations. When using non-associative scalar operations 
-the operation parallelizes along the non-reduced axes, but the computation 
-remains `O(N)`. When given non-scalar operations, the function is applied 
-and multiple kernels may be spawned, which could lead to some small 
-parallel gains, but generally will not provide significant performance 
+The reduction operations (`/⌿`) are fairly easy to parallelize, but they
+go up the complexity class to `O(⍟N)` when using reduction on `+×⌊⌈` or
+similar associative operations. When using non-associative scalar operations
+the operation parallelizes along the non-reduced axes, but the computation
+remains `O(N)`. When given non-scalar operations, the function is applied
+and multiple kernels may be spawned, which could lead to some small
+parallel gains, but generally will not provide significant performance
 unless doing very heavy computation over very small sized reductions.
 
-The scan operations (`\⍀`) are relatively difficult to parallelize, but 
-are well studied. These operations jump to `O(N×⍟N)` complexity class 
-when parallelized with associative scalar functions. With non-associative 
-scalar functions, then the same limitations as reductions are in force, 
-with the same complexity class. The same advice applies for non-scalar, 
+The scan operations (`\⍀`) are relatively difficult to parallelize, but
+are well studied. These operations jump to `O(N×⍟N)` complexity class
+when parallelized with associative scalar functions. With non-associative
+scalar functions, then the same limitations as reductions are in force,
+with the same complexity class. The same advice applies for non-scalar,
 non-associative functions as applies for reductions.
 
-Scans and reductions operating with scalar associative operands will usually 
-generate a small number of fixed kernels, and can generally be counted as 
-a single kernel for the purposes of performance analysis. When given 
-scalar, non-associative operands, generally the number of kernels 
-generated will be linear in relation to the size of the reduction axis. 
-When given non-scalar functions, potentially as many kernels may be 
+Scans and reductions operating with scalar associative operands will usually
+generate a small number of fixed kernels, and can generally be counted as
+a single kernel for the purposes of performance analysis. When given
+scalar, non-associative operands, generally the number of kernels
+generated will be linear in relation to the size of the reduction axis.
+When given non-scalar functions, potentially as many kernels may be
 generated as there are elements in the input array.
 
 #### Products (Inner and Outer)
 
 Critical Path: 2*⍨⍟N
 
-The outer product operations will be potentially parallel for all function 
-inputs, but particular effort is made to ensure that a single kernel is 
-generated for scalar function operands. If not, there may be as many 
+The outer product operations will be potentially parallel for all function
+inputs, but particular effort is made to ensure that a single kernel is
+generated for scalar function operands. If not, there may be as many
 kernels generated as elements in the input arrays.
 
-The inner product operation is relatively complex. For well understood 
-operations like +.×, you can generally consider this to be a single 
-optimized kernel. For less obvious cases, such as ⌊.=, these can be 
-thought of as a single scalar operation followed by a single reduction 
+The inner product operation is relatively complex. For well understood
+operations like +.×, you can generally consider this to be a single
+optimized kernel. For less obvious cases, such as ⌊.=, these can be
+thought of as a single scalar operation followed by a single reduction
 operation, with the associated kernel behaviors.
 
-For non-scalar operations as the right operand, the same limitations apply 
-as for Each, and similar limitations apply for the left operand as for 
+For non-scalar operations as the right operand, the same limitations apply
+as for Each, and similar limitations apply for the left operand as for
 reductions.

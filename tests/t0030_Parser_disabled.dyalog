@@ -159,7 +159,7 @@ out←2('SYNTAX ERROR' '[3] ⎕blah' '    ^    ')msg
 
 oup←¯1↓LFZ⊢inp←NS'FFT←5' '⎕FFT'
 d←  0  1  2  3  1
-t←  F  B  A  N  P 
+t←  F  B  A  N  P
 k←  0  1  1  1  2
 n←  '' 'FFT' '' 5 '⎕FFT'
 s←,¨oup 'FFT←5' '5' '5' '⎕FFT'

@@ -10,12 +10,12 @@
     print_header ← 0
 
     ∇ {Z}←{Conf}run Argument;PRE_test;POST_test;TEST_step;COVER_step;FromSpace
-     
+
       load_display_if_not_already_loaded
       load_salt_scripts_into_current_namespace_if_configured
-     
+
       FromSpace←1⊃⎕RSI
-     
+
       PRE_test←{}
       POST_test←{}
       COVER_step←{}
@@ -25,32 +25,32 @@
               POST_test←{{}⎕PROFILE'stop'}
           :EndIf
       :EndIf
-     
+
       :If is_function Argument
           TEST_step←single_function_test_function
           COVER_file←Argument,'_coverage.html'
-     
+
       :ElseIf is_list_of_functions Argument
           TEST_step←list_of_functions_test_function
           COVER_file←'list_coverage.html'
-     
+
       :ElseIf is_file Argument
           TEST_step←file_test_function
           COVER_file←(get_file_name Argument),'_coverage.html'
-     
+
       :ElseIf is_dir Argument
           test_files←test_files_in_dir Argument
           TEST_step←test_dir_function
           Argument←test_files
       :EndIf
-     
+
       :If 0≠⎕NC'Conf'
           :If Conf has'cover_target'
               COVER_step←{Conf,←⊂('cover_file'COVER_file)
                   generate_coverage_page Conf}
           :EndIf
       :EndIf
-     
+
       PRE_test ⍬
       Z←FromSpace TEST_step Argument
       POST_test ⍬
@@ -302,7 +302,7 @@
               Z←(⍎function)0
               t←⎕TS-t
           :EndIf
-     
+
       :Else
           Z←(↑⎕DMX.(Vendor EM Message))1
           :If exception≢⍬
@@ -339,7 +339,7 @@
       ⎕←'    ⍒  Failed: ',⍕+/{3⊃⍵}¨ArrayRes
       ⎕←'    ○ Runtime: ',format_time time
     ∇
-    
+
     determine_pass_crash_or_fail←{
       r c←⍵ ⋄ 0≠c:0 1 0 ⋄ z←(0 0 1)(1 0 0)
       expect_orig≢expect:(⎕IO+expect≡r)⊃z ⋄ (⎕IO+nexpect≢r)⊃z

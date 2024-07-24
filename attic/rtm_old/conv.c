@@ -7,4 +7,3 @@ DF(conv_f){
  dim4 s=zv.dims();I rk=zv.numdims();z.s=SHP(rk);DO(rk,z.s[i]=s[i]);
  z.v=flat(zv);
 }
- 

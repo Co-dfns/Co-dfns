@@ -10,8 +10,8 @@ TT←{
 
 	⍝ Convert ⎕NC calls to static A1 nodes
 	pi←p[i←⍸mi←(t[p]=E)∧(t=P)∧n=-sym⍳⊂'⎕nc'] ⋄ j←⍸mj←(p∊pi)∧~mi ⋄ x←⍸mx←p∊j
-	
-	∨⌿msk←k[pi]≠1:'MUST APPLY ⎕NC MONADICALLY'SIGNAL SELECT msk⌿pi	
+
+	∨⌿msk←k[pi]≠1:'MUST APPLY ⎕NC MONADICALLY'SIGNAL SELECT msk⌿pi
 	∨⌿msk←(t[j]≠A)∨~k[j]∊1 7:{
 		ERR←'ONLY LITERAL ARGUMENTS TO ⎕NC ARE SUPPORTED'
 		16 ERR SIGNAL SELECT msk⌿j
@@ -20,7 +20,7 @@ TT←{
 		ERR←'ONLY SIMPLE/NESTED CHAR VECTORS TO ⎕NC ARE SUPPORTED'
 		16 ERR SIGNAL SELECT msk⌿x
 	}⍬
-	
+
 	ncvar←'⍺' '⍺⍺' '⍵⍵'
 	ncmap←(0 0 0)(0 0 0)(0 0 0)(2 0 0),,⍉⊃∘.,⌿(0 2)(2 3)(0 2 3)
 	vx←x,j1←j⌿⍨k[j]=1 ⋄ vp←p[p[x]],p[j1]
@@ -33,7 +33,7 @@ TT←{
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i
 	⍝ axfns←,¨'⌷↓,'
 	⍝ 0≠≢i←⍸(≠p)∧(t[p]=O)∧(k[p]=¯1)∧~n∊-sym⍳axfns:{
-	⍝ 	ERR←2 'FUNCTION DOES NOT SUPPORT AXIS OPERATOR' 
+	⍝ 	ERR←2 'FUNCTION DOES NOT SUPPORT AXIS OPERATOR'
 	⍝	ERR SIGNAL SELECT i
 	⍝ }⍬
 
@@ -43,12 +43,12 @@ TT←{
 	⍝ Convert B strand targets to B0, S0, and S7 nodes
 	msk←~(≠p)∧(t[p]=B)∧(t=A)∧k=7 ⋄ i⌿⍨←~msk[p I@{msk[⍵]}⍣≡i←⍸(t=A)∧k=7]
 	t[i]←S ⋄ k[i,ip←p[i←⍸(t=S)∧t[p]=B]]←0 ⋄ n[ip]←0
-	
+
 	⍝ Merge B node bindings
 	n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
-	⍝ Mark mutated bindings 
+	⍝ Mark mutated bindings
 	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊B E V S)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(t[p]=C)∨(t=E)∧k=4
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
@@ -67,7 +67,7 @@ TT←{
 		16 ERR SIGNAL SELECT msk⌿i
 	}⍵
 	k[r[i]]+←2=k[i]
-	
+
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V ⋄ k[i]←3+5 11⍸k[i]
@@ -93,7 +93,7 @@ TT←{
 	msk[p⌿⍨(t[p]=B)∧(t∊V P)∨(t=A)∧k=1]←0 ⋄ i←⍸msk
 	n mu lx{⍺[⍵]@i⊢⍺}←⊂p[i] ⋄ i←⍸msk←(~msk)∧(⍳≢p)∊p[i] ⋄ p←(p[i]@i⍳≢p)[p]
 	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
-	
+
 	⍝ Allocate frame variables for unbound application results
 	msk←((t=B)∧k=0)∨((t[p]=B)⍲k[p]=0)∧(k≠0)∧(t∊C E O)∨(t∊A S)∧k=7
 	pi←p[i←⍸msk∧n≥0] ⋄ d←⊃P2D p ⋄ msk←(t=E)∧k∊0 ¯1 ⋄ lx[i]←6
@@ -112,7 +112,7 @@ TT←{
 	n[i←⍸(t[p]=E)∧(k[p]=0)∧(t=E)∨((t=A)∧k=7)∨(t=B)∧k≠7]←0 ⋄ lx[i]←6
 	n[i]←n[p[i←⍸(t[p]=B)∧(k[p]=0)∧(~t∊V P)∧(t=A)⍲k=1]] ⋄ lx[i]←lx[p[i]]
 	n[p[i]]←n[i←⍸(t[p]=E)∧k[p]=¯1] ⋄ lx[p[i]]←lx[i]
-	
+
 	⍝ Add V nodes for each application node in preparation for lifting
 	msk←((t[p]=B)⍲k[p]=0)∧(t∊B C O S)∨((t=E)∧k>0)∨(t=A)∧k=7 ⋄ i←(+⍀1+msk)-1
 	p t k n lx mu r pos end⌿⍨←⊂1+msk ⋄ p r{⍵[⍺]}←⊂i ⋄ n[j]←i[n[j←⍸n>0]]
@@ -242,7 +242,7 @@ TT←{
 	syms,←⊂,'⎕PRINT_MEMSTATS' ⋄ nams⍪←3⍴⊂'q_print_memstats'
 	syms,←⊂,'%u'      ⋄ nams⍪←''           ''              ''
 	syms←⎕C syms
-	
+
 	⍝ Convert all primitives to variables; P → V|E
 	i←⍸t=P ⋄ si←syms⍳sym[ni←|n[i]]
 	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
@@ -251,4 +251,3 @@ TT←{
 
 	p t k n lx mu lv fv sv pos end sym IN
 }
-	

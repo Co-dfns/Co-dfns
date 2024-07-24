@@ -3,10 +3,10 @@ GC←{
 
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
-	
+
 	⍝ Text utilities
 	csep←{⎕PP←34 ⋄ ¯2↓⊃,⌿(⍕¨⍵),¨⊂', '}
-	
+
 	⍝ Tracing information
 	linestarts←⍸1⍪IN∊CR LF←⎕UCS 13 10
 	highlight←{
@@ -82,11 +82,11 @@ GC←{
 		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'(*z)'
 		'(',¨z,¨')'
 	}
-	
+
 	check_vars←{
 		(highlight¨⍵){'CHK(var_ref(',⍵,'), cleanup, ',⍺,');'}¨var_values ⍵
 	}
-	
+
 	release_vars←{
 		'release_'∘,¨(var_ckinds ⍵),¨'(',¨(var_values ⍵),¨⊂');'
 	}
@@ -105,9 +105,9 @@ GC←{
 	⍝ We declare all external variables in the prefix
 	pref,←decl_vars ⍸msk∧msk⍀≠n⌿⍨msk←(t=V)∧lx=5
 	pref,←⊂''
-	
+
 	⍝ Define all literals as static values
-	atypes←'BOOL' 'SINT'    'SINT'    'INT'     'DBL'    'CMPX' 
+	atypes←'BOOL' 'SINT'    'SINT'    'INT'     'DBL'    'CMPX'
 	ctypes←'char' 'int16_t' 'int16_t' 'int32_t' 'double' 'struct apl_cmpx'
 	drtypes←11     83        163       323       645      1289
 	atypes,←'CHAR8'   'CHAR16'   'CHAR32'
@@ -131,14 +131,14 @@ GC←{
 
 	⍝ We have a vector output for each node in the AST
 	zz←(≢p)⍴⊂'' ⋄ kk←(≢p)⍴⊂⍬ ⋄ _←{kk[⍺]←⊂⍵~⍺}⌸p
-	
+
 	⍝ Z¯N: Error nodes
 	i←⍸(t=Z)∧k<0
 	zz[i],←{
 		line←highlight ⍵
 		('CHK(',(⍕|k[⍵]),', cleanup, ',line,');') ''
 	}¨i
-	
+
 	⍝ A7/E6: Stranded Arrays and Indexing
 	i←⍸((t=A)∧k=7)∨(t=E)∧k=6
 	zz[i],←{
@@ -156,7 +156,7 @@ GC←{
 		z,←(n[ks]>0)⌿{'release_array(',⍵,'); ',⍵,' = NULL;'}¨vs
 		z,⊂''
 	}¨i
-	
+
 	⍝ S0/7: Initial and internal strand assignment
 	i←⍸t=S
 	zz[i],←{
@@ -198,7 +198,7 @@ GC←{
 		z,←(k[⍵]≠0)⌿''('release_array(',tgt,'); ',tgt,' = NULL;')
 		z,⊂''
 	}¨i
-	
+
 	⍝ B: Non-option, non-null bindings
 	i←⍸(t=B)∧~k∊0 7
 	zz[i],←{
@@ -209,7 +209,7 @@ GC←{
 		z,←⊂tgt,' = ',kv,';'
 		z,⊂''
 	}¨i
-	
+
 	⍝ C: Closures for functions
 	i←⍸t=C
 	zz[i],←{
@@ -245,7 +245,7 @@ GC←{
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ E1: Monadic expression application
 	i←⍸(t=E)∧k=1
 	zz[i],←{
@@ -260,7 +260,7 @@ GC←{
 		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ E2: Dyadic expression application
 	i←⍸(t=E)∧k=2
 	zz[i],←{
@@ -276,7 +276,7 @@ GC←{
 		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ E3: Niladic application
 	i←⍸(t=E)∧k=3
 	zz[i],←{
@@ -290,7 +290,7 @@ GC←{
 		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ E4: Assignment
 	i←⍸(t=E)∧k=4
 	zz[i],←{
@@ -307,7 +307,7 @@ GC←{
 		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ Om: Monadic operators
 	i←⍸(t=O)∧k∊1 2
 	zz[i],←{
@@ -326,7 +326,7 @@ GC←{
 		z,←(n[oi]>0)⌿⊂'release_moper(',op,'); ',op,' = NULL;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ Od: Dyadic operators
 	i←⍸(t=O)∧k∊4 5 7 8
 	zz[i],←{
@@ -349,7 +349,7 @@ GC←{
 		z,←(n[yi]>0)⌿⊂'release_',rtyp,'(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ Ox: Axis Operator and Variant Operator
 	i←⍸(t=O)∧k=¯1
 	zz[i],←{
@@ -410,7 +410,7 @@ GC←{
 		z,←⊂'err = 0;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ FN: Non-zero functions
 	i←⍸(t=F)∧k≠0
 	zz[i],←{
@@ -589,7 +589,7 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
-	
+
 	exp,←⊂'int'
 	exp,←⊂'main(int argc, char *argv[])'
 	exp,←⊂'{'
@@ -611,7 +611,7 @@ GC←{
 	exp,←⊂'	return err;'
 	exp,←⊂'}'
 	exp,←⊂''
-	
+
 	⍝ Warn about nodes that appear which we haven't generated
 	⍝ ⍞←(∨⌿msk)↑(⎕UCS 10)(⊣,⍨,)⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
 

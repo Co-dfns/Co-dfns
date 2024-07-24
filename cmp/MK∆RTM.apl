@@ -7,7 +7,7 @@
   data header←'prim'GC echo 'G' TT echo 'C' PS echo 'P' TK echo 'T' ⊢ src
   (path,'/rtm/prim.c')put data
   (path,'/rtm/prim.h')put header
-  
+
   codfns_h←⊃⎕NGET path,'/rtm/codfns.h.template'
   codfns_h,←CR LF←⎕UCS 13 10
   codfns_h,←'/* Runtime primitives */',CR LF
@@ -18,12 +18,12 @@
   codfns_h,←'#endif',CR LF
   codfns_h,←CR LF
   (path,'/rtm/codfns.h')put codfns_h
-  
+
   →opsys WINDOWS LINUX MAC
-  
+
   WINDOWS:
   	vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
-  	
+
   	vsc←'%comspec% /C ""',vsbat,'" amd64'
   	vsc,←'  && cd "',path,'\rtm"'
   	vsc,←'  && cl /std:c17 /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
@@ -39,7 +39,7 @@
   	vsc,←'    /DYNAMICBASE "af',LIB,'.lib"'
   	vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
   	vsc,←'    /TLBID:1 /OUT:"codfns.dll""'
-  	
+
   	⎕CMD ⎕←vsc
   	⎕CMD ⎕←'copy "',path,'\rtm\codfns.h" "',path,'\tests\"'
   	⎕CMD ⎕←'copy "',path,'\rtm\codfns.exp" "',path,'\tests\"'
@@ -47,7 +47,7 @@
   	⎕CMD ⎕←'copy "',path,'\rtm\codfns.pdb" "',path,'\tests\"'
   	⎕CMD ⎕←'copy "',path,'\rtm\codfns.dll" "',path,'\tests\"'
   →0
-  
+
   LINUX:
   	gcc ←'cd ''',path,'/rtm'''
   	gcc,←'  && gcc -std=c17 -O2 -g -Wall -fPIC -shared'
@@ -57,12 +57,12 @@
   	gcc,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
   	gcc,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
   	gcc,←'    -o libcodfns.so *.c -lm -laf',LIB
-  	
+
   	⎕CMD ⎕←gcc
   	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
   	⎕CMD ⎕←'cp "',path,'/rtm/libcodfns.so" "',path,'/tests/"'
   →0
-  
+
   MAC:
   	clang ←'cd ''',path,'/rtm'''
   	clang,←'  && clang -std=c99 -O2 -g -Wall -fPIC -shared'
@@ -72,7 +72,7 @@
   	clang,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
   	clang,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
   	clang,←'    -o libcodfns.dylib *.c -lm -laf',LIB
-  	
+
   	⎕CMD ⎕←clang
   	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
   	⎕CMD ⎕←'cp "',path,'/rtm/libcodfns.dylib" "',path,'/tests/"'

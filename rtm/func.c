@@ -17,7 +17,7 @@ mk_func(struct cell_func **k, func_mon fm, func_dya fd, unsigned int fs)
 {
 	size_t sz;
 	struct cell_func *ptr;
-	
+
 	mk_func_count++;
 
 	sz = sizeof(struct cell_func) + fs * sizeof(void *);
@@ -33,7 +33,7 @@ mk_func(struct cell_func **k, func_mon fm, func_dya fd, unsigned int fs)
 	ptr->fs = fs;
 	ptr->fv = ptr->fv_;
 	ptr->opts = NULL;
-	
+
 	for (unsigned int i = 0; i < fs; i++)
 		ptr->fv[i] = NULL;
 
@@ -47,7 +47,7 @@ mk_derf(struct cell_derf **k, func_mon fm, func_dya fd, unsigned int fs)
 {
 	size_t sz;
 	struct cell_derf *ptr;
-	
+
 	mk_derf_count++;
 
 	sz = sizeof(struct cell_func) + fs * sizeof(void *);
@@ -63,7 +63,7 @@ mk_derf(struct cell_derf **k, func_mon fm, func_dya fd, unsigned int fs)
 	ptr->fs = fs;
 	ptr->fv = ptr->fv_;
 	ptr->opts = NULL;
-	
+
 	for (unsigned int i = 0; i < fs; i++)
 		ptr->fv_[i] = NULL;
 
@@ -73,13 +73,13 @@ mk_derf(struct cell_derf **k, func_mon fm, func_dya fd, unsigned int fs)
 }
 
 DECLSPEC int
-mk_moper(struct cell_moper **k, 
+mk_moper(struct cell_moper **k,
     func_mon fam, func_dya fad, func_mon ffm, func_dya ffd,
     unsigned int fs)
 {
 	size_t sz;
 	struct cell_moper *ptr;
-	
+
 	mk_moper_count++;
 
 	sz = sizeof(struct cell_moper) + fs * sizeof(void *);
@@ -105,14 +105,14 @@ mk_moper(struct cell_moper **k,
 }
 
 DECLSPEC int
-mk_doper(struct cell_doper **k, 
+mk_doper(struct cell_doper **k,
     func_mon faam, func_dya faad, func_mon fafm, func_dya fafd,
     func_mon ffam, func_dya ffad, func_mon fffm, func_dya fffd,
     unsigned int fs)
 {
 	size_t sz;
 	struct cell_doper *ptr;
-	
+
 	mk_doper_count++;
 
 	sz = sizeof(struct cell_doper) + fs * sizeof(void *);
@@ -146,12 +146,12 @@ release_func(struct cell_func *k)
 {
 	if (k == NULL)
 		return;
-	
+
 	if (k->ctyp == CELL_DERF) {
 		release_derf((struct cell_derf *)k);
 		return;
 	}
-	
+
 	if (!k->refc)
 		return;
 
@@ -161,7 +161,7 @@ release_func(struct cell_func *k)
 		return;
 
 	free_func_count++;
-	
+
 	free(k);
 }
 
@@ -170,7 +170,7 @@ release_derf(struct cell_derf *k)
 {
 	if (k == NULL)
 		return;
-	
+
 	if (!k->refc)
 		return;
 
@@ -181,9 +181,9 @@ release_derf(struct cell_derf *k)
 
 	for (unsigned int i = 0; i < k->fs; i++)
 		release_cell(k->fv_[i]);
-	
+
 	free_derf_count++;
-	
+
 	free(k);
 }
 
@@ -192,17 +192,17 @@ release_moper(struct cell_moper *k)
 {
 	if (k == NULL)
 		return;
-	
+
 	if (!k->refc)
 		return;
-	
+
 	k->refc--;
-	
+
 	if (k->refc)
 		return;
-	
+
 	free_moper_count++;
-	
+
 	free(k);
 }
 
@@ -211,17 +211,17 @@ release_doper(struct cell_doper *k)
 {
 	if (k == NULL)
 		return;
-	
+
 	if (!k->refc)
 		return;
-	
+
 	k->refc--;
-	
+
 	if (k->refc)
 		return;
-	
+
 	free_doper_count++;
-	
+
 	free(k);
 }
 

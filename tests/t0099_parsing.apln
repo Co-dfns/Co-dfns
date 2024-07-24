@@ -21,9 +21,9 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
 ∇{Z}←TEST;src;p;d;t;k;n;lx;pos;end;xn;xt;sym;IN;CD
  Z←⍪⍬
- 
+
  CD←##.codfns
- 
+
  CHK PARSE NS '∇FN' '∇'
  CHK t=CD.(F T H)
  CHK p d=(0 0 1)(0 1 2)
@@ -32,7 +32,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0
  CHK pos end=(0 11 12)(30 16 14)
  CHK xn xt≡¨(,⊂'FN')(,1)
- 
+
  CHK PARSE NS '∇FN X' '∇'
  CHK t=CD.(F T H V)
  CHK p d=(0 0 1 2)(0 1 2 3)
@@ -41,7 +41,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1
  CHK pos end=(0 11 12 15)(32 18 16 16)
  CHK xn xt≡¨(,⊂'FN')(,2)
- 
+
  CHK PARSE NS '∇X FN Y' '∇'
  CHK t=CD.(F T H V V)
  CHK p d=(0 0 1 2 2)(0 1 2 3 3)
@@ -50,7 +50,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1
  CHK pos end=(0 11 12 12 17)(34 20 18 13 18)
  CHK xn xt≡¨(,⊂'FN')(,2)
- 
+
  CHK PARSE NS '∇Z←FN' '∇'
  CHK t=CD.(F T H V)
  CHK p d=(0 0 1 2)(0 1 2 3)
@@ -59,7 +59,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1
  CHK pos end=(0 11 12 12)(32 18 16 13)
  CHK xn xt≡¨(,⊂'FN')(,1)
- 
+
  CHK PARSE NS '∇Z←FN X' '∇'
  CHK t=CD.(F T H V V)
  CHK p d=(0 0 1 2 2)(0 1 2 3 3)
@@ -68,7 +68,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1
  CHK pos end=(0 11 12 12 17)(34 20 18 13 18)
  CHK xn xt≡¨(,⊂'FN')(,2)
- 
+
  CHK PARSE NS '∇Z←X FN Y' '∇'
  CHK t=CD.(F T H V V V)
  CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
@@ -131,11 +131,11 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1 1 1 1
  CHK pos end=(0 11 12 12 14 16 21 23)(40 26 24 13 15 17 22 24)
  CHK xn xt≡¨(,⊂'FN')(,4)
- 
+
  CHK TOKENIZE ':Class blah :X' ':EndClass'
  CHK TOKENIZE ':Class Blah:X' ':EndClass'
  CHK TOKENIZE ':Class Blah : X' ':EndClass'
- 
+
  CHK PARSE NS '∇{X} FN Y' '∇'
  CHK t=CD.(F T H V V)
  CHK p d=(0 0 1 2 2)(0 1 2 3 3)
@@ -144,7 +144,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1
  CHK pos end=(0 11 12 13 19)(36 22 20 14 20)
  CHK xn xt≡¨(,⊂'FN')(,2)
- 
+
  CHK PARSE NS '∇Z←{X}FN Y' '∇'
  CHK t=CD.(F T H V V V)
  CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
@@ -189,7 +189,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1 1 1 1
  CHK pos end=(0 11 12 12 15 18 23 25)(42 28 26 13 16 19 24 26)
  CHK xn xt≡¨(,⊂'FN')(,4)
- 
+
  CHK PARSE NS '∇{Z}←FN' '∇'
  CHK t=CD.(F T H V)
  CHK p d=(0 0 1 2)(0 1 2 3)
@@ -198,7 +198,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1
  CHK pos end=(0 11 12 13)(34 20 18 14)
  CHK xn xt≡¨(,⊂'FN')(,1)
- 
+
  CHK PARSE NS '∇{Z}←FN X' '∇'
  CHK t=CD.(F T H V V)
  CHK p d=(0 0 1 2 2)(0 1 2 3 3)
@@ -207,7 +207,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1
  CHK pos end=(0 11 12 13 19)(36 22 20 14 20)
  CHK xn xt≡¨(,⊂'FN')(,2)
- 
+
  CHK PARSE NS '∇{Z}←X FN Y' '∇'
  CHK t=CD.(F T H V V V)
  CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
@@ -234,7 +234,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1 1 1 1
  CHK pos end=(0 11 12 13 16 18 23 25)(42 28 26 14 17 19 24 26)
  CHK xn xt≡¨(,⊂'FN')(,4)
- 
+
  CHK PARSE NS '∇{Z}←{X}FN Y' '∇'
  CHK t=CD.(F T H V V V)
  CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
@@ -261,7 +261,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1 1 1 1
  CHK pos end=(0 11 12 13 17 20 25 27)(44 30 28 14 18 21 26 28)
  CHK xn xt≡¨(,⊂'FN')(,4)
- 
+
  CHK PARSE NS '∇FN;blah;X;Y;nothing' '∇'
  CHK t=CD.(F T H V V V V)
  CHK p d=(0 0 1 2 2 2 2)(0 1 2 3 3 3 3)
@@ -270,7 +270,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1 1 1
  CHK pos end=(0 11 12 15 20 22 24)(47 33 31 19 21 23 31)
  CHK xn xt≡¨(,⊂'FN')(,1)
- 
+
  CHK PARSE NS '∇FN(X Y Z)' '∇'
  CHK t=CD.(F T H V V V)
  CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
@@ -279,7 +279,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1 1
  CHK pos end=(0 11 12 15 17 19)(37 23 21 16 18 20)
  CHK xn xt≡¨(,⊂'FN')(,2)
- 
+
  CHK PARSE NS '∇(Z1 Z2 Z3)←FN' '∇'
  CHK t=CD.(F T H V V V)
  CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
@@ -333,7 +333,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1 1 1 1 1 1 1 1 1
  CHK pos end=(0 11 12 14 17 20 26 29 34 37 39 41)(59 45 43 16 19 22 27 30 35 38 40 42)
  CHK xn xt≡¨(,⊂'FN')(,4)
- 
+
  CHK PARSE NS '∇FN' 'L1:' '∇'
  CHK t=CD.(F T H L)
  CHK p d=(0 0 1 1)(0 1 2 2)
@@ -341,33 +341,33 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK n=0 (-sym⍳⊂'FN') 0(-sym⍳⊂'L1')
  CHK lx=4 0 0 0
  CHK pos end=(0 11 12 15)(34 20 14 17)
- 
+
  CHK PARSE NS '∇FN' ':If 0' ':EndIf' '∇'
- 
- CHK (,⊂'⍞SOUND')(,⊂2)TOKENIZE NS '∇FN' '⍞SOUND 5' '∇' 
+
+ CHK (,⊂'⍞SOUND')(,⊂2)TOKENIZE NS '∇FN' '⍞SOUND 5' '∇'
  CHK PARSE NS '('':namespace'')' ''
  CHK PARSE NS '∇FN;⎕IO' '∇'
  CHK TOKENIZE NS'∇FN' '{5:6}⍬' '∇'
  CHK TOKENIZE ,⊂'1 ¯2'
  CHK TOKENIZE ERRS 2 ,⊂'1¯2'
  CHK TOKENIZE ERRS 2 ,⊂'1.¯2'
- 
+
  CHK PARSE NS 'FN←{0:5}' ''
  CHK t=CD.(F B V C F G A A F G A A)
  CHK p d=(0 0 1 1 3 4 5 5 3 8 9 9)(0 1 2 2 3 4 5 5 3 4 5 5)
  CHK k=0 2 2 2 2 0 1 1 3 0 1 1
- 
+
  CHK PARSE NS 'FN←{0::5}' ''
  CHK t=CD.(F B V C F G A A F G A A)
- 
+
  CHK PARSE NS ⊂'TEST←{F←{⍵} ⋄ F X←5}'
  CHK t=CD.(F B V C F B V C F P F P B A V V A F B V C F P F P B A V V A)
  CHK p=0 0 1 1 3 4 5 5 7 8 7 10 4 12 13 13 12 3 17 18 18 20 21 20 23 17 25 26 26 25
  CHK d=0 1 2 2 3 4 5 5 6 7 6 7 4 5 6 6 5 3 4 5 5 6 7 6 7 4 5 6 6 5
  CHK k=0 2 2 2 2 2 2 2 2 1 3 1 1 7 1 1 1 3 2 2 2 2 1 3 1 1 7 1 1 1
- 
- ⎕←'☺' 
- 
+
+ ⎕←'☺'
+
 ∇
 
 :EndNamespace

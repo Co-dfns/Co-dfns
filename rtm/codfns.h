@@ -29,7 +29,7 @@
 enum cell_type {
 	CELL_VOID,
 	CELL_VOID_BOX,
-	CELL_ARRAY, 
+	CELL_ARRAY,
 	CELL_ARRAY_BOX,
 	CELL_FUNC,
 	CELL_FUNC_BOX,
@@ -44,15 +44,15 @@ enum cell_type {
 
 enum array_type {
 	ARR_SPAN,
-	ARR_BOOL, 
-	ARR_SINT, 
-	ARR_INT, 
-	ARR_DBL, 
+	ARR_BOOL,
+	ARR_SINT,
+	ARR_INT,
+	ARR_DBL,
 	ARR_CMPX,
-	ARR_CHAR8, 
-	ARR_CHAR16, 
+	ARR_CHAR8,
+	ARR_CHAR16,
 	ARR_CHAR32,
-	ARR_MIXED, 
+	ARR_MIXED,
 	ARR_NESTED,
 	ARR_MAX
 };
@@ -69,8 +69,8 @@ typedef int (*func_mon)(struct cell_array **,
 
 typedef int (*func_dya)(struct cell_array **,
     struct cell_array *, struct cell_array *, struct cell_func *);
-    
-typedef int (*topfn_ptr)(struct cell_array **, 
+
+typedef int (*topfn_ptr)(struct cell_array **,
     struct cell_array *, struct cell_array *);
 
 struct cell_void {
@@ -178,7 +178,7 @@ DECLSPEC int mk_void(struct cell_void **);
 DECLSPEC void release_void(struct cell_void *);
 
 /* ARRAY type */
-DECLSPEC int mk_array(struct cell_array **, 
+DECLSPEC int mk_array(struct cell_array **,
     enum array_type, enum array_storage, unsigned int);
 DECLSPEC int release_array(struct cell_array *);
 DECLSPEC int alloc_array(struct cell_array *);
@@ -192,10 +192,10 @@ DECLSPEC int mk_derf(struct cell_derf **, func_mon, func_dya, unsigned int);
 DECLSPEC void release_func(struct cell_func *);
 DECLSPEC void release_derf(struct cell_derf *);
 DECLSPEC void release_env(void **, void **);
-DECLSPEC int mk_moper(struct cell_moper **, 
+DECLSPEC int mk_moper(struct cell_moper **,
     func_mon, func_dya, func_mon, func_dya,
     unsigned int);
-DECLSPEC int mk_doper(struct cell_doper **, 
+DECLSPEC int mk_doper(struct cell_doper **,
     func_mon, func_dya, func_mon, func_dya,
     func_mon, func_dya, func_mon, func_dya,
     unsigned int);

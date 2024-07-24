@@ -4,8 +4,8 @@ The Co-dfns project aims to provide a high-performance, high-reliability
 compiler for a parallel extension of the Dyalog dfns programming language.
 The dfns language is a functionally oriented, lexically scoped dialect of
 APL. The Co-dfns language extends the dfns language to include explicit task
-parallelism with implicit structures for synchronization and determinism. 
-The language is designed to enable rigorous formal analysis of programs 
+parallelism with implicit structures for synchronization and determinism.
+The language is designed to enable rigorous formal analysis of programs
 to aid in compiler optimization and programmer productivity, as well as in
 the general reliability of the code itself.
 
@@ -15,29 +15,29 @@ you can effectively accomplish with APL.
 
 ## Getting Help
 
-Documentation on Co-dfns can be found in the [docs/](docs/) folder. 
+Documentation on Co-dfns can be found in the [docs/](docs/) folder.
 
-APL and Co-dfns can be a little different at first. I encourage you to contact 
-me (arcfide@sacrideo.us) for any questions you may have regarding either APL or Co-dfns. 
+APL and Co-dfns can be a little different at first. I encourage you to contact
+me (arcfide@sacrideo.us) for any questions you may have regarding either APL or Co-dfns.
 
-Additionally, if you have general Dyalog APL inquiries, please do not hesitate to 
+Additionally, if you have general Dyalog APL inquiries, please do not hesitate to
 email Dyalog's support email: support@dyalog.com.
 
 ## Contributing and Helping
 
-We are seeking to create an open funding model for Co-dfns research through 
-user and patron contributions. You can support the project by contributing code, feedback, benchmarks, and so forth, but you can also directly support the Co-dfns project by funding the author: 
+We are seeking to create an open funding model for Co-dfns research through
+user and patron contributions. You can support the project by contributing code, feedback, benchmarks, and so forth, but you can also directly support the Co-dfns project by funding the author:
 
 https://www.patreon.com/arcfide
 
 ## Related Projects
 
-There are a number of related initiatives that are based on the Co-dfns 
+There are a number of related initiatives that are based on the Co-dfns
 technology:
 
 * [Mystika](https://github.com/Co-dfns/mystika):
   a high-level, high-performance cryptographic stack
-* [apixlib](https://github.com/Co-dfns/apixlib): 
+* [apixlib](https://github.com/Co-dfns/apixlib):
   programmable, easy to use image processing
 
 ## Publications

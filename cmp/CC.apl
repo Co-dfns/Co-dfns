@@ -6,7 +6,7 @@ CC←{
 	'win'≡ostype:⍺{
 		vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 		~⎕NEXISTS vsbat:'MISSING VISUAL C'⎕SIGNAL 99
-		
+
 		vsc←'%comspec% /C ""',vsbat,'" amd64'
 		vsc,←'	&& cd "',(⊃⎕CMD'echo %CD%'),'"'
 		vsc,←'  && cl /std:c17 /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
@@ -19,7 +19,7 @@ CC←{
 		vsc,←'    /DYNAMICBASE "codfns.lib"'
 		vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
 		vsc,←'    /TLBID:1 /OUT:"',⍺,'.dll" > "',⍺,'.log""'
-		
+
 		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc⊣1 ⎕NDELETE ⍺,'.dll'
 		⎕NEXISTS f←⍺,'.dll':f
 		'COMPILE ERROR' ⎕SIGNAL 22
@@ -31,10 +31,10 @@ CC←{
 		gcc,←' -Wno-unused-but-set-variable'
 		gcc,←' -L. -o ''',⍺,'.so'' ''',⍺,'.c'' -lcodfns'
 		gcc,←' > ''',⍺,'.log'' 2>&1'
-		
+
 		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc⊣1 ⎕NDELETE ⍺,'.so'
 		⎕NEXISTS f←⍺,'.so':f
-		'COMPILE ERROR' ⎕SIGNAL 22		
+		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
 	'mac'≡ostype:⍺{
 		clang ←'clang -arch x86_64 -std=c17 -O2 -g -Wall -fPIC -shared'
@@ -44,10 +44,10 @@ CC←{
 		clang,←' -o ''',⍺,'.dylib'' ''',⍺,'.c'''
 		clang,←' -Wl,-rpath,. ./libcodfns.dylib'
 		clang,←' > ''',⍺,'.log'' 2>&1'
-		
+
 		⎕←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang⊣1 ⎕NDELETE ⍺,'.dylib'
 		⎕NEXISTS f←⍺,'.dylib':f
-		'COMPILE ERROR' ⎕SIGNAL 22		
+		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
 }
 
@@ -59,7 +59,7 @@ CX←{
 	'win'≡ostype:⍺{
 		vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 		~⎕NEXISTS vsbat:'MISSING VISUAL C'⎕SIGNAL 99
-		
+
 		vsc←'%comspec% /C ""',vsbat,'" amd64'
 		vsc,←'	&& cd "',(⊃⎕CMD'echo %CD%'),'"'
 		vsc,←'  && cl /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
@@ -71,7 +71,7 @@ CX←{
 		vsc,←'    /DYNAMICBASE "codfns.lib"'
 		vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
 		vsc,←'    /OUT:"',⍺,'.exe" > "',⍺,'.log""'
-		
+
 		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD vsc⊣1 ⎕NDELETE ⍺,'.exe'
 		⎕NEXISTS f←⍺,'.exe':f log
 		⎕←log
@@ -84,11 +84,11 @@ CX←{
 		gcc,←' -Wno-unused-but-set-variable'
 		gcc,←' -L. -o ''',⍺,''' ''',⍺,'.c'' -lcodfns'
 		gcc,←' > ''',⍺,'.log'' 2>&1'
-		
+
 		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD gcc⊣1 ⎕NDELETE ⍺
 		⎕NEXISTS f←⍺:f log
 		⎕←log
-		'COMPILE ERROR' ⎕SIGNAL 22		
+		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
 	'mac'≡ostype:⍺{
 		clang ←'clang -arch x86_64 -std=c99 -Ofast -g -Wall -fPIC'
@@ -98,10 +98,10 @@ CX←{
 		clang,←' -o ''',⍺,''' ''',⍺,'.c'''
 		clang,←' -Wl,-rpath,. ./libcodfns.dylib'
 		clang,←' > ''',⍺,'.log'' 2>&1'
-		
+
 		log←⍪⊃⎕NGET(⍺,'.log')1⊣⎕CMD clang⊣1 ⎕NDELETE ⍺
 		⎕NEXISTS f←⍺:f log
 		⎕←log
-		'COMPILE ERROR' ⎕SIGNAL 22		
+		'COMPILE ERROR' ⎕SIGNAL 22
 	}⍵
 }

@@ -1,7 +1,7 @@
 ﻿:Require file://t0005.dyalog
 :Namespace t0005_tests
  tn←'t0005' ⋄ cn←'c0005'
- bindings←'dmop' 'dop' 'mdop' 'mmop' 'ndop' 'nmop' 'umop' 
+ bindings←'dmop' 'dop' 'mdop' 'mmop' 'ndop' 'nmop' 'umop'
  cd←⎕NS⍬ ⋄ dy←#.⍎tn
  ∆00_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0005←tn #.codfns.Fix ⎕SRC dy}
  ∆01_TEST←{#.UT.expect←↑bindings ⋄ cd.⎕NL 3}

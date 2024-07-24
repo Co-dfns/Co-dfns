@@ -109,10 +109,10 @@ TK←{⍺←⊢
 	0≠⊃tm←¯1⌽≠⍀tm:'UNBALANCED TRAD-FNS'SIGNAL lineof pos[⊃⌽⍸2<⌿0⍪tm]
 	msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0
 	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL lineof msk⌿pos
-	
+
 	⍝ Flatten trad-fns headers
 	d[⍸msk←∊∨⍀¨(t=Z)⊂2<⌿tm⍪0]←0 ⋄ t[⍸msk∧x∊'{}']←P
-	
+
 	⍝ Parse trad-fns into T type
 	t[⍸msk←2<⌿tm⍪0]←T ⋄ d+←tm∧~msk
 
@@ -142,12 +142,12 @@ TK←{⍺←⊢
 	msk vals←⎕VFI ⍕n[i←⍸t=N]
 	~∧⌿msk:'CANNOT REPRESENT NUMBER'SIGNAL SELECT ⍸(t=N)⍀~msk
 	n[i]←vals
-	
+
 	⍝ Split inheritance reference if necessary
 	msk←(t=K)∧¯1⌽(t=V)∧¯1⌽(t=K)∧n∊⊂':class'
 	tm d t n pos end msk⌿⍨←⊂1+msk ⋄ i←⍸2<⌿0⍪msk
-	t[i+1]←V ⋄ n[i]←1↑¨n[i] ⋄ n[i+1]←1↓¨n[i+1] ⋄ end[i]←pos[i+1]←pos[i]+1	
-	
+	t[i+1]←V ⋄ n[i]←1↑¨n[i] ⋄ n[i+1]←1↓¨n[i+1] ⋄ end[i]←pos[i+1]←pos[i]+1
+
 	⍝ Check that all keywords are valid
 	KW←'NAMESPACE' 'ENDNAMESPACE' 'END' 'IF' 'ELSEIF' 'ANDIF' 'ORIF' 'ENDIF'
 	KW,←'WHILE' 'ENDWHILE' 'UNTIL' 'REPEAT' 'ENDREPEAT' 'LEAVE' 'FOR' 'ENDFOR'
@@ -207,6 +207,6 @@ TK←{⍺←⊢
 	⍝ Convert n field to symbols and add a symbol table
 	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
 	n←-sym⍳n
-	
+
 	(d t k n pos end)sym IN
 }

@@ -121,7 +121,7 @@ exceed 1 - 10 MB. While recursion and guards are supported, it is best if
 you restrict their use to outer-most functions, since they are significantly
 less efficient on the GPU than APL primitives.
 
-We compile under the assumption that ⎕IO ⎕ML ⎕CT←0 1 0. 
+We compile under the assumption that ⎕IO ⎕ML ⎕CT←0 1 0.
 
 ### Known limitations
 

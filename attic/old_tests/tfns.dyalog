@@ -1,4 +1,4 @@
-﻿:Namespace 
+﻿:Namespace
 
 bitvector∆Run←{⍺∧0≠⍵}
 

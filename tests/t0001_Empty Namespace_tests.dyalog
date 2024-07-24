@@ -2,7 +2,7 @@
 
  lc←':namespace' ':endnamespace' ⋄ uc←':NAMESPACE' ':ENDNAMESPACE'
  nc←':Namespace' ':EndNamespace' ⋄ mc←':NaMeSpAcE' ':eNdNaMeSpAcE'
- 
+
  ext←#.codfns.opsys '.dll' '.so' '.dylib'
 
  ∆0_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX'c0001' ⋄ 0⊣#.c0001←'t0001'#.codfns.Fix nc}

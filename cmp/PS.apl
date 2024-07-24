@@ -86,7 +86,7 @@ PS←{
 		t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
 		ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←0 ⋄ k[gz cq,ci]←1
 	0}⌸i←⍸t[p[p]]=F
-	
+
 	⍝ Delete keywords we can't handle
 	t k n pos end⌿⍨←⊂msk←t≠K ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
@@ -156,7 +156,7 @@ PS←{
 
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	
+
 	⍝ Associate bound variables with their B node ancestor
 	j←p I@{msk[⍵]}⍣≡i←⍸t=V⊣msk←~(≠p)∧t[p]=B ⋄ vb[msk⌿i]←p[j⌿⍨msk←~msk[j]]
 
@@ -249,13 +249,13 @@ PS←{
 
 		k[z⌿⍨msk←{(2 3 5∊⍨⊃⍵)∨4=|(⍵,0)[0⍳⍨∧⍀⍵=1]}∘{k[⌽⍵]}¨x]←2
 		z x⌿⍨←⊂~msk
-		
+
 		isa←{((1=|k⌷⍨⊃⍵)∨A 0≡t k⌷¨⍨⊃⍵)∧(V=i⌷t)⍲0=k⌷⍨i←(0⍳⍨∧⍀k[⍵]=1)⌷⍵,0}
 		k[z⌿⍨msk←isa∘⌽¨x]←1
 		z x⌿⍨←⊂~msk
 
 		k[i]←k[vb[i←⍸(t∊B V)∨(t=P)∧vb≥0]]
-		
+
 		k[i,z]
 	}⍣≡⍬
 
@@ -276,7 +276,7 @@ PS←{
 	j←i⌿⍨jm←2>⌿0⍪msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
 	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿¯1++⍀2<⌿0⍪msk]
-	
+
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
@@ -437,7 +437,7 @@ PS←{
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
 	k[p[i←⍸msk]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
 	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
-	
+
 	⍝ All A1 nodes should be lexical scope 6
 	lx[⍸(t=A)∧k=1]←6
 
