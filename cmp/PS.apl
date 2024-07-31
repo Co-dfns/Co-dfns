@@ -122,11 +122,6 @@ PS←{
 	⍝ Unify A1, N, and C tokens to A1 nodes
 	t k(⊣@(⍸t∊N C))⍨←A 1
 
-	⍝ Mark bindable nodes
-	bm←(t=V)∨(t=A)∧k=0
-	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
-	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
-
 	⍝ Mark binding primitives
 	bp←n∊-sym⍳,¨'←' '⍠←' '∘←'
 
@@ -135,14 +130,74 @@ PS←{
 	∨⌿msk←bp[i]:{
 		'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[i]
 	}⍬
-
+	
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸t[p]=H
 
-	⍝ Treat ⍺ as V node for assignment parsing
-	t[⍸n=¯2]←V
+	⍝ Wrap binding values in Z nodes and link
+	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	nz←(≢p)+⍳≢bi←i⌿⍨msk←bp[i]∧¯1⌽km∧((t=V)∨(≠p)∧(t=P)∧(n=¯2)∧t[p][p]=F)[i]
+	p[km⌿i]←(np←(msk∨~km)⌿nz@{msk}i)[¯1+km⌿+⍀¯1⌽msk∨~km]
+	p,←(np≥≢p)⌿¯1⌽np ⋄ t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p][bi])
+	vb,←bt←i⌿⍨1⌽msk
+	
+	⍝ Enclosing frames and lines for all nodes
+	rz←p I@{(t[⍵]∊G Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍳≢p
+	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G}p[rz]
+	
+	⍝ Link local variables to known pseudo-bindings
+	i←⍸(t=V)∧vb=¯1 ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
+	b←(0,i)[1+(⍸b)⍸(⍳≢i)-b←i∊vb[nz]] ⋄ vb[i]+←(1+b)×(n[i]=n[b])∧r[i]=r[b]
+	
+	⍝ Link pseudo-free variables to pseudo-bindings
+	fb←vb[nz] ⋄ fr←n[fb],⍪r[fb] ⋄ fb fr⌿⍨←⊂⊖≠⊖fr ⋄ fb,←¯1 ⋄ frb←fb I fr∘⍳
+	i←⍸(t=V)∧vb=¯1 ⋄ ir←n[i],⍪r[r[i]]
+	_←{vb[⊣/ir]←j←frb ir ⋄ ir⌿⍨←j=¯1 ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
 
-	⍝ Wrap bindings/assignments into B(Z, Z) nodes
+	⍝ Specialize functions to specific formal binding types
+	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t=F)⊢(≢p)⍴1
+	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r vb rc pos end⌿⍨←⊂x
+	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
+	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]
+
+	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
+	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
+	vb[j]←(i,¯1)[(r[i],⍪n[i])⍳r[j],⍪n[j]]
+
+	⍝ Mark formals with their appropriate kinds
+	k[⍸(t=P)∧n=¯2]←0
+	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
+	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
+	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
+	
+	⍝ Error if brackets are not addressing something
+	∨⌿msk←(≠p)∧t=¯1:{
+		EM←'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'
+		EM SIGNAL SELECT ⍸msk
+	}⍬
+	
+	⍝ Infer the type of groups and variables
+	v←⍸(t=V)∧k=0 ⋄ z←⍸(t=Z)∧k=0
+	zi←⍸(p∊z)∧t≠¯1 ⋄ za←zi⌿⍨≠p[zi] ⋄ zc←zi⌿⍨⌽≠⌽p[zi]
+	_←{
+		zb←(⌽≠⌽p[zb])⌿zb←⍸(p∊z)∧(t≠¯1)∧(k≠1)∨(≠p)∧k=1
+		nk←k[za]×(k[za]≠0)∧za=zc
+		nk+←3×(nk=0)∧k[za]=4
+		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
+		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
+		nk+←(nk=0)∧((t[zc]=A)∨1=|k[zc])∧(t[zb]=V)⍲k[zb]=0
+		k[vb[msk⌿z]]←(msk←(vb[z]≥0)∧vm∨(k[z]=2)∨k[vb[z]⌈0]=1)⌿k[z]←nk
+		k[v]←k[vb[v]]
+		z za zc⌿⍨←nk=0 ⋄ v⌿⍨←k[v]=0
+		v z
+	}⍣≡⍬
+
+	⍝ XXX Mark bindable nodes
+	bm←(t=V)∨(t=A)∧k=0
+	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
+	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
+
+	⍝ XXX Wrap bindings/assignments into B(Z, Z) nodes
 	_←p[i]{
 		t[⍵⌿⍨bp[⍵]∧0,¯1↓bm[⍵]]←B
 		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓(t[⍵]∊F P B)∨t[⍵]=¯1])
@@ -157,27 +212,23 @@ PS←{
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	
-	⍝ Associate bound variables with their B node ancestor
-	j←p I@{msk[⍵]}⍣≡i←⍸t=V⊣msk←~(≠p)∧t[p]=B ⋄ vb[msk⌿i]←p[j⌿⍨msk←~msk[j]]
-
-	⍝ Return bindable ⍺ to P node
-	t[⍸n=¯2]←P
-
-	⍝ Wrap all non-module functions in closures
+	⍝ XXX Wrap all non-module functions in closures
 	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p←(np@i⊢⍳≢p)[p] ⋄ p,←i
 	t k n vb pos end(⊣,I)←⊂i ⋄ t[i]←C
 
-	⍝ Enclosing frames and lines for all nodes
-	rz←p I@{(t[⍵]∊G Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍳≢p
-	rf←I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G}p[rz]
-	r←I@{t[0⌈⍵]=G}⍨rf
+	⍝ XXX Mark lexical scope of non-variable primitives and trad-fns locals
+	lx←(≢p)⍴0 ⋄ lx[⍸t[p]=H]←1 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
+	⍝ Iterate:
+	⍝ 	Mark local variables
+	⍝ 	Propagate free variables
+	
+	⍝ Error if free variables exist at top-level
+
+⍝⍝⍝⍝⍝⍝⍝ USE THE FOLLOWING FOR INSPIRATION ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
 	fb,←¯1⊣fr←rf mk⊢fb←fb[∪⍳⍨rf mk⊢fb←⊖fb[∪⍳⍨rz mk⊢fb←⊖⍸t[0⌈vb]=B]]
-
-	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
-	lx←(≢p)⍴0 ⋄ lx[⍸t[p]=H]←1 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
 	⍝ Link local variables with their local bindings
 	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
@@ -202,67 +253,13 @@ PS←{
 		⍝ Continue with remaining unlinked free variables
 		fv⌿⍨vb[fv]=¯1
 	}⍣{0=≢⍺}⍸(t=V)∧vb=¯1
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 
-	⍝ Check that all variables have a valid binding
-	∨⌿msk←(t=V)∧vb=¯1:{
-		6'VARIABLES MUST BE BOUND'SIGNAL∊pos[⍵]{⍺+⍳⍵-⍺}¨end[⍵]
-	}⍸msk
-
-	⍝ Remove duplicates in closure variables
+	⍝ XXX Remove duplicates in closure variables
 	fi←∊p[i]{⊂⍵[⍳⍨n[⍵]]}⌸i←i[⍋p[i←⍸(t=V)∧t[p]=C]]
 	vb←(¯1,fi@i⊢⍳≢vb)[1+vb]
 	p t k n r lx vb pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1
 	p vb r(⊣-1+⍸⍨)←⊂⍸~msk
-
-	⍝ Specialize functions to specific formal binding types
-	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t=F)⊢(≢p)⍴1
-	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r lx vb rc pos end⌿⍨←⊂x
-	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
-	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]
-
-	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
-	ab←r mk⊢i←⍸(bm←t[0⌈vb]=B)∧msk←(n=¯2)∧k[r]∊2+2×⍳7
-	vb[j]←(i,¯1)[ab⍳r mk⊢j←⍸msk∧~bm]
-
-	⍝ Mark formals with their appropriate kinds
-	k[⍸(t=P)∧n=¯2]←0
-	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
-	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
-	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
-
-	⍝ Infer the type of bindings, groups, and variables
-	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	∨⌿msk←0=≢¨y←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x:{
-		EM←'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'
-		EM SIGNAL SELECT ∊msk⌿x
-	}⍬
-	x←y
-	_←{
-		k[msk⌿z]←k[x⌿⍨msk←(k[⊃¨x]≠0)∧1=≢¨x]
-		z x⌿⍨←⊂~msk
-
-		k[z⌿⍨msk←k[⊃¨x]=4]←3
-		z x⌿⍨←⊂~msk
-
-		k[msk⌿z]←|lk⌿⍨msk←¯3 ¯4∊⍨lk←k[⊃∘⌽¨x]
-		z x⌿⍨←⊂~msk
-
-		k[z⌿⍨msk←{(2 3 5∊⍨⊃⍵)∨4=|(⍵,0)[0⍳⍨∧⍀⍵=1]}∘{k[⌽⍵]}¨x]←2
-		z x⌿⍨←⊂~msk
-		
-		isa←{((1=|k⌷⍨⊃⍵)∨A 0≡t k⌷¨⍨⊃⍵)∧(V=i⌷t)⍲0=k⌷⍨i←(0⍳⍨∧⍀k[⍵]=1)⌷⍵,0}
-		k[z⌿⍨msk←isa∘⌽¨x]←1
-		z x⌿⍨←⊂~msk
-
-		k[i]←k[vb[i←⍸(t∊B V)∨(t=P)∧vb≥0]]
-		
-		k[i,z]
-	}⍣≡⍬
-
-	0≠≢z:{
-		msg←'FAILED TYPE INFERENCE'
-		msg SIGNAL SELECT z
-	}⍬
 
 	⍝ Compute exports
 	msk←(t=T)∨(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
