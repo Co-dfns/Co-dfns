@@ -14,7 +14,7 @@ TK←{⍺←⊢
 	alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
 	num←⎕D ⋄ syna←'⍬⎕⍞#' ⋄ synb←'¯[]{}()'':⍺⍵⋄;←'
 	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇→⌺'
-	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⍤⍥@' ⋄ prmfo←'/⌿\⍀'
+	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⍤⍥@' ⋄ prmfo←'/⌿\⍀←'
 	prms←prmfs,prmmo,prmdo,prmfo
 
 	⍝ Guarantee everything is LF-terminated
@@ -86,7 +86,7 @@ TK←{⍺←⊢
 	t[⍸(~msk∨¯1⌽msk)∧x∊'⍺⍵']←A
 
 	⍝ Tokenize primitives and atoms
-	t[⍸x∊syna]←A ⋄ t[⍸(~dm)∧x∊prms,'←']←P
+	t[⍸x∊syna]←A ⋄ t[⍸(~dm)∧x∊prms]←P
 	msk←(x∊'⌶∇')∨msk∨¯1⌽msk←(~dm)∧⊃'⍠←' '∘←' '∘.'∨.⍷⊂x
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿msk⍪0 ⋄ t[⍸msk∧~m2]←0
 	∨⌿msk←2<end[i]-pos[i←⍸msk∧x='∇']:{
