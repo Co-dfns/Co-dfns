@@ -138,7 +138,7 @@ PS←{
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	nz←(≢p)+⍳≢bi←i⌿⍨msk←bp[i]∧¯1⌽km∧((t=V)∨(≠p)∧(t=P)∧(n=¯2)∧t[p][p]=F)[i]
 	p[km⌿i]←(np←(msk∨~km)⌿nz@{msk}i)[¯1+km⌿+⍀¯1⌽msk∨~km]
-	p,←(np≥≢p)⌿¯1⌽np ⋄ t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p][bi])
+	p,←(np≥≢p)⌿¯1⌽np ⋄ t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	vb,←bt←i⌿⍨1⌽msk ⋄ vb[bi]←nz
 	
 	⍝ Enclosing frames and lines for all nodes
@@ -152,11 +152,11 @@ PS←{
 	⍝ Link pseudo-free variables to pseudo-bindings
 	fb←vb[nz] ⋄ fr←n[fb],⍪r[fb] ⋄ fb fr⌿⍨←⊂⊖≠⊖fr ⋄ fb,←¯1 ⋄ frb←fb I fr∘⍳
 	i←⍸(t=V)∧vb=¯1 ⋄ ir←n[i],⍪r[r[i]]
-	_←{vb[⊣/ir]←j←frb ir ⋄ ir⌿⍨←j=¯1 ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
+	_←{vb[i]←j←frb ir ⋄ i ir⌿⍨←⊂j=¯1 ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
 
 	⍝ Wrap all non-module functions in closures
-	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p←(np@i⊢⍳≢p)[p] ⋄ p,←i
-	t k n vb pos end(⊣,I)←⊂i ⋄ t[i]←C
+	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p r I⍨←⊂np@i⊢⍳≢p
+	p,←i ⋄ t k n vb r pos end(⊣,I)←⊂i ⋄ t[i]←C
 
 	⍝ Specialize functions to specific formal binding types
 	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t=F)⊢(≢p)⍴1
@@ -316,28 +316,17 @@ PS←{
 	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
 	
 	⍝ Check for bindings/assignments without targets
-	bp←n∊-sym⍳,¨'←' '⍠←' '∘←'
-	∨⌿msk←bp∧(t=P)∧((k=2)∧(t[p]=E)∧k[p]=1)∨(k=3)∧(t[p][p]=E)∧k[p][p]=1:{
+	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
+	∨⌿msk←bp∧((k=2)∧(t[p]=E)⍲k[p]=2)∨(k=3)∧(t[p][p]=E)⍲k[p][p]=2:{
 		ERR←'MISSING ASSIGNMENT TARGET'
 		ERR SIGNAL SELECT p[⍸msk∧k=2],p[p][⍸msk∧k=3]
 	}⍬
 	
-	⍝ Check for invalid targets
-
-	⍝ E2(A¯1, P2(←), Z)
-	⍝ E2(A7, P2(←), Z)
-	⍝ E2(V|A0, P2(←), Z)
-	⍝ E2(E, P2(←), Z)
-	⍝ E2(A¯1, O2(C, P3(←)), Z)
-	⍝ E2(A7, O2(C, P3(←)), Z)
-	⍝ E2(V|A0, O2(C, P3(←)), Z)
-	⍝ E2(E, O2(C, P3(←)), Z)
-
-	⍝ XXX Mark bindable nodes
-	⍝ bm←(t=V)∨(t=A)∧k∊0
-	⍝ bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
-	⍝ bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
-
+	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
+	i←p[⍸bp∧k=2] ⋄ k[i]←4
+	i←⍸(≠p)∧(t[p]=E)∧(t[p]=4)∧(t=V)∨(t=A)∧k∊0 7 ⋄ t[i]←B ⋄ k[i]←1
+	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
+	
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
@@ -350,51 +339,8 @@ PS←{
 		ERR SIGNAL SELECT ⍸msk
 	}⍬
 
-	⍝ XXX All A1 nodes should be lexical scope 6
-	lx[⍸(t=A)∧k=1]←6
-
-	⍝ XXX Compute exports
-	msk←(t=T)∨(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
-	xn←sym[|msk⌿n] ⋄ xt←msk⌿k
-
 	⍝ Sort AST by depth-first pre-order traversal
 	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p
-
-	(p d t k n lx pos end)(xn xt)sym IN
+∘∘∘
+	(p d t k n pos end)sym IN
 }
-
-⍝	⍝ XXX Wrap all assignment values as Z nodes
-⍝	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]=1
-⍝	j←i⌿⍨msk←(t[i]≠B)∧n[i]∊-sym⍳⊂,'←' ⋄ nz←(≢p)+⍳zc←≢j
-⍝	p,←nz ⋄ t k n lx,←zc⍴¨Z 1 0 0 ⋄ pos,←1+pos[j] ⋄ end,←end[p[j]]
-⍝	zm←¯1⌽msk ⋄ p[km⌿i]←(zpm⌿(i×~km)+zm⍀nz)[km⌿¯1++⍀zpm←zm∨~km]
-⍝
-⍝	⍝ This is the definition of a function value at this point
-⍝	isfn←{(t[⍵]∊O C)∨(t[⍵]∊B P V Z)∧k[⍵]=2}
-⍝
-⍝	⍝ Parse modified assignment to E4(V, C, Z)
-⍝	j←i⌿⍨m←msk∧(¯1⌽isfn i)∧¯2⌽(t[i]=V)∧k[i]=1 ⋄ p[zi←nz⌿⍨msk⌿m]←j
-⍝	p[i⌿⍨(1⌽m)∨2⌽m]←2⌿j ⋄ t k(⊣@j⍨)←E 4
-⍝	pos n lx end{⍺[⍵]@j⊢⍺}←(3⍴⊂i⌿⍨2⌽m),⊂zi
-⍝
-⍝	⍝ Parse bracket modified assignment to E4(E6, O2(C, P3(←)), Z)
-⍝	j←i⌿⍨m←msk∧(¯1⌽isfn i)∧¯2⌽(t[i]=A)∧k[i]=¯1 ⋄ ei←p⍳i⌿⍨2⌽m
-⍝	p[zi←nz⌿⍨msk⌿m]←ei ⋄ p t k end(⊣@ei⍨)←p[j] E 4(end[zi])
-⍝	p t k lx n(⊣@(i⌿⍨2⌽m)⍨)←ei E 6 0 0
-⍝	p t k lx,←(≢j)⍴¨j P 3 3 ⋄ ⋄ n pos end(⊣,I)←⊂j
-⍝	p t k n lx pos(⊣@j⍨)←ei O 2 0 0(pos[fi←i⌿⍨1⌽m]) ⋄ p[fi]←j
-⍝
-⍝	⍝ Parse bracket assignment to E4(E6, P2(←), Z)
-⍝	j←i⌿⍨m←msk∧¯1⌽(t[i]=A)∧k[i]=¯1 ⋄ ei←p⍳i⌿⍨1⌽m
-⍝	p[zi←nz⌿⍨msk⌿m]←ei ⋄ p t k end(⊣@ei⍨)←p[j] E 4(end[zi])
-⍝	p t k lx n(⊣@(i⌿⍨1⌽m)⍨)←ei E 6 0 0
-⍝	p t k lx(⊣@j⍨)←ei P 2 3
-⍝
-⍝	⍝ PARSE MODIFIED STRAND ASSIGNMENT
-⍝	⍝ SELECTIVE MODIFIED ASSIGNMENT
-⍝	⍝ SELECTIVE ASSIGNMENT
-⍝
-⍝	∨⌿msk←(t=0)∧n=bn←-sym⍳⊂,'←':{
-⍝		msg←'INVALID ASSIGNMENT TARGET'
-⍝		msg SIGNAL SELECT ∊p[i]{⊂⍵⌿⍨⌽∨⍀⌽n[⍵]=bn}⌸i←⍸p∊p[⍸msk]
-⍝	}⍬
