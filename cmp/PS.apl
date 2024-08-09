@@ -144,7 +144,7 @@ PS←{
 	⍝ Enclosing frames and lines for all nodes
 	rz←p I@{(t[⍵]∊G Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G}p[rz]
-	
+		
 	⍝ Link local variables to known pseudo-bindings
 	i←⍸(t=V)∧vb=¯1 ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
 	b←(0,i)[1+(⍸b)⍸(⍳≢i)-b←i∊vb[nz]] ⋄ vb[i]+←(1+b)×(n[i]=n[b])∧r[i]=r[b]
@@ -181,8 +181,8 @@ PS←{
 	}⍬
 	
 	⍝ Infer the type of groups and variables
-	v←⍸(t=V)∧k=0 ⋄ z←⍸(t=Z)∧k=0
-	zi←⍸(p∊z)∧t≠¯1 ⋄ za←zi⌿⍨≠p[zi] ⋄ zc←zi⌿⍨⌽≠⌽p[zi]
+	v←⍸(t=V)∧(k=0)∧vb≥0
+	z←⍸(t=Z)∧k=0 ⋄ zi←⍸(p∊z)∧t≠¯1 ⋄ za←zi⌿⍨≠p[zi] ⋄ zc←zi⌿⍨⌽≠⌽p[zi]
 	_←{
 		zb←(⌽≠⌽p[zb])⌿zb←⍸(p∊z)∧(t≠¯1)∧(k≠1)∨(≠p)∧k=1
 		nk←k[za]×(k[za]≠0)∧za=zc
@@ -190,9 +190,8 @@ PS←{
 		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
 		nk+←(nk=0)∧((t[zc]=A)∨1=|k[zc])∧(t[zb]=V)⍲k[zb]=0
-		k[vb[msk⌿z]]←(msk←(vb[z]≥0)∧vm∨(k[z]=2)∨k[vb[z]⌈0]=1)⌿k[z]←nk
-		k[v]←k[vb[v]]
-		z za zc⌿⍨←nk=0 ⋄ v⌿⍨←k[v]=0
+		k[z]←nk ⋄ k[vb[msk⌿z]]←nk⌿⍨msk←vb[z]≥0 ⋄ k[v]←k[vb[v]]
+		z za zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 		v z
 	}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1
@@ -208,15 +207,15 @@ PS←{
 	msk∧←(0,gm⌿km⍲k[i]=4)[+⍀gm←2<⌿0⍪msk]
 	msk∧←(0,(2>⌿msk⍪0)⌿1⌽km∧t[i]=¯1)[+⍀2<⌿0⍪msk]
 	j←i⌿⍨jm←2>⌿0⍪msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
-	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
+	t k n pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿¯1++⍀2<⌿0⍪msk]
 	
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
 	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai
-	t k n lx pos end(⊣,I)←⊂ai
-	t k n lx pos(⊣@ai⍨)←A 7 0 0(pos[i⌿⍨km←2<⌿0⍪msk])
+	t k n pos end(⊣,I)←⊂ai
+	t k n pos(⊣@ai⍨)←A 7 0(pos[i⌿⍨km←2<⌿0⍪msk])
 	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]
 
 	⍝ Rationalize F[X] syntax
@@ -233,11 +232,11 @@ PS←{
 		msg←'AXIS REQUIRES NON-EMPTY AXIS EXPRESSION'
 		msg SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
 	}msk⌿p[j]
-	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
+	p[j]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
 	i←⍸t=¯1 ⋄ p←(p[i]@i⍳≢p)[p] ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
-	p t k n lx pos end⌿⍨←⊂t≠¯1 ⋄ p(⊣-1+⍸⍨)←i
+	p t k n pos end⌿⍨←⊂t≠¯1 ⋄ p(⊣-1+⍸⍨)←i
 
 	⍝ Parse ⌶* nodes to V nodes
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
@@ -247,7 +246,7 @@ PS←{
 	}⍬
 	vi←i⌿⍨1⌽msk←i∊j ⋄ pi←msk⌿i
 	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←5 ⋄ end[vi]←end[pi]
-	p t k n lx pos end⌿⍨←⊂~pm ⋄ p(⊣-1+⍸⍨)←⍸pm
+	p t k n pos end⌿⍨←⊂~pm ⋄ p(⊣-1+⍸⍨)←⍸pm
 
 	⍝ Group function and value expressions
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
@@ -326,7 +325,7 @@ PS←{
 	i←p[⍸bp∧k=2] ⋄ k[i]←4
 	i←⍸(≠p)∧(t[p]=E)∧(t[p]=4)∧(t=V)∨(t=A)∧k∊0 7 ⋄ t[i]←B ⋄ k[i]←1
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
-	
+		
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
