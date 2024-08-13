@@ -257,7 +257,7 @@ PS←{
 	}⍬
 
 	⍝ Refine schizophrenic types
-	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽(~km)∨(~dm)∧k[i]∊¯1 0 1 6]←2 ⋄ k[i⌿⍨k[i]=5]←3
+	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽(~km)∨(~dm)∧k[i]∊¯1 0 1 6 7]←2 ⋄ k[i⌿⍨k[i]=5]←3
 
 	⍝ Mask and verify monadic and dyadic operator left operands
 	jm←(t[i]=P)∧n[i]∊-sym⍳⊂,'∘.'
