@@ -182,9 +182,9 @@ PS←{
 	
 	⍝ Infer the type of groups and variables
 	v←⍸(t=V)∧(k=0)∧vb≥0
-	z←⍸(t=Z)∧k=0 ⋄ zi←⍸(p∊z)∧t≠¯1 ⋄ za←zi⌿⍨≠p[zi] ⋄ zc←zi⌿⍨⌽≠⌽p[zi]
+	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]=Z)∧(k[p]=0)∧t≠¯1] ⋄ za←zi⌿⍨≠zp ⋄ zc←zi⌿⍨⌽≠⌽zp ⋄ z←p[za]
 	_←{
-		zb←(⌽≠⌽p[zb])⌿zb←⍸(p∊z)∧(t≠¯1)∧(k≠1)∨(≠p)∧k=1
+		zb←(⌽≠⌽p[zb])⌿zb←zi⌿⍨(zp∊z)∧(k[zi]≠1)∨(≠zp)∧k[zi]=1
 		nk←k[za]×(k[za]≠0)∧za=zc
 		nk+←3×(nk=0)∧k[za]=4
 		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
