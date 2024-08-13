@@ -142,11 +142,11 @@ PS←{
 	vb,←bt←i⌿⍨1⌽msk ⋄ vb[bi]←nz
 	
 	⍝ Enclosing frames and lines for all nodes
-	rz←p I@{(t[⍵]∊G Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍳≢p
-	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G}p[rz]
+	rz←p I@{(t[⍵]∊G Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
+	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G T}p[rz]
 		
 	⍝ Link dfns bound names to canonical binding
-	bm←(t=V)∨(t=A)∧k∊0
+	bm←(t[r]∊F G)∧(t=V)∨(t=A)∧k∊0
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
 	vb[⍸bm]←(nz,¯1)[bt⍳i⌿⍨⌽≠⌽p[i←⍸bm]][bm⌿+⍀0⍪2>⌿bm]
