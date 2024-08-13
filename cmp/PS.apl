@@ -245,7 +245,7 @@ PS←{
 		msg SIGNAL SELECT i⌿⍨msk∨¯1⌽msk
 	}⍬
 	vi←i⌿⍨1⌽msk←i∊j ⋄ pi←msk⌿i
-	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←5 ⋄ end[vi]←end[pi]
+	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ end[vi]←end[pi]
 	p t k n pos end⌿⍨←⊂~pm ⋄ p(⊣-1+⍸⍨)←⍸pm
 
 	⍝ Group function and value expressions
@@ -273,7 +273,7 @@ PS←{
 
 	⍝ Parse function expressions
 	msk←jm∨dm∨mm ⋄ np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p]
-	p,←oi ⋄ t k n lx pos end(⊣,I)←⊂oi
+	p,←oi ⋄ t k n pos end(⊣,I)←⊂oi
 	jl←¯1⌽jm ⋄ ml←(jm∧2⌽mm)∨(~jl)∧1⌽mm ⋄ dl←(jm∧3⌽dm)∨(~jl)∧2⌽dm
 	p[g⌿i]←oi[(g←(~msk)∧(1⌽dm)∨om←jl∨ml∨dl)⌿(xc-⌽+⍀⌽msk)-jl]
 	p[g⌿oi]←(g←msk⌿om)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←0
@@ -284,7 +284,7 @@ PS←{
 	⍝ Parse value expressions
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p
 	msk←m2∨fm∧~¯1⌽m2←km∧(1⌽km)∧~fm←(t[i]=O)∨(t[i]≠A)∧k[i]=2
-	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0 ⋄ lx,←xc⍴0
+	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0
 	pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
 	p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
 	
@@ -292,7 +292,7 @@ PS←{
 	k[⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←¯2
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
 	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p⊣msk←(t[p]=Z)⍲k[p]=¯2
-	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
+	p t k n pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
 
 	⍝ Check for invalid types
 	∨⌿msk←(≠p)∧(t[p]=G)∧k>1:{
@@ -305,14 +305,14 @@ PS←{
 
 	⍝ Eliminate non-error Z nodes from the tree
 	zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
-	p←(zi@ki⍳≢p)[p] ⋄ t k n lx pos end(⊣@zi⍨)←t k n lx pos end I¨⊂ki
-	p t k n lx pos end⌿⍨←⊂msk←msk⍱(t=Z)∧k≠¯2 ⋄ p(⊣-1+⍸⍨)←⍸~msk
+	p←(zi@ki⍳≢p)[p] ⋄ t k n pos end(⊣@zi⍨)←t k n pos end I¨⊂ki
+	p t k n pos end⌿⍨←⊂msk←msk⍱(t=Z)∧k≠¯2 ⋄ p(⊣-1+⍸⍨)←⍸~msk
 	
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
 	k[p[i←⍸msk]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
-	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
+	p t k n pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
 	
 	⍝ Check for bindings/assignments without targets
 	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
@@ -329,7 +329,7 @@ PS←{
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
-	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴3 0
+	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' ''
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 	
 	⍝ Check for nested ⍠← forms
@@ -339,7 +339,7 @@ PS←{
 	}⍬
 
 	⍝ Sort AST by depth-first pre-order traversal
-	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p
+	d i←P2D p ⋄ p d t k n pos end I∘⊢←⊂i ⋄ p←i⍳p
 ∘∘∘
 	(p d t k n pos end)sym IN
 }
