@@ -133,7 +133,7 @@ PS←{
 	
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸t[p]=H
-
+	
 	⍝ Wrap binding values in Z nodes and link
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	nz←(≢p)+⍳≢bi←i⌿⍨msk←bp[i]∧¯1⌽km∧((t=V)∨(≠p)∧(t=P)∧(n=¯2)∧t[p][p]=F)[i]
@@ -145,6 +145,12 @@ PS←{
 	rz←p I@{(t[⍵]∊G Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G}p[rz]
 		
+	⍝ Link dfns bound names to canonical binding
+	bm←(t=V)∨(t=A)∧k∊0
+	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
+	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
+	vb[⍸bm]←(nz,¯1)[bt⍳i⌿⍨⌽≠⌽p[i←⍸bm]][bm⌿+⍀0⍪2>⌿bm]
+
 	⍝ Link local variables to known pseudo-bindings
 	i←⍸(t=V)∧vb=¯1 ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
 	b←(0,i)[1+(⍸b)⍸(⍳≢i)-b←i∊vb[nz]] ⋄ vb[i]+←(1+b)×(n[i]=n[b])∧r[i]=r[b]
@@ -179,7 +185,7 @@ PS←{
 		EM←'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'
 		EM SIGNAL SELECT ⍸msk
 	}⍬
-	
+
 	⍝ Infer the type of groups and variables
 	v←⍸(t=V)∧(k=0)∧vb≥0
 	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]=Z)∧(k[p]=0)∧t≠¯1] ⋄ za←zi⌿⍨≠zp ⋄ zc←zi⌿⍨⌽≠⌽zp ⋄ z←p[za]
@@ -287,7 +293,7 @@ PS←{
 	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0
 	pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
 	p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
-	
+
 	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
 	k[⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←¯2
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
@@ -340,6 +346,6 @@ PS←{
 
 	⍝ Sort AST by depth-first pre-order traversal
 	d i←P2D p ⋄ p d t k n pos end I∘⊢←⊂i ⋄ p←i⍳p
-∘∘∘
+
 	(p d t k n pos end)sym IN
 }
