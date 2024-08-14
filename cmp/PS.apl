@@ -151,7 +151,7 @@ PS←{
 	bm←(t[r]∊F G)∧(t=V)∨(t=A)∧k∊0
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
-	vb[⍸bm]←(nz,¯1)[bt⍳i⌿⍨⌽≠⌽p[i←⍸bm]][bm⌿+⍀0⍪2>⌿bm]
+	vb[msk⌿⍸bm]←x⌿⍨msk←¯1≠x←(nz,¯1)[bt⍳⍸msk⍪0][bm⌿+⍀0⍪msk←2>⌿bm]
 
 	⍝ Link local variables to known pseudo-bindings
 	i←⍸(t=V)∧vb=¯1 ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
