@@ -24,6 +24,7 @@ PS←{
 	'Non-Z/L dfns body node'assert t[⍸t[p]=F]∊Z L:
 
 	⍝ Parse the first line of a trad-fn as an H node
+	⍝ N M S A R L Z X Y←(9⍴2)⊤k ⋄ N M←16 16⊤n
 	t[⍸(≠p)∧t[p]=T]←H
 	∨⌿msk←(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H:'EMPTY RETURN HEADER'SIGNAL SELECT ⍸msk
 	∨⌿msk←(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H:'MISSING SIGNATURE'SIGNAL SELECT ⍸msk
