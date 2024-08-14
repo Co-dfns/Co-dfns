@@ -138,10 +138,11 @@ PS←{
 	⍝ Wrap binding values in Z nodes and link
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	nz←(≢p)+⍳≢bi←i⌿⍨msk←bp[i]∧¯1⌽km∧((t=V)∨(≠p)∧(t=P)∧(n=¯2)∧t[p][p]=F)[i]
-	p[km⌿i]←(np←(msk∨~km)⌿nz@{msk}i)[¯1+km⌿+⍀¯1⌽msk∨~km]
-	p,←(np≥≢p)⌿¯1⌽np ⋄ t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
+	p,←(np≥≢p)⌿¯1⌽np←(msk∨~km)⌿nz@{msk}i
+	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
+	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽msk∨~km]
 	vb,←bt←i⌿⍨1⌽msk ⋄ vb[bi]←nz
-	
+
 	⍝ Enclosing frames and lines for all nodes
 	rz←p I@{(t[⍵]∊G H Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G T}p[rz]
