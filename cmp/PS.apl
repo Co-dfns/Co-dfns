@@ -142,7 +142,7 @@ PS←{
 	vb,←bt←i⌿⍨1⌽msk ⋄ vb[bi]←nz
 	
 	⍝ Enclosing frames and lines for all nodes
-	rz←p I@{(t[⍵]∊G Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
+	rz←p I@{(t[⍵]∊G H Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G T}p[rz]
 		
 	⍝ Link dfns bound names to canonical binding
@@ -165,10 +165,10 @@ PS←{
 	p,←i ⋄ t k n vb r pos end(⊣,I)←⊂i ⋄ t[i]←C
 
 	⍝ Specialize functions to specific formal binding types
-	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t=F)⊢(≢p)⍴1
+	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t∊F T)⊢(≢p)⍴1
 	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r vb rc pos end⌿⍨←⊂x
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
-	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]
+	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t∊F T]
 
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
 	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
