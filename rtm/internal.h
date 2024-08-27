@@ -1,4 +1,6 @@
+#pragma warning (push, 3)
 #include <arrayfire.h>
+#pragma warning (pop)
 
 #include "codfns.h"
 #include "prim.h"
