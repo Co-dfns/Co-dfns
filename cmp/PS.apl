@@ -133,7 +133,7 @@ PS←{
 	}⍬
 	
 	⍝ We use vb to link variables to their binding
-	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸t[p]=H
+	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸(t=T)∨t[p]=H
 	
 	⍝ Wrap binding values in Z nodes and link
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
