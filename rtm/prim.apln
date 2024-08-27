@@ -560,6 +560,10 @@ gdd←{
 	z⊣{z⊢←a[z;⍵]('gradedown_vec_ibeam'⌶)z}¨⌽⍳1⌷⍴a←⍪⍵⊣z←⍳≢⍵
 }
 
+⍝ ≤≥ Sort Up/Down
+sortup←{(⊂⍋⍵)⌷⍵}
+sortdown←{(⊂⍒⍵)⌷⍵}
+
 ⍝ ⊤: Encode
 encmon←{⎕SIGNAL 2}
 enc←{
@@ -993,5 +997,10 @@ print←{
 
 ⍝ ⎕TS: Time stamp
 q_ts←'q_ts_ibeam'⌶
+
+⍝ Conor's Easter Eggs
+starling←violetstarling{⍺←⍵ ⋄ ⍺ ⍺⍺ ⍵⍵ ⍵}
+dove←zebradove←{⍺←⍵ ⋄ (⍺⍺ ⍺)⍵⍵ ⍵}
+
 
 :EndNamespace

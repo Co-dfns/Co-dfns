@@ -49,6 +49,7 @@ TT←{
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Mark mutated bindings 
+	∘∘∘
 	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊B E V S)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(t[p]=C)∨(t=E)∧k=4
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
@@ -167,9 +168,9 @@ TT←{
 	syms,←⊂,'⍲'       ⋄ nams⍪←'nan'        'nanmon'        'lognan'
 	syms,←⊂,'⍱'       ⋄ nams⍪←'nor'        'normon'        'lognor'
 	syms,←⊂,'<'       ⋄ nams⍪←'lth'        'lthmon'        'lessthan'
-	syms,←⊂,'≤'       ⋄ nams⍪←'lte'        'ltemon'        'lesseql'
+	syms,←⊂,'≤'       ⋄ nams⍪←'lte'        'sortup'        'lesseql'
 	syms,←⊂,'='       ⋄ nams⍪←'eql'        'eqlmon'        'equal'
-	syms,←⊂,'≥'       ⋄ nams⍪←'gte'        'gtemon'        'greatereql'
+	syms,←⊂,'≥'       ⋄ nams⍪←'gte'        'sortdown'      'greatereql'
 	syms,←⊂,'>'       ⋄ nams⍪←'gth'        'gthmon'        'greaterthan'
 	syms,←⊂,'≠'       ⋄ nams⍪←'neq'        'firstocc'      'noteq'
 	syms,←⊂,'⌷'       ⋄ nams⍪←'sqd'        'materialize'   'sqd_idx'
@@ -232,6 +233,8 @@ TT←{
 	syms,←⊂,'⎕SIGNAL' ⋄ nams⍪←'q_signal'   'q_signal'      'q_signal'
 	syms,←⊂,'⎕DR'     ⋄ nams⍪←'q_dr'       'q_dr'          'q_dr'
 	syms,←⊂,'⎕TS'     ⋄ nams⍪←'q_ts'       'q_ts'          'q_ts'
+	syms,←⊂,'⟜'       ⋄ nams⍪←'starling'   'starling'      'starling'
+	syms,←⊂,'⊸'       ⋄ nams⍪←'dove'       'dove'          'dove'
 	syms,←⊂,'⍺'       ⋄ nams⍪←'alpha'      'alpha'         'alpha'
 	syms,←⊂,'⍵'       ⋄ nams⍪←'omega'      'omega'         'omega'
 	syms,←⊂,'⍺⍺'      ⋄ nams⍪←'alphaalpha' 'alphaalpha'    'alphaalpha'

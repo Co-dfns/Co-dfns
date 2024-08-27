@@ -14,8 +14,8 @@ TK←{⍺←⊢
 	alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
 	num←⎕D ⋄ syna←'⍬⎕⍞#' ⋄ synb←'¯[]{}()'':⍺⍵⋄;←'
 	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇→⌺'
-	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⍤⍥@' ⋄ prmfo←'/⌿\⍀←'
-	prms←prmfs,prmmo,prmdo,prmfo
+	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⍤⍥@⟜⊸' ⋄ prmfo←'/⌿\⍀←'
+	prms←prmfs,prmmo,prmdo,prmfo  
 
 	⍝ Guarantee everything is LF-terminated
 	IN←LF@{⍵=CR}(~CR LF⍷IN)⌿IN←∊(⊆IN),¨LF
