@@ -151,17 +151,42 @@ PS←{
 	bm←(t[r]∊F G)∧(t=V)∨(t=A)∧k∊0
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
-	vb[msk⌿⍸bm]←x⌿⍨msk←¯1≠x←(nz,¯1)[bt⍳⍸msk⍪0][bm⌿+⍀0⍪msk←2>⌿bm]
-
-	⍝ Link local variables to known pseudo-bindings
-	i←⍸(t=V)∧vb=¯1 ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
-	b←(0,i)[1+(⍸b)⍸(⍳≢i)-b←i∊vb[nz]] ⋄ vb[i]+←(1+b)×(n[i]=n[b])∧r[i]=r[b]
+	vb[msk⌿⍸bm]←i⌿⍨msk←¯1≠i←(nz,¯1)[bt⍳⍸msk⍪0][bm⌿+⍀0⍪msk←2>⌿bm]
 	
-	⍝ Link pseudo-free variables to pseudo-bindings
-	fb←vb[nz] ⋄ fr←n[fb],⍪r[fb] ⋄ fb fr⌿⍨←⊂⊖≠⊖fr ⋄ fb,←¯1 ⋄ frb←fb I fr∘⍳
-	i←⍸(t=V)∧vb=¯1 ⋄ ir←n[i],⍪r[r[i]]
-	_←{vb[i]←j←frb ir ⋄ i ir⌿⍨←⊂j=¯1 ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
+	⍝ Link local variables to bindings
+	i←⍸t∊T V ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
+	b←(0,i)[1+b⍸⍥⍸~b←vb[i]≠¯1] ⋄ i⌿⍨←~b ⋄ vb[i]+←(1+b)∧(n[i]=n[b])∧r[i]=r[b]
 
+	⍝ Link free variables to bindings
+	fb←⍸(t=T)∨(t[p]=H)∨(t=V)∧t[0⌈vb]=Z
+	fr←n[fb],⍪r[fb] ⋄ fb fr⌿⍨←⊂≠fr ⋄ fb,←¯1
+	i←⍸(t=V)∧vb=¯1 ⋄ ir←n[i],⍪r[r][i]
+	_←{vb[i]←j←fb[fr⍳ir] ⋄ i ir⌿⍨←⊂j=¯1 ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
+	
+	⍝ Link shadowed variables to bindings
+	fr fb←↓⍉r[i]{⍺⍵}⌸i←⍸t[p]=H
+	i←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←fr⍳r[i] ⋄ ib←fr⍳vb[i]
+	_←{fb⊣fb[ib]{(≠n[⍺,⍵])⌿⍺,⍵}←fb[ir]}⍣≡fb
+	vb[i]←fb[fr⍳r[i]]{(⍺,¯1)[n[⍺]⍳n[⍵]]}¨i←⍸(t=V)∧(vb=¯1)∧t[r]=T
+	
+	⍝ Check that we have linked everything
+	∨⌿msk←(t=V)∧vb=¯1:'UNBOUND VARIABLE(S)' SIGNAL SELECT ⍳msk
+	
+	⍝ Link bindings to their 1st assignments
+	fr←⍸t=T ⋄ fh←(≢fr)⍴⍬ ⋄ fb←(≢fr)⍴⍬
+	_←r[i]{fh[fr⍳⍺]←⍵}⌸i←⍸t[p]=H
+	_←r[i]{fb[fr⍳⍺]←(≠n[x])⌿x←⍵[⍋n[⍵],pos[rz[⍵]],end[rz[⍵]]-pos[⍵]]}⌸i←⍸(t=Z)∧vb≠¯1
+	i←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←fr⍳r[i] ⋄ ib←fr⍳vb[i]
+	_←{
+		fb[ir]{
+			z←fh[ib]{(~n[vb[⍵]]∊n[⍺])⌿⍵}fb[ib]
+			x←n[vb[⍺]],r[⍺],pos[rz[⍺]],⍪end[rz[⍺]]-pos[⍺]
+			y←n[vb[z]],(≢z)⌿r[⍵],pos[rz[⍵]],⍪end[rz[⍵]]-pos[⍵]
+			(≠n[vb[z]])⌿z←(⍺,z)[⍋x,y]
+		}←i
+	fb}⍣≡fb
+	vb[i]←fb[r[i]]{(⍺,¯1)[n[vb[⍺]]⍳⍵]}¨n[i←⍸t[p]=H]
+	
 	⍝ Wrap all non-module functions in closures
 	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p r I⍨←⊂np@i⊢⍳≢p
 	p,←i ⋄ t k n vb r pos end(⊣,I)←⊂i ⋄ t[i]←C
