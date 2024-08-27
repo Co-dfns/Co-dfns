@@ -141,7 +141,7 @@ PS←{
 	p,←(np≥≢p)⌿¯1⌽np←(msk∨~km)⌿nz@{msk}i
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽msk∨~km]
-	vb,←bt←i⌿⍨1⌽msk ⋄ vb[bi]←nz
+	vb,←bt←i⌿⍨1⌽msk
 
 	⍝ Enclosing frames and lines for all nodes
 	rz←p I@{(t[⍵]∊G H Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
