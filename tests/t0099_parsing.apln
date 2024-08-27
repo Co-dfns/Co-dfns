@@ -371,6 +371,16 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK k=0 1 0 2 2 2 2 1 2 1 1 2 1
  CHK d=0 1 2 2 3 3 2 3 3 3 4 4 4
  
+ CHK PARSE NS 'fn←⊢' 'a←1' '∇FN' 'a fn b←1' '∇'
+ CHK p=0 0 1 1 0 4 4 0 7 7 9 9 9 12 12
+ CHK t=CD.(F B V P B V A T H E V V B V A)
+ CHK k=0 2 2 2 1 1 1 1 0 2 1 2 1 1 1
+
+ CHK PARSE NS 'fn←⊢' 'a←1' 'FN←{a fn b←1}'
+ CHK p=0 0 1 1 0 4 4 0 7 7 9 10 11 12 12 12 11 9 17 18 19 19 19 18
+ CHK t=CD.(F B V P B V A B V C F B A V V V A F B A V V V A)
+ CHK k=0 2 2 2 1 1 1 2 2 2 2 1 7 1 1 1 1 3 1 7 1 1 1 1
+ 
  ⎕←'☺' 
  
 ∇
