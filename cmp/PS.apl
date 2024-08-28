@@ -188,7 +188,7 @@ PS←{
 	vb[i]←fb[r[i]]{(⍺,¯1)[n[vb[⍺]]⍳⍵]}¨n[i←⍸t[p]=H]
 	
 	⍝ Wrap all non-module functions in closures
-	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p r I⍨←⊂np@i⊢⍳≢p
+	i←⍸(t∊F T)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p r I⍨←⊂np@i⊢⍳≢p
 	p,←i ⋄ t k n vb r pos end(⊣,I)←⊂i ⋄ t[i]←C
 
 	⍝ Specialize functions to specific formal binding types
