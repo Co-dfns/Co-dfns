@@ -132,6 +132,10 @@ PS←{
 		'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[i]
 	}⍬
 	
+	⍝ Wrap all non-module functions in closures
+	i←⍸(t∊F T)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p r I⍨←⊂np@i⊢⍳≢p
+	p,←i ⋄ t k n vb r pos end(⊣,I)←⊂i ⋄ t[i]←C
+
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸(t=T)∨t[p]=H
 	
@@ -160,14 +164,18 @@ PS←{
 	⍝ Link free variables to bindings
 	fb←⍸(t=T)∨(t[p]=H)∨(t=V)∧t[0⌈vb]=Z
 	fr←n[fb],⍪r[fb] ⋄ fb fr⌿⍨←⊂≠fr ⋄ fb,←¯1
-	i←⍸(t=V)∧vb=¯1 ⋄ ir←n[i],⍪r[r][i]
-	_←{vb[i]←j←fb[fr⍳ir] ⋄ i ir⌿⍨←⊂j=¯1 ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
+	i←⍸(t=V)∧vb=¯1 ⋄ ir←n[i],⍪r[r][i] ⋄ fvr←r[i] ⋄ fvi←i
+	_←{vb[i]←j←fb[fr⍳ir] ⋄ i ir⌿⍨←⊂j=¯1 ⋄ fvr,←⊢/ir ⋄ fvi,←i ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
 	
 	⍝ Link shadowed variables to bindings
-	fr fb←↓⍉r[i]{⍺⍵}⌸i←⍸t[p]=H
-	i←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←fr⍳r[i] ⋄ ib←fr⍳vb[i]
-	_←{fb⊣fb[ib]{(≠n[⍺,⍵])⌿⍺,⍵}←fb[ir]}⍣≡fb
-	vb[i]←fb[fr⍳r[i]]{(⍺,¯1)[n[⍺]⍳n[⍵]]}¨i←⍸(t=V)∧(vb=¯1)∧t[r]=T
+	j←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←(I@{t[0⌈⍵]≠T}⍣≡⍨r)[i]
+	_←{
+		vb[i]⌈←x←fb[fr⍳n[i],⍪ir] ⋄ i ir⌿⍨←⊂x=¯1 ⋄ fvr,←ir ⋄ fvi,←i
+		msk←vb[j]∘.=ir ⋄ i←msk⌿⍥,(⍴msk)⍴i ⋄ ir←r[j]⌿⍨+/msk
+	}⍣≡ir
+
+	⍝ Add free variables to closures
+	fvi fvr⌿⍨←⊂≠fvi,⍪fvr ⋄ t k n vb pos end(⊣,I)←fvi ⋄ p r(⊣,I)←fvr
 	
 	⍝ Check that we have linked everything
 	∨⌿msk←(t=V)∧vb=¯1:'UNBOUND VARIABLE(S)' SIGNAL SELECT ⍳msk
@@ -187,10 +195,6 @@ PS←{
 	fb}⍣≡fb
 	vb[i]←fb[r[i]]{(⍺,¯1)[n[vb[⍺]]⍳⍵]}¨n[i←⍸t[p]=H]
 	
-	⍝ Wrap all non-module functions in closures
-	i←⍸(t∊F T)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p r I⍨←⊂np@i⊢⍳≢p
-	p,←i ⋄ t k n vb r pos end(⊣,I)←⊂i ⋄ t[i]←C
-
 	⍝ Specialize functions to specific formal binding types
 	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t∊F T)⊢(≢p)⍴1
 	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r vb rc pos end⌿⍨←⊂x
