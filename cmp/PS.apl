@@ -181,9 +181,6 @@ PS←{
 	msk←vb[j]∘.=fvr ⋄ i←msk⌿⍥,(⍴msk)⍴fvi ⋄ ir←j⌿⍨+/msk
 	p,←ir ⋄ t k n vb lx pos end(⊣,I)←i ⋄ r,←r[ir] ⋄ rz,←rz[ir]
 	
-	⍝ Check that we have linked everything
-	∨⌿msk←(t=V)∧vb=¯1:'UNBOUND VARIABLE(S)' SIGNAL SELECT ⍳msk
-	
 	⍝ Link bindings to their 1st assignments
 	fr←⍸t=T ⋄ fh←(≢fr)⍴⍬ ⋄ fb←(≢fr)⍴⍬
 	_←r[i]{fh[fr⍳⍺]←⍵}⌸i←⍸t[p]=H
@@ -208,6 +205,9 @@ PS←{
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
 	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
 	vb[j]←(i,¯1)[(r[i],⍪n[i])⍳r[j],⍪n[j]]
+	
+	⍝ Unbound variables are lx=¯1
+	lx[⍸(t=V)∧vb=¯1]←¯1
 
 	⍝ Mark formals with their appropriate kinds
 	k[⍸(t=P)∧n=¯2]←0
