@@ -4,7 +4,6 @@
 
  src,←⊃⎕NGET (root,'/cmp/main.apl') 1
  src,←⊃⎕NGET (root,'/cmp/util.apl') 1
- src,←⊃⎕NGET (root,'/cmp/TK.apl') 1
  src,←⊃⎕NGET (root,'/cmp/PS.apl') 1
  src,←⊃⎕NGET (root,'/cmp/TT.apl') 1
  src,←⊃⎕NGET (root,'/cmp/GC.apl') 1

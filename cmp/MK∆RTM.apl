@@ -4,7 +4,7 @@
 
   src←⊃⎕NGET path,'/rtm/prim.apln'
   echo←{⍺←⊢ ⋄ ⍺ ⍺⍺ ⍵⊣⍞←⍵⍵}
-  data header←'prim'GC echo 'G' TT echo 'C' PS echo 'P' TK echo 'T' ⊢ src
+  data header←'prim'GC echo 'G' TT echo 'C' PS echo 'P' ⊢ src
   (path,'/rtm/prim.c')put data
   (path,'/rtm/prim.h')put header
   

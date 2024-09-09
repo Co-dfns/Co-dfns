@@ -9,7 +9,6 @@ N∆←'∘ABCEFGHKLMNOPSTVZ'
 Compile←{
 	m←(-≢2⊃⎕NPARTS ⍵)↓⍵
 	_←    ⊃⎕NGET ⍵ 1⊣⍞←'R'
-	_←          TK _⊣⍞←'T'
 	_←a n s src←PS _⊣⍞←'P'
 	_←          TT _⊣⍞←'C'
 	_←        m GC _⊣⍞←'G'
@@ -20,7 +19,6 @@ Compile←{
 Exec←{
 	m←(-≢2⊃⎕NPARTS ⍵)↓⍵
 	_←    ⊃⎕NGET ⍵ 1
-	_←          TK _
 	_←a n s src←PS _
 	_←          TT _
 	_←        m GC _
@@ -28,8 +26,8 @@ Exec←{
 	'UTF-8'⎕UCS ⎕UCS ∊(⎕UCS 13),¨⍨⎕CMD f
 }
 
-Fix←{
-	_←          TK ⍵⊣⍞←'T'
+Fix←{_←⍵
+	_←          TK _⊣⍞←'T'
 	_←a n s src←PS _⊣⍞←'P'
 	_←          TT _⊣⍞←'C'
 	_←        ⍺ GC _⊣⍞←'G'
