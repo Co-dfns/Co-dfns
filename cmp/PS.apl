@@ -170,30 +170,30 @@ PS←{
 	_←{
 		vb[i]⌈←x←fb[fr⍳n[i],⍪ir] ⋄ i ir⌿⍨←⊂x=¯1 ⋄ fvr,←ir ⋄ fvi,←i
 		msk←vb[j]∘.=ir ⋄ i←msk⌿⍥,(⍴msk)⍴i ⋄ ir←r[j]⌿⍨+/msk
-	}⍣≡ir
+	ir}⍣≡ir
 	
 	⍝ Link bindings to their 1st assignments
 	fb←⍸(t=V)∧(t[p]≠H)∧t[r]=T
 	fb←(≠n[fb],⍪r[fb])⌿fb←fb[⍋n[fb],r[fb],pos[rz[fb]],⍪end[rz[fb]]-pos[fb]]
 	fz←(i,¯1)[fb⍳⍥(p∘I)⍨i←⍸(t=Z)∧vb≠¯1]
 	fr←n[fb],⍪r[fb] ⋄ fh←n[i],⍪r[i←⍸t[p]=H]
-	fx←n[fb],r[fb],pos[rz[fb]],end[rz[fb]]-pos[fb]
-	jx←r[j],pos[rz[j]],end[rz[j]]-pos[j]
+	fx←n[fb],r[fb],pos[rz[fb]],⍪end[rz[fb]]-pos[fb]
+	jx←r[j],pos[rz[j]],⍪end[rz[j]]-pos[j]
 	_←{
 		fvr fvz←(⊂~fr∊⍥↓fh)⌿¨fr fz
 		rc←+/msk←vb[j]∘.=fvr[;1] ⋄ jn←msk⌿⍥,(⍴msk)⍴fvr[;0]
 		fx⍪←jn,rc⌿jx ⋄ fr⍪←jn,⍪rc⌿r[j] ⋄ fz⍪←msk⌿⍥,(⍴msk)⍴fvz
 		fr fz fx⌿⍨←⊂(≠fx[x;])[⍋x←⍋fx]
 	fx}⍣≡fx
-	vb[i]←(fz,¯1)[fr⍳n[i],⍪r[i]
+	vb[i]←(fz,¯1)[fr⍳n[i],⍪r[i]]
 
 	⍝ Create closures for functions and trad-fn references
 	i←j,⍸(t∊F T)∧k≠0 ⋄ fvi fvr⌿⍨←⊂≠n[fvi],⍪fvr ⋄ k[j]←k[vb[j]]
 	np←(≢p)+⍳≢i ⋄ p r fvi I⍨←⊂np@i⊢⍳≢p
 	p,←i ⋄ t k n vb r lx pos end(⊣,I)←⊂i ⋄ t[i]←C
-	p,←fvr ⋄ t k n vb lx pos end(⊣,I)←fvi ⋄ r,←r[fvr] ⋄ rz,←rz[fvr]
+	p,←fvr ⋄ t k n vb lx pos end(⊣,I)←⊂fvi ⋄ r,←r[fvr] ⋄ rz,←rz[fvr]
 	msk←vb[j]∘.=fvr ⋄ i←msk⌿⍥,(⍴msk)⍴fvi ⋄ ir←j⌿⍨+/msk
-	p,←ir ⋄ t k n vb lx pos end(⊣,I)←i ⋄ r,←r[ir] ⋄ rz,←rz[ir]
+	p,←ir ⋄ t k n vb lx pos end(⊣,I)←⊂i ⋄ r,←r[ir] ⋄ rz,←rz[ir]
 
 	⍝ Specialize functions to specific formal binding types
 	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t∊F T)⊢(≢p)⍴1
