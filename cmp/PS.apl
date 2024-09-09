@@ -390,8 +390,9 @@ PS←{
 	}⍬
 	
 	⍝ Compute exports
-	msk←∘∘∘
-	xt←k[xn] ⋄ xn←sym[|n[xn]]
+	msk←(≠p)∧t[p]=B
+	i←⍸(k[I@{t[⍵]≠F}⍣≡⍨p]=0)∧(t=T)∨(t=V)∧msk[p I@{~msk[⍵]}⍣≡⍳≢p]
+	xn←sym[|n[i]] ⋄ xt←k[i]
 
 	⍝ Sort AST by depth-first pre-order traversal
 	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p
