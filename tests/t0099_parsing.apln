@@ -4,13 +4,7 @@ CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8⊣⎕←'✗' ⋄ _
 ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
 ∇{Z}←{E}PARSE X
- (p d t k n lx pos end)(xn xt)sym IN←##.codfns.(PS TK) src←X
- Z←1
-∇
-
-∇{Z}←{E}TOKENIZE X
- ⍎'E←⊢'⌿⍨0=⎕NC'E'
- (d t k n pos end)sym IN←E ##.codfns.TK src←X
+ (p d t k n lx pos end)(xn xt)sym IN←##.codfns.PS src←X
  Z←1
 ∇
 
