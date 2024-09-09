@@ -125,10 +125,6 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK pos end=(0 11 12 12 14 16 21 23)(40 26 24 13 15 17 22 24)
  CHK xn xt≡¨(,⊂'FN')(,4)
  
- CHK TOKENIZE ':Class blah :X' ':EndClass'
- CHK TOKENIZE ':Class Blah:X' ':EndClass'
- CHK TOKENIZE ':Class Blah : X' ':EndClass'
- 
  CHK PARSE NS '∇{X} FN Y' '∇'
  CHK t=CD.(F T H V V)
  CHK p d=(0 0 1 2 2)(0 1 2 3 3)
@@ -191,7 +187,7 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK lx=4 0 0 1
  CHK pos end=(0 11 12 13)(34 20 18 14)
  CHK xn xt≡¨(,⊂'FN')(,1)
- 
+
  CHK PARSE NS '∇{Z}←FN X' '∇'
  CHK t=CD.(F T H V V)
  CHK p d=(0 0 1 2 2)(0 1 2 3 3)
@@ -376,6 +372,10 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK k=0 2 2 2 1 1 1 2 2 2 2 1 7 1 1 1 1 3 1 7 1 1 1 1
  
  ⎕←'☺' 
+ 
+ ⍝ CHK TOKENIZE ':Class blah :X' ':EndClass'
+ ⍝ CHK TOKENIZE ':Class Blah:X' ':EndClass'
+ ⍝ CHK TOKENIZE ':Class Blah : X' ':EndClass'
  
 ∇
 
