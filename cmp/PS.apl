@@ -404,10 +404,14 @@ PS←{⍺←⊢
 	p,←ir ⋄ t k n vb lx pos end(⊣,I)←⊂i ⋄ r,←r[ir] ⋄ rz,←rz[ir]
 
 	⍝ Specialize functions to specific formal binding types
-	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t∊F T)⊢(≢p)⍴1
-	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r vb rc lx pos end⌿⍨←⊂x
+	isa isd←↓5 1⌷(9⍴2)⊤k ⋄ rc←(≢p)⍴1
+	rc←1 1 2 4 8[k[i]]@(i←⍸(t=F)∨isa∧t=T)⊢rc
+	rc←1 1 1 2 4[k[i]]@(i←⍸(t=T)∧~isa)⊢rc
+	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc ⋄ j←(+⍀x)-x ⋄ ro←∊⍳¨x
+	p t k n r vb lx rc isa isd pos end⌿⍨←⊂x
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
-	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t∊F T]
+	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸(t=F)∨(t=T)∧isa]
+	k[i]←0 1 2 4 8[k[i]](⊣+isd[i]+2×|)ro[i←⍸(t=T)∧~isa] 
 
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
 	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
