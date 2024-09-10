@@ -600,7 +600,7 @@ PS←{⍺←⊢
 	
 	⍝ Compute exports
 	msk←(≠p)∧t[p]=B
-	i←⍸(k[I@{t[⍵]≠F}⍣≡⍨p]=0)∧(t=T)∨(t=V)∧msk[p I@{~msk[⍵]}⍣≡⍳≢p]
+	i←⍸(k[I@{t[⍵]≠F}⍣≡⍨p]=0)∧(t=C)∨(t=V)∧msk[p I@{~msk[⍵]}⍣≡⍳≢p]
 	xn←sym[|n[i]] ⋄ xt←k[i]
 
 	⍝ Sort AST by depth-first pre-order traversal
