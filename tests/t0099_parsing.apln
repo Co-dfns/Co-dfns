@@ -18,57 +18,57 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CD←##.codfns
  
  CHK PARSE NS '∇FN' '∇'
- CHK t=CD.(F T H)
- CHK p d=(0 0 1)(0 1 2)
- CHK k=0 1 0
- CHK n=0 (-sym⍳⊂'FN') 0
- CHK lx=4 0 0
- CHK pos end=(0 11 12)(30 16 14)
+ CHK t=CD.(F C T H)
+ CHK p d=(0 0 1 2)(0 1 2 3)
+ CHK k=0 1 1 0
+ CHK n=0 (-sym⍳⊂'FN')(-sym⍳⊂'FN') 0
+ CHK lx=4 0 0 0
+ CHK pos end=(0 11 11 12)(30 16 16 14)
  CHK xn xt≡¨(,⊂'FN')(,1)
  
  CHK PARSE NS '∇FN X' '∇'
- CHK t=CD.(F T H V)
- CHK p d=(0 0 1 2)(0 1 2 3)
- CHK k=0 2 1 1
- CHK n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'X')
- CHK lx=4 0 0 1
- CHK pos end=(0 11 12 15)(32 18 16 16)
+ CHK t=CD.(F C T H V)
+ CHK p d=(0 0 1 2 3)(0 1 2 3 4)
+ CHK k=0 2 2 1 1
+ CHK n=0(-sym⍳⊂'FN') (-sym⍳⊂'FN')0(-sym⍳⊂,'X')
+ CHK lx=4 0 0 0 4
+ CHK pos end=(0 11 11 12 15)(32 18 18 16 16)
  CHK xn xt≡¨(,⊂'FN')(,2)
  
  CHK PARSE NS '∇X FN Y' '∇'
- CHK t=CD.(F T H V V)
- CHK p d=(0 0 1 2 2)(0 1 2 3 3)
- CHK k=0 2 3 1 1
- CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'XY'
- CHK lx=4 0 0 1 1
- CHK pos end=(0 11 12 12 17)(34 20 18 13 18)
+ CHK t=CD.(F C T H V V)
+ CHK p d=(0 0 1 2 3 3)(0 1 2 3 4 4)
+ CHK k=0 2 3 3 1 1
+ CHK n=0 (-sym⍳⊂'FN')(-sym⍳⊂'FN')0,-sym⍳,¨'XY'
+ CHK lx=4 0 0 0 4 4
+ CHK pos end=(0 11 11 12 12 17)(34 20 20 18 13 18)
  CHK xn xt≡¨(,⊂'FN')(,2)
  
  CHK PARSE NS '∇Z←FN' '∇'
- CHK t=CD.(F T H V)
- CHK p d=(0 0 1 2)(0 1 2 3)
- CHK k=0 1 4 1
- CHK n=0 (-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
- CHK lx=4 0 0 1
- CHK pos end=(0 11 12 12)(32 18 16 13)
+ CHK t=CD.(F C T H V)
+ CHK p d=(0 0 1 2 3)(0 1 2 3 4)
+ CHK k=0 1 1 4 1
+ CHK n=0(-sym⍳⊂'FN')(-sym⍳⊂'FN')0(-sym⍳⊂,'Z')
+ CHK lx=4 0 0 0 4
+ CHK pos end=(0 11 11 12 12)(32 18 18 16 13)
  CHK xn xt≡¨(,⊂'FN')(,1)
  
  CHK PARSE NS '∇Z←FN X' '∇'
- CHK t=CD.(F T H V V)
- CHK p d=(0 0 1 2 2)(0 1 2 3 3)
- CHK k=0 2 5 1 1
- CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
- CHK lx=4 0 0 1 1
- CHK pos end=(0 11 12 12 17)(34 20 18 13 18)
+ CHK t=CD.(F C T H V V)
+ CHK p d=(0 0 1 2 3 3)(0 1 2 3 4 4)
+ CHK k=0 2 2 5 1 1
+ CHK n=0(-sym⍳⊂'FN')(-sym⍳⊂'FN')0,-sym⍳,¨'ZX'
+ CHK lx=4 0 0 0 4 4
+ CHK pos end=(0 11 11 12 12 17)(34 20 20 18 13 18)
  CHK xn xt≡¨(,⊂'FN')(,2)
  
  CHK PARSE NS '∇Z←X FN Y' '∇'
- CHK t=CD.(F T H V V V)
- CHK p d=(0 0 1 2 2 2)(0 1 2 3 3 3)
- CHK k=0 2 7 1 1 1
- CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
- CHK lx=4 0 0 1 1 1
- CHK pos end=(0 11 12 12 14 19)(36 22 20 13 15 20)
+ CHK t=CD.(F C T H V V V)
+ CHK p d=(0 0 1 2 3 3 3)(0 1 2 3 4 4 4)
+ CHK k=0 2 3 7 1 1 1
+ CHK n=0(-sym⍳⊂'FN')(-sym⍳⊂'FN')0,-sym⍳,¨'ZXY'
+ CHK lx=4 0 0 0 4 4 4
+ CHK pos end=(0 11 11 12 12 14 19)(36 22 22 20 13 15 20)
  CHK xn xt≡¨(,⊂'FN')(,2)
 
  CHK PARSE NS '∇(L FN)Y' '∇'
