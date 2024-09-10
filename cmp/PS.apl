@@ -416,7 +416,7 @@ PS←{⍺←⊢
 	⍝ Unbound variables are lx=¯1
 	lx[⍸(t=V)∧vb=¯1]←¯1
 
-	⍝ Mark formals with their appropriate kinds
+	⍝ Mark formals with their appropriate kinds and scopes
 	k[⍸(t=P)∧n=¯2]←0
 	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
 	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
@@ -429,6 +429,7 @@ PS←{⍺←⊢
 	im←hk[5;]⌿j+zc+hk[7;]
 	id←(hk[5;]⌿hk[4;])⌿im+1
 	k[ix,iy,iz]←1 ⋄ k[im]←(¯16↑12⍴2⌿1 2)[k[r[im]]] ⋄ k[id]←(¯16↑4⌿1 2)[k[r[id]]]
+	lx[ix,iy,iz,im,id]←4
 	
 	⍝ Error if brackets are not addressing something
 	∨⌿msk←(≠p)∧t=¯1:{
