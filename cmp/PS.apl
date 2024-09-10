@@ -451,10 +451,9 @@ PS←{⍺←⊢
 		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
 		nk+←(nk=0)∧((t[zc]=A)∨1=|k[zc])∧(t[zb]=V)⍲k[zb]=0
-		k[z]←nk ⋄ k[vb[msk⌿z]]←nk⌿⍨msk←vb[z]≥0 ⋄ k[v]←k[vb[v]]
+		k[z]←nk ⋄ k[v]←k[vb[v]]
 		z za zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
-		v z
-	}⍣≡⍬
+	v z}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1
 	
 	⍝ Wrap non-array bindings as B2+(V, Z)
