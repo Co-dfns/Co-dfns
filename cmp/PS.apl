@@ -404,7 +404,7 @@ PS←{⍺←⊢
 	p,←ir ⋄ t k n vb lx pos end(⊣,I)←⊂i ⋄ r,←r[ir] ⋄ rz,←rz[ir]
 
 	⍝ Specialize functions to specific formal binding types
-	isa isd←↓5 1⌷(9⍴2)⊤k ⋄ rc←(≢p)⍴1
+	rc←(≢p)⍴1 ⋄ isa isd←⊣@p⍨¨↓(⊂3 7)⌷(9⍴2)⊤k
 	rc←1 1 2 4 8[k[i]]@(i←⍸(t=F)∨isa∧t=T)⊢rc
 	rc←1 1 1 2 4[k[i]]@(i←⍸(t=T)∧~isa)⊢rc
 	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc ⋄ j←(+⍀x)-x ⋄ ro←∊⍳¨x
