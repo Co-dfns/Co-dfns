@@ -1,6 +1,8 @@
 :Namespace t0099_parsing
 
-CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8⊣⎕←'✗' ⋄ _←0⊣⍞←'✓'}
+⍝ ⍞←'✓'
+⍝ ⎕←'✗'
+CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0}
 ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
 ∇{Z}←{E}PARSE X
@@ -72,12 +74,12 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  CHK xn xt≡¨(,⊂'FN')(,2)
 
  CHK PARSE NS '∇(L FN)Y' '∇'
- CHK t=CD.(F T H V V)
- CHK p d=(0 0 1 2 2)(0 1 2 3 3)
- CHK k=0 3 9 0 1
- CHK n=0 (-sym⍳⊂'FN')0,-sym⍳,¨'LY'
- CHK lx=4 0 0 1 1
- CHK pos end=(0 11 12 13 18)(35 21 19 14 19)
+ CHK t=CD.(F C T H V V T H V V)
+ CHK p d=(0 0 1 2 3 3 1 6 7 7)(0 1 2 3 4 4 2 3 4 4)
+ CHK k=0 3 4 9 1 1 6 9 2 1
+ CHK n=0(-sym⍳⊂'FN'),8⍴(-sym⍳⊂'FN')0,-sym⍳,¨'LY'
+ CHK lx=4 0 0 0 4 4 0 0 4 4
+ CHK pos end=(0 11 11 12 13 18 11 12 13 18)(35 21 21 19 14 19 21 19 14 19)
  CHK xn xt≡¨(,⊂'FN')(,3)
 
  CHK PARSE NS '∇X(L FN)Y' '∇'
