@@ -425,15 +425,14 @@ PS←{⍺←⊢
 	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
 	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
 	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
-	i←i[⍋p[i←⍸t[p]=H]] ⋄ j←i⌿⍨≠p[i] ⋄ hk←(9⍴2)⊤k[p[j]] ⋄ hn←16 16⊤n[p[j]]
+	i←i[⍋p[i←⍸t[p]=H]] ⋄ jp←p[i[j←⍸≠p[i]]] ⋄ hk←(9⍴2)⊤k[jp] ⋄ hn←16 16⊤n[jp]
 	zc←hk[6;]⌈hn[0;]×hk[0;]
-	ix←∊hk[8;]⌿(j+zc++⌿hk[4 5 7;])+⍳¨hk[8;]⌈hn[1;]×hk[1;]
-	iy←hk[7;]⌿j+zc
-	iz←∊hk[6;]⌿j+⍳¨zc
-	im←hk[5;]⌿j+zc+hk[7;]
-	id←(hk[5;]⌿hk[4;])⌿im+1
-	k[ix,iy,iz]←1 ⋄ k[im]←(¯16↑12⍴2⌿1 2)[k[r[im]]] ⋄ k[id]←(¯16↑4⌿1 2)[k[r[id]]]
-	lx[ix,iy,iz,im,id]←4
+	iy←i[∊hk[8;]⌿(j+zc++⌿hk[4 5 7;])+⍳¨hk[8;]⌈hn[1;]×hk[1;]]
+	ix←i[hk[7;]⌿j+zc]
+	iz←i[∊hk[6;]⌿j+⍳¨zc]
+	id←(hk[5;]⌿hk[4;])⌿1+im←hk[5;]⌿j+zc+hk[7;] ⋄ im←i[im] ⋄ id←i[id]
+	k[iz,iy,ix]←1 ⋄ k[im]←(¯16↑12⍴2⌿1 2)[k[r[im]]] ⋄ k[id]←(¯16↑4⌿1 2)[k[r[id]]]
+	lx[im,id,iz,ix,iy]←4
 	
 	⍝ Error if brackets are not addressing something
 	∨⌿msk←(≠p)∧t=¯1:{
