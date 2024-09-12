@@ -231,7 +231,7 @@ PS←{⍺←⊢
 	'Non-Z/L dfns body node'assert t[⍸t[p]=F]∊Z L:
 
 	⍝ Parse the first line of a trad-fn as an H node
-	⍝ N M S A R L Z X Y←(9⍴2)⊤k ⋄ N M←16 16⊤n
+	⍝ N M S A R L Z X Y←(9⍴2)⊤k ⋄ N M←0(2*16)⊤n
 	t[⍸(≠p)∧t[p]=T]←H
 	∨⌿msk←(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H:'EMPTY RETURN HEADER'SIGNAL SELECT ⍸msk
 	∨⌿msk←(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H:'MISSING SIGNATURE'SIGNAL SELECT ⍸msk
@@ -425,7 +425,7 @@ PS←{⍺←⊢
 	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
 	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
 	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
-	i←i[⍋p[i←⍸t[p]=H]] ⋄ jp←p[i[j←⍸≠p[i]]] ⋄ hk←(9⍴2)⊤k[jp] ⋄ hn←16 16⊤n[jp]
+	i←i[⍋p[i←⍸t[p]=H]] ⋄ jp←p[i[j←⍸≠p[i]]] ⋄ hk←(9⍴2)⊤k[jp] ⋄ hn←0(2*16)⊤n[jp]
 	zc←hk[6;]⌈hn[0;]×hk[0;]
 	iy←i[∊hk[8;]⌿(j+zc++⌿hk[4 5 7;])+⍳¨hk[8;]⌈hn[1;]×hk[1;]]
 	ix←i[hk[7;]⌿j+zc]
