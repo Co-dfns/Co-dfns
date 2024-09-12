@@ -584,7 +584,7 @@ PS←{⍺←⊢
 	
 	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
 	i←p[⍸bp∧k=2] ⋄ k[i]←4
-	i←p[⍸(≠p)∧(t[p]=E)∧(t[p]=4)∧(t=V)∨(t=A)∧k∊0 7] ⋄ t[i]←B ⋄ k[i]←1
+	i←p[⍸(≠p)∧(t[p]=E)∧(k[p]=4)∧(t=V)∨(t=A)∧k∊0 7] ⋄ t[i]←B ⋄ k[i]←1
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
 		
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
