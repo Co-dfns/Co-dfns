@@ -334,10 +334,9 @@ PS←{⍺←⊢
 	bp←n∊-sym⍳,¨'←' '⍠←' '∘←'
 
 	⍝ Check for empty bindings
-	i←p[i]{⊃⌽⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	∨⌿msk←bp[i]:{
-		'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[i]
-	}⍬
+	i←⍸(t[p]=Z)∧p≠⍳≢p
+	∨⌿msk←bp[j←i⌿⍨≠p[i]]:{'EMPTY ASSIGNMENT TARGET'SIGNAL SELECT msk⌿p[j]}⍬
+	∨⌿msk←bp[j←i⌿⍨⌽≠⌽p[i]]:{'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[j]}⍬
 	
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸(t=T)∨t[p]=H
