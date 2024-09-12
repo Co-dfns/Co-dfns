@@ -453,11 +453,11 @@ PS←{⍺←⊢
 		z za zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1
-	
+
 	⍝ Wrap non-array bindings as B2+(V, Z)
-	i←⍸(t[vb⌈0]=Z)∧(k[vb⌈0]≠1)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
-	p[vb[vb[i]]]←i ⋄ p[vb[i]]←i ⋄ t[i]←B ⋄ k[i]←k[vb[i]]
-	pos[i]←pos[vb[vb[i]]] ⋄ end[i]←end[vb[i]]
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂2=k[i]
+	p[(jt←i[j-1]),jv←i[j+1]]←,⍨ij←i[j] ⋄ t[ij]←B ⋄ k[ij]←2
+	pos[ij]←pos[jt] ⋄ end[ij]←end[jv]
 	
 	⍝ Enclose V+[X;...] in Z nodes for parsing
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
