@@ -586,6 +586,7 @@ PS←{⍺←⊢
 	i←p[⍸bp∧k=2] ⋄ k[i]←4
 	i←p[⍸(≠p)∧(t[p]=E)∧(k[p]=4)∧(t=V)∨(t=A)∧k∊0 7] ⋄ t[i]←B ⋄ k[i]←1
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
+	n[p[i]]←n[i←⍸msk←bp∧t[p]=B] ⋄ p t k n lx pos end⌿⍨←⊂~msk ⋄ p←i(⊢-1+⍸)p
 		
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
