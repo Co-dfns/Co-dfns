@@ -14,6 +14,27 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
  Z←(⊂':Namespace'),src,⊂':EndNamespace'
 ∇
 
+MKSYM←{
+	⍬≡⍵:'⍬'
+	v←v,(⍕⍵),v←''''⌿⍨' '=⊃0⍴⍵
+	(,1)≡⍴⍵:'(,',v,')'
+	v
+}
+
+MK←{(p d t k n lx pos end)(xn xt)sym IN←CD.PS ⍵
+	⎕←' CHK t=CD.(',(⊃{⍺,' ',⍵}⌿CD.N∆[t]),')'
+	⎕←' CHK p=',⍕p
+	⎕←' CHK d=',⍕d
+	⎕←' CHK k=',⍕k
+	⎕←' CHK lx=',⍕lx
+	⎕←' CHK pos=',⍕pos
+	⎕←' CHK end=',⍕end
+	⎕←' CHK n=',⍕n
+	⎕←' CHK sym≡',⊃{⍺,' ',⍵}⌿MKSYM¨sym
+	⎕←' CHK xn≡',(',⊂'⌿⍨1=≢xn),⊃{⍺,' ',⍵}⌿MKSYM¨xn
+	⎕←' CHK xt≡,',⍕xt
+}
+
 ∇{Z}←TEST;src;p;d;t;k;n;lx;pos;end;xn;xt;sym;IN;CD
  Z←⍪⍬
  
