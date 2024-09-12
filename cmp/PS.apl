@@ -417,7 +417,7 @@ PS←{⍺←⊢
 	vb[j]←(i,¯1)[(r[i],⍪n[i])⍳r[j],⍪n[j]]
 	
 	⍝ Unbound variables are lx=¯1
-	lx[⍸(t=V)∧vb=¯1]←¯1
+	lx[⍸(t=V)∧(vb=¯1)∧t[p]≠H]←¯1
 
 	⍝ Mark formals with their appropriate kinds and scopes
 	k[⍸(t=P)∧n=¯2]←0
