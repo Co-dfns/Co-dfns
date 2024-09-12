@@ -6,8 +6,10 @@ CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0}
 ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 
 ∇{Z}←{E}PARSE X
- (p d t k n lx pos end)(xn xt)sym IN←##.codfns.PS src←X
  Z←1
+ →(⎕NC'E')⌿HASE
+ (p d t k n lx pos end)(xn xt)sym IN←##.codfns.PS src←X ⋄ →0
+ HASE:(p d t k n lx pos end)(xn xt)sym IN←E ##.codfns.PS src←X
 ∇
 
 ∇Z←NS src
@@ -31,7 +33,7 @@ MK←{(p d t k n lx pos end)(xn xt)sym IN←CD.PS ⍵
 	⎕←' CHK end=',⍕end
 	⎕←' CHK ({sym[|⍵]}@{⍵<0}n)≡',⊃{⍺,' ',⍵}⌿MKSYM¨{sym[|⍵]}@{⍵<0}⊢n
 	⎕←' CHK sym≡',⊃{⍺,' ',⍵}⌿MKSYM¨sym
-	⎕←' CHK xn≡',(',⊂'⌿⍨1=≢xn),⊃{⍺,' ',⍵}⌿MKSYM¨xn
+	⎕←' CHK xn≡',(',⊂'⌿⍨1=≢xn),⊃{⍺,' ',⍵}⌿(⊂''),MKSYM¨xn
 	⎕←' CHK xt≡,',⍕xt
 }
 
@@ -415,22 +417,27 @@ MK←{(p d t k n lx pos end)(xn xt)sym IN←CD.PS ⍵
  CHK xt≡,4
  
  CHK PARSE NS '∇FN' 'L1:' '∇'
- CHK t=CD.(F T H L)
- CHK p d=(0 0 1 1)(0 1 2 2)
- CHK k=0 1 0 0
- CHK n=0 (-sym⍳⊂'FN') 0(-sym⍳⊂'L1')
- CHK lx=4 0 0 0
- CHK pos end=(0 11 12 15)(34 20 14 17)
+ CHK t=CD.(F C T H L)
+ CHK p=0 0 1 2 2
+ CHK d=0 1 2 3 3
+ CHK k=0 1 1 0 0
+ CHK lx=4 0 0 0 0
+ CHK pos=0 11 11 12 15
+ CHK end=34 20 20 14 17
+ CHK ({sym[|⍵]}@{⍵<0}n)≡0 'FN' 'FN' 0 'L1'
+ CHK sym≡'' (,'⍵') (,'⍺') '⍺⍺' '⍵⍵' (,'∇') '∇∇' ⍬ (,';') ':namespace' 'FN' 'L1' ':endnamespace'
+ CHK xn≡,⊂'FN'
+ CHK xt≡,1
  
  CHK PARSE NS '∇FN' ':If 0' ':EndIf' '∇'
  
- CHK (,⊂'⍞SOUND')(,⊂2)TOKENIZE NS '∇FN' '⍞SOUND 5' '∇' 
+ CHK (,⊂'⍞SOUND')(,⊂2)PARSE NS '∇FN' '⍞SOUND 5' '∇' 
  CHK PARSE NS '('':namespace'')' ''
  CHK PARSE NS '∇FN;⎕IO' '∇'
- CHK TOKENIZE NS'∇FN' '{5:6}⍬' '∇'
- CHK TOKENIZE ,⊂'1 ¯2'
- CHK TOKENIZE ERRS 2 ,⊂'1¯2'
- CHK TOKENIZE ERRS 2 ,⊂'1.¯2'
+ CHK PARSE NS'∇FN' '{5:6}⍬' '∇'
+ CHK PARSE NS ,⊂'1 ¯2'
+ CHK PARSE ERRS 2 NS ,⊂'1¯2'
+ CHK PARSE ERRS 2 NS ,⊂'1.¯2'
  
  CHK PARSE NS 'FN←{0:5}' ''
  CHK t=CD.(F B V C F G A A F G A A)
