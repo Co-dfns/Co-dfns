@@ -456,7 +456,7 @@ PS←{⍺←⊢
 
 	⍝ Wrap non-array bindings as B2+(V, Z)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂2=k[i]
-	p[(jt←i[j-1]),jv←i[j+1]]←,⍨ij←i[j] ⋄ t[ij]←B ⋄ k[ij]←2
+	p[(jt←i[j-1]),jv←i[j+1]]←,⍨ij←i[j] ⋄ t[ij]←B ⋄ k[ij]←2 ⋄ lx[ij]←lx[jt]
 	pos[ij]←pos[jt] ⋄ end[ij]←end[jv]
 	
 	⍝ Enclose V+[X;...] in Z nodes for parsing
@@ -584,7 +584,7 @@ PS←{⍺←⊢
 	
 	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
 	i←p[⍸bp∧k=2] ⋄ k[i]←4
-	i←p[⍸(≠p)∧(t[p]=E)∧(k[p]=4)∧(t=V)∨(t=A)∧k∊0 7] ⋄ t[i]←B ⋄ k[i]←1
+	i←p[j←⍸(≠p)∧(t[p]=E)∧(k[p]=4)∧(t=V)∨(t=A)∧k∊0 7] ⋄ t[i]←B ⋄ k[i]←1 ⋄ lx[i]←lx[j]
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
 	n[p[i]]←n[i←⍸msk←bp∧t[p]=B] ⋄ p t k n lx pos end⌿⍨←⊂~msk ⋄ p←i(⊢-1+⍸)p
 		
