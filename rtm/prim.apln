@@ -999,7 +999,7 @@ print←{
 q_ts←'q_ts_ibeam'⌶
 
 ⍝ Conor's Easter Eggs
-starling←violetstarling{⍺←⍵ ⋄ ⍺ ⍺⍺ ⍵⍵ ⍵}
+starling←violetstarling←{⍺←⍵ ⋄ ⍺ ⍺⍺ ⍵⍵ ⍵}
 dove←zebradove←{⍺←⍵ ⋄ (⍺⍺ ⍺)⍵⍵ ⍵}
 
 
