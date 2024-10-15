@@ -378,7 +378,7 @@ PS←{⍺←⊢
 	cg←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←(I@{t[0⌈⍵]≠T}⍣≡⍨r)[i]
 	_←{
 		vb[i]⌈←x←fb[fr⍳n[i],⍪ir] ⋄ i ir⌿⍨←⊂x=¯1 ⋄ fvr,←ir ⋄ fvi,←i
-		msk←vb[cg]∘.=ir ⋄ i←msk⌿⍥,(⍴msk)⍴i ⋄ ir←r[cg]⌿⍨+/msk
+		msk←vb[cg]∘.=ir ⋄ i←i[(≢i)|⍸,msk] ⋄ ir←r[cg]⌿⍨+/msk
 	ir}⍣≡ir
 	
 	⍝ Link global free variables to F0(H) header
@@ -396,8 +396,8 @@ PS←{⍺←⊢
 	jx←r[cg],pos[rz[cg]],⍪end[rz[cg]]-pos[cg]
 	_←{
 		fvr fvz←(⊂~fr∊⍥↓fh)⌿¨fr fz
-		rc←+/msk←vb[cg]∘.=fvr[;1] ⋄ jn←msk⌿⍥,(⍴msk)⍴fvr[;0]
-		fx⍪←jn,rc⌿jx ⋄ fr⍪←jn,⍪rc⌿r[cg] ⋄ fz⍪←msk⌿⍥,(⍴msk)⍴fvz
+		rc←+/msk←vb[cg]∘.=fvr[;1] ⋄ jn←fvr[(⊃⌽⍴fvr)|⍸,msk;0]
+		fx⍪←jn,rc⌿jx ⋄ fr⍪←jn,⍪rc⌿r[cg] ⋄ fz⍪←fvz[(≢fvz)|⍸,msk]
 		fr fz fx⌿⍨←⊂(≠fx[x;])[⍋x←⍋fx]
 	fx}⍣≡fx
 	vb[i]←(fz,¯1)[fr⍳n[i],⍪r[i]]
@@ -408,7 +408,7 @@ PS←{⍺←⊢
 	np←(≢p)+⍳≢i ⋄ p r fvi I⍨←⊂np@i⊢⍳≢p
 	p,←i ⋄ t k n vb r lx pos end(⊣,I)←⊂i ⋄ t[i]←C
 	p,←fvr ⋄ t k n vb lx pos end(⊣,I)←⊂fvi ⋄ r,←r[fvr] ⋄ rz,←rz[fvr]
-	msk←vb[cg]∘.=fvr ⋄ i←msk⌿⍥,(⍴msk)⍴fvi ⋄ ir←cg⌿⍨+/msk
+	msk←vb[cg]∘.=fvr ⋄ i←fvi[(≢fvi)|⍸,msk] ⋄ ir←cg⌿⍨+/msk
 	p,←ir ⋄ t k n vb lx pos end(⊣,I)←⊂i ⋄ r,←r[ir] ⋄ rz,←rz[ir]
 
 	⍝ Specialize functions to specific formal binding types
