@@ -363,9 +363,9 @@ PS←{⍺←⊢
 
 	⍝ Link local variables to bindings
 	i←⍸t∊T V ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
-	b←(0,i)[1+bm⍸⍥⍸~bm←vb[i]≠¯1] ⋄ i⌿⍨←~bm
+	b←(0,i[⍸bm])[1+bm⍸⍥⍸~bm←vb[i]≠¯1] ⋄ i⌿⍨←~bm
 	vb[i]+←(1+b)∧(n[i]=n[b])∧r[i]=r[b]
-	
+
 	⍝ Compute bindings and set of free variables
 	fb←⍸(t=T)∨(t[p]=H)∨(t=V)∧t[0⌈vb]=Z
 	fr←n[fb],⍪r[fb] ⋄ fb fr⌿⍨←⊂≠fr ⋄ fb,←¯1
