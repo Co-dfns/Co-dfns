@@ -449,7 +449,7 @@ PS←{⍺←⊢
 	}⍬
 
 	⍝ Infer the type of groups and variables
-	v←⍸(t=V)∧(k=0)∧vb≥0
+	t[⍸(t=P)∧n=¯2]←V ⋄ v←⍸(t=V)∧(k=0)∧vb≥0
 	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]=Z)∧(k[p]=0)∧t≠¯1] ⋄ za←zi⌿⍨≠zp ⋄ zc←zi⌿⍨⌽≠⌽zp ⋄ z←p[za]
 	_←{
 		zb←(⌽≠⌽p[zb])⌿zb←zi⌿⍨(zp∊z)∧(k[zi]≠1)∨(≠zp)∧k[zi]=1
@@ -461,7 +461,7 @@ PS←{⍺←⊢
 		k[z]←nk ⋄ k[v]←k[vb[v]]
 		z za zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
-	k[⍸(t∊V Z)∧k=0]←1
+	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
 
 	⍝ Wrap non-array bindings as B2+(V, Z)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂k[i]≥2
