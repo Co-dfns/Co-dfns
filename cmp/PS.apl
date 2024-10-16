@@ -13,7 +13,7 @@ PS←{⍺←⊢
 	alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
 	alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
 	num←⎕D ⋄ syna←'⍬⎕⍞#' ⋄ synb←'¯[]{}()'':⍺⍵⋄;←'
-	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇→⌺'
+	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇→⌺','⍠←' '∘←'
 	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⍤⍥@⟜⊸' ⋄ prmfo←'/⌿\⍀←'
 	prms←prmfs,prmmo,prmdo,prmfo  
 
@@ -424,7 +424,7 @@ PS←{⍺←⊢
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
 	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
 	vb[j]←(i,¯1)[(r[i],⍪n[i])⍳r[j],⍪n[j]]
-	
+
 	⍝ Unbound variables are lx=¯1
 	lx[⍸(t=V)∧(vb=¯1)∧t[p]≠H]←¯1
 
@@ -596,7 +596,7 @@ PS←{⍺←⊢
 	i←p[j←⍸(≠p)∧(t[p]=E)∧(k[p]=4)∧(t=V)∨(t=A)∧k∊0 7] ⋄ t[i]←B ⋄ k[i]←1 ⋄ lx[i]←lx[j]
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
 	n[p[i]]←n[i←⍸msk←bp∧t[p]=B] ⋄ p t k n lx pos end⌿⍨←⊂~msk ⋄ p←i(⊢-1+⍸)p
-		
+
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
