@@ -497,10 +497,6 @@ PS←{⍺←⊢
 		msg←'UNEXPECTED COMPOUND AXIS EXPRESSION'
 		99 msg SIGNAL SELECT ⊃⍪⌿{⊂⍺⌿⍨1<≢⍵}⌸p[j]
 	}⍬
-	∨⌿msk←~t[j]∊A Z:{
-		msg←'AXIS REQUIRES NON-EMPTY AXIS EXPRESSION'
-		msg SIGNAL SELECT msk⌿p[j]
-	}⍬
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
