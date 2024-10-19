@@ -477,8 +477,14 @@ PS←{⍺←⊢
 	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿¯1++⍀2<⌿0⍪msk]
 	
+	⍝ Mark F[X] forms with k=4
+	_←p[i]{
+		⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX' SIGNAL SELECT ⍵
+		k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
+	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
+	
 	⍝ Parse plural value sequences to A7 nodes
-	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
+	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸(t[p]=Z)∨(t[p]=¯1)∧k[p]=4
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
 	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai
 	t k n lx pos end(⊣,I)←⊂ai
@@ -486,19 +492,15 @@ PS←{⍺←⊢
 	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]
 
 	⍝ Rationalize F[X] syntax
-	_←p[i]{
-		⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX' SIGNAL SELECT ⍵
-		k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
-	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
 	i←⍸(t=¯1)∧k=4 ⋄ j←⍸(t[p]=¯1)∧k[p]=4
 	(≢i)≠≢j:{
-		msg←'AXIS REQUIRES SINGLE AXIS EXPRESSION'
-		msg SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
-	}⊃⍪⌿{⊂⍺⌿⍨1<≢⍵}⌸p[j]
-	∨⌿msk←t[j]≠Z:{
+		msg←'UNEXPECTED COMPOUND AXIS EXPRESSION'
+		99 msg SIGNAL SELECT ⊃⍪⌿{⊂⍺⌿⍨1<≢⍵}⌸p[j]
+	}⍬
+	∨⌿msk←~t[j]∊A Z:{
 		msg←'AXIS REQUIRES NON-EMPTY AXIS EXPRESSION'
-		msg SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
-	}msk⌿p[j]
+		msg SIGNAL SELECT msk⌿p[j]
+	}⍬
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
