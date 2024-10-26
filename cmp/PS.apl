@@ -455,13 +455,22 @@ PS←{⍺←⊢
 		zb←(⌽≠⌽p[zb])⌿zb←zi⌿⍨(zp∊z)∧(k[zi]≠1)∨(≠zp)∧k[zi]=1
 		nk←k[za]×(k[za]≠0)∧za=zc
 		nk+←3×(nk=0)∧k[za]=4
-		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
+		nk+←(|k[zc])×(nk=0)∧(k[zc]∊¯3 ¯4)∨(t[zb]=P)∧n[zb]=-sym⍳⊂,'.'
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
 		nk+←(nk=0)∧((t[zc]=A)∨1=|k[zc])∧(t[zb]=V)⍲k[zb]=0
 		k[z]←nk ⋄ k[v]←k[vb[v]]
 		z za zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
+	
+	⍝ Parse Namespace References as Nk(Nk(...), E)
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
+	j←i⌿⍨msk←(t[i]=P)∧(n[i]=-sym⍳⊂,'.')∧¯1⌽(k[i]=1)∧p[i]=1⌽p[i]
+	∨⌿m2←msk∧(¯1⌽msk)∨p[i]≠1⌽p[i]:'EMPTY NAMESPACE REFERENCE'SIGNAL SELECT m2⌿i
+	p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk
+	p[i⌿⍨¯1⌽msk]←j
+	p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)∧~¯1⌽msk
+	t[j]←N ⋄ k[j]←k[i⌿⍨¯1⌽msk]
 
 	⍝ Wrap non-array bindings as B2+(V, Z)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂k[i]≥2
@@ -470,7 +479,7 @@ PS←{⍺←⊢
 	
 	⍝ Enclose V+[X;...] in Z nodes for parsing
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
+	msk←km∧(t[i]=A)∨(t[i]∊N P V Z)∧k[i]=1
 	msk∧←(0,gm⌿km⍲k[i]=4)[+⍀gm←2<⌿0⍪msk]
 	msk∧←(0,(2>⌿msk⍪0)⌿1⌽km∧t[i]=¯1)[+⍀2<⌿0⍪msk]
 	j←i⌿⍨jm←2>⌿0⍪msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
@@ -485,7 +494,7 @@ PS←{⍺←⊢
 	
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸(t[p]=Z)∨(t[p]=¯1)∧k[p]=4
-	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
+	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊N P V Z)∧k[i]=1
 	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai
 	t k n lx pos end(⊣,I)←⊂ai
 	t k n lx pos(⊣@ai⍨)←A 7 0 0(pos[i⌿⍨km←2<⌿0⍪msk])
@@ -517,7 +526,7 @@ PS←{⍺←⊢
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
 
 	⍝ Mask and verify dyadic operator right operands
-	∨⌿msk←(dm←¯1⌽(k[i]=4)∧t[i]∊C P V Z)∧(~km)∨k[i]∊0 3 4:{
+	∨⌿msk←(dm←¯1⌽(k[i]=4)∧t[i]∊C N P V Z)∧(~km)∨k[i]∊0 3 4:{
 		'MISSING RIGHT OPERAND'SIGNAL SELECT msk⌿i
 	}⍬
 
