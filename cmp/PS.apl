@@ -563,11 +563,14 @@ PS←{⍺←⊢
 	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
 	k[⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←¯2
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
+	k[p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←¯2
+	k[p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←¯2
+	k[p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←¯2
 	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p⊣msk←(t[p]=Z)⍲k[p]=¯2
 	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
 
 	⍝ Check for invalid types
-	∨⌿msk←(≠p)∧(t[p]=G)∧k>1:{
+	∨⌿msk←(≠p)∧(t[p]=G)∧(~t∊A E)∧k≠1:{
 		msg←'GUARD TESTS MUST BE ARRAY VALUES'
 		msg SIGNAL SELECT ⍸msk
 	}⍬
