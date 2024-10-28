@@ -441,7 +441,7 @@ PS←{⍺←⊢
 	id←(hk[5;]⌿hk[4;])⌿1+im←hk[5;]⌿j+zc+hk[7;] ⋄ im←i[im] ⋄ id←i[id]
 	k[iz,iy,ix]←1 ⋄ k[im]←(¯16↑12⍴2⌿1 2)[k[r[im]]] ⋄ k[id]←(¯16↑4⌿1 2)[k[r[id]]]
 	lx[im,id,iz,ix,iy]←4
-	
+
 	⍝ Error if brackets are not addressing something
 	∨⌿msk←(≠p)∧t=¯1:{
 		EM←'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'
@@ -454,7 +454,7 @@ PS←{⍺←⊢
 	_←{
 		zb←(⌽≠⌽p[zb])⌿zb←zi⌿⍨(zp∊z)∧(k[zi]≠1)∨(≠zp)∧k[zi]=1
 		nk←k[za]×(k[za]≠0)∧za=zc
-		nk+←3×(nk=0)∧k[za]=4
+		nk+←3×(nk=0)∧k[za]∊3 4
 		nk+←(|k[zc])×(nk=0)∧(k[zc]∊¯3 ¯4)∨(t[zb]=P)∧n[zb]=-sym⍳⊂,'.'
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
 		nk+←(nk=0)∧((t[zc]=A)∨1=|k[zc])∧(t[zb]=V)⍲k[zb]=0
