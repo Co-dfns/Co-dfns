@@ -462,7 +462,7 @@ PS←{⍺←⊢
 		z za zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
-	
+
 	⍝ Parse Namespace References as Nk(Nk(...), E)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
 	j←i⌿⍨msk←(t[i]=P)∧(n[i]=-sym⍳⊂,'.')∧¯1⌽(k[i]=1)∧p[i]=1⌽p[i]
@@ -504,7 +504,7 @@ PS←{⍺←⊢
 	i←⍸(t=¯1)∧k=4 ⋄ j←⍸(t[p]=¯1)∧k[p]=4
 	(≢i)≠≢j:{
 		msg←'UNEXPECTED COMPOUND AXIS EXPRESSION'
-		99 msg SIGNAL SELECT ⊃⍪⌿{⊂⍺⌿⍨1<≢⍵}⌸p[j]
+		99 msg SIGNAL SELECT {⊃⍺⌿⍨1<≢⍵}⌸i
 	}⍬
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
 
