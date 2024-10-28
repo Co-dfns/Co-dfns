@@ -501,8 +501,8 @@ PS←{⍺←⊢
 	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]
 
 	⍝ Rationalize F[X] syntax
-	i←⍸(t=¯1)∧k=4 ⋄ j←⍸(t[p]=¯1)∧k[p]=4
-	(≢i)≠≢j:{
+	i←p[j←⍸(t[p]=¯1)∧k[p]=4]
+	i≢∪i:{
 		msg←'UNEXPECTED COMPOUND AXIS EXPRESSION'
 		99 msg SIGNAL SELECT {⊃⍺⌿⍨1<≢⍵}⌸i
 	}⍬
