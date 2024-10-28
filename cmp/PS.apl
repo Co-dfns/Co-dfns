@@ -525,11 +525,9 @@ PS←{⍺←⊢
 	⍝ Group function and value expressions
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
 
-	⍝ Mask and verify dyadic operator right operands
-	∨⌿msk←(dm←¯1⌽(k[i]=4)∧t[i]∊C N P V Z)∧(~km)∨k[i]∊0 3 4:{
-		'MISSING RIGHT OPERAND'SIGNAL SELECT msk⌿i
-	}⍬
-
+	⍝ Mask dyadic operator right operands
+	dm←(¯1⌽(k[i]=4)∧t[i]∊C N P V Z)∧km∧~k[i]∊0 3 4
+	
 	⍝ Refine schizophrenic types
 	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽(~km)∨(~dm)∧k[i]∊¯1 0 1 6 7]←2 ⋄ k[i⌿⍨k[i]=5]←3
 
@@ -541,9 +539,7 @@ PS←{⍺←⊢
 	∨⌿msk←jm∧1⌽k[i]≠2:{
 		'∘. REQUIRES FUNCTION OPERAND'SIGNAL SELECT msk⌿i
 	}⍬
-	∨⌿msk←(dm∧¯2⌽~km)∨(¯1⌽~km)∧mm←(~jm)∧(k[i]=3)∧t[i]∊C P V Z:{
-		'MISSING LEFT OPERAND'SIGNAL SELECT msk⌿i
-	}⍬
+	mm←(~jm)∧(k[i]=3)∧(t[i]∊C N P V Z)∧(¯2⌽dm⍲km)∧¯1⌽km∧~k[i]∊0 3 4
 
 	⍝ Parse function expressions
 	msk←jm∨dm∨mm ⋄ np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p]
@@ -557,11 +553,13 @@ PS←{⍺←⊢
 
 	⍝ Parse value expressions
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p
-	msk←m2∨fm∧~¯1⌽m2←km∧(1⌽km)∧~fm←(t[i]=O)∨(t[i]≠A)∧k[i]=2
+	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
+	i km msk m2⌿⍨←⊂msk∨(~km)∨¯1⌽msk←m2∨fm∧~¯1⌽m2←am∧1⌽fm
+	i km msk m2⌿⍨←⊂km∨1⌽km
 	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0 ⋄ lx,←xc⍴0
 	pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
 	p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
-
+	
 	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
 	k[⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←¯2
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
