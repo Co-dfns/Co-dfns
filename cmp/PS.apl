@@ -566,14 +566,9 @@ PS←{⍺←⊢
 	k[p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←¯2
 	k[p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←¯2
 	k[p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←¯2
+	i←p[⍸(t[p]=G)∧(≠p)∧(~t∊A E)∧k≠1] ⋄ t[i]←Z ⋄ k[i]←¯2
 	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p⊣msk←(t[p]=Z)⍲k[p]=¯2
 	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
-
-	⍝ Check for invalid types
-	∨⌿msk←(≠p)∧(t[p]=G)∧(~t∊A E)∧k≠1:{
-		msg←'GUARD TESTS MUST BE ARRAY VALUES'
-		msg SIGNAL SELECT ⍸msk
-	}⍬
 
 	⍝ Include parentheses in source range
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
