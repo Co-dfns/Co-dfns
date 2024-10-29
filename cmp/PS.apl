@@ -554,12 +554,12 @@ PS←{⍺←⊢
 	⍝ Parse value expressions
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p
 	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
-	i km msk m2⌿⍨←⊂msk∨(~km)∨¯1⌽msk←m2∨fm∧~¯1⌽m2←am∧1⌽fm
+	i km msk m2⌿⍨←⊂msk∨(~km)∨(¯2⌽m2)∨¯1⌽msk←m2∨fm∧~¯1⌽m2←am∧1⌽fm
 	i km msk m2⌿⍨←⊂km∨1⌽km
 	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0 ⋄ lx,←xc⍴0
 	pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
 	p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
-	
+
 	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
 	k[⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←¯2
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
