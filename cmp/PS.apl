@@ -539,7 +539,7 @@ PS←{⍺←⊢
 	∨⌿msk←jm∧1⌽k[i]≠2:{
 		'∘. REQUIRES FUNCTION OPERAND'SIGNAL SELECT msk⌿i
 	}⍬
-	mm←(~jm)∧(k[i]=3)∧(t[i]∊C N P V Z)∧(¯2⌽dm⍲km)∧¯1⌽km∧~k[i]∊0 3 4
+	mm←(~jm)∧(k[i]=3)∧(t[i]∊C N P V Z)∧(¯2⌽dm⍲km)∧¯1⌽km∧~k[i]∊0 4
 
 	⍝ Parse function expressions
 	msk←jm∨dm∨mm ⋄ np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p]
