@@ -347,7 +347,7 @@ PS←{⍺←⊢
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
 	vb,←bt←i⌿⍨1⌽bp[i]
-
+	
 	⍝ Enclosing frames and lines for all nodes
 	rz←p I@{(t[⍵]∊G H Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G T}p[rz]
@@ -358,6 +358,9 @@ PS←{⍺←⊢
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
 	vb[msk⌿⍸bm]←i⌿⍨msk←¯1≠i←(nz,¯1)[bt⍳⍸msk⍪0][bm⌿+⍀0⍪msk←2>⌿bm]
 	
+	⍝ Link terminal assignments to canonical binding
+	vb[msk⌿bt]←nz⌿⍨msk←((≠p)∨¯1⌽((t∊P C)∧k∊2 3)∨(t=P)∧n=-sym⍳⊂,'.')[bt]
+
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
