@@ -466,6 +466,15 @@ PS←{⍺←⊢
 	v z}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
 
+	⍝ Enclose V+[X;...] in Z nodes for parsing
+	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	msk←km∧(t[i]∊A)∨((t[i]∊P V Z)∧k[i]=1)∨(t[i]=P)∧n[i]=-sym⍳⊂,'.'
+	msk∧←(0,gm⌿km⍲k[i]=4)[+⍀gm←2<⌿0⍪msk]
+	msk∧←(0,(2>⌿msk⍪0)⌿1⌽km∧t[i]=¯1)[+⍀2<⌿0⍪msk]
+	j←i⌿⍨jm←2>⌿0⍪msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
+	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
+	p[msk⌿i]←j[msk⌿¯1++⍀2<⌿0⍪msk]
+
 	⍝ Parse Namespace References as Nk(Nk(...), E)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
 	j←i⌿⍨msk←(t[i]=P)∧(n[i]=-sym⍳⊂,'.')∧¯1⌽(1=|k[i])∧p[i]=1⌽p[i]
@@ -479,15 +488,6 @@ PS←{⍺←⊢
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂k[i]≥2
 	p[(jt←i[j-1]),jv←i[j+1]]←,⍨ij←i[j] ⋄ t[ij]←B ⋄ k[ij]←k[jv] ⋄ lx[ij]←lx[jt]
 	pos[ij]←pos[jt] ⋄ end[ij]←end[jv]
-	
-	⍝ Enclose V+[X;...] in Z nodes for parsing
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	msk←km∧(t[i]=A)∨(t[i]∊N P V Z)∧k[i]=1
-	msk∧←(0,gm⌿km⍲k[i]=4)[+⍀gm←2<⌿0⍪msk]
-	msk∧←(0,(2>⌿msk⍪0)⌿1⌽km∧t[i]=¯1)[+⍀2<⌿0⍪msk]
-	j←i⌿⍨jm←2>⌿0⍪msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
-	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
-	p[msk⌿i]←j[msk⌿¯1++⍀2<⌿0⍪msk]
 	
 	⍝ Mark F[X] forms with k=4
 	_←p[i]{
