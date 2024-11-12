@@ -376,10 +376,11 @@ PS←{⍺←⊢
 	
 	⍝ Handle specific known structural forms for assignment/binding
 	vb[msk⌿bt]←nz⌿⍨msk←((≠p)∨¯1⌽((t∊P C F)∧k∊2 3 5)∨(t=P)∧n=-sym⍳⊂,'.')[bt]
-	j←j[⍋p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ bm←(t[j]=P)∧bm∨(k[j]∊3 5)∧1⌽bm←n[j]=-sym⍳⊂,'←'
+	j←j[⍋p[j←⍸(t[p]=Z)∧p≠⍳≢p]]
+	bm←bm∨((t[j]=¯1)∨(t[j]∊F P)∧k[j]∊3 5)∧1⌽bm←n[j]=-sym⍳⊂,'←'
 	msk←1⌽((k[j]=2)∧t[j]∊F P)∧1⌽bm
 	msk∨←((≠p[j])∨¯1⌽(t[j]=P)∧k[j]>1)∧1⌽((t[j]=¯1)∨(k[j]=5)∧t[j]∊F P)∧1⌽bm
-	k[j←j⌿⍨msk∧t[j]=V]←1 ⋄ vb[j]←j
+	k[j←j⌿⍨msk∧t[j]∊V Z]←1 ⋄ vb[j]←j
 
 	⍝ Link shadowed variables to bindings
 	cg←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←(I@{t[0⌈⍵]≠T}⍣≡⍨r)[i]
