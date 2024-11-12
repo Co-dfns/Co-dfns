@@ -358,9 +358,6 @@ PS←{⍺←⊢
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
 	vb[msk⌿⍸bm]←i⌿⍨msk←¯1≠i←(nz,¯1)[bt⍳⍸msk⍪0][bm⌿+⍀0⍪msk←2>⌿bm]
 	
-	⍝ Link terminal assignments to canonical binding
-	vb[msk⌿bt]←nz⌿⍨msk←((≠p)∨¯1⌽((t∊P C F)∧k∊2 3 5)∨(t=P)∧n=-sym⍳⊂,'.')[bt]
-
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
@@ -377,6 +374,8 @@ PS←{⍺←⊢
 	⍝ Link free variables to bindings
 	_←{vb[i]←j←fb[fr⍳ir] ⋄ i ir⌿⍨←⊂j=¯1 ⋄ fvr,←⊢/ir ⋄ fvi,←i ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
 	
+	⍝ Handle specific known structural forms for assignment/binding
+	vb[msk⌿bt]←nz⌿⍨msk←((≠p)∨¯1⌽((t∊P C F)∧k∊2 3 5)∨(t=P)∧n=-sym⍳⊂,'.')[bt]
 	⍝ Link shadowed variables to bindings
 	cg←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←(I@{t[0⌈⍵]≠T}⍣≡⍨r)[i]
 	_←{
