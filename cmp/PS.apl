@@ -380,7 +380,9 @@ PS←{⍺←⊢
 	bm←bm∨((t[j]=¯1)∨(t[j]∊F P)∧k[j]∊3 5)∧1⌽bm←n[j]=-sym⍳⊂,'←'
 	msk←1⌽((k[j]=2)∧t[j]∊F P)∧1⌽bm
 	msk∨←((≠p[j])∨¯1⌽(t[j]=P)∧k[j]>1)∧1⌽((t[j]=¯1)∨(k[j]=5)∧t[j]∊F P)∧1⌽bm
-	k[j←j⌿⍨msk∧t[j]∊V Z]←1 ⋄ vb[j]←j
+	k[x←j⌿⍨msk∧t[j]∊V Z]←1 ⋄ vb[x]←x
+	msk←(≠p[j])∨¯1⌽(t[j]=P)∧(n[j]=-sym⍳⊂,'.')∧¯1⌽≠p[j]
+	k[x←j⌿⍨((t[j]=V)∧p[j]∊msk⌿j)∧(⌽≠⌽p[j])∨1⌽(t[j]=¯1)∧⌽≠⌽p[j]]←1 ⋄ vb[x]←x
 
 	⍝ Link shadowed variables to bindings
 	cg←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←(I@{t[0⌈⍵]≠T}⍣≡⍨r)[i]
