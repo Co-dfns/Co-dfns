@@ -378,12 +378,13 @@ PS←{⍺←⊢
 	j km←⍪⌿p[j]{(⍺⍪⍵)(0,1∨⍵)}⌸j←⍸(t[p]=Z)∧p≠⍳≢p
 	tm←(km∧t[j]∊V Z)∨tm∨(¯1⌽tm)∨1⌽tm←km∧(t[j]=P)∧n[j]=-sym⍳⊂,'.'
 	tm∧←(0,msk⌿(¯1⌽~km)∨¯1⌽km∧(t[j]∊P C F)∧k[j]∊2 3 5)[+⍀msk←2<⌿0⍪tm]
-	vb[bi←msk⌿bt]←nz⌿⍨msk←bt∊tm⌿j
+	vb[bi←msk⌿bt]←nz⌿⍨msk←bt∊tm⌿j ⋄ i~←bi
 	bm←bm∨(km∧(t[j]=¯1)∨(t[j]∊F P)∧k[j]∊3 5)∧1⌽bm←km∧n[j]=-sym⍳⊂,'←'
 	bm←(km∧t[j]∊V Z)∧(2⌽bm)∧(1⌽km∧(k[j]=2)∧t[j]∊F P)∨tm∧1⌽km∧(t[j]=¯1)∨(k[j]=5)∧t[j]∊F P
 	x←j⌿⍨bm∨(p[j]∊j⌿⍨msk←bm∨j∊bi)∧m2←km∧(t[j]=V)∧(1⌽~km)∨1⌽km∧(t[j]=¯1)∧1⌽~km
-	k[x]←1 ⋄ vb[x]←x
+	k[x]←1 ⋄ vb[x]←x ⋄ i~←x
 	k[x←j⌿⍨tm∧(~msk)∧(0⍪(msk←2>⌿tm⍪0)⌿msk)[+⍀2<⌿0⍪tm]]←1 ⋄ k[j⌿⍨m2∧p[j]∊x]←1
+
 	⍝ Link shadowed variables to bindings
 	cg←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←(I@{t[0⌈⍵]≠T}⍣≡⍨r)[i]
 	_←{
