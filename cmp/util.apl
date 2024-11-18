@@ -49,7 +49,9 @@ assert←{
 D2P←{0=≢⍵:⍬ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←⍳≢⍵}
 P2D←{d←⍵≠h←z←⍳≢p←⍵
 	_←{p⊣d+←⍵≠p←⍺[⍵]}⍣≡⍨p
-	_←{m←d≥⍵ ⋄ z∘←z[⍋(h×m)[z]] ⋄ h[i]←p[h[i←⍸m]] ⋄ ⍵-1}⍣(1+md)⊢md←⌈⌿d
+	_←{mz←(m←d≥⍵)[z]
+		z∘←(z⌿⍨~mz)⍪zi[⍋h[zi←mz⌿z]] ⋄ h[i]←p[h[i←⍸m]]
+	⍵-1}⍣(1+md)⊢md←⌈⌿d
 d z}
 
 opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
