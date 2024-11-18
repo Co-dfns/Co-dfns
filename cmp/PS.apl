@@ -137,7 +137,7 @@ PS←{⍺←⊢
 	t[li]←L ⋄ d tm t pos end(⌿⍨)←⊂~lm
 
 	⍝ With tokens created, reify n field before tree-building
-	n←IN∘I¨pos+⍳¨end-pos
+	n←(w⌿1+⍳≢pos)⊆IN[(⍳≢x)+x←w⌿pos-+⍀0,¯1↓w←end-pos]
 	n←{¯1↓⍎¨⍵,⊂''''''}@{t=C}(⊂'')@{t∊Z F}⎕C@{t∊K S}(⊂⍬)@{n∊⊂,'⍬'}n
 	msk vals←⎕VFI ⍕n[i←⍸t=N]
 	~∧⌿msk:'CANNOT REPRESENT NUMBER'SIGNAL SELECT ⍸(t=N)⍀~msk
@@ -292,7 +292,7 @@ PS←{⍺←⊢
 		⊃m:'EMPTY GUARD TEST EXPRESSION'SIGNAL pos[⊃⍵]
 		1<+⌿m:'TOO MANY GUARDS'SIGNAL pos[m⌿⍵]
 		t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
-		ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←0 ⋄ gz cq,ci
+		ci←≢p ⋄ p⍪←⍺ ⋄ t⍪←0 ⋄ k⍪←0 ⋄ pos⍪←0 ⋄ end⍪←0 ⋄ n⍪←0 ⋄ gz cq,ci
 	0}⌸i←⍸t[p[p]]=F
 
 	⍝ Delete keywords we can't handle
@@ -342,7 +342,8 @@ PS←{⍺←⊢
 	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸(t=T)∨t[p]=H
 	
 	⍝ Wrap binding values in Z nodes and link
-	nz←(≢p)+⍳≢bi←bp[i]⌿⊃i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
+	nz←(≢p)+⍳≢bi←bp[i]⌿i
 	p,←(np≥≢p)⌿¯1⌽np←(bp[i]∨~km)⌿nz@{bp[i]}i
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
@@ -375,7 +376,7 @@ PS←{⍺←⊢
 	_←{vb[i]←j←fb[fr⍳ir] ⋄ i ir⌿⍨←⊂j=¯1 ⋄ fvr,←⊢/ir ⋄ fvi,←i ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
 
 	⍝ Handle specific known structural forms for assignment/binding
-	j km←⍪⌿p[j]{(⍺⍪⍵)(0,1∨⍵)}⌸j←⍸(t[p]=Z)∧p≠⍳≢p
+	j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	tm←(km∧t[j]∊V Z)∨tm∨(¯1⌽tm)∨1⌽tm←km∧(t[j]=P)∧n[j]=-sym⍳⊂,'.'
 	tm∧←(0,msk⌿(¯1⌽~km)∨¯1⌽km∧(t[j]∊P C F)∧k[j]∊2 3 5)[+⍀msk←2<⌿0⍪tm]
 	vb[bi←msk⌿bt]←nz⌿⍨msk←bt∊tm⌿j ⋄ i~←bi
@@ -475,7 +476,7 @@ PS←{⍺←⊢
 	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
 
 	⍝ Enclose V+[X;...] in Z nodes for parsing
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	msk←km∧(t[i]∊A)∨((t[i]∊P V Z)∧k[i]=1)∨(t[i]=P)∧n[i]=-sym⍳⊂,'.'
 	msk∧←(0,(2>⌿msk⍪0)⌿1⌽t[i]=¯1)[+⍀2<⌿0⍪msk]
 	msk∨←(t[i]=¯1)∧(¯1⌽msk)∧1⌽msk
@@ -535,8 +536,9 @@ PS←{⍺←⊢
 	p t k n lx pos end⌿⍨←⊂~pm ⋄ p(⊣-1+⍸⍨)←⍸pm
 
 	⍝ Group function and value expressions
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
-
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2]]
+	km←((-≢x)↑(≢pi)⍴1)[x]
+	
 	⍝ Mask dyadic operator right operands
 	dm←(¯1⌽(k[i]=4)∧t[i]∊C N P V Z)∧km∧~k[i]∊0 3 4
 	
@@ -564,7 +566,8 @@ PS←{⍺←⊢
 	k[oi]←3 3⊥↑or ol
 
 	⍝ Parse value expressions
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]]
+	km∧←(¯1⌽km)∨1⌽km←((-≢x)↑(≢pi)⍴1)[x]
 	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
 	i km msk m2⌿⍨←⊂msk∨(~km)∨(¯2⌽m2)∨¯1⌽msk←m2∨fm∧~¯1⌽m2←am∧1⌽fm
 	i km msk m2⌿⍨←⊂km∨1⌽km
@@ -579,7 +582,7 @@ PS←{⍺←⊢
 	k[p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←¯2
 	k[p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←¯2
 	i←p[⍸(t[p]=G)∧(≠p)∧(~t∊A E)∧k≠1] ⋄ t[i]←Z ⋄ k[i]←¯2
-	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p⊣msk←(t[p]=Z)⍲k[p]=¯2
+	msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
 	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
 
 	⍝ Include parentheses in source range
@@ -593,7 +596,7 @@ PS←{⍺←⊢
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
-	k[p[i←⍸msk]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
+	k[p[i←⍸msk]]←1 ⋄ n[∪pi]←-sym⍳sym∪←(pi←p[i]){⊂⍵}⌸sym[|n[i]]
 	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
 	
 	⍝ All A1 nodes should be lexical scope 6
@@ -627,8 +630,7 @@ PS←{⍺←⊢
 	}⍬
 	
 	⍝ Compute exports
-	msk←(≠p)∧t[p]=B
-	i←⍸(k[I@{t[⍵]≠F}⍣≡⍨p]=0)∧(t=C)∨(t=V)∧msk[p I@{~msk[⍵]}⍣≡⍳≢p]
+	i←⍸(k[I@{t[⍵]≠F}⍣≡⍨p]=0)∧(t=C)∨(t=V)∧{⍵∨⍵[p]}⍣≡(≠p)∧t[p]=B
 	xn←sym[|n[i]] ⋄ xt←k[i]
 
 	⍝ Sort AST by depth-first pre-order traversal
