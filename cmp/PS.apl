@@ -585,11 +585,9 @@ PS←{⍺←⊢
 	k[p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←¯2
 	k[p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←¯2
 	i←p[⍸(t[p]=G)∧(≠p)∧(~t∊A E)∧k≠1] ⋄ t[i]←Z ⋄ k[i]←¯2
-	msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
-	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
 
 	⍝ Eliminate non-error Z nodes from the tree
-	zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
+	zi←p I@{m2[⍵]}⍣≡ki←⍸msk←((t≠Z)∨(t=Z)∧k=¯2)∧m2←(t[p]=Z)∧k[p]≠¯2
 	p←(zi@ki⍳≢p)[p] ⋄ t k n lx pos end(⊣@zi⍨)←t k n lx pos end I¨⊂ki
 	p t k n lx pos end⌿⍨←⊂msk←msk⍱(t=Z)∧k≠¯2 ⋄ p(⊣-1+⍸⍨)←⍸~msk
 	
@@ -604,13 +602,12 @@ PS←{⍺←⊢
 
 	⍝ Check for bindings/assignments without targets
 	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
-	∨⌿msk←bp∧((k=2)∧(t[p]=E)⍲k[p]=2)∨(k=3)∧(t[p][p]=E)⍲k[p][p]=2:{
-		ERR←'MISSING ASSIGNMENT TARGET'
-		ERR SIGNAL SELECT p[⍸msk∧k=2],p[p][⍸msk∧k=3]
-	}⍬
+	msk←bp∧((k=2)∧(t[p]=E)⍲k[p]=2)∨(k=3)∧(t[p][p]=E)⍲k[p][p]=2
+	msk∧←nzm←{⍵∧⍵[p]}⍣≡(t=Z)⍲k=¯2
+	∨⌿msk:'MISSING ASSIGNMENT TARGET'SIGNAL SELECT p[⍸msk∧k=2],p[p][⍸msk∧k=3]
 	
 	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
-	i←p[⍸bp∧k=2] ⋄ k[i]←4
+	i←p[⍸nzm∧bp∧k=2] ⋄ k[i]←4
 	msk←(≠p)∧(em←(t[p]=E)∧k[p]=4)∧am←(t∊P V)∨(t=A)∧k∊0 7
 	m2←(⌽≠⌽p)∧am∧em[p]∧t[p]=N
 	i←p[j←⍸msk],p[p[j2←⍸m2]] ⋄ t[i]←B ⋄ k[i]←1 ⋄ lx[i]←lx[j,j2]
