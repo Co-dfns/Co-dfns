@@ -575,6 +575,9 @@ PS←{⍺←⊢
 	pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
 	p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
 
+	⍝ Include parentheses in source range
+	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
+
 	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
 	k[⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←¯2
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
@@ -584,9 +587,6 @@ PS←{⍺←⊢
 	i←p[⍸(t[p]=G)∧(≠p)∧(~t∊A E)∧k≠1] ⋄ t[i]←Z ⋄ k[i]←¯2
 	msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
 	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
-
-	⍝ Include parentheses in source range
-	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
 
 	⍝ Eliminate non-error Z nodes from the tree
 	zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
