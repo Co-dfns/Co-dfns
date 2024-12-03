@@ -481,8 +481,9 @@ PS←{⍺←⊢
 	msk∧←(0,(2>⌿msk⍪0)⌿1⌽t[i]=¯1)[+⍀2<⌿0⍪msk]
 	msk∨←(t[i]=¯1)∧(¯1⌽msk)∧1⌽msk
 	msk∧←(0,gm⌿km⍲k[i]=4)[+⍀gm←2<⌿0⍪msk]
-	j←i⌿⍨jm←(t[i]=¯1)∧msk∨¯1⌽msk ⋄ np←(≢p)+⍳≢j ⋄ p←(np@j⍳≢p)[p] ⋄ p,←j
-	t k n lx pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
+	j←i⌿⍨jm←(t[i]=¯1)∧msk∨¯1⌽msk
+	np←(≢p)+⍳≢j ⋄ p←(x←np@j⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
+	p,←j ⋄ t k n lx vb pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿+⍀jm]
 
 	⍝ Parse Namespace References as Nk(Nk(...), E)
@@ -508,9 +509,9 @@ PS←{⍺←⊢
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸(t[p]=Z)∨(t[p]=¯1)∧k[p]=4
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊N P V Z)∧k[i]=1
-	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai
-	t k n lx pos end(⊣,I)←⊂ai
-	t k n lx pos(⊣@ai⍨)←A 7 0 0(pos[i⌿⍨km←2<⌿0⍪msk])
+	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(x←np@ai⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x ⋄ p,←ai
+	t k n lx vb pos end(⊣,I)←⊂ai
+	t k n lx vb pos(⊣@ai⍨)←A 7 0 0 ¯1(pos[i⌿⍨km←2<⌿0⍪msk])
 	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]
 
 	⍝ Rationalize F[X] syntax
@@ -523,7 +524,7 @@ PS←{⍺←⊢
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
 	i←⍸t=¯1 ⋄ p←(p[i]@i⍳≢p)[p] ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
-	p t k n lx pos end⌿⍨←⊂t≠¯1 ⋄ p(⊣-1+⍸⍨)←i
+	p t k n lx vb pos end⌿⍨←⊂t≠¯1 ⋄ p vb(⊣-1+⍸⍨)←⊂i
 
 	⍝ Parse ⌶* nodes to V nodes
 	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
@@ -533,7 +534,7 @@ PS←{⍺←⊢
 	}⍬
 	vi←i⌿⍨1⌽msk←i∊j ⋄ pi←msk⌿i
 	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←5 ⋄ end[vi]←end[pi]
-	p t k n lx pos end⌿⍨←⊂~pm ⋄ p(⊣-1+⍸⍨)←⍸pm
+	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
 
 	⍝ Group function and value expressions
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2]]
@@ -556,8 +557,8 @@ PS←{⍺←⊢
 	mm←(~jm)∧(k[i]=3)∧(t[i]∊C N P V Z)∧(¯2⌽dm⍲km)∧¯1⌽km∧~k[i]∊0 4
 
 	⍝ Parse function expressions
-	msk←jm∨dm∨mm ⋄ np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p]
-	p,←oi ⋄ t k n lx pos end(⊣,I)←⊂oi
+	msk←jm∨dm∨mm ⋄ np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(x←np@oi⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
+	p,←oi ⋄ t k n lx vb pos end(⊣,I)←⊂oi
 	jl←¯1⌽jm ⋄ ml←(jm∧2⌽mm)∨(~jl)∧1⌽mm ⋄ dl←(jm∧3⌽dm)∨(~jl)∧2⌽dm
 	p[g⌿i]←oi[(g←(~msk)∧(1⌽dm)∨om←jl∨ml∨dl)⌿(xc-⌽+⍀⌽msk)-jl]
 	p[g⌿oi]←(g←msk⌿om)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←0
@@ -571,7 +572,7 @@ PS←{⍺←⊢
 	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
 	i km msk m2⌿⍨←⊂msk∨(~km)∨(¯2⌽m2)∨¯1⌽msk←m2∨fm∧~¯1⌽m2←am∧1⌽fm
 	i km msk m2⌿⍨←⊂km∨1⌽km
-	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0 ⋄ lx,←xc⍴0
+	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0 ⋄ lx,←xc⍴0 ⋄ vb,←xc⍴¯1
 	pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
 	p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
 
@@ -588,14 +589,15 @@ PS←{⍺←⊢
 
 	⍝ Eliminate non-error Z nodes from the tree
 	zi←p I@{m2[⍵]}⍣≡ki←⍸msk←((t≠Z)∨(t=Z)∧k=¯2)∧m2←(t[p]=Z)∧k[p]≠¯2
-	p←(zi@ki⍳≢p)[p] ⋄ t k n lx pos end(⊣@zi⍨)←t k n lx pos end I¨⊂ki
-	p t k n lx pos end⌿⍨←⊂msk←msk⍱(t=Z)∧k≠¯2 ⋄ p(⊣-1+⍸⍨)←⍸~msk
+	p←(x←zi@ki⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
+	t k n lx vb pos end(⊣@zi⍨)←t k n lx vb pos end I¨⊂ki
+	p t k n lx vb pos end⌿⍨←⊂msk←msk⍱(t=Z)∧k≠¯2 ⋄ p vb(⊣-1+⍸⍨)←⊂⍸~msk
 	
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
 	k[p[i←⍸msk]]←1 ⋄ n[∪pi]←-sym⍳sym∪←(pi←p[i]){⊂⍵}⌸sym[|n[i]]
-	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
+	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂⍸msk
 	
 	⍝ All A1 nodes should be lexical scope 6
 	lx[⍸(t=A)∧k=1]←6
@@ -612,12 +614,13 @@ PS←{⍺←⊢
 	m2←(⌽≠⌽p)∧am∧em[p]∧t[p]=N
 	i←p[j←⍸msk],p[p[j2←⍸m2]] ⋄ t[i]←B ⋄ k[i]←1 ⋄ lx[i]←lx[j,j2]
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
-	n[p[i]]←n[i←⍸msk←bp∧t[p]=B] ⋄ p t k n lx pos end⌿⍨←⊂~msk ⋄ p←i(⊢-1+⍸)p
+	n[p[i]]←n[i←⍸msk←bp∧t[p]=B]
+	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂i
 
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
-	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴3 0
+	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴3 0 ⋄ vb,←nc⍴¯1
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 	
 	⍝ Check for nested ⍠← forms
@@ -634,5 +637,5 @@ PS←{⍺←⊢
 	⍝ Sort AST by depth-first pre-order traversal
 	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p
 
-	(p d t k n lx pos end)(xn xt)sym IN
+	(p d t k n lx vb pos end)(xn xt)sym IN
 }
