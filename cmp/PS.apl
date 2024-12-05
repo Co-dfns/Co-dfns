@@ -523,7 +523,7 @@ PS←{⍺←⊢
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
-	i←⍸t=¯1 ⋄ p←(p[i]@i⍳≢p)[p] ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
+	i←⍸t=¯1 ⋄ p←(x←p[i]@i⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
 	p t k n lx vb pos end⌿⍨←⊂t≠¯1 ⋄ p vb(⊣-1+⍸⍨)←⊂i
 
 	⍝ Parse ⌶* nodes to V nodes
@@ -561,7 +561,7 @@ PS←{⍺←⊢
 	p,←oi ⋄ t k n lx vb pos end(⊣,I)←⊂oi
 	jl←¯1⌽jm ⋄ ml←(jm∧2⌽mm)∨(~jl)∧1⌽mm ⋄ dl←(jm∧3⌽dm)∨(~jl)∧2⌽dm
 	p[g⌿i]←oi[(g←(~msk)∧(1⌽dm)∨om←jl∨ml∨dl)⌿(xc-⌽+⍀⌽msk)-jl]
-	p[g⌿oi]←(g←msk⌿om)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←0
+	p[g⌿oi]←(g←msk⌿om)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←0 ⋄ vb[oi]←¯1
 	pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←jm∨(~msk)∧ml∨dl] ⋄ end[jm⌿i]←end[jl⌿i]
 	ol←1+(k[i⌿⍨1⌽om]=4)∨k[i⌿⍨om]∊2 3 ⋄ or←(msk⌿dm)⍀1+k[dm⌿i]=2
 	k[oi]←3 3⊥↑or ol
@@ -588,16 +588,17 @@ PS←{⍺←⊢
 	i←p[⍸(t[p]=G)∧(≠p)∧(~t∊A E)∧k≠1] ⋄ t[i]←Z ⋄ k[i]←¯2
 
 	⍝ Eliminate non-error Z nodes from the tree
-	zi←p I@{m2[⍵]}⍣≡ki←⍸msk←((t≠Z)∨(t=Z)∧k=¯2)∧m2←(t[p]=Z)∧k[p]≠¯2
+	msk←((t≠Z)∨(t=Z)∧k=¯2)∧m2←(t[p]=Z)∧k[p]≠¯2
+	zi←{p I@{m2[⍵]}⍵⊣vb I@(≥∘0)⍨←ki@⍵⍳≢p}⍣≡p[ki←⍸msk]
 	p←(x←zi@ki⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
 	t k n lx vb pos end(⊣@zi⍨)←t k n lx vb pos end I¨⊂ki
 	p t k n lx vb pos end⌿⍨←⊂msk←msk⍱(t=Z)∧k≠¯2 ⋄ p vb(⊣-1+⍸⍨)←⊂⍸~msk
-	
+
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
 	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
 	k[p[i←⍸msk]]←1 ⋄ n[∪pi]←-sym⍳sym∪←(pi←p[i]){⊂⍵}⌸sym[|n[i]]
-	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂⍸msk
+	vb I@(≥∘0)⍨←pi@i⍳≢p ⋄ p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂⍸msk
 	
 	⍝ All A1 nodes should be lexical scope 6
 	lx[⍸(t=A)∧k=1]←6
