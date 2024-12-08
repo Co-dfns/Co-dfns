@@ -27,7 +27,6 @@ Exec←{
 }
 
 Fix←{_←⍵
-	_←          TK _⊣⍞←'T'
 	_←a n s src←PS _⊣⍞←'P'
 	_←          TT _⊣⍞←'C'
 	_←        ⍺ GC _⊣⍞←'G'
