@@ -636,7 +636,7 @@ PS←{⍺←⊢
 	xn←sym[|n[i]] ⋄ xt←k[i]
 
 	⍝ Sort AST by depth-first pre-order traversal
-	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p
+	d i←P2D p ⋄ p d t k n lx vb pos end I∘⊢←⊂i ⋄ p←i⍳p
 
 	(p d t k n lx vb pos end)(xn xt)sym IN
 }
