@@ -377,8 +377,10 @@ PS←{⍺←⊢
 
 	⍝ Handle specific known structural forms for assignment/binding
 	j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
-	tm←(km∧t[j]∊V Z)∨tm∨(¯1⌽tm)∨1⌽tm←km∧(t[j]=P)∧n[j]=-sym⍳⊂,'.'
-	tm∧←(0,msk⌿(¯1⌽~km)∨¯1⌽km∧(t[j]∊P C F)∧k[j]∊2 3 5)[+⍀msk←2<⌿0⍪tm]
+	tm←(1⌽tm)∨tm←((1⌽tm)∧t[j]=¯1)∨tm←(1⌽tm)∨tm←¯1⌽(t[j]=P)∧n[j]=-sym⍳⊂,'.'
+	tm∨←(t[j]∊V Z)∧jt∨(¯1⌽~km)∨1⌽(t[j]=¯1)∧jt←j∊bt
+	m2←(~km)∨(0⍪msk⌿¯1⌽~km)[+⍀msk←2<⌿0⍪m2←km∧(t[j]=P)∨(t[j]=A)∧k[j]=1]
+	tm∧←(0⍪msk⌿¯1⌽m2)[+⍀msk←2<⌿0⍪tm]
 	vb[bi←msk⌿bt]←nz⌿⍨msk←bt∊tm⌿j ⋄ i~←bi
 	bm←bm∨(km∧(t[j]=¯1)∨(t[j]∊F P)∧k[j]∊3 5)∧1⌽bm←km∧n[j]=-sym⍳⊂,'←'
 	bm←(km∧t[j]∊V Z)∧(2⌽bm)∧(1⌽km∧(k[j]=2)∧t[j]∊F P)∨tm∧1⌽km∧(t[j]=¯1)∨(k[j]=5)∧t[j]∊F P
@@ -398,7 +400,7 @@ PS←{⍺←⊢
 	p,←ph ⋄ rt,←r,←rt[ph] ⋄ t k n vb lx pos end,←(≢ih)⍴¨H 0 0 ¯1 0(pos[ph])(pos[ph]+1)
 	jv←(≢p)+⍳≢j ⋄ p,←ih[ph⍳rt[j]] ⋄ r,←rt[j] ⋄ t k n rt vb lx pos end(⊣,I)←⊂j
 	vb[i]←jv[(rt[jv],⍪n[jv])⍳rt[i],⍪n[i]]
-	
+
 	⍝ Link bindings to their 1st assignments
 	fb←⍸(t=V)∧(t[p]≠H)∧t[r]=T
 	fb←(≠n[fb],⍪r[fb])⌿fb←fb[⍋n[fb],r[fb],pos[rz[fb]],⍪end[rz[fb]]-pos[fb]]
