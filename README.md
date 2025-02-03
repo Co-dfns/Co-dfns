@@ -44,6 +44,8 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[Designing Your Data: The Bread and Butter of APL Performance](https://www.youtube.com/watch?v=ozlxUmdYsHA)
+
 [Living The Loopless Life: Techniques For Removing Explicit Loops And Recursion, LambdaConf 2024](https://www.youtube.com/watch?v=F1q-ZxXmYbo)
 
 [The Nano-parsing Architecture: Sane And Portable Parsing For Perverse Environments, LambdaConf 2024](https://www.youtube.com/watch?v=uInwQEMYAP8)
