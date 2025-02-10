@@ -468,8 +468,7 @@ PS←{⍺←⊢
 	_←{
 		zb←(⌽≠⌽p[zb])⌿zb←zi⌿⍨(zp∊z)∧(k[zi]≠1)∨(≠zp)∧k[zi]=1
 		nk←k[za]×(k[za]≠0)∧za=zc
-                nk+←2×(nk=0)∧(t[za]=P)∧n[za]=-sym⍳⊂,'∘.'
-		nk+←3×(nk=0)∧k[za]∊3 4
+		nk+←3×(nk=0)∧(k[za]∊3 4)∧n[za]≠-sym⍳⊂,'∘.'
 		nk+←(|k[zc])×(nk=0)∧(k[zc]∊¯3 ¯4)∨(t[zb]=P)∧n[zb]=-sym⍳⊂,'.'
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
 		nk+←(nk=0)∧((t[zc]=A)∨1=|k[zc])∧(t[zb]=V)⍲k[zb]=0
