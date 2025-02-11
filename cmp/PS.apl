@@ -338,70 +338,81 @@ PS←{⍺←⊢
 	∨⌿msk←bp[j←i⌿⍨≠p[i]]:{'EMPTY ASSIGNMENT TARGET'SIGNAL SELECT msk⌿p[j]}⍬
 	∨⌿msk←bp[j←i⌿⍨⌽≠⌽p[i]]:{'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[j]}⍬
 	
-	⍝ We use vb to link variables to their binding
-	vb←¯1⍴⍨≢p ⋄ vb[i]←i←⍸(t=T)∨t[p]=H
-	
 	⍝ Wrap binding values in Z nodes and link
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	nz←(≢p)+⍳≢bi←bp[i]⌿i
 	p,←(np≥≢p)⌿¯1⌽np←(bp[i]∨~km)⌿nz@{bp[i]}i
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
-	vb,←bt←i⌿⍨1⌽bp[i]
+	
+	⍝ Enclose definitions in closures
+	i←⍸t∊F T ⋄ p←(((≢p)+⍳≢i)@i⊢⍳≢p)[p] ⋄ p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
+	
+	⍝ Add H node to each F node
+	i←⍸t=F ⋄ p⍪←i ⋄ t n⍪←(≢i)⍴¨T 0 ⋄ k⍪←(0 39 47 63)[0 2 3 4⍳k[i]]
+	pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
 	⍝ Enclosing frames and lines for all nodes
 	rz←p I@{(t[⍵]∊G H Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G T}p[rz]
-		
-	⍝ Link dfns bound names to canonical binding
-	bm←(t[r]∊F G)∧(t=V)∨(t=A)∧k∊0
-	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡⍣(∨⌿bm)⊢bm
-	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
-	vb[msk⌿⍸bm]←i⌿⍨msk←¯1≠i←(nz,¯1)[bt⍳⍸msk⍪0][bm⌿+⍀0⍪msk←2>⌿bm]
+	
+	⍝ We use vb to link variables to their binding
+	vb←¯1⍴⍨≢p
+	
+	⍝ Add localized dfns bindings to the H-set
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(t[r]=F)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
+	bm←1⍴⍨≢p ⋄ bm[p]∧←msk←t∊A V Z ⍝ XXX: Must clear after first ~bm ∨∨∨
+	zv∧←(0⍪(n∊-sym⍳,¨'←' '⍠←' '∘←')⌿⍨2>⌿x)[+⍀2<⌿x←0⍪zv←km∧msk[i]]
+	zv×←(0⍪i⌿⍨¯1⌽2>⌿x)[+⍀2<⌿x←0⍪zv] ⋄ zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0
+	_←p[i]{zv[⍵]←zv[⍵]⌈zv[⍺]×bm[⍺]}⍣≡i←⍸msk
+	i←⍸(t=V)∧zv≠0 ⋄ i⌿⍨←≠n[i],⍪r[i] ⋄ j←⍸t=H ⋄ p⍪←j[p[j]⍳r[i]] ⋄ vb⍪←zv[i]
+	t k n r rz pos end(⊣⍪I)←⊂i
 	
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
-	⍝ Link local variables to bindings
-	i←⍸t∊T V ⋄ i←i[⍋n[i],r[i],pos[rz[i]],⍪end[rz[i]]-pos[i]]
-	b←(0,i[⍸bm])[1+bm⍸⍥⍸~bm←vb[i]≠¯1] ⋄ i⌿⍨←~bm
-	vb[i]+←(1+b)∧(n[i]=n[b])∧r[i]=r[b]
-
-	⍝ Compute bindings and set of free variables
-	fb←⍸(t=T)∨(t[p]=H)∨(t=V)∧t[0⌈vb]=Z
-	fr←n[fb],⍪r[fb] ⋄ fb fr⌿⍨←⊂≠fr ⋄ fb,←¯1
-	i←⍸(t=V)∧vb=¯1 ⋄ ir←n[i],⍪r[r][i] ⋄ fvr←r[i] ⋄ fvi←i ⋄ lx[i]←1
-
-	⍝ Link free variables to bindings
-	_←{vb[i]←j←fb[fr⍳ir] ⋄ i ir⌿⍨←⊂j=¯1 ⋄ fvr,←⊢/ir ⋄ fvi,←i ⋄ ir[;1]←r[⊢/ir]}⍣≡⊢/ir
-
-	⍝ Handle specific known structural forms for assignment/binding
-	j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
-	tm←(1⌽tm)∨tm←((1⌽tm)∧t[j]=¯1)∨tm←(1⌽tm)∨tm←¯1⌽(t[j]=P)∧n[j]=-sym⍳⊂,'.'
-	tm∨←(t[j]∊V Z)∧jt∨(¯1⌽~km)∨1⌽(t[j]=¯1)∧jt←j∊bt
-	m2←(~km)∨(0⍪msk⌿¯1⌽~km)[+⍀msk←2<⌿0⍪m2←km∧(t[j]=P)∨(t[j]=A)∧k[j]=1]
-	tm∧←(0⍪msk⌿¯1⌽m2)[+⍀msk←2<⌿0⍪tm]
-	vb[bi←msk⌿bt]←nz⌿⍨msk←bt∊tm⌿j ⋄ i~←bi
-	bm←bm∨(km∧(t[j]=¯1)∨(t[j]∊F P)∧k[j]∊3 5)∧1⌽bm←km∧n[j]=-sym⍳⊂,'←'
-	bm←(km∧t[j]∊V Z)∧(2⌽bm)∧(1⌽km∧(k[j]=2)∧t[j]∊F P)∨tm∧1⌽km∧(t[j]=¯1)∨(k[j]=5)∧t[j]∊F P
-	x←j⌿⍨bm∨(p[j]∊j⌿⍨msk←bm∨j∊bi)∧m2←km∧(t[j]=V)∧(1⌽~km)∨1⌽km∧(t[j]=¯1)∧1⌽~km
-	k[x]←1 ⋄ vb[x]←x ⋄ i~←x
-	k[x←j⌿⍨tm∧(~msk)∧(0⍪(msk←2>⌿tm⍪0)⌿msk)[+⍀2<⌿0⍪tm]]←1 ⋄ k[j⌿⍨m2∧p[j]∊x]←1
-
-	⍝ Link shadowed variables to bindings
-	cg←⍸(t=V)∧(t[r]=T)∧t[0⌈vb]=T ⋄ ir←(I@{t[0⌈⍵]≠T}⍣≡⍨r)[i]
+	⍝ Resolve names
+	bi←⍸(t=T)∨t[p]=H ⋄ bnr←n[bi],⍪r[bi]
 	_←{
-		vb[i]⌈←x←fb[fr⍳n[i],⍪ir] ⋄ i ir⌿⍨←⊂x=¯1 ⋄ fvr,←ir ⋄ fvi,←i
-		msk←vb[cg]∘.=ir ⋄ i←i[(≢i)|⍸,msk] ⋄ ir←r[cg]⌿⍨+/msk
-	ir}⍣≡ir
-	
-	⍝ Link global free variables to F0(H) header
-	rt←I⍣≡⍨r ⋄ j←i⌿⍨≠rt[i],⍪n[i] ⋄ ih←(≢p)+⍳≢ph←∪rt[j]
-	p,←ph ⋄ rt,←r,←rt[ph] ⋄ t k n vb lx pos end,←(≢ih)⍴¨H 0 0 ¯1 0(pos[ph])(pos[ph]+1)
-	jv←(≢p)+⍳≢j ⋄ p,←ih[ph⍳rt[j]] ⋄ r,←rt[j] ⋄ t k n rt vb lx pos end(⊣,I)←⊂j
-	vb[i]←jv[(rt[jv],⍪n[jv])⍳rt[i],⍪n[i]]
+		⍝ Resolve locals
+		msk←(≢bnr)≠j←bnr⍳n[i],⍪r[i] ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
+		li lb⌿⍨←⊂(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]>pos[li]
+		vb[li]←lb ⋄ i⌿⍨←~msk ⋄ lx[i]←1
+		
+		⍝ Propagate Free Variables to Definition Closures
+		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V ⋄ msk←(≢j)≠x←(n[j],⍪p[j])⍳n[i],⍪p[r[i]]
+		vb[msk⌿x]←j[x] ⋄ i⌿⍨←~msk
+		j←(≢p)+≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ p⍪←p[r[ui]] ⋄ r rz(⊣⍪I)←⊂p[r[ui]]
+		t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
+		vb[i]←j[(n[ui],⍪r[ui])⍳n[i],⍪r[i]]
+		
+		⍝ Propagate Free Variables to Dynamic Closures
+		nj np←j i I¨↓⍉↑⍸p[j]∘.=vb[i←⍸(t=C)∧vb∊p[j]] ⋄ j⍪←(≢p)+⍳≢nj
+		p⍪←np ⋄ r rz(⊣⍪I)←⊂np ⋄ t k n lx vb pos end(⊣⍪I)←⊂nj
+		
+		⍝ Propagate Definition Closures to new Dynamic Call Sites
+		i x⌿⍨←⊂t[x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H]=T
+		pi vi←↓⍉↑⍸,px∘.=p[vs←⍸(t=V)∧p∊px←p[x]]
+		p⍪←i ⋄ t k n r rx vb pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
+		p⍪←i[pi] ⋄ r rx(⊣⍪I)←⊂i[pi]
+		t k n pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨0 ¯1
+		t[i]←C ⋄ k[i]←k[x] ⋄ vb[i]←px	
+	j⌿⍨k[p[j]]≠0}⍣≡⍸(t[p]≠H)∧(t=V)∧vb=¯1
+		
+	⍝ XXX Handle specific known structural forms for assignment/binding
+	⍝ j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
+	⍝ tm←(1⌽tm)∨tm←((1⌽tm)∧t[j]=¯1)∨tm←(1⌽tm)∨tm←¯1⌽(t[j]=P)∧n[j]=-sym⍳⊂,'.'
+	⍝ tm∨←(t[j]∊V Z)∧jt∨(¯1⌽~km)∨1⌽(t[j]=¯1)∧jt←j∊bt
+	⍝ m2←(~km)∨(0⍪msk⌿¯1⌽~km)[+⍀msk←2<⌿0⍪m2←km∧(t[j]=P)∨(t[j]=A)∧k[j]=1]
+	⍝ tm∧←(0⍪msk⌿¯1⌽m2)[+⍀msk←2<⌿0⍪tm]
+	⍝ vb[bi←msk⌿bt]←nz⌿⍨msk←bt∊tm⌿j ⋄ i~←bi
+	⍝ bm←bm∨(km∧(t[j]=¯1)∨(t[j]∊F P)∧k[j]∊3 5)∧1⌽bm←km∧n[j]=-sym⍳⊂,'←'
+	⍝ bm←(km∧t[j]∊V Z)∧(2⌽bm)∧(1⌽km∧(k[j]=2)∧t[j]∊F P)∨tm∧1⌽km∧(t[j]=¯1)∨(k[j]=5)∧t[j]∊F P
+	⍝ x←j⌿⍨bm∨(p[j]∊j⌿⍨msk←bm∨j∊bi)∧m2←km∧(t[j]=V)∧(1⌽~km)∨1⌽km∧(t[j]=¯1)∧1⌽~km
+	⍝ k[x]←1 ⋄ vb[x]←x ⋄ i~←x
+	⍝ k[x←j⌿⍨tm∧(~msk)∧(0⍪(msk←2>⌿tm⍪0)⌿msk)[+⍀2<⌿0⍪tm]]←1 ⋄ k[j⌿⍨m2∧p[j]∊x]←1
 
-	⍝ Link bindings to their 1st assignments
+	⍝ XXX Link bindings to their 1st assignments
 	fb←⍸(t=V)∧(t[p]≠H)∧t[r]=T
 	fb←(≠n[fb],⍪r[fb])⌿fb←fb[⍋n[fb],r[fb],pos[rz[fb]],⍪end[rz[fb]]-pos[fb]]
 	fz←(i,¯1)[fb⍳⍥(p∘I)⍨i←⍸(t=Z)∧vb≠¯1]
@@ -416,14 +427,6 @@ PS←{⍺←⊢
 	fx}⍣≡fx
 	vb[i]←(fz,¯1)[fr⍳n[i],⍪r[i]]
 	vb[i]←(fz,¯1)[(⊣/fr)⍳n[i←⍸(t[p]=H)∧vb=¯1]]
-
-	⍝ Create closures for functions and trad-fn references
-	i←cg,⍸(t∊F T)∧k≠0 ⋄ fvi fvr⌿⍨←⊂(k[fvr]≠0)∧≠n[fvi],⍪fvr ⋄ k[cg]←k[vb[cg]]
-	np←(≢p)+⍳≢i ⋄ p r fvi I⍨←⊂np@i⊢⍳≢p
-	p,←i ⋄ t k n vb r lx pos end(⊣,I)←⊂i ⋄ t[i]←C
-	p,←fvr ⋄ t k n vb lx pos end(⊣,I)←⊂fvi ⋄ r,←r[fvr] ⋄ rz,←rz[fvr]
-	msk←vb[cg]∘.=fvr ⋄ i←fvi[(≢fvi)|⍸,msk] ⋄ ir←cg⌿⍨+/msk
-	p,←ir ⋄ t k n vb lx pos end(⊣,I)←⊂i ⋄ r,←r[ir] ⋄ rz,←rz[ir]
 
 	⍝ Specialize functions to specific formal binding types
 	rc←(≢p)⍴1 ⋄ isa isd←⊣@p⍨¨↓(⊂3 7)⌷(9⍴2)⊤k
