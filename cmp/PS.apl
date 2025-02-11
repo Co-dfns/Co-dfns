@@ -349,7 +349,7 @@ PS←{⍺←⊢
 	i←⍸t∊F T ⋄ p←(((≢p)+⍳≢i)@i⊢⍳≢p)[p] ⋄ p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
 	
 	⍝ Add H node to each F node
-	i←⍸t=F ⋄ p⍪←i ⋄ t n⍪←(≢i)⍴¨T 0 ⋄ k⍪←(0 39 47 63)[0 2 3 4⍳k[i]]
+	i←⍸t=F ⋄ p⍪←i ⋄ t n⍪←(≢i)⍴¨H 0 ⋄ k⍪←(0 39 47 63)[0 2 3 4⍳k[i]]
 	pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
 	⍝ Enclosing frames and lines for all nodes
