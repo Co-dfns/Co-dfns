@@ -364,7 +364,7 @@ PS←{⍺←⊢
 	bm←1⍴⍨≢p ⋄ msk←{bm[p]∧←⍵∧bm}⍣≡t∊A V Z
 	zv∧←(0⍪(n∊-sym⍳,¨'←' '⍠←' '∘←')⌿⍨2>⌿x)[+⍀2<⌿x←0⍪zv←km∧msk[i]]
 	zv×←(0⍪i⌿⍨¯1⌽2>⌿x)[+⍀2<⌿x←0⍪zv] ⋄ zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0
-	_←p[i]{zv[⍵]←zv[⍵]⌈zv[⍺]×bm[⍺]}⍣≡i←⍸msk
+	_←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸msk
 	i←⍸(t=V)∧zv≠0 ⋄ i⌿⍨←≠n[i],⍪r[i] ⋄ j←⍸t=H ⋄ p⍪←j[p[j]⍳r[i]] ⋄ vb⍪←zv[i]
 	t k n r rz pos end(⊣⍪I)←⊂i
 	
