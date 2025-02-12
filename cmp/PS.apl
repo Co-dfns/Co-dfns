@@ -346,7 +346,8 @@ PS←{⍺←⊢
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
 	
 	⍝ Enclose definitions in closures
-	i←⍸t∊F T ⋄ p←(((≢p)+⍳≢i)@i⊢⍳≢p)[p] ⋄ p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
+	i←⍸t∊F T ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
+	p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
 	
 	⍝ Add H node to each F node
 	i←⍸t=F ⋄ p⍪←i ⋄ t n⍪←(≢i)⍴¨H 0 ⋄ k⍪←(0 39 47 63)[0 2 3 4⍳k[i]]
