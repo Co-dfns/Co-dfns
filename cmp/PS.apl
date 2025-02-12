@@ -352,8 +352,8 @@ PS←{⍺←⊢
 	i←⍸t=F ⋄ p⍪←i ⋄ t n⍪←(≢i)⍴¨H 0 ⋄ k⍪←(0 39 47 63)[0 2 3 4⍳k[i]]
 	pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
-	⍝ Enclosing frames and lines for all nodes
-	rz←p I@{(t[⍵]∊G H Z)⍲(t[p[⍵]]∊F G T)∨p[⍵]=⍵}⍣≡⍳≢p
+	⍝ Enclosing frames and lines for all nodes'
+	msk←(t∊G H Z)⍲(t[p]∊F G T)∨p=⍳≢p ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨¯1@{~t[⍵]∊F G T}p[rz]
 	
 	⍝ We use vb to link variables to their binding
