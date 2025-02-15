@@ -383,7 +383,7 @@ PS←{⍺←⊢
 		⍝ Propagate Free Variables to Definition Closures
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[r[i]]] ⋄ i⌿⍨←x=≢j
-		j←(≢p)+≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ p⍪←p[r[ui]] ⋄ r rz(⊣⍪I)←⊂p[r[ui]]
+		j←(≢p)+⍳≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ p⍪←p[r[ui]] ⋄ r rz(⊣⍪I)←⊂p[r[ui]]
 		t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
 		vb[i]←j[(n[ui],⍪r[ui])⍳n[i],⍪r[i]]
 		
