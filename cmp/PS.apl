@@ -373,8 +373,8 @@ PS←{⍺←⊢
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
 	⍝ Resolve names
-	bi←⍸(t=T)∨t[p]=H ⋄ bnr←n[bi],⍪r[bi]
-	_←{i←⍵
+	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi
+	bi⍪←i←⍸(t=T)∨(t[p]=H)∨(t=F)∧k=0 ⋄ bnr⍪←n[i],⍪r[i]
 		⍝ Resolve locals
 		msk←(≢bnr)≠j←bnr⍳n[i],⍪r[i] ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
 		li lb⌿⍨←⊂(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]>pos[li]
