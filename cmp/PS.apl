@@ -346,7 +346,7 @@ PS←{⍺←⊢
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
 	
 	⍝ Enclose definitions in closures
-	i←⍸t∊F T ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
+	i←⍸(t=T)∨(t=F)∧k≠0 ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
 	p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
 	
 	⍝ Add H node to each F node
@@ -354,13 +354,13 @@ PS←{⍺←⊢
 	pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
 	⍝ Enclosing frames and lines for all nodes
-	msk←(t∊C G H Z)⍲(t[p]∊F G T)∨p=⍳≢p ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
+	msk←(t∊F G H Z)⍲(t[p]∊F G T)∨p=⍳≢p ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨p[rz]
 	
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p
 	
-	⍝ Add localized dfns bindings to the H-set
+	⍝ Add localized dfns/ns bindings to the H-set
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(t[r]=F)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	bm←1⍴⍨≢p ⋄ msk←{bm[p]∧←⍵∧bm}⍣≡t∊A V Z
 	zv∧←(0⍪(n[i]∊-sym⍳,¨'←' '⍠←' '∘←')⌿⍨2>⌿x)[+⍀2<⌿x←0⍪zv←km∧msk[i]]
@@ -381,12 +381,18 @@ PS←{⍺←⊢
 		li lb⌿⍨←⊂(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]>pos[li]
 		vb[li]←lb ⋄ i⌿⍨←~msk ⋄ lx[i]←1
 		
-		⍝ Propagate Free Variables to Definition Closures
+		⍝ Resolve free variables
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[r[i]]] ⋄ i⌿⍨←x=≢j
+		
+		⍝ Propagate Free Variables to Definition Closures
 		j←(≢p)+⍳≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ p⍪←p[r[ui]] ⋄ r rz(⊣⍪I)←⊂p[r[ui]]
 		t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
 		vb[i]←j[(n[ui],⍪r[ui])⍳n[i],⍪r[i]]
+		
+		⍝ Add namespace locals to bindings
+		i←j⌿⍨msk←t[p[j]]=F ⋄ p[i]←x[p[x←⍸(t[p]=F)∧(k[p]=0)∧t=H]⍳p[i]]
+		bi⍪←i ⋄ bnr⍪←n[i],⍪r[i] ⋄ j⌿⍨←~msk
 		
 		⍝ Propagate Free Variables to Dynamic Closures
 		nj np←j i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[j]] ⋄ j⍪←(≢p)+⍳≢nj
