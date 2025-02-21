@@ -354,7 +354,7 @@ PS←{⍺←⊢
 	pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
 	⍝ Enclosing frames and lines for all nodes
-	msk←(t∊F G H Z)⍲(t[p]∊F G T)∨p=⍳≢p ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
+	msk←~t[p]∊F G T ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨p[rz]
 	
 	⍝ We use vb to link variables to their binding
@@ -376,23 +376,22 @@ PS←{⍺←⊢
 	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi
 	bi⍪←i←⍸(t=T)∨(t[p]=H)∨(t=F)∧k=0 ⋄ bnr⍪←n[i],⍪r[i]
 	_←{i←⍵
-		⍝ Resolve locals
+		⍝ Resolve locals and free variables
 		msk←(≢bnr)≠j←bnr⍳n[i],⍪r[i] ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
 		li lb⌿⍨←⊂(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]>pos[li]
 		vb[li]←lb ⋄ i⌿⍨←~msk ⋄ lx[i]←1
-		
-		⍝ Resolve free variables
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[r[i]]] ⋄ i⌿⍨←x=≢j
 		
-		⍝ Propagate Free Variables to Definition Closures
-		j←(≢p)+⍳≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ p⍪←p[r[ui]] ⋄ r rz(⊣⍪I)←⊂p[r[ui]]
-		t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
-		vb[i]←j[(n[ui],⍪r[ui])⍳n[i],⍪r[i]]
+		⍝ Bind unresolved variables to new bindings
+		j←(≢p)+⍳≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ vb[i]←j[(n[ui],⍪r[ui])⍳n[i],⍪r[i]]
 		
-		⍝ Add namespace locals to bindings
-		i←j⌿⍨msk←t[p[j]]=F ⋄ p[i]←x[p[x←⍸(t[p]=F)∧(k[p]=0)∧t=H]⍳p[i]]
-		bi⍪←i ⋄ bnr⍪←n[i],⍪r[i] ⋄ j⌿⍨←~msk
+		⍝ Add namespace bindings to H-set; free variables to C-set
+		i ir←j x⌿⍨¨⊂msk←(t[x]=F)∧k[x←r[ui]]=0
+		np←x[p[x←⍸(t[p]=F)∧(k[p]=0)∧t=H]⍳ir]
+		p r rz⍪←⊂(≢ui)⍴¯1 ⋄ t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
+		p[i]←np ⋄ r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ bnr⍪←n[i],⍪r[i] ⋄ j ui⌿⍨←⊂~msk
+		p[j]←x←p[r[ui]] ⋄ r[j]←r[x] ⋄ rz[j]←rz[x]
 		
 		⍝ Propagate Free Variables to Dynamic Closures
 		nj np←j i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[j]] ⋄ j⍪←(≢p)+⍳≢nj
