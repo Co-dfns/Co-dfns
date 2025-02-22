@@ -368,7 +368,7 @@ PS←{⍺←⊢
 	_←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸msk
 	i←⍸(t=V)∧zv≠0 ⋄ i⌿⍨←≠n[i],⍪r[i] ⋄ j←⍸t=H ⋄ p⍪←j[p[j]⍳r[i]] ⋄ vb⍪←zv[i]
 	t k n r rz pos end(⊣⍪I)←⊂i
-	
+
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
