@@ -338,7 +338,7 @@ PS←{⍺←⊢
 	∨⌿msk←bp[j←i⌿⍨≠p[i]]:{'EMPTY ASSIGNMENT TARGET'SIGNAL SELECT msk⌿p[j]}⍬
 	∨⌿msk←bp[j←i⌿⍨⌽≠⌽p[i]]:{'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[j]}⍬
 
-	⍝ Wrap binding values in Z nodes and link
+	⍝ Wrap binding values in Z nodes
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	nz←(≢p)+⍳≢bi←bp[i]⌿i
 	p,←(np≥≢p)⌿¯1⌽np←(bp[i]∨~km)⌿nz@{bp[i]}i
