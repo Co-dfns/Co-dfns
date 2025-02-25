@@ -345,13 +345,10 @@ PS←{⍺←⊢
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
 	
-	⍝ Enclose definitions in closures
+	⍝ Enclose definitions in closures; add H node to each F node
 	i←⍸(t=T)∨(t=F)∧k≠0 ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
 	p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
-	
-	⍝ Add H node to each F node
-	i←⍸t=F ⋄ p⍪←i ⋄ t n⍪←(≢i)⍴¨H 0 ⋄ k⍪←(0 39 47 63)[0 2 3 4⍳k[i]]
-	pos⍪←pos[i] ⋄ end⍪←pos[i]+1
+	i←⍸t=F ⋄ p⍪←i ⋄ t n k⍪←(≢i)⍴¨H 0 0 ⋄ pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
 	⍝ Enclosing frames and lines for all nodes
 	msk←~t[p]∊F G T ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
