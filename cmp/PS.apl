@@ -387,7 +387,7 @@ PS←{⍺←⊢
 		i ir←j x⌿⍨¨⊂msk←(t[x]=F)∧k[x←r[ui]]=0
 		np←x[p[x←⍸(t[p]=F)∧(k[p]=0)∧t=H]⍳ir]
 		p r rz⍪←⊂(≢ui)⍴¯1 ⋄ t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
-		p[i]←np ⋄ r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ bnr⍪←n[i],⍪r[i] ⋄ j ui⌿⍨←⊂~msk
+		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r[j]←r[x] ⋄ rz[j]←rz[x]
 		
 		⍝ Propagate Free Variables to Dynamic Closures
