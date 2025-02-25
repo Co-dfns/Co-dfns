@@ -378,8 +378,8 @@ PS←{⍺←⊢
 	_←{i←⍵
 		⍝ Resolve locals and free variables
 		msk←(≢bnr)≠j←bnr⍳n[i],⍪r[i] ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
-		li lb⌿⍨←⊂(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]≥pos[li]
-		vb[li]←lb ⋄ i~←li ⋄ lx[i]←1
+		lm←(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]≥pos[li]
+		li lb⌿⍨←⊂lm ⋄ vb[li]←lb ⋄ i⌿⍨←~msk⍀lm ⋄ lx[i]←1
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[r[i]]] ⋄ i⌿⍨←x=≢j
 		
