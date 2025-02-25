@@ -417,7 +417,7 @@ PS←{⍺←⊢
 	⍝ x←j⌿⍨bm∨(p[j]∊j⌿⍨msk←bm∨j∊bi)∧m2←km∧(t[j]=V)∧(1⌽~km)∨1⌽km∧(t[j]=¯1)∧1⌽~km
 	⍝ k[x]←1 ⋄ vb[x]←x ⋄ i~←x
 	⍝ k[x←j⌿⍨tm∧(~msk)∧(0⍪(msk←2>⌿tm⍪0)⌿msk)[+⍀2<⌿0⍪tm]]←1 ⋄ k[j⌿⍨m2∧p[j]∊x]←1
-
+∘∘∘
 	⍝ XXX Link bindings to their 1st assignments
 	fb←⍸(t=V)∧(t[p]≠H)∧t[r]=T
 	fb←(≠n[fb],⍪r[fb])⌿fb←fb[⍋n[fb],r[fb],pos[rz[fb]],⍪end[rz[fb]]-pos[fb]]
