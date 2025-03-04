@@ -356,22 +356,22 @@ PS←{⍺←⊢
 	
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p
-	
+
 	⍝ Add localized dfns/ns bindings to the H-set
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(t[r]=F)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	bm←{bm⊣bm[p]∧←⍵}⍣≡bm←t∊A V Z
 	zv∧←(0⍪(1⌽n[i]∊-sym⍳,¨'←' '⍠←' '∘←')⌿⍨2>⌿zv⍪0)[+⍀2<⌿0⍪zv←km∧bm[i]]
-	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv] ⋄ zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0
-	_←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
-	i←⍸(t=V)∧zv≠0 ⋄ i⌿⍨←≠n[i],⍪r[i] ⋄ j←⍸t=H ⋄ p⍪←j[p[j]⍳r[i]] ⋄ vb⍪←zv[i]
-	t k n r rz pos end(⊣⍪I)←⊂i
+	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv]
+	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0 ⋄ _←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
+	zv[i]←i←⍸(t=T)∨(t=F)∧k=0
+	i←⍸(t∊F T V)∧zv≠0 ⋄ i⌿⍨←≠n[i],⍪r[i] ⋄ j←⍸t=H
+	p⍪←j[p[j]⍳r[i]] ⋄ vb⍪←zv[i] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rz pos end(⊣⍪I)←⊂i
 
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
 	⍝ Resolve names
-	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi
-	bi⍪←i←⍸(t=T)∨(t[p]=H)∨(t=F)∧k=0 ⋄ bnr⍪←n[i],⍪r[i]
+	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←i←⍸t[p]=H ⋄ bnr⍪←n[i],⍪r[i]
 	_←{i←⍵
 		⍝ Resolve locals and free variables
 		msk←(≢bnr)≠j←bnr⍳n[i],⍪r[i] ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
