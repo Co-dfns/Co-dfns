@@ -30,6 +30,21 @@ user and patron contributions. You can support the project by contributing code,
 
 https://www.patreon.com/arcfide
 
+We welcome code contributions, improvements, and fixes. Our internal team 
+primarily works "old school" via email and patches, and you are welcome to 
+submit your own diffs via email to arcfide@sacrideo.us for inclusion into 
+the compiler. However, we would also like to credit you in the most visible 
+way possible if you wish, and the easiest way to do this is to submit a 
+pull request of your changes against the master branch. Using a pull request 
+is optional, but makes it easier to give you credit on the GitHub platform
+for any of your contributions. 
+
+Please note that Co-dfns is a dual-licensed project, and any contributions 
+must use the same dual-licensing model to be accepted. We also require a 
+copyright transfer to enable us to work effectively with the codebase from 
+a legal standpoint. A pull request is assumed to be an acknowledgement 
+and acceptance of these terms. 
+
 ## Related Projects
 
 There are a number of related initiatives that are based on the Co-dfns 
