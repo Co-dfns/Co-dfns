@@ -32,6 +32,10 @@ Co-dfns uses a "release when it's ready" semantic versioning model. We release f
 
 Yes. It is not currently, but it will be. We are getting very close to this goal now.
 
+**If Co-dfns isn't self-hosting, how did you do your benchmarking for your thesis?**
+
+The APL code in the thesis was hand-compiled (translated) down to representative C++ code that was designed to mimic the perceived "low hanging" optimizations and compiler outputs that would be produced by a compiler. Things like function inlining, function and loop fusion, and reasonable implementations of runtime primitives were taken for granted to do the translation. More sophisticated optimizations such as those that would permit algorithms to fundamentally alter their runtime behaviors were not used. 
+
 **Will Co-dfns work standalone without Dyalog APL?**
 
 Co-dfns is not intended to replace working within the Dyalog APL development environment. However, Co-dfns is designed to allow for use cases where the interpreter may not be a good fit. The intent has always been to keep the compiler small, and leverage the existing features of the interpreter where they make sense to avoid duplicate work. 
@@ -77,4 +81,3 @@ https://youtu.be/v7Mt0GYHU9A
 **Do I need a discrete GPU to use Co-dfns?**
 
 No, you can also use it with standard Intel CPUs or anything with OpenCL support. The best performance is still with GPUs, though.
-
