@@ -107,7 +107,7 @@ PS←{⍺←⊢
 	tm←(d=0)∧'∇'=x
 	∨⌿msk←tm∧¯1⌽Z≠t:'∇ MUST BE FIRST ON A LINE'SIGNAL lineof msk⌿pos
 	0≠⊃tm←¯1⌽≠⍀tm:'UNBALANCED TRAD-FNS'SIGNAL lineof pos[⊃⌽⍸2<⌿0⍪tm]
-	msk←(⊃¯1 1∨.⌽⊂Z≠t)∧(2>⌿tm)⍪0
+	msk←(1⌽Z≠t)∧(2>⌿tm)⍪0
 	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL lineof msk⌿pos
 	
 	⍝ Flatten trad-fns headers
