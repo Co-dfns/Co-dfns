@@ -343,7 +343,7 @@ PS←{⍺←⊢
 	p,←(np≥≢p)⌿¯1⌽np←(bp[i]∨~km)⌿nz@{bp[i]}i
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
-	
+
 	⍝ Enclose definitions in closures; add H node to each F node
 	i←⍸(t=T)∨(t=F)∧k≠0 ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
 	p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
@@ -414,22 +414,6 @@ PS←{⍺←⊢
 	⍝ x←j⌿⍨bm∨(p[j]∊j⌿⍨msk←bm∨j∊bi)∧m2←km∧(t[j]=V)∧(1⌽~km)∨1⌽km∧(t[j]=¯1)∧1⌽~km
 	⍝ k[x]←1 ⋄ vb[x]←x ⋄ i~←x
 	⍝ k[x←j⌿⍨tm∧(~msk)∧(0⍪(msk←2>⌿tm⍪0)⌿msk)[+⍀2<⌿0⍪tm]]←1 ⋄ k[j⌿⍨m2∧p[j]∊x]←1
-∘∘∘
-	⍝ XXX Link bindings to their 1st assignments
-	fb←⍸(t=V)∧(t[p]≠H)∧t[r]=T
-	fb←(≠n[fb],⍪r[fb])⌿fb←fb[⍋n[fb],r[fb],pos[rz[fb]],⍪end[rz[fb]]-pos[fb]]
-	fz←(i,¯1)[fb⍳⍥(p∘I)⍨i←⍸(t=Z)∧vb≠¯1]
-	fr←n[fb],⍪r[fb] ⋄ fh←n[i],⍪r[i←⍸t[p]=H]
-	fx←n[fb],r[fb],pos[rz[fb]],⍪end[rz[fb]]-pos[fb]
-	jx←r[cg],pos[rz[cg]],⍪end[rz[cg]]-pos[cg]
-	_←{
-		fvr fvz←(⊂~fr∊⍥↓fh)⌿¨fr fz
-		rc←+/msk←vb[cg]∘.=fvr[;1] ⋄ jn←fvr[(⊃⌽⍴fvr)|⍸,msk;0]
-		fx⍪←jn,rc⌿jx ⋄ fr⍪←jn,⍪rc⌿r[cg] ⋄ fz⍪←fvz[(≢fvz)|⍸,msk]
-		fr fz fx⌿⍨←⊂(≠fx[x;])[⍋x←⍋fx]
-	fx}⍣≡fx
-	vb[i]←(fz,¯1)[fr⍳n[i],⍪r[i]]
-	vb[i]←(fz,¯1)[(⊣/fr)⍳n[i←⍸(t[p]=H)∧vb=¯1]]
 
 	⍝ Specialize functions to specific formal binding types
 	rc←(≢p)⍴1 ⋄ isa isd←⊣@p⍨¨↓(⊂3 7)⌷(9⍴2)⊤k
