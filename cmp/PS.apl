@@ -434,9 +434,6 @@ PS←{⍺←⊢
 	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
 	vb[j]←(i,¯1)[(r[i],⍪n[i])⍳r[j],⍪n[j]]
 
-	⍝ Unbound variables are lx=¯1
-	lx[⍸(t=V)∧(vb=¯1)∧t[p]≠H]←¯1
-
 	⍝ Mark formals with their appropriate kinds and scopes
 	k[⍸(t=P)∧n=¯2]←0
 	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
