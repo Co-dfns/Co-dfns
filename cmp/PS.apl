@@ -105,9 +105,9 @@ PS←{⍺←⊢
 
 	⍝ Mark trad-fns regions as tm
 	tm←(d=0)∧'∇'=x
-	∨⌿msk←Z≠t⌿⍨1⌽tm:'∇ MUST BE FIRST ON A LINE'SIGNAL lineof msk⌿pos
+	∨⌿msk←tm∧¯1⌽Z≠t:'∇ MUST BE FIRST ON A LINE'SIGNAL lineof msk⌿pos
 	0≠⊃tm←¯1⌽≠⍀tm:'UNBALANCED TRAD-FNS'SIGNAL lineof pos[⊃⌽⍸2<⌿0⍪tm]
-	msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0
+	msk←(1⌽Z≠t)∧(2>⌿tm)⍪0
 	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL lineof msk⌿pos
 	
 	⍝ Flatten trad-fns headers
@@ -271,12 +271,11 @@ PS←{⍺←⊢
 	⍝ Parse :Namespace syntax into M nodes
 	nss←(t=K)∧n∊-sym⍳⎕C⊂':NAMESPACE' ⋄ nse←(t=K)∧n∊-sym⍳⎕C⊂':ENDNAMESPACE'
 	ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE'
-	∨⌿msk←Z≠t⌿⍨1⌽nss:ERR SIGNAL SELECT ⍸msk
+	∨⌿msk←nss∧¯1⌽Z≠t:ERR SIGNAL SELECT ⍸msk
 	ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
-	msk←(Z≠t⌿⍨¯1⌽nss)∧(V≠t⌿⍨¯1⌽nss)∨Z≠t⌿⍨¯2⌽nss
-	∨⌿msk:ERR SIGNAL SELECT ⍸msk
+	∨⌿msk←nss∧(1⌽Z≠t)∧(1⌽V≠t)∨2⌽Z≠t:ERR SIGNAL SELECT ⍸msk
 	ERR←':ENDNAMESPACE KEYWORD MUST APPEAR ALONE ON A LINE'
-	∨⌿msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR SIGNAL SELECT ⍸msk
+	∨⌿msk←nse∧⊃¯1 1∨.⌽⊂Z≠t:ERR SIGNAL SELECT ⍸msk
 	t[nsi←⍸1⌽nss]←M ⋄ t[nei←⍸1⌽nse]←-M
 	n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ end[nsi]←end[nei]
 	x←⍸p=⍳≢p ⋄ d←+⍀(t[x]=M)+-t[x]=-M
