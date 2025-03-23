@@ -47,7 +47,7 @@ PS←{⍺←⊢
 	t[⍸'⋄'=IN[pos]]←Z
 
 	⍝ Remove insignificant whitespace
-	t pos end⌿⍨←⊂~(t=0)∧(⊢∧1⌽⊢)IN[pos]∊WS
+	t pos end⌿⍨←⊂(t=0)⍲(⊢∧1⌽⊢)IN[pos]∊WS
 	t pos end⌿⍨←⊂(t≠0)∨(~IN[pos]∊WS)∨⊃¯1 1∧.⌽⊂IN[pos]∊alp,num,'¯⍺⍵⎕.:'
 
 	⍝ Verify all open characters are valid
@@ -65,9 +65,9 @@ PS←{⍺←⊢
 	∨⌿msk←1<+⌿¨dm⊆'¯'=x:'MULTIPLE ¯ IN NUMBER'SIGNAL ∊msk⌿dm⊆pos
 	∨⌿msk←('¯'=x)∧~dm:'ORPHANED ¯'SIGNAL msk⌿pos
 	dm∨←(msk←x∊'Ee')∧(¯1⌽dm)∧1⌽dm
-	dm←dm⍀∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
+	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	dm∨←(msk←x∊'Jj')∧(¯1⌽dm)∧1⌽dm
-	dm←dm⍀∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
+	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	(msk⌿dm)←∊∧⍀¨(msk←x∊alp,num)⊆dm
 	dm[⍸dm∧(x='.')∧(¯1⌽dm)⍱1⌽dm]←0
 	msk←∨⌿¨dm⊆dm∧(x='.')∧¯1⌽(~dm)∧x∊num
@@ -77,18 +77,18 @@ PS←{⍺←⊢
 	t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 
 	⍝ Tokenize variables
-	msk←(~dm)∧(t=0)∧x∊alp,num ⋄ t[i←⍸2<⌿0⍪msk]←V ⋄ end[i]←end⌿⍨2>⌿msk⍪0
+	msk←dm<(t=0)∧x∊alp,num ⋄ t[i←⍸2<⌿0⍪msk]←V ⋄ end[i]←end⌿⍨2>⌿msk⍪0
 
 	⍝ Tokenize dfns formals
 	msk←3≤≢¨grp←(pos⊆⍨'⍺'=x),pos⊆⍨'⍵'=x
 	∨⌿msk:'AMBIGUOUS FORMALS'SIGNAL ∊msk⌿grp
 	msk←('⍺⍺'⍷x)∨'⍵⍵'⍷x ⋄ t[i←⍸msk]←P ⋄ end[i]+←1
-	t[⍸(~msk∨¯1⌽msk)∧x∊'⍺⍵']←A
+	t[⍸msk<(¯1⌽msk)<x∊'⍺⍵']←A
 
 	⍝ Tokenize primitives and atoms
-	t[⍸x∊syna]←A ⋄ t[⍸(~dm)∧x∊prms]←P
-	msk←(x∊'⌶∇')∨msk∨¯1⌽msk←(~dm)∧⊃'⍠←' '∘←' '∘.'∨.⍷⊂x
-	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿msk⍪0 ⋄ t[⍸msk∧~m2]←0
+	t[⍸x∊syna]←A ⋄ t[⍸dm<x∊prms]←P
+	msk←(x∊'⌶∇')∨msk∨¯1⌽msk←dm<⊃'⍠←' '∘←' '∘.'∨.⍷⊂x
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿msk⍪0 ⋄ t[⍸m2<msk]←0
 	∨⌿msk←2<end[i]-pos[i←⍸msk∧x='∇']:{
 		'AMBIGUOUS ∇ CLUSTER'SIGNAL SELECT msk⌿i
 	}⍬
@@ -114,7 +114,7 @@ PS←{⍺←⊢
 	d[⍸msk←∊∨⍀¨(t=Z)⊂2<⌿tm⍪0]←0 ⋄ t[⍸msk∧x∊'{}']←P
 	
 	⍝ Parse trad-fns into T type
-	t[⍸msk←2<⌿tm⍪0]←T ⋄ d+←tm∧~msk
+	t[⍸msk←2<⌿tm⍪0]←T ⋄ d+←msk<tm
 
 	⍝ Identify colons belonging to Labels
 	t[⍸tm∧(d=1)∧∊0,¨(<⍀∧∘~⊃)¨':'=1↓¨(t=Z)⊂x]←L
@@ -122,7 +122,7 @@ PS←{⍺←⊢
 	⍝ Tokenize Keywords
 	∨⌿msk←3∧⌿(':'=x)∧t=0:'TOO MANY COLONS'SIGNAL SELECT ⍸msk
 	t[⍸(':'=x)∧t=0]←K
-	ki←⍸(t=K)∧((1⌽t=K)∧~msk)∨(1⌽t=V)∧msk←(d=0)∨tm∧d=1
+	ki←⍸(t=K)∧(msk<1⌽t=K)∨(1⌽t=V)∧msk←(d=0)∨tm∧d=1
 	end[ki]←end[1+ki] ⋄ t[ki+1]←0
 
 	⍝ Tokenize system variables
