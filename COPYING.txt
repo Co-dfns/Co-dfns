@@ -1,5 +1,5 @@
 Co-dfns Compiler: High-performance, Parallel APL Compiler
-Copyright (c) 2011-2022 Aaron W. Hsu <arcfide@sacrideo.us>
+Copyright (c) 2011-2025 Aaron W. Hsu <arcfide@sacrideo.us>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
