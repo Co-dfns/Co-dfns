@@ -227,8 +227,8 @@ PS←{⍺←⊢
 	'Non-Z top-level node'assert t[⍸p=⍳≢p]=Z:
 
 	⍝ Wrap all function expression bodies as Z nodes
-	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t[p]∊T F)∧~t=L
-	'Non-Z/L dfns body node'assert t[⍸t[p]=F]∊Z L:
+	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t=L)<t[p]∊T F
+	'Non-Z/L function body node'assert t[⍸t[p]∊T F]∊Z L:
 
 	⍝ Parse the first line of a trad-fn as an H node
 	⍝ N M S A R L Z X Y←(9⍴2)⊤k ⋄ N M←0(2*16)⊤n
