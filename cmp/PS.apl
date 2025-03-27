@@ -436,7 +436,7 @@ PS←{⍺←⊢
 
 	⍝ Mark formals with their appropriate kinds and scopes
 	k[⍸(t=P)∧n=¯2]←0
-	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
+	k[i]←(0 0,14⍴1)[k[r[i←⍸0@(vb⌿⍨(t=Z)∧vb≠¯1)⊢(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
 	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
 	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
 	i←i[⍋p[i←⍸t[p]=H]] ⋄ jp←p[i[j←⍸≠p[i]]] ⋄ hk←(9⍴2)⊤k[jp] ⋄ hn←0(2*16)⊤n[jp]
