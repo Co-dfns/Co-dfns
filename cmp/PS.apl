@@ -456,16 +456,23 @@ PS←{⍺←⊢
 
 	⍝ Infer the type of groups and variables
 	t[⍸(t=P)∧n=¯2]←V ⋄ v←⍸(t=V)∧(k=0)∧vb≥0
-	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]=Z)∧(k[p]=0)∧t≠¯1] ⋄ za←zi⌿⍨≠zp ⋄ zc←zi⌿⍨⌽≠⌽zp ⋄ z←p[za]
+	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]∊N Z)∧(k[p]=0)∧t≠¯1]
+	za←zi⌿⍨≠zp ⋄ zb←zi⌿⍨1⌽msk←⌽≠⌽zp ⋄ zc←msk⌿zi ⋄ z←p[za]
 	_←{
-		zb←(⌽≠⌽p[zb])⌿zb←zi⌿⍨(zp∊z)∧(k[zi]≠1)∨(≠zp)∧k[zi]=1
-		nk←k[za]×(k[za]≠0)∧za=zc
+		nk←k[zc]×(za=zc)∨t[zp]=N
 		nk+←3×(nk=0)∧(k[za]∊3 4)∧n[za]≠-sym⍳⊂,'∘.'
-		nk+←(|k[zc])×(nk=0)∧(k[zc]∊¯3 ¯4)∨(t[zb]=P)∧n[zb]=-sym⍳⊂,'.'
+		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
-		nk+←(nk=0)∧((t[zc]=A)∨1=|k[zc])∧(t[zb]=V)⍲k[zb]=0
-		k[z]←nk ⋄ k[v]←k[vb[v]]
-		z za zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
+		nk+←2×{zp zi←zp zi⌿⍨¨⊂zp∊z
+			msk←(k[zi]=4)∧⌽∘≠∘⌽U((k[zi]≠0)⌿⊢)zp
+			msk<←≠⍀(⊢∨0⍪¯1↓⊢)U((msk∨≠zp)⌿⊢)msk
+			m2←(≢p)⍴0 ⋄ tm←(⍳≢p)∊ti←zi⌿⍨msk∨zi∊zc
+			vi←ti⌿⍨(t[ti]=V)∧vb[ti]≠¯1 ⋄ vp←p[vi]
+			vd←vb I@{vb[⍵]≠¯1}⍣≡vb[vi]
+			_←{dz⊣m2[dz←dz⍪vp⌿⍨vd∊vb[dz←tm[⍵]⌿p[⍵]]}⍣{0=≢⍺}msk⌿zp
+		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
+		k[z]←nk ⋄ k[vb[i]]←k[i←z⌿⍨(vb[z]≠¯1)∧nk≠0] ⋄ k[v]←k[vb[v]]
+		z za zb zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
 
