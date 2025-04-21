@@ -1,5 +1,5 @@
 TT←{
-	(p d t k n lx pos end)exp sym IN←⍵
+	(p d t k n lx vb pos end)exp sym IN←⍵
 
 	⍝ Convert primitive niladic references to E3(P2) forms
 	i←⍸(t=P)∧(k=1)∧'⎕⍞'∊⍨⊃¨sym[|n]
