@@ -618,6 +618,14 @@ PS←{⍺←⊢
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
 	n[p[i]]←n[i←⍸msk←bp∧t[p]=B]
 	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂i
+	
+	⍝ Check that we have well-formed E4 nodes
+	i←⍸(≠p)∧(t[p]=E)∧k[p]=4 ⋄ msk←(t[i]∊A P V)⍱m2←(t[i]=E)∧k[i]=2
+	∨⌿msk:'INVALID ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
+	i←⍸(⌽≠⌽p)∧p∊m2⌿i ⋄ msk←(t[i]=V)⍱m2←(t[i]=A)∧k[i]=¯1
+	∨⌿msk:'INVALID SELECTIVE ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
+	i←⍸(≠p)∧p∊m2⌿i ⋄ msk←t[i]≠V
+	∨⌿msk:'INVALID INDEXED SELECTIVE ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
 
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
