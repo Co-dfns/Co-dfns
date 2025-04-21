@@ -612,9 +612,9 @@ PS←{⍺←⊢
 	
 	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
 	i←p[⍸nzm∧bp∧k=2] ⋄ k[i]←4
-	msk←(≠p)∧(em←(t[p]=E)∧k[p]=4)∧am←(t∊P V)∨(t=A)∧k∊0 7
-	m2←(⌽≠⌽p)∧am∧em[p]∧t[p]=N
-	i←p[j←⍸msk],p[p[j2←⍸m2]] ⋄ t[i]←B ⋄ k[i]←1 ⋄ lx[i]←lx[j,j2]
+	i←p[j←⍸(≠p)∧(em←(t[p]=E)∧k[p]=4)∧am←(t∊P V)∨(t=A)∧k∊0 7]
+	i⍪←p[p][j⍪←⍸(⌽≠⌽p)∧am∧em[p]∧t[p]=N]
+	t[i]←B ⋄ k[i]←1 ⋄ lx[i]←lx[j]
 	i←p[p][⍸bp∧k=3] ⋄ k[i]←4
 	n[p[i]]←n[i←⍸msk←bp∧t[p]=B]
 	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂i
