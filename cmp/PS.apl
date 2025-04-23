@@ -488,13 +488,13 @@ PS←{⍺←⊢
 	p[msk⌿i]←j[msk⌿+⍀jm]
 
 	⍝ Parse Namespace References as Nk(Nk(...), E)
-	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
-	j←i⌿⍨msk←(t[i]=P)∧(n[i]=-sym⍳⊂,'.')∧(1⌽msk)∨¯1⌽msk←(1=|k[i])∧p[i]=1⌽p[i]
-	∨⌿m2←msk∧(¯1⌽msk)∨p[i]≠1⌽p[i]:'EMPTY NAMESPACE REFERENCE'SIGNAL SELECT m2⌿i
-	p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk
-	p[i⌿⍨¯1⌽msk]←j
-	p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)∧~¯1⌽msk
-	t[j]←N ⋄ k[j]←k[i⌿⍨¯1⌽msk]
+	⍝ i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
+	⍝ j←i⌿⍨msk←(t[i]=P)∧(n[i]=-sym⍳⊂,'.')∧(1⌽msk)∨¯1⌽msk←(1=|k[i])∧p[i]=1⌽p[i]
+	⍝ ∨⌿m2←msk∧(¯1⌽msk)∨p[i]≠1⌽p[i]:'EMPTY NAMESPACE REFERENCE'SIGNAL SELECT m2⌿i
+	⍝ p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk
+	⍝ p[i⌿⍨¯1⌽msk]←j
+	⍝ p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)∧~¯1⌽msk
+	⍝ t[j]←N ⋄ k[j]←k[i⌿⍨¯1⌽msk]
 
 	⍝ Wrap non-array bindings as B2+(V, Z)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂k[i]≥2
