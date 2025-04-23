@@ -35,11 +35,6 @@ TT←{
 	⍝ Convert O*(F, [, A) to Ox(F, A)
 	i←⍸msk←(t[p]=O)∧n=-sym⍳⊂,'[' ⋄ k[p[i]]←¯1
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i
-	⍝ axfns←,¨'⌷↓,'
-	⍝ 0≠≢i←⍸(≠p)∧(t[p]=O)∧(k[p]=¯1)∧~n∊-sym⍳axfns:{
-	⍝ 	ERR←2 'FUNCTION DOES NOT SUPPORT AXIS OPERATOR' 
-	⍝	ERR SIGNAL SELECT i
-	⍝ }⍬
 
 	⍝ Mark ⍠← bindings as kind 7
 	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
