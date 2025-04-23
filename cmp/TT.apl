@@ -87,11 +87,6 @@ TT←{
 	i←p[j←⍸(≠p)∧(t[p]=B)∧(t=A)∧k=0]
 	t[i]←E ⋄ k[i]←1 ⋄ n[i]←0 ⋄ t[j]←P ⋄ k[j]←2 ⋄ lx[j]←3
 
-	⍝ Convert E4 nodes to have their assigned target as the first child
-	p t k n lx mu r pos end⌿⍨←⊂1+msk←(t=E)∧k=4
-	i←(+⍀1+msk)-1 ⋄ p r{⍵[⍺]}←⊂i ⋄ n[j]←i[n[j←⍸n>0]] ⋄ p[j←i-1]←i←msk⌿i
-	n[i]←0 ⋄ t[j]←V ⋄ k[j]←1 ⋄ mu[j]←1
-
 	⍝ Allocate named targets in the n field for bound application nodes
 	msk←((t[p]=B)∧~k[p]∊0 7)∧(t∊C E O)∨((t=A)∧k=7)∨(t=B)∧~k∊0 7
 	msk[p⌿⍨(t[p]=B)∧(t∊V P)∨(t=A)∧k=1]←0 ⋄ i←⍸msk
