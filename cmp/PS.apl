@@ -626,6 +626,14 @@ PS←{⍺←⊢
 	∨⌿msk:'INVALID SELECTIVE ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
 	i←⍸(≠p)∧p∊m2⌿i ⋄ msk←t[i]≠V
 	∨⌿msk:'INVALID INDEXED SELECTIVE ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
+	
+	⍝ Convert E4 nodes to have their assigned target as the first child
+	i←j←⍸(em←(t[p]=E)∧k[p]=4)∧(t∊P V)∨(t=A)∧k∊0 7
+	i⍪←p[j⍪←⍸em[p]∧((t[p]=A)∧(k[p]=¯1)∧≠p)∨(t[p]=E)∧(⌽≠⌽p)∧t=V]
+	i⍪←p[p][j⍪←⍸em[p][p]∧(t[p][p]=E)∧(⌽≠⌽p)[p]∧(t[p]=A)∧≠p]
+	p t k n lx vb pos end⌿⍨←⊂x←2@i⊢(≢p)⍴1
+	p i j{⍵[⍺]}←⊂ni←(+⍀x)-1 ⋄ vb←(¯1,ni)[vb+1]
+	t k n lx vb pos end{⍺[⍵]@(i-1)⊢⍺}←⊂j
 
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
