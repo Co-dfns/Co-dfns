@@ -47,9 +47,9 @@ TT←{
 	n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
-	⍝ Mark mutated bindings 
-	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊B E V S)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
-	j←⍸msk∧(t[p]=C)∨(t=E)∧k=4
+	⍝ Mark mutated bindings
+	i←⍸msk←(t∊B V S)∧(lx∊0 1)∧n<¯6 ⋄ j←⍸msk∧(t[p]=C)∨(t[p]=E)∧(k[p]=4)∧≠p
+	mu←(≢i)⍴0 ⋄ rn←r,⍪n ⋄ rni←rn[i;]
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
 	ci←p[fi←⍸(t=F)∧k≠0]
 	mu←msk⍀1@{(↓rni)∊⊃⍪⌿{n[⍵],¨⍨fi⌿⍨ci=p[⍵]}¨i⌿⍨⍵∧t[p[i]]=C}⍣≡mu
