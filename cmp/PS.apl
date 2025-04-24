@@ -459,7 +459,7 @@ PS←{⍺←⊢
 	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]∊N Z)∧(k[p]=0)∧t≠¯1]
 	za←zi⌿⍨≠zp ⋄ zb←zi⌿⍨1⌽msk←⌽≠⌽zp ⋄ zc←msk⌿zi ⋄ z←p[za]
 	_←{
-		nk←k[zc]×(za=zc)∨t[zp]=N
+		nk←k[zc]×(za=zc)∨t[z]=N
 		nk+←3×(nk=0)∧(k[za]∊3 4)∧n[za]≠-sym⍳⊂,'∘.'
 		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
