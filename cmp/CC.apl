@@ -91,7 +91,7 @@ CX←{
 		'COMPILE ERROR' ⎕SIGNAL 22		
 	}⍵
 	'mac'≡ostype:⍺{
-		clang ←'clang -arch x86_64 -std=c99 -Ofast -g -Wall -fPIC'
+		clang ←'clang -arch x86_64 -std=c17 -O2 -g -Wall -fPIC'
 		clang,←' -Wno-parentheses -Wno-misleading-indentation -Wno-unused-variable'
 		clang,←' -Wno-incompatible-pointer-types -Wno-missing-braces'
 		clang,←' -Wno-unused-but-set-variable'
