@@ -484,6 +484,9 @@ MK←{(p d t k n lx pos end)(xn xt)sym IN←CD.PS ⍵
  CHK xn≡ 'TEST' (,'F') (,'X')
  CHK xt≡,1 2 1
  
+ CHK PARSE ERRS 2 NS '∇NF;' '∇'
+ CHK PARSE ERRS 2 NS '∇NF;A B' '∇'
+ 
  ⎕←'☺' 
  
  ⍝ CHK TOKENIZE ':Class blah :X' ':EndClass'
