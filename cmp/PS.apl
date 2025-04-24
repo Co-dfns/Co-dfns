@@ -469,7 +469,7 @@ PS←{⍺←⊢
 			m2←(≢p)⍴0 ⋄ tm←(⍳≢p)∊ti←zi⌿⍨msk∨zi∊zc
 			vi←ti⌿⍨(t[ti]=V)∧vb[ti]≠¯1 ⋄ vp←p[vi]
 			vd←vb I@{vb[⍵]≠¯1}⍣≡vb[vi]
-			_←{dz⊣m2[dz←dz⍪vp⌿⍨vd∊vb[dz←tm[⍵]⌿p[⍵]]}⍣{0=≢⍺}msk⌿zp
+			_←{dz⊣m2[dz←dz⍪vp⌿⍨vd∊vb[dz←tm[⍵]⌿p[⍵]]]←1}⍣{0=≢⍺}msk⌿zp
 		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
 		k[z]←nk ⋄ k[vb[i]]←k[i←z⌿⍨(vb[z]≠¯1)∧nk≠0] ⋄ k[v]←k[vb[v]]
 		z za zb zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
