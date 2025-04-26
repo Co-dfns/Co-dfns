@@ -460,6 +460,7 @@ PS←{⍺←⊢
 	zd[i]←vb I@{vb[⍵]≠¯1}⍣≡vb[i←⍸(t=Z)∧vb≠¯1]⊣zd←(≢p)⍴¯1
 	_←{
 		nk←k[zc]×(za=zc)∨t[z]=N
+		nk+←(k[zc])×(nk=0)∧za=vb[zc]
 		nk+←3×(nk=0)∧(k[za]∊3 4)∧n[za]≠-sym⍳⊂,'∘.'
 		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
