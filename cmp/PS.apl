@@ -425,10 +425,9 @@ PS←{⍺←⊢
 	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸(t=F)∨(t=T)∧isa]
 	k[i]←0 1 2 4 8[k[i]](⊣+isd[i]+2×|)ro[i←⍸(t=T)∧~isa]
 	
-	⍝ Link Z nodes of V←Z forms to V's binding sites
+	⍝ Link Z nodes of V←Z forms to V target
 	i←{⍵[⍋p[⍵]]}⍸p∊p⌿⍨msk←n∊-sym⍳,¨'←' '∘←'
-	zm←¯2⌽vm←(1⌽msk[i])∧(t[i]=V)∨n[i]=¯2
-	vb[i⌿⍨zm]←vb I@{vb[⍵]≠¯1}⍣≡i⌿⍨vm
+	vb[i⌿⍨¯2⌽vm]←i⌿⍨vm←(1⌽msk[i])∧(t[i]=V)∨n[i]=¯2
 
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
 	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
@@ -458,6 +457,7 @@ PS←{⍺←⊢
 	t[⍸(t=P)∧n=¯2]←V ⋄ v←⍸(t=V)∧(k=0)∧vb≥0
 	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]∊N Z)∧(k[p]=0)∧t≠¯1]
 	za←zi⌿⍨≠zp ⋄ zb←zi⌿⍨1⌽msk←⌽≠⌽zp ⋄ zc←msk⌿zi ⋄ z←p[za]
+	zd[i]←vb I@{vb[⍵]≠¯1}⍣≡vb[i←⍸(t=Z)∧vb≠¯1]⊣zd←(≢p)⍴¯1
 	_←{
 		nk←k[zc]×(za=zc)∨t[z]=N
 		nk+←3×(nk=0)∧(k[za]∊3 4)∧n[za]≠-sym⍳⊂,'∘.'
@@ -469,9 +469,9 @@ PS←{⍺←⊢
 			m2←(≢p)⍴0 ⋄ tm←(⍳≢p)∊ti←zi⌿⍨msk∨zi∊zc
 			vi←ti⌿⍨(t[ti]=V)∧vb[ti]≠¯1 ⋄ vp←p[vi]
 			vd←vb I@{vb[⍵]≠¯1}⍣≡vb[vi]
-			_←{dz⊣m2[dz←dz⍪vp⌿⍨vd∊vb[dz←tm[⍵]⌿p[⍵]]]←1}⍣{0=≢⍺}msk⌿zp
+			_←{dz⊣m2[dz←dz⍪vp⌿⍨vd∊zd[dz←tm[⍵]⌿p[⍵]]]←1}⍣{0=≢⍺}msk⌿zp
 		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
-		k[z]←nk ⋄ k[vb[i]]←k[i←z⌿⍨(vb[z]≠¯1)∧nk≠0] ⋄ k[v]←k[vb[v]]
+		k[z]←nk ⋄ k[zd[i]]←k[i←z⌿⍨(vb[z]≠¯1)∧nk≠0] ⋄ k[v]←k[vb[v]]
 		z za zb zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
