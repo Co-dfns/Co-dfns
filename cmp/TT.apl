@@ -2,8 +2,8 @@ TT←{
 	(p d t k n lx vb pos end)exp sym IN←⍵
 
 	⍝ Kill the contents of Z¯2 nodes
-	p d t k n lx vb pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
-	p vb(⊣-1+⍸⍨)←⊂⍸~msk
+	p t k n lx pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
+	p(⊣-1+⍸⍨)←⍸~msk
 
 	⍝ Convert primitive niladic references to E3(P2) forms
 	i←⍸(t=P)∧(k=1)∧'⎕⍞'∊⍨⊃¨sym[|n]
