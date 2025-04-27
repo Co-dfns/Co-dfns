@@ -5,6 +5,11 @@ TT←{
 	p t k n lx pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
 	p(⊣-1+⍸⍨)←⍸~msk
 
+	⍝ Convert E4(APV, APV, O, ...) mod. assignments to E4(APV, APV, C, ...)
+	j←p[i←⍸(≠p)∧((t=E)∧k=4)[p][p]∧((t=O)∧(p=¯1⌽p)∧(~⌽≠⌽p)∧¯1⌽t∊A P V)[p]]
+	t k n lx pos end(I⊣@j⊣)←⊂i ⋄ p t k n lx pos end⌿⍨←⊂~msk←p∊j
+	p←(j@i⊢⍳≢p)[p] ⋄ p(⊣-1+⍸⍨)←⍸msk
+	
 	⍝ Convert primitive niladic references to E3(P2) forms
 	i←⍸(t=P)∧(k=1)∧'⎕⍞'∊⍨⊃¨sym[|n]
 	p,←i ⋄ t n lx pos end(⊣,I)←⊂i ⋄ k,←(≢i)⍴2 ⋄ t[i]←E ⋄ k[i]←3 ⋄ n[i]←0
