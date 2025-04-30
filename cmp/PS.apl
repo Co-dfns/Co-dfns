@@ -351,7 +351,7 @@ PS←{⍺←⊢
 	
 	⍝ Enclosing frames and lines for all nodes
 	msk←~t[p]∊F G T ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
-	r←I@{t[0⌈⍵]=G}⍨I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨p[rz]
+	r←I@{t[0⌈⍵]=G}⍨rf←I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨p[rz]
 	
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p
@@ -363,17 +363,18 @@ PS←{⍺←⊢
 	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv]
 	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0 ⋄ _←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
 	zv[i]←i←⍸(t=T)∨(t=F)∧k=0
-	i←⍸(t∊F T V)∧zv≠0 ⋄ i←(≠n[i],⍪r[i])⌿i←i[⍋n[i],r[i],rz[i],⍪end[rz[i]]-pos[i]]
-	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rz vb pos end(⊣⍪I)←⊂i
+	i←⍸(t∊F T V)∧zv≠0 ⋄ i←(≠n[i],⍪rf[i])⌿i←i[⍋n[i],r[i],rz[i],⍪end[rz[i]]-pos[i]]
+	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz vb pos end(⊣⍪I)←⊂i
 
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
 	⍝ Resolve names
-	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←i←⍸t[p]=H ⋄ bnr⍪←n[i],⍪r[i]
+	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←i←⍸t[p]=H ⋄ bnr⍪←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Resolve locals and free variables
-		msk←(≢bnr)≠j←bnr⍳n[i],⍪r[i] ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
+		j←bnr⍳n[i],⍪rf[i] ⋄ j[⍸msk]←bnr⍳n[x],⍪r[x←i⌿⍨msk←j=≢bnr]
+		msk←(≢bnr)≠j ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
 		lm←(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]≥pos[li]
 		lm∨←((t[x]=F)∧k[x←r[li]]=0)∨(t[x]=C)∧vb[x←p[li]]=¯1
 		li lb⌿⍨←⊂lm ⋄ vb[li]←lb ⋄ i⌿⍨←~msk⍀lm ⋄ lx[i]←1
@@ -386,19 +387,19 @@ PS←{⍺←⊢
 		⍝ Add namespace bindings to H-set; free variables to C-set
 		i ir←j x⌿⍨¨⊂msk←(t[x]=F)∧k[x←r[ui]]=0
 		np←x[p[x←⍸(t[p]=F)∧(k[p]=0)∧t=H]⍳ir]
-		p r rz⍪←⊂(≢ui)⍴¯1 ⋄ t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
+		p r rf rz⍪←⊂(≢ui)⍴¯1 ⋄ t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
-		p[j]←x←p[r[ui]] ⋄ r[j]←r[x] ⋄ rz[j]←rz[x]
+		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
 		
 		⍝ Propagate Free Variables to Dynamic Closures
 		nj np←j i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[j]] ⋄ j⍪←(≢p)+⍳≢nj
-		p⍪←np ⋄ r rz(⊣⍪I)←⊂np ⋄ t k n lx vb pos end(⊣⍪I)←⊂nj
+		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb pos end(⊣⍪I)←⊂nj
 		
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
 		i x⌿⍨←⊂t[x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H]=T
 		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[x]]
-		p⍪←i ⋄ t k n r rz lx vb pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
-		p⍪←pi ⋄ r rz(⊣⍪I)←⊂pi ⋄ t k n pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨0 ¯1
+		p⍪←i ⋄ t k n r rf rz lx vb pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
+		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨0 ¯1
 		t[i]←C ⋄ k[i]←k[x] ⋄ vb[i]←px
 	j}⍣≡⍸(t[p]≠H)∧(t=V)∧vb=¯1
 		
