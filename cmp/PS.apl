@@ -370,17 +370,17 @@ PS←{⍺←⊢
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
 	⍝ Resolve names
-	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←i←⍸t[p]=H ⋄ bnr⍪←n[i],⍪rf[i]
+	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←(i←⍸t[p]=H)⍪0 ⋄ bnr⍪←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Resolve locals and free variables
-		j←bnr⍳n[i],⍪rf[i] ⋄ j[⍸msk]←bnr⍳n[x],⍪r[x←i⌿⍨msk←j=≢bnr]
-		msk←(≢bnr)≠j ⋄ li←msk⌿i ⋄ lb←bi[msk⌿j]
-		lm←(pos[rz[lb]]<pos[rz[li]])∨(rz[lb]=rz[li])∧pos[lb]≥pos[li]
-		lm∨←((t[x]=F)∧k[x←r[li]]=0)∨(t[x]=C)∧vb[x←p[li]]=¯1
-		li lb⌿⍨←⊂lm ⋄ vb[li]←lb ⋄ i⌿⍨←~msk⍀lm ⋄ lx[i]←1
+		fm←((t[x]=F)∧k[x←r[i]]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
+		b←bi[j←bnr⍳n[i],⍪rf[i]] ⋄ lm←(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
+		j[⍸msk]←bnr⍳n[x],⍪r[x←i⌿⍨msk←(j=≢bnr)∨fm⍱lm] ⋄ b←bi[j]
+		msk←(j≠≢bnr)∧fm∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
+		vb[msk⌿i]←msk⌿b ⋄ i⌿⍨←~msk ⋄ lx[i]←1
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[r[i]]] ⋄ i⌿⍨←x=≢j
-		
+
 		⍝ Bind unresolved variables to new bindings
 		j←(≢p)+⍳≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ vb[i]←j[(n[ui],⍪r[ui])⍳n[i],⍪r[i]]
 		
