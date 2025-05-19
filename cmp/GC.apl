@@ -556,9 +556,9 @@ GC←{
 	pref,←⊂''
 
 	⍝ Export functions
-	i←⍸(n<0)∧(t[p]=F)∧(k[p]=0)∧(t=O)∨(t∊B C)∧(k=2)
+	i←⍸(t[p][p]=F)∧(k[p][p]=0)∧(t[p]=H)∧k=2
 	exp←⊃⍪⌿{
-		fn ns←var_names ⍵,p[⍵]
+		fn ns←var_names ⍵,p[p][⍵]
 		fnv←⊃var_values ⍵
 		z ←⊂'EXPORT int'
 		z,←⊂fn,'(struct cell_array **z, struct cell_array *l, struct cell_array *r)'
