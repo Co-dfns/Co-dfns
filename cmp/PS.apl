@@ -207,7 +207,7 @@ PS←{⍺←⊢
 	⍝ Convert n field to symbols and add a symbol table
 	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
 	n←-sym⍳n
-	
+
 	⍝ Compute parent vector from d
 	p←D2P d
 
@@ -290,7 +290,7 @@ PS←{⍺←⊢
 		0=+⌿m←K=t[⍵]:⍬
 		⊃m:'EMPTY GUARD TEST EXPRESSION'SIGNAL pos[⊃⍵]
 		1<+⌿m:'TOO MANY GUARDS'SIGNAL pos[m⌿⍵]
-		t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
+		t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←0
 		ci←≢p ⋄ p⍪←⍺ ⋄ t⍪←0 ⋄ k⍪←0 ⋄ pos⍪←0 ⋄ end⍪←0 ⋄ n⍪←0 ⋄ gz cq,ci
 	0}⌸i←⍸t[p[p]]=F
 
@@ -589,7 +589,7 @@ PS←{⍺←⊢
 	k[p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←¯2
 	k[p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←¯2
 	i←p[⍸(t[p]=G)∧(≠p)∧(~t∊A E)∧k≠1] ⋄ t[i]←Z ⋄ k[i]←¯2
-
+	
 	⍝ Eliminate non-error Z nodes from the tree
 	msk←((t≠Z)∨(t=Z)∧k=¯2)∧m2←(t[p]=Z)∧k[p]≠¯2
 	zi←{p I@{m2[⍵]}⍵⊣vb I@(≥∘0)⍨←ki@⍵⍳≢p}⍣≡p[ki←⍸msk]
