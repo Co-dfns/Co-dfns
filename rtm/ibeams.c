@@ -5264,13 +5264,13 @@ q_ts_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	struct timespec ts;
 	struct tm *lts;
 	struct cell_array *res;
-	int16_t *vals;
+	int32_t *vals;
 	int err;
 	
 	timespec_get(&ts, TIME_UTC);
 	lts = localtime(&ts.tv_sec);
 	
-	CHKFN(mk_array(&res, ARR_SINT, STG_HOST, 1), fail);
+	CHKFN(mk_array(&res, ARR_INT, STG_HOST, 1), fail);
 	
 	res->shape[0] = 7;
 	
@@ -5283,7 +5283,7 @@ q_ts_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	vals[3] = lts->tm_hour;
 	vals[4] = lts->tm_min;
 	vals[5] = lts->tm_sec;
-	vals[6] = (int16_t)(ts.tv_nsec / 1000000);
+	vals[6] = (int32_t)(ts.tv_nsec / 1000000);
 	
 	*z = res;
 	
