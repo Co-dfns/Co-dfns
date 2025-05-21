@@ -650,8 +650,7 @@ PS←{⍺←⊢
 	}⍬
 	
 	⍝ Compute exports
-	_←{x⊣r[x]←p[r[x←⍵⌿⍨(t[rx]=F)⍱rx=p[rx←r[⍵]]]]}⍣{0=≢⍺}⍳≢r←p
-	i←⍸(k[r]=0)∧(t=C)∨(t=V)∧{⍵∨⍵[p]}⍣≡(≠p)∧t[p]=B
+	i←⍸(p=⍳≢p)[p][p]∧(k[p][p]=0)∧(t[p][p]=F)∧t[p]=H
 	xn←sym[|n[i]] ⋄ xt←k[i]
 
 	⍝ Sort AST by depth-first pre-order traversal
