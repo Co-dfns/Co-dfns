@@ -84,6 +84,7 @@ reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
 rho←shape ambiv reshape
 
 ⍝ X[]←Y: Bracket Assignment
+idxerr←{⎕SIGNAL 3}
 idx_rnk_check←{(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4 ⋄ 0}
 idx_rng_check←{
 	is_span ⍵:0
@@ -94,6 +95,7 @@ idx_rng_check←{
 	0}⍵
 	0⊣⍺ ∇¨⍵
 }
+brkidx←{⍺ idx_rnk_check ⍵: ⋄ (⍴⍺)idx_rng_check ⍵: ⋄ ⍵}
 set←'set_ibeam'⌶
 
 ⍝ X[]f←Y: Modified Bracket Assignment

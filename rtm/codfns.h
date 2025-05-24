@@ -266,8 +266,10 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_prototype;
 	struct cell_func *cdf_reshape;
 	struct cell_func *cdf_rho;
+	struct cell_func *cdf_idxerr;
 	struct cell_func *cdf_idx_rnk_check;
 	struct cell_func *cdf_idx_rng_check;
+	struct cell_func *cdf_brkidx;
 	struct cell_func *cdf_set;
 	struct cell_doper *cdf_mst_vals;
 	struct cell_moper *cdf_mst;
@@ -393,6 +395,8 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_trn;
 	struct cell_func *cdf_gdu;
 	struct cell_func *cdf_gdd;
+	struct cell_func *cdf_sortup;
+	struct cell_func *cdf_sortdown;
 	struct cell_func *cdf_encmon;
 	struct cell_func *cdf_enc;
 	struct cell_func *cdf_decmon;
@@ -457,6 +461,10 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_println;
 	struct cell_func *cdf_print;
 	struct cell_func *cdf_q_ts;
+	struct cell_doper *cdf_starling;
+	struct cell_doper *cdf_violetstarling;
+	struct cell_doper *cdf_dove;
+	struct cell_doper *cdf_zebradove;
 };
 
 

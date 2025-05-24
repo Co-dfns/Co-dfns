@@ -1283,8 +1283,7 @@ int
 set_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	struct cell_array *arr, *sp, *tgt, **lv, *idx_[32];
-	struct cell_func *idx_rnk_check, *idx_rng_check;
+	struct cell_array *arr, *tgt, **lv, *idx_[32];
 	size_t sp_[32], cnt_[32], ci_[32];
 	size_t lc, rc, zc, ic, bc, csz, *isp, *cnt, *ci;
 	char *zv, *rv;
@@ -1293,23 +1292,9 @@ set_func(struct cell_array **z,
 	
 	tgt = *z;
 	arr = NULL;
-	sp = NULL;
 	f = 0;
 	zc = 0;
 	lc = 0;
-	
-	idx_rnk_check = cdf_prim.cdf_idx_rnk_check;
-	CHK((idx_rnk_check->fptr_dya)(&arr, tgt, l, idx_rnk_check), fail,
-	    "z idx_rnk_check ⍺:");
-	CHKFN(release_array(arr), fail);arr = NULL;
-	
-	CHKFN(shape_func(&sp, tgt, NULL), fail);
-	
-	idx_rng_check = cdf_prim.cdf_idx_rng_check;
-	CHK((idx_rng_check->fptr_dya)(&arr, sp, l, idx_rng_check), fail,
-	    "(⍴z) idx_rng_check ⍺:");
-	CHKFN(release_array(sp), fail);sp = NULL;
-	CHKFN(release_array(arr), fail);arr = NULL;
 	
 	CHKFN(squeeze_array(l), fail);
 		
@@ -1573,10 +1558,6 @@ fail:
 		free(isp);
 		free(cnt);
 		free(ci);
-	}
-	
-	if (err) {
-		release_array(sp);
 	}
 	
 	return err;
