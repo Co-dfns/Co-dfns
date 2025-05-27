@@ -80,7 +80,7 @@ TT←{
 	i←(⍸(~t∊F G H)∧t[p]=F),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
 	p t k n lx mu r pos end⌿⍨←⊂m←2@i⊢1⍴⍨≢p
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
-	k[j]←-(k[r[j]]=0)∨0@{(⌽≠⌽p×p≠⍳≢p)[j]}(t[j]=B)∨(t[j]=E)∧k[j]=4
+	k[j]←-(k[r[j]]=0)∨0@{⌽≠⌽(p×p≠⍳≢p)[j]}(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
 
 	⍝ Convert print bindings to E1(P2(⎕⍞), ∘∘∘)
