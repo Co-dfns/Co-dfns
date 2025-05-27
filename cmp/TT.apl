@@ -4,7 +4,7 @@ TT←{
 	⍝ Kill the contents of Z¯2 nodes
 	p t k n lx pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
 	p(⊣-1+⍸⍨)←⍸~msk
-
+	
 	⍝ Convert E4(APV, APV, O, ...) mod. assignments to E4(APV, APV, C, ...)
 	j←p[i←⍸(≠p)∧((t=E)∧k=4)[p][p]∧((t=O)∧(p=¯1⌽p)∧(~⌽≠⌽p)∧¯1⌽t∊A P V)[p]]
 	t k n lx pos end(I⊣@j⊣)←⊂i ⋄ p t k n lx pos end⌿⍨←⊂~msk←p∊j
@@ -40,6 +40,10 @@ TT←{
 	⍝ Convert O*(F, [, A) to Ox(F, A)
 	i←⍸msk←(t[p]=O)∧n=-sym⍳⊂,'[' ⋄ k[p[i]]←¯1
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i
+	
+	⍝ Report empty axis operand
+	i←⍸(t=P)∧(n=-sym⍳⊂,';')∧(t[p]=O)∧k[p]=¯1
+	0≠≢i:'EMPTY AXIS OPERATOR' SIGNAL SELECT i
 
 	⍝ Mark ⍠← bindings as kind 7
 	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
