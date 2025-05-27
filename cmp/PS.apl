@@ -466,7 +466,7 @@ PS←{⍺←⊢
 		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
 		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
 		nk+←2×{zp zi←zp zi⌿⍨¨⊂zp∊z
-			msk←(k[zi]=4)∧⌽∘≠∘⌽U((k[zi]≠0)⌿⊢)zp
+			msk←(k[zi]=4)∧⌽∘≠∘⌽U((~k[zi]∊0 1)⌿⊢)zp
 			msk<←≠⍀(⊢∨0⍪¯1↓⊢)U((msk∨≠zp)⌿⊢)msk
 			m2←(≢p)⍴0 ⋄ tm←(⍳≢p)∊ti←zi⌿⍨msk∨zi∊zc
 			vi←ti⌿⍨(t[ti]=V)∧vb[ti]≠¯1 ⋄ vp←p[vi]
