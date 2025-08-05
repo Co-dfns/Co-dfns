@@ -334,8 +334,8 @@ PS←{⍺←⊢
 
 	⍝ Check for empty bindings
 	i←⍸(t[p]=Z)∧p≠⍳≢p
-	∨⌿msk←bp[j←i⌿⍨≠p[i]]:{'EMPTY ASSIGNMENT TARGET'SIGNAL SELECT msk⌿p[j]}⍬
-	∨⌿msk←bp[j←i⌿⍨⌽≠⌽p[i]]:{'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[j]}⍬
+	∨⌿msk←bp[j←i⌿⍨≠p[i]]:'EMPTY ASSIGNMENT TARGET'SIGNAL SELECT msk⌿p[j]
+	∨⌿msk←bp[j←i⌿⍨⌽≠⌽p[i]]:'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[j]
 
 	⍝ Wrap binding values in Z nodes
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
