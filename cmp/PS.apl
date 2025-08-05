@@ -330,7 +330,7 @@ PS←{⍺←⊢
 	t k(⊣@(⍸t∊N C))⍨←A 1
 
 	⍝ Mark binding primitives
-	bp←n∊-sym⍳,¨'←' '⍠←' '∘←'
+	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
 
 	⍝ Check for empty bindings
 	i←⍸(t[p]=Z)∧p≠⍳≢p
