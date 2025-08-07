@@ -59,6 +59,8 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[My favorite verbose programming technique - LambdaConf 2025](https://www.youtube.com/watch?v=hkNwku81ehw)
+
 [Do Programming Language Features Deliver on their Promises - LambdaConf 2025](https://www.youtube.com/watch?v=V8sACAhg4vM)
 
 [Designing Your Data: The Bread and Butter of APL Performance](https://www.youtube.com/watch?v=ozlxUmdYsHA)
