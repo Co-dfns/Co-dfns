@@ -59,6 +59,8 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[Comparing Parallel Functional Array Languages: Programming and Performance](https://arxiv.org/abs/2505.08906)
+
 [My favorite verbose programming technique - LambdaConf 2025](https://www.youtube.com/watch?v=hkNwku81ehw)
 
 [Do Programming Language Features Deliver on their Promises - LambdaConf 2025](https://www.youtube.com/watch?v=V8sACAhg4vM)
