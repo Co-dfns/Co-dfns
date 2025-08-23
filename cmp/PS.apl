@@ -320,8 +320,8 @@ PS←{⍺←⊢
 	⍝ Convert formal nodes ⍺/⍵ and system variables to P nodes
 	t[⍸(t=S)∨(t=A)∧n∊¯1 ¯2]←P
 
-	⍝ Convert M nodes to F0 nodes
-	t←F@{t=M}t
+	⍝ Convert M nodes to T0 nodes
+	t←T@{t=M}t
 
 	⍝ Parse niladic tokens to A0 nodes
 	t[i←⍸n∊-sym⍳,¨'⎕⍞']←A ⋄ k[i]←0
@@ -344,10 +344,10 @@ PS←{⍺←⊢
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
 
-	⍝ Enclose definitions in closures; add H node to each F node
-	i←⍸(t=T)∨(t=F)∧k≠0 ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
+	⍝ Enclose definitions in closures; add H node to each F and T0 node
+	i←⍸(t=F)∨(t=T)∧k≠0 ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
 	p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
-	i←⍸t=F ⋄ p⍪←i ⋄ t n k⍪←(≢i)⍴¨H 0 0 ⋄ pos⍪←pos[i] ⋄ end⍪←pos[i]+1
+	i←⍸(t=F)∨(t∊T)∧k=0 ⋄ p⍪←i ⋄ t n k⍪←(≢i)⍴¨H 0 0 ⋄ pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
 	⍝ Enclosing frames and lines for all nodes
 	msk←~t[p]∊F G T ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
@@ -362,7 +362,7 @@ PS←{⍺←⊢
 	zv∧←(0⍪(1⌽n[i]∊-sym⍳,¨'←' '⍠←' '∘←')⌿⍨2>⌿zv⍪0)[+⍀2<⌿0⍪zv←km∧bm[i]]
 	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv]
 	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0 ⋄ _←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
-	zv[i]←i←⍸(t=T)∨(t=F)∧k=0
+	zv[i]←i←⍸t=T
 	i←⍸(t∊F T V)∧zv≠0 ⋄ i←(≠n[i],⍪rf[i])⌿i←i[⍋n[i],r[i],rz[i],⍪end[rz[i]]-pos[i]]
 	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz vb pos end(⊣⍪I)←⊂i
 
@@ -370,10 +370,10 @@ PS←{⍺←⊢
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
 	⍝ Resolve names
-	bi←⍸(t=T)∨(t=F)∧k=0 ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←(i←⍸t[p]=H)⍪0 ⋄ bnr⍪←n[i],⍪rf[i]
+	bi←⍸t=T ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←(i←⍸t[p]=H)⍪0 ⋄ bnr⍪←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Resolve locals and free variables
-		fm←((t[x]=F)∧k[x←r[i]]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
+		fm←((t[x]=T)∧k[x←r[i]]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
 		b←bi[j←bnr⍳n[i],⍪rf[i]] ⋄ lm←(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
 		j[⍸msk]←bnr⍳n[x],⍪r[x←i⌿⍨msk←(j=≢bnr)∨fm⍱lm] ⋄ b←bi[j]
 		msk←(j≠≢bnr)∧fm∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
@@ -385,8 +385,8 @@ PS←{⍺←⊢
 		j←(≢p)+⍳≢ui←i⌿⍨≠n[i],⍪r[i] ⋄ vb[i]←j[(n[ui],⍪r[ui])⍳n[i],⍪r[i]]
 		
 		⍝ Add namespace bindings to H-set; free variables to C-set
-		i ir←j x⌿⍨¨⊂msk←(t[x]=F)∧k[x←r[ui]]=0
-		np←x[p[x←⍸(t[p]=F)∧(k[p]=0)∧t=H]⍳ir]
+		i ir←j x⌿⍨¨⊂msk←(t[x]=T)∧k[x←r[ui]]=0
+		np←x[p[x←⍸(t[p]=T)∧(k[p]=0)∧t=H]⍳ir]
 		p r rf rz⍪←⊂(≢ui)⍴¯1 ⋄ t k n pos end(⊣⍪I)←⊂ui ⋄ lx vb⍪←(≢ui)⍴¨0 ¯1
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
@@ -431,7 +431,7 @@ PS←{⍺←⊢
 	vb[i⌿⍨¯2⌽vm]←i⌿⍨vm←(1⌽msk[i])∧(t[i]=V)∨n[i]=¯2
 
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
-	msk←(n=¯2)∧k[r]∊2+2×⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
+	msk←(n=¯2)∧k[r]∊2×1+⍳7 ⋄ j←(⍸msk)~i←msk[i]⌿i←vb⌿⍨(t=Z)∧vb≠¯1
 	vb[j]←(i,¯1)[(r[i],⍪n[i])⍳r[j],⍪n[j]]
 
 	⍝ Mark formals with their appropriate kinds and scopes
