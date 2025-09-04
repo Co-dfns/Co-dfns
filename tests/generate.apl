@@ -118,7 +118,9 @@ srcify←{p t k n sym←⍵ ⋄ nl←⍺
 }
 
 tag←'-------'
-tagout←{⎕←tag ⋄ _←⎕FIX ⍺≠B⊆⍵}
+tagout←{
+	⍺∘{⎕←tag ⋄ _←⎕FIX ⍺~⍤∊⍨B⊆⍵}¨⍵
+}
 
 annotate←{
 	log←⌽¯2↓⎕SE.Log ⋄ tags←log∊⊂tag ⋄ log tags↑⍨←⊂(+⍀tags)⍳≢⍵
