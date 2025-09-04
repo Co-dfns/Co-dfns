@@ -2,6 +2,8 @@
 
 ⎕IO ⎕CT ⎕PP←0 0 34
 
+B←{⍺←⊢ ⋄ (⍺ ⍺⍺ ⍵)⍵⍵ ⍵}
+
 CRLF←CR LF←⎕UCS 13 10
 
 gen←{⍺←⊢ ⋄ (⍺⊣CR)srcify step⍣≡ ⍵}
@@ -112,7 +114,15 @@ srcify←{p t k n sym←⍵ ⋄ nl←⍺
 	((em∧(≠p)∧em2[p])⌿src)←'(' ⋄ ((em∆∧(~⌽≠⌽p)∧em2[p])⌿src)←')'
 	((em∆∧(~em)[p])⌿src)←⊂nl
 	
-	∊src[1⊃P2D p]
+	∊¨((d[i]=0)∧t[i]=Ns)⊂src[1⊃d i←P2D p]
+}
+
+tag←'-------'
+tagout←{⎕←tag ⋄ _←⎕FIX ⍺≠B⊆⍵}
+
+annotate←{
+	log←⌽¯2↓⎕SE.Log ⋄ tags←log∊⊂tag ⋄ log tags↑⍨←⊂(+⍀tags)⍳≢⍵
+	⍵,∘∊¨⌽(~tags)⊆'⍝ '∘,¨log,¨⊂⍺
 }
 
 P2D←{p←⍵
