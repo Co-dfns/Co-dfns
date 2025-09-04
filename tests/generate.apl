@@ -35,7 +35,7 @@ typ[Nz;prm⍳,¨'*!']←Num Pos
 msk[Pos;prm⍳,¨'-⌈⍟≡⍕⌹']←0
 typ[Pos;prm⍳,¨'|*~?⍴≠⍳⍸⍋⍒≢']←Num Num Bool Nat Any Any Shp Nat Nscl Nscl Any
 
-msk[Bool;prm⍳,¨'-÷⌊⌈*⍟○?⍴⍳⍸⍋⍒≡≢⍕⌹']←0
+msk[Bool;prm⍳,¨'-÷*⍟○?⍴⍳⍸⍋⍒≡≢⍕⌹']←0
 typ[Bool;prm⍳,¨'×≠']←Pos Any
 
 msk[Nat;prm⍳,¨'-÷*⍟○?≡⍕⌹']←0
