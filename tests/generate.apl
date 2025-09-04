@@ -91,10 +91,10 @@ step←{p t k n sym←⍵
 	sp←LT∆SPD⍸?0⍴⍨≢i ⋄ sp[j]←6+⌊2048×(?0⍴⍨≢j)×?0⍴⍨≢j←⍸sp=6 ⋄ sp[⍸(k[i]=Nscl)∧sp=1]+←1
 	ec←sp×1+7=|tp[c←(≢tp)|x] ⋄ vl←(ec⌿rg[0;c])+(ec⌿(-⌿⊖rg)[c])×?ec⌿0
 	nv←(≢i)⍴⊂⍬ ⋄ ei←⍸ec ⋄ cc←ec⌿c
-	nv[ei[j]]⍪←⌊0.5+vl[j←⍸5≥|tp[cc]]
+	nv[ei[j]]⍪←⌊vl[j←⍸5≥|tp[cc]]
 	nv[ei[j]]⍪←vl[j←⍸6=|tp[cc]]
 	nv[ei[j]]⍪←+⌿1 0j1×[0](2,(≢j)÷2)⍴vl[j←⍸7=|tp[cc]]
-	nv[ei[j]]⍪←av[⌊0.5+vl[j←⍸tp[cc]=8]]
+	nv[ei[j]]⍪←av[⌊vl[j←⍸tp[cc]=8]]
 	n[i]←sym⍳sym∪←nv
 	
 	p t k n sym
