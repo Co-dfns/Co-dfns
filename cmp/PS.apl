@@ -370,12 +370,12 @@ PS←{⍺←⊢
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
 
 	⍝ Resolve names
-	bi←⍸t=T ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←(i←⍸t[p]=H)⍪0 ⋄ bnr⍪←n[i],⍪rf[i]
+	bi←⍸t=T ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←i←⍸t[p]=H ⋄ bnr⍪←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Resolve locals and free variables
 		fm←((t[x]=T)∧k[x←r[i]]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
-		b←bi[j←bnr⍳n[i],⍪rf[i]] ⋄ lm←(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
-		j[⍸msk]←bnr⍳n[x],⍪r[x←i⌿⍨msk←(j=≢bnr)∨fm⍱lm] ⋄ b←bi[j]
+		b←(bi⍪0)[j←bnr⍳n[i],⍪rf[i]] ⋄ lm←(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
+		j[⍸msk]←bnr⍳n[x],⍪r[x←i⌿⍨msk←(j=≢bnr)∨fm⍱lm] ⋄ b←(bi⍪0)[j]
 		msk←(j≠≢bnr)∧fm∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
 		vb[msk⌿i]←msk⌿b ⋄ i⌿⍨←~msk ⋄ lx[i]←1
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
