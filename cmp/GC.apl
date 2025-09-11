@@ -493,8 +493,8 @@ GC←{
 	}¨i
 	pref,←⊂''
 
-	⍝ F0: Initialization functions for namespaces
-	i←⍸(t=F)∧k=0
+	⍝ T0: Initialization functions for namespaces
+	i←⍸(t=T)∧k=0
 	zz[i],←{
 
 		id←⊃var_names ⍵
@@ -556,7 +556,7 @@ GC←{
 	pref,←⊂''
 
 	⍝ Export functions
-	i←⍸(t[p][p]=F)∧(k[p][p]=0)∧(t[p]=H)∧k=2
+	i←⍸(t[p][p]=T)∧(k[p][p]=0)∧(t[p]=H)∧k=2
 	exp←⊃⍪⌿{
 		fn ns←var_names ⍵,p[p][⍵]
 		fnv←⊃var_values ⍵

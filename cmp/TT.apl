@@ -15,7 +15,7 @@ TT←{
 	p,←i ⋄ t n lx pos end(⊣,I)←⊂i ⋄ k,←(≢i)⍴2 ⋄ t[i]←E ⋄ k[i]←3 ⋄ n[i]←0
 
 	⍝ Compute reference scope
-	r←I@{t[⍵]≠F}⍣≡⍨p
+	r←I@{msk[⍵]}⍣≡⍨p⊣msk←~t∊F T
 
 	⍝ Convert ⎕NC calls to static A1 nodes
 	pi←p[i←⍸mi←(t[p]=E)∧(t=P)∧n=-sym⍳⊂'⎕nc'] ⋄ j←⍸mj←(p∊pi)∧~mi ⋄ x←⍸mx←p∊j
@@ -60,7 +60,7 @@ TT←{
 	i←⍸msk←(t∊B V S)∧(lx∊0 1)∧n<¯6 ⋄ j←⍸msk∧(t[p]=C)∨(t[p]=E)∧(k[p]=4)∧≠p
 	mu←(≢i)⍴0 ⋄ rn←r,⍪n ⋄ rni←rn[i;]
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
-	ci←p[fi←⍸(t=F)∧k≠0]
+	ci←p[fi←⍸t=F]
 	mu←msk⍀1@{(↓rni)∊⊃⍪⌿{n[⍵],¨⍨fi⌿⍨ci=p[⍵]}¨i⌿⍨⍵∧t[p[i]]=C}⍣≡mu
 
 	⍝ Delete ⍺← forms for dyadic specializations

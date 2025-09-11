@@ -656,7 +656,7 @@ PS←{⍺←⊢
 	}⍬
 	
 	⍝ Compute exports
-	i←⍸(p=⍳≢p)[p][p]∧(k[p][p]=0)∧(t[p][p]=F)∧t[p]=H
+	i←⍸(p=⍳≢p)[p][p]∧(k[p][p]=0)∧(t[p][p]=T)∧t[p]=H
 	xn←sym[|n[i]] ⋄ xt←k[i]
 
 	⍝ Sort AST by depth-first pre-order traversal
