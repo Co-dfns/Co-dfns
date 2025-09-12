@@ -385,7 +385,7 @@ PS←{⍺←⊢
 		msk←(j≠≢bnr)∧fm∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
 		vb[msk⌿i]←msk⌿b ⋄ i lr⌿⍨←⊂~msk ⋄ lx[i]←¯2@{¯1=⍵}lx[i]
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
-		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[lr]] ⋄ i lr⌿⍨←x=≢j
+		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[lr]] ⋄ i lr⌿⍨←⊂x=≢j
 
 		⍝ Bind unresolved variables to new bindings
 		j←(≢p)+⍳≢ui←i⌿⍨msk←≠n[i],⍪lr ⋄ vb[i]←j[(n[ui],⍪lr←msk⌿lr)⍳n[i],⍪lr]
