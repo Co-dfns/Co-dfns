@@ -87,8 +87,9 @@ PS←{⍺←⊢
 
 	⍝ Tokenize primitives and atoms
 	t[⍸x∊syna]←A ⋄ t[⍸dm<x∊prms]←P
-	msk←(x∊'⌶∇')∨msk∨¯1⌽msk←dm<⊃'⍠←' '∘←' '∘.'∨.⍷⊂x
-	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿msk⍪0 ⋄ t[⍸m2<msk]←0
+	end[i]←end[1+i←⍸dm<⊃'⍠←' '∘←' '∘.'∨.⍷⊂x] ⋄ t[i+1]←0
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⌶'=x ⋄ t[⍸m2<msk]←0
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'∇'=x ⋄ t[⍸m2<msk]←0
 	∨⌿msk←2<end[i]-pos[i←⍸msk∧x='∇']:{
 		'AMBIGUOUS ∇ CLUSTER'SIGNAL SELECT msk⌿i
 	}⍬
