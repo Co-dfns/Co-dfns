@@ -371,7 +371,7 @@ PS←{⍺←⊢
 	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz lx vb pos end(⊣⍪I)←⊂i
 
 	⍝ Resolve names
-	bi←⍸t=T ⋄ bnr←n[bi],⍪bi ⋄ bi⍪←i←⍸t[p]=H ⋄ bnr⍪←n[i],⍪rf[i]
+	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Scope variables
 		dv←vb I@{vb[⍵]≠¯1}⍣≡i-2
