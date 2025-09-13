@@ -369,6 +369,7 @@ PS←{⍺←⊢
 	zv[i]←i←⍸t=T ⋄ lx[i]←i←⍸(t=T)∧k=0
 	i←⍸(t∊F T V)∧zv≠0 ⋄ i←(≠n[i],⍪rf[i])⌿i←i[⍋n[i],r[i],rz[i],⍪end[rz[i]]-pos[i]]
 	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz lx vb pos end(⊣⍪I)←⊂i
+	vb[i[j]]←(p-⍥≢i)+j←⍸t[i]=T
 
 	⍝ Resolve names
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
@@ -403,8 +404,8 @@ PS←{⍺←⊢
 		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb pos end(⊣⍪I)←⊂nj
 		
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
-		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[x]]
 		i x⌿⍨←⊂k[x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H]≥2
+		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[ti][vb[ti←⍸t=T]⍳x]]
 		p⍪←i ⋄ t k n r rf rz lx vb pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
 		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨¯1 ¯1
 		t[i]←C ⋄ k[i]←k[x] ⋄ vb[i]←px
