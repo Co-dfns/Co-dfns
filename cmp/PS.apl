@@ -403,8 +403,8 @@ PS←{⍺←⊢
 		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb pos end(⊣⍪I)←⊂nj
 		
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
-		i x⌿⍨←⊂k[x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H]≠0
 		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[x]]
+		i x⌿⍨←⊂k[x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H]≥2
 		p⍪←i ⋄ t k n r rf rz lx vb pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
 		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨¯1 ¯1
 		t[i]←C ⋄ k[i]←k[x] ⋄ vb[i]←px
