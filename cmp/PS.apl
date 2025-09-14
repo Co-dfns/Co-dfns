@@ -376,8 +376,8 @@ PS←{⍺←⊢
 	_←{i←⍵
 		⍝ Scope variables
 		dv←vb I@{vb[⍵]≠¯1}⍣≡i-2
-		srm←((t[dv]=T)∨t[p[dv]]=H)∧sem←(t[i-2]=V)∧(t[i-1]=P)∧n[i-1]=-sym⍳⊂,'.'
-		uv ni i←⌿∘i¨(sem>srm) srm (sem≤srm) ⋄ lx[ni]←lx[srm⌿dv]
+		rm←((t[dv]=T)∨t[p[dv]]=H)∧sm←(t[i-2]=V)∧(t[i-1]=P)∧n[i-1]=-sym⍳⊂,'.'
+		uv ni i←⌿∘i¨(sm>rm) rm (sm≤rm) ⋄ lx[ni]←lx[rm⌿dv]
 		lr←(r[i]×~msk)+lx[i]×msk←lx[i]≥0 ⋄ lrf←(rf[i]×~msk)+lx[i]×msk
 
 		⍝ Resolve locals and free variables
