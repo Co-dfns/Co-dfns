@@ -404,13 +404,13 @@ PS←{⍺←⊢
 		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb pos end(⊣⍪I)←⊂nj
 		
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
-		i x⌿⍨←⊂k[x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H]≥2
-		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[ti][vb[ti←⍸t=T]⍳x]]
+		i x tv⌿⍨←⊂(≢ti)≠tv←vb[ti←⍸(t=T)∧k≠0]⍳x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H
+		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[ti][tv]]
 		p⍪←i ⋄ t k n r rf rz lx vb pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
 		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨¯1 ¯1
 		t[i]←C ⋄ k[i]←k[x] ⋄ vb[i]←px
 	j⍪uv}⍣≡⍸(t[p]≠H)∧(t=V)∧vb=¯1
-		
+
 	⍝ XXX Handle specific known structural forms for assignment/binding
 	⍝ j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	⍝ tm←(1⌽tm)∨tm←((1⌽tm)∧t[j]=¯1)∨tm←(1⌽tm)∨tm←¯1⌽(t[j]=P)∧n[j]=-sym⍳⊂,'.'
