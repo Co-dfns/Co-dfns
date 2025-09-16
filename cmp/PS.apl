@@ -517,9 +517,9 @@ PS←{⍺←⊢
 		k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
 	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
 	
-	⍝ Parse plural value sequences to A7 nodes
+	⍝ Parse strands/plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸(t[p]=Z)∨(t[p]=¯1)∧k[p]=4
-	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊N P V Z)∧k[i]=1
+	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊C N P V Z)∧k[i]=1
 	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(x←np@ai⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x ⋄ p,←ai
 	t k n lx vb pos end(⊣,I)←⊂ai
 	t k n lx vb pos(⊣@ai⍨)←A 7 0 ¯1 ¯1(pos[i⌿⍨km←2<⌿0⍪msk])
