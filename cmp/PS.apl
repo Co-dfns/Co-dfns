@@ -385,7 +385,7 @@ PS←{⍺←⊢
 		b←(bi⍪0)[j←bnr⍳n[i],⍪lrf] ⋄ lm←(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
 		j[⍸msk]←bnr⍳n[x←msk⌿i],⍪lr⌿⍨msk←(j=≢bnr)∨fm⍱lm ⋄ b←(bi⍪0)[j]
 		msk←(j≠≢bnr)∧fm∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
-		vb[msk⌿i]←msk⌿b ⋄ i lr⌿⍨←⊂~msk ⋄ lx[i]←¯2@{¯1=⍵}lx[i]
+		vb[msk⌿i]←msk⌿b ⋄ i lr⌿⍨←⊂~msk ⋄ lx[i]←¯2@{(t[lr]≠T)∨k[lr]≠0}lx[i]
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[lr]] ⋄ i lr⌿⍨←⊂x=≢j
 
