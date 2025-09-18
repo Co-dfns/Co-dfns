@@ -34,7 +34,7 @@ TT←{
 	ncmap←(0 0 0)(0 0 0)(0 0 0)(2 0 0),,⍉⊃∘.,⌿(0 2)(2 3)(0 2 3)
 	vx←x,j1←j⌿⍨k[j]=1 ⋄ vp←p[p[x]],p[j1]
 	_←vp{n[⍺]←-sym⍳sym∪←⊂(k[r[⍺]]⊃ncmap)[ncvar⍳sym[|n[⍵]]]}⌸⍣(0≠≢vx)⊢vx
-	t[pi]←A ⋄ k[pi]←1 ⋄ lx[pi]←6
+	t[pi]←A ⋄ k[pi]←1 ⋄ lx[pi]←¯6
 	p t k n lx r pos end⌿⍨←⊂~msk←mi∨mj∨mx ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Convert O*(F, [, A) to Ox(F, A)
@@ -57,9 +57,9 @@ TT←{
 	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Mark mutated bindings
-	i←⍸msk←(t∊B V S)∧(lx∊0 1)∧n<¯6 ⋄ j←⍸msk∧(t[p]=C)∨(t[p]=E)∧(k[p]=4)∧≠p
+	i←⍸msk←(t∊B V S)∧(lx∊¯1 ¯2)∧n<¯6 ⋄ j←⍸msk∧(t[p]=C)∨(t[p]=E)∧(k[p]=4)∧≠p
 	mu←(≢i)⍴0 ⋄ rn←r,⍪n ⋄ rni←rn[i;]
-	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
+	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=¯2]}⍣≡j
 	ci←p[fi←⍸t=F]
 	mu←msk⍀1@{(↓rni)∊⊃⍪⌿{n[⍵],¨⍨fi⌿⍨ci=p[⍵]}¨i⌿⍨⍵∧t[p[i]]=C}⍣≡mu
 
@@ -89,7 +89,7 @@ TT←{
 
 	⍝ Convert print bindings to E1(P2(⎕⍞), ∘∘∘)
 	i←p[j←⍸(≠p)∧(t[p]=B)∧(t=A)∧k=0]
-	t[i]←E ⋄ k[i]←1 ⋄ n[i]←0 ⋄ t[j]←P ⋄ k[j]←2 ⋄ lx[j]←3
+	t[i]←E ⋄ k[i]←1 ⋄ n[i]←0 ⋄ t[j]←P ⋄ k[j]←2 ⋄ lx[j]←¯3
 
 	⍝ Disambiguate schizophrenic functions
 	i←⍸(t=P)∧(k=2)∧n∊ns←-sym⍳,¨'/⌿\⍀←'
@@ -207,7 +207,7 @@ TT←{
 	
 	⍝ Allocate frame variables for unbound application results
 	msk←((t=B)∧k=0)∨((t[p]=B)⍲k[p]=0)∧(k≠0)∧(t∊C E O)∨(t∊A S)∧k=7
-	pi←p[i←⍸msk∧n≥0] ⋄ d←⊃P2D p ⋄ msk←(t=E)∧k∊0 ¯1 ⋄ lx[i]←6
+	pi←p[i←⍸msk∧n≥0] ⋄ d←⊃P2D p ⋄ msk←(t=E)∧k∊0 ¯1 ⋄ lx[i]←¯6
 	cg←(pi∘.=i)∨(∘.=⍨pi)∨(∘.<⍨i)∧(∘.>⍨d[i])∧∘.=⍨p I@{~msk[⍵]}⍣≡i
 	cg∨←i∘.=(t[ppi]=B)∧(k[ppi]=0)∧ppi←p[pi]
 	cg∧←∘.=⍨t[i]∊C O ⋄ cg∨←⍉cg ⋄ cg∧←~∘.=⍨⍳≢i
@@ -220,7 +220,7 @@ TT←{
 	}⍣≡0
 
 	⍝ Link miscellaneous nodes
-	n[i←⍸(t[p]=E)∧(k[p]=0)∧(t=E)∨((t=A)∧k=7)∨(t=B)∧k≠7]←0 ⋄ lx[i]←6
+	n[i←⍸(t[p]=E)∧(k[p]=0)∧(t=E)∨((t=A)∧k=7)∨(t=B)∧k≠7]←0 ⋄ lx[i]←¯6
 	n[i]←n[p[i←⍸(t[p]=B)∧(k[p]=0)∧(t≠V)∧(t=A)⍲k=1]] ⋄ lx[i]←lx[p[i]]
 	n[p[i]]←n[i←⍸(t[p]=E)∧k[p]=¯1] ⋄ lx[p[i]]←lx[i]
 	
@@ -240,15 +240,15 @@ TT←{
 	⍝ Remove dead code paths: Empty B0; post-Z¯2 nodes
 	_←p[i]{msk[⍵]←∨⍀¯1⌽msk[⍵]}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←(t=Z)∧k=¯2
 	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0
-	msk←{1@(n⌿⍨⍵∧(t=V)∧(lx=4)∧n∊⍸t=F)⊢⍵∨⍵[p]}⍣≡msk
+	msk←{1@(n⌿⍨⍵∧(t=V)∧(lx=¯4)∧n∊⍸t=F)⊢⍵∨⍵[p]}⍣≡msk
 	p t k n lx mu r pos end⌿⍨←⊂~msk
 	p r(⊣-1+⍸⍨)←⊂i←⍸msk ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
 
 	⍝ Compute a function's local, free, and stack variables
 	lv←(≢p)⍴⊂⍬ ⋄ fv←(≢p)⍴⊂⍬ ⋄ sv←(≢p)⍴⊂⍬
-	lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B S V)∧(lx=0)∧n<0;]
+	lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B S V)∧(lx=¯1)∧n<0;]
 	typ←1@(⍸(t∊A E S)∨(t=B)∧k=0)⊢2@(⍸t=O)⊢k[i]@(i←⍸t∊B C V)⊢(≢p)⍴0
-	sv[r[i]],←i←i⌿⍨≠(r,n,⍪typ)[i←⍸(lx=6)∧n>0;]
+	sv[r[i]],←i←i⌿⍨≠(r,n,⍪typ)[i←⍸(lx=¯6)∧n>0;]
 	fv[p[i]],←i←⍸(t=V)∧(t[p]=C)∧n<0
 	fv[n[i]]←fv[p[i←⍸(t=V)∧(t[p]=C)∧n≥0]]
 
