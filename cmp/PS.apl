@@ -378,7 +378,7 @@ PS←{⍺←⊢
 		dv←vb I@{vb[⍵]≠¯1}⍣≡i-2
 		rm←((t[dv]=T)∨t[p[dv]]=H)∧sm←(t[i-2]=V)∧(t[i-1]=P)∧n[i-1]=-sym⍳⊂,'.'
 		uv ni i←⌿∘i¨(sm>rm) rm (sm≤rm) ⋄ lx[ni]←lx[rm⌿dv]
-		lr←(r[i]×~msk)+lx[i]×msk←lx[i]≥0 ⋄ lrf←(rf[i]×~msk)+lx[i]×msk
+		lr←lx[i[j]]@(j←⍸lx[i]≥0)⊢r[i] ⋄ lrf←lx[i[j]]@j⊢rf[i]
 
 		⍝ Resolve locals and free variables
 		fm←((t[lr]=T)∧k[lr]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
