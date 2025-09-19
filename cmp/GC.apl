@@ -595,7 +595,7 @@ GC←{
 	exp,←⊂'	struct cell_array *dbg;'
 	exp,←⊂'	int err;'
 	exp,←⊂''
-	exp,←⊃⍪⌿{⊂'	CHKFN(',(⊃var_names ⍵),'_init(), fail);'}¨⍸(t=F)∧k=0
+	exp,←⊃⍪⌿{⊂'	CHKFN(',(⊃var_names ⍵),'_init(), fail);'}¨⍸(t=T)∧k=0
 	exp,←⊂''
 	exp,←⊂'	print_cell_stats();'
 	exp,←⊂'	print_ibeam_stats();'
