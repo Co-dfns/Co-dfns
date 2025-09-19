@@ -21,9 +21,9 @@ GC←{
 	var_ckinds←{
 		types←'' 'array' 'func' 'moper' 'doper' 'env' 'void' 'array'
 		isa←t[⍵]∊A E S
-		isfn←(t[⍵]=O)∨(t[⍵]=F)∧k[⍵]<5
-		isdop←(t[⍵]=F)∧k[⍵]≥11
-		ismop←(~isdop)∧(t[⍵]=F)∧k[⍵]≥5
+		isfn←(t[⍵]=O)∨(t[⍵]∊F T)∧k[⍵]<5
+		isdop←(t[⍵]∊F T)∧k[⍵]≥11
+		ismop←(~isdop)∧(t[⍵]∊F T)∧k[⍵]≥5
 		types[4@{isdop}3@{ismop}2@{isfn}1@{isa}k[⍵]]
 	}
 
