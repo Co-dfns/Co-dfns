@@ -81,7 +81,7 @@ TT←{
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V ⋄ k[i]←3+5 11⍸k[i]
 
 	⍝ Wrap expressions as binding or return statements
-	i←(⍸(~t∊F G H)∧t[p]=F),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
+	i←(⍸(t[p]∊F T)>t∊F G H T),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
 	p t k n lx mu r pos end⌿⍨←⊂m←2@i⊢1⍴⍨≢p
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@{⌽≠⌽(p×p≠⍳≢p)[j]}(t[j]=B)∨(t[j]=E)∧k[j]=4
@@ -231,7 +231,7 @@ TT←{
 	
 	⍝ Lift and flatten expressions
 	i←⍸(t∊B C E G O S Z)∨(t=A)∧k≠1
-	msk←~(t∊F G)∨((t=B)∧k=7)∨gm←(t[p]=G)∧~(t=V)∨((t=A)∧k=1)∨(t=E)∧k=0
+	msk←~(t∊F G T)∨((t=B)∧k=7)∨gm←(t[p]=G)∧~(t=V)∨((t=A)∧k=1)∨(t=E)∧k=0
 	p[i]←p[x←p[p] I@{gm[p[⍵]]}p I@{msk[p[⍵]]}⍣≡p I@{gm[⍵]}i]
 	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]
 	i←⍸(t=S)∨(t=B)∧k=0
