@@ -375,10 +375,11 @@ PS←{⍺←⊢
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Scope variables
-		dv←vb I@{vb[⍵]≠¯1}⍣≡i-2
-		rm←((t[dv]=T)∨t[p[dv]]=H)∧sm←(t[i-2]=V)∧(t[i-1]=P)∧n[i-1]=-sym⍳⊂,'.'
-		uv ni i←⌿∘i¨(sm>rm) rm (sm≤rm) ⋄ lx[ni]←lx[rm⌿dv]
-		lr←lx[i[j]]@(j←⍸lx[i]≥0)⊢r[i] ⋄ lrf←lx[i[j]]@j⊢rf[i]
+		sm←(t[i-2]=V)∧(t[i-1]=P)∧n[i-1]=-sym⍳⊂,'.'
+		rm←sm∧t[p[dv←vb I@{vb[⍵]≠¯1}⍣≡i-2]]=H
+		lx[rm⌿i]←lx[rm⌿dv] ⋄ uv i←⌿∘i¨(sm>rm)(sm≤rm)
+		lr←(lx[i]×msk)+r[i]×~msk←lx[i]≥0 ⋄ lrf←(lx[i]×msk)+rf[i]×~msk
+		t[¯1+msk⌿i]←N
 
 		⍝ Resolve locals and free variables
 		fm←((t[lr]=T)∧k[lr]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
