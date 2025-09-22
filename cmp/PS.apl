@@ -425,6 +425,11 @@ PS←{⍺←⊢
 	⍝ k[x]←1 ⋄ vb[x]←x ⋄ i~←x
 	⍝ k[x←j⌿⍨tm∧(~msk)∧(0⍪(msk←2>⌿tm⍪0)⌿msk)[+⍀2<⌿0⍪tm]]←1 ⋄ k[j⌿⍨m2∧p[j]∊x]←1
 
+	⍝ Parse Namespace References as Nk(Nk(...), E)
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←i⌿⍨msk←t[i]=N
+	p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk ⋄ p[i⌿⍨¯1⌽msk]←j ⋄ p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)>¯1⌽msk
+	k[j]←k[i⌿⍨¯1⌽msk]
+
 	⍝ Specialize functions to specific formal binding types
 	rc←(≢p)⍴1 ⋄ isa isd←⊣@p⍨¨↓(⊂3 7)⌷(9⍴2)⊤k
 	rc←1 1 2 4 8[k[i]]@(i←⍸(t=F)∨isa∧t=T)⊢rc
@@ -497,15 +502,6 @@ PS←{⍺←⊢
 	np←(≢p)+⍳≢j ⋄ p←(x←np@j⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
 	p,←j ⋄ t k n lx vb pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿+⍀jm]
-
-	⍝ Parse Namespace References as Nk(Nk(...), E)
-	⍝ i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
-	⍝ j←i⌿⍨msk←(t[i]=P)∧(n[i]=-sym⍳⊂,'.')∧(1⌽msk)∨¯1⌽msk←(1=|k[i])∧p[i]=1⌽p[i]
-	⍝ ∨⌿m2←msk∧(¯1⌽msk)∨p[i]≠1⌽p[i]:'EMPTY NAMESPACE REFERENCE'SIGNAL SELECT m2⌿i
-	⍝ p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk
-	⍝ p[i⌿⍨¯1⌽msk]←j
-	⍝ p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)∧~¯1⌽msk
-	⍝ t[j]←N ⋄ k[j]←k[i⌿⍨¯1⌽msk]
 
 	⍝ Wrap non-array bindings as B2+(V, Z)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂k[i]≥2
