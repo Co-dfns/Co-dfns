@@ -1,9 +1,3 @@
-#include <string.h>
-#include <stdio.h>
-#include <wchar.h>
-
-#include "internal.h"
-
 struct cell_array *debug_info = NULL;
 
 DECLSPEC struct cell_array *

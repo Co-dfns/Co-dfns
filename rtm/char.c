@@ -1,5 +1,3 @@
-#include "internal.h"
-
 static int 
 cp_utf8(unsigned char *buf, unsigned int point)
 {

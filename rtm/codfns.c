@@ -1,6 +1,22 @@
+#include <complex.h>
+#include <float.h>
+#include <limits.h>
+#include <math.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <wchar.h>
+
 #pragma warning (push, 3)
 #include <arrayfire.h>
 #pragma warning (pop)
+
+#if AF_API_VERSION < 38
+#error "Your ArrayFire version is too old."
+#endif
 
 #include "codfns.h"
 #include "prim.h"
@@ -22,74 +38,6 @@ extern struct cdf_prim_loc cdf_prim;
 #define NUM_645  (cdf_prim.cdf_NUM_645)
 #define NUM_1289 (cdf_prim.cdf_NUM_1289)
 
-void print_array_stats(void);
-void print_func_stats(void);
-
-char *get_aferr_msg(int);
-
-void print_cp8(uint8_t *, size_t);
-void print_cp16(uint16_t *, size_t);
-void print_cp32(uint32_t *, size_t);
-
-#define type_pair(src, dst) ((src * ARR_MAX) + dst)
-
-enum array_type array_max_type(enum array_type, enum array_type);
-af_dtype array_type_af_dtype(enum array_type);
-af_dtype array_af_dtype(struct cell_array *);
-enum array_type closest_numeric_array_type(double);
-
-int cast_values(struct cell_array *, enum array_type);
-
-int is_integer_dbl(double);
-int is_integer_device(unsigned char *, af_array);
-int is_integer_array(struct cell_array *);
-int is_real_array(struct cell_array *);
-int is_numeric_array(struct cell_array *);
-int is_char_array(struct cell_array *);
-
-int array_get_host_buffer(void **, int *, struct cell_array *);
-
-int get_scalar_int8(int8_t *, struct cell_array *, size_t);
-int get_scalar_int16(int16_t *, struct cell_array *, size_t);
-int get_scalar_int32(int32_t *, struct cell_array *, size_t);
-int get_scalar_dbl(double *, struct cell_array *, size_t);
-int get_scalar_cmpx(struct apl_cmpx *, struct cell_array *, size_t);
-int get_scalar_u64(size_t *, struct cell_array *, size_t);
-int get_scalar_char8(uint8_t *, struct cell_array *, size_t);
-int get_scalar_char16(uint16_t *, struct cell_array *, size_t);
-int get_scalar_char32(uint32_t *, struct cell_array *, size_t);
-
-int mk_array_int8(struct cell_array **, int8_t);
-int mk_array_int16(struct cell_array **, int16_t);
-int mk_array_int32(struct cell_array **, int32_t);
-int mk_array_dbl(struct cell_array **, double);
-int mk_array_real(struct cell_array **, double);
-int mk_array_cmpx(struct cell_array **, struct apl_cmpx);
-int mk_array_char8(struct cell_array **, uint8_t);
-int mk_array_char16(struct cell_array **, uint16_t);
-int mk_array_char32(struct cell_array **, uint32_t);
-int mk_array_nested(struct cell_array **, struct cell_array *);
-
-int has_integer_values(int *, struct cell_array *);
-int has_natural_values(int *, struct cell_array *);
-
-size_t array_count(struct cell_array *);
-size_t array_values_count(struct cell_array *);
-size_t array_values_bytes(struct cell_array *);
-size_t array_element_size(struct cell_array *);
-size_t array_element_size_type(enum array_type);
-af_dtype array_af_dtype(struct cell_array *);
-
-int array_share_values(struct cell_array *, struct cell_array *);
-int array_shallow_copy(struct cell_array **, struct cell_array *);
-int retain_array_data(struct cell_array *);
-int release_array_data(struct cell_array *);
-int array_is_same(int8_t *, struct cell_array *, struct cell_array *);
-int array_promote_storage(struct cell_array *, struct cell_array *);
-int array_migrate_storage(struct cell_array *, enum array_storage);
-
-struct apl_cmpx cast_cmpx(double x);
-
 #define CHKAF(expr, fail)							\
 if (0 < (err = (expr))) {							\
 	debug_trace(err, __FILE__, __LINE__, __func__, af_err_to_string(err));	\
@@ -100,6 +48,8 @@ if (0 < (err = (expr))) {							\
 if (0 < (err = (expr))) {							\
 	debug_trace(err, __FILE__, __LINE__, __func__, af_err_to_string(err));	\
 }										\
+
+#define type_pair(src, dst) ((src * ARR_MAX) + dst)
 
 #define cast_real_real(x)	(x)
 #define cast_real_cmpx(x)	(x).real
@@ -363,3 +313,11 @@ name##_func(struct cell_array **z,				\
 								\
 DECL_FUNC(name##_vec_ibeam, name##_func, error_dya_syntax)	\
 
+#include "array.c"
+#include "func.c"
+#include "cell.c"
+#include "call.c"
+#include "char.c"
+#include "dwa.c"
+#include "error.c"
+#include "ibeams.c"

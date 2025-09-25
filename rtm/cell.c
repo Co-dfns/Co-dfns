@@ -1,7 +1,3 @@
-#include <stdlib.h>
-
-#include "internal.h"
-
 DECLSPEC void *
 retain_cell(void *cell)
 {

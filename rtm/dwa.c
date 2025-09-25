@@ -1,10 +1,3 @@
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-
-#include "internal.h"
-
 #define DATA(pp) ((void *)&(pp)->shape[(pp)->rank])
 
 struct dwa_fns {

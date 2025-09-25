@@ -1,8 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
-
-#include "internal.h"
-
 size_t mk_func_count = 0;
 size_t mk_derf_count = 0;
 size_t mk_moper_count = 0;

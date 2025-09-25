@@ -1,15 +1,3 @@
-#include <complex.h>
-#include <float.h>
-#include <limits.h>
-#include <math.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <wchar.h>
-
-#include "internal.h"
-
 int
 error_mon_syntax(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)

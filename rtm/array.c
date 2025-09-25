@@ -1,17 +1,3 @@
-#include <float.h>
-#include <limits.h>
-#include <math.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "internal.h"
-
-#if AF_API_VERSION < 38
-#error "Your ArrayFire version is too old."
-#endif
-
 size_t
 array_count_shape(unsigned int rank, size_t shape[])
 {

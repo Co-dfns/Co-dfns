@@ -1,5 +1,3 @@
-#include "internal.h"
-
 DECLSPEC int
 mk_nested_array(struct cell_array **arr, size_t count)
 {

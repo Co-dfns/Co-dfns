@@ -219,12 +219,9 @@ struct cdf_prim_loc {
 	char **__names;
 	struct cell_func *cdf_q_print_memstats;
 	struct cell_func *cdf_q_signal;
-	struct cell_doper *cdf_dove;
 	struct cell_func *cdf_q_dr;
 	struct cell_array *cdf_spn;
-	struct cell_doper *cdf_starling;
 	struct cell_array *cdf_ZILDE;
-	struct cell_func *cdf_q_ts;
 	struct cell_array *cdf_NUM_0;
 	struct cell_array *cdf_NUM_1;
 	struct cell_array *cdf_NUM_11;
@@ -235,9 +232,7 @@ struct cdf_prim_loc {
 	struct cell_array *cdf_NUM_323;
 	struct cell_array *cdf_NUM_326;
 	struct cell_array *cdf_NUM_645;
-	struct cell_func *cdf_matmul;
 	struct cell_array *cdf_NUM_1289;
-	struct cell_func *cdf_dot_prod;
 	struct cell_array *cdf_VEC_0;
 	struct cell_doper *cdf_eq;
 	struct cell_func *cdf_squeeze;
@@ -247,7 +242,6 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_is_integer;
 	struct cell_func *cdf_is_bool;
 	struct cell_func *cdf_is_cmpx;
-	struct cell_func *cdf_where_nz;
 	struct cell_func *cdf_is_span;
 	struct cell_func *cdf_has_nat_vals;
 	struct cell_func *cdf_both_simple;
@@ -255,25 +249,19 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_both_integer;
 	struct cell_func *cdf_both_char;
 	struct cell_func *cdf_both_bool;
-	struct cell_func *cdf_neq_vec;
 	struct cell_func *cdf_bitand;
 	struct cell_func *cdf_scl_and;
 	struct cell_func *cdf_scl_or;
-	struct cell_func *cdf_eql_vec;
 	struct cell_func *cdf_any;
 	struct cell_moper *cdf_numeric;
 	struct cell_func *cdf_chk_scl;
 	struct cell_doper *cdf_ambiv;
-	struct cell_func *cdf_first;
-	struct cell_func *cdf_notsame;
 	struct cell_func *cdf_same;
-	struct cell_moper *cdf_mst;
-	struct cell_func *cdf_set;
-	struct cell_func *cdf_shape;
 	struct cell_moper *cdf_veach;
 	struct cell_moper *cdf_scalar;
 	struct cell_moper *cdf_scl_mon;
 	struct cell_moper *cdf_chk_axis;
+	struct cell_func *cdf_shape;
 	struct cell_func *cdf_chk_valid_shape;
 	struct cell_func *cdf_prototype;
 	struct cell_func *cdf_reshape;
@@ -282,7 +270,9 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_idx_rnk_check;
 	struct cell_func *cdf_idx_rng_check;
 	struct cell_func *cdf_brkidx;
+	struct cell_func *cdf_set;
 	struct cell_doper *cdf_mst_vals;
+	struct cell_moper *cdf_mst;
 	struct cell_func *cdf_materialize;
 	struct cell_func *cdf_sqd_idx;
 	struct cell_func *cdf_sqd;
@@ -301,10 +291,12 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_depth;
 	struct cell_func *cdf_eqv;
 	struct cell_func *cdf_tally;
+	struct cell_func *cdf_notsame;
 	struct cell_func *cdf_nqv;
 	struct cell_func *cdf_index_gen;
 	struct cell_func *cdf_index_of;
 	struct cell_func *cdf_iot;
+	struct cell_func *cdf_first;
 	struct cell_func *cdf_pick;
 	struct cell_func *cdf_dis;
 	struct cell_func *cdf_enclose;
@@ -371,6 +363,7 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_lesseql;
 	struct cell_func *cdf_lte;
 	struct cell_func *cdf_eqlmon;
+	struct cell_func *cdf_eql_vec;
 	struct cell_func *cdf_equal;
 	struct cell_func *cdf_eql;
 	struct cell_func *cdf_gtemon;
@@ -380,6 +373,7 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_greaterthan;
 	struct cell_func *cdf_gth;
 	struct cell_func *cdf_firstocc;
+	struct cell_func *cdf_neq_vec;
 	struct cell_func *cdf_noteq;
 	struct cell_func *cdf_neq;
 	struct cell_func *cdf_mix;
@@ -437,6 +431,7 @@ struct cdf_prim_loc {
 	struct cell_moper *cdf_reduce_last;
 	struct cell_moper *cdf_nwreduce_last;
 	struct cell_moper *cdf_red;
+	struct cell_func *cdf_where_nz;
 	struct cell_func *cdf_where;
 	struct cell_func *cdf_interval_idx;
 	struct cell_func *cdf_iou;
@@ -454,6 +449,8 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_xpdmon;
 	struct cell_func *cdf_xpd;
 	struct cell_moper *cdf_oup;
+	struct cell_func *cdf_dot_prod;
+	struct cell_func *cdf_matmul;
 	struct cell_doper *cdf_dot;
 	struct cell_doper *cdf_pow;
 	struct cell_doper *cdf_jot;
@@ -463,7 +460,10 @@ struct cdf_prim_loc {
 	struct cell_func *cdf_fmt;
 	struct cell_func *cdf_println;
 	struct cell_func *cdf_print;
+	struct cell_func *cdf_q_ts;
+	struct cell_doper *cdf_starling;
 	struct cell_doper *cdf_violetstarling;
+	struct cell_doper *cdf_dove;
 	struct cell_doper *cdf_zebradove;
 };
 

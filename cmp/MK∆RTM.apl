@@ -33,7 +33,7 @@
   	vsc,←'    /I"%AF_PATH%\include"'
   	vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"BUILD_CODFNS"'
 	vsc,←'    /D"_CRT_SECURE_NO_WARNINGS"'
-  	vsc,←'    "*.c" /link /DLL /OPT:REF'
+  	vsc,←'    "prim.c" "codfns.c" /link /DLL /OPT:REF'
   	vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
   	vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
   	vsc,←'    /DYNAMICBASE "af',LIB,'.lib"'
@@ -56,7 +56,7 @@
   	gcc,←'    -Wno-unused-but-set-variable'
   	gcc,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
   	gcc,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'''
-  	gcc,←'    -o libcodfns.so *.c -lm -laf',LIB
+  	gcc,←'    -o libcodfns.so prim.c codfns.c -lm -laf',LIB
   	
   	⎕CMD ⎕←gcc
   	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
@@ -71,7 +71,7 @@
   	clang,←'    -Wno-unused-but-set-variable'
   	clang,←'    -DNOMINMAX -DAF_DEBUG -DBUILD_CODFNS'
   	clang,←'    -I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'''
-  	clang,←'    -o libcodfns.dylib *.c -lm -laf',LIB
+  	clang,←'    -o libcodfns.dylib prim.c codfns.c -lm -laf',LIB
   	
   	⎕CMD ⎕←clang
   	⎕CMD ⎕←'cp "',path,'/rtm/codfns.h" "',path,'/tests/"'
