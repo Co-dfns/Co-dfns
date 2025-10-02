@@ -106,7 +106,7 @@ mst_vals←{idx←⍺⍺ ⋄ op←⍵⍵ ⋄ idx((idx⌷⍺)op¨⍵)
 mst←'mst_ibeam'⌶⌶
 
 ⍝ ⌷: Materialize | Squad indexing
-materialize←{⍵}
+materialize←'materialize_ibeam'⌶
 sqd_idx←{
 	hax←1 ⋄ axis⍠←hax←0
 	hax:⍺{

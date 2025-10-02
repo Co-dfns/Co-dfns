@@ -74,6 +74,25 @@ fail:
 DECL_FUNC(q_signal_ibeam, q_signal_mon, q_signal_dya)
 
 int
+materialize_mon(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	
+	err = 0;
+	
+	*z = retain_cell(r);
+	
+	if (r->storage == STG_DEVICE)
+		CHKAF(af_eval(r->values), fail);
+	
+fail:
+	return err;
+}
+
+DECL_FUNC(materialize_ibeam, materialize_mon, error_dya_syntax)
+
+int
 q_dr_mon(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
