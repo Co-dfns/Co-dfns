@@ -11,7 +11,7 @@ DF(iot_f){z.s=r.s;B c=cnt(r);if(!c){z.v=scl(0);R;}
    [&](carr&olv,carr&orv){arr lv=olv,rv=orv,ix;sort(lv,ix,lv);
     z.v=constant(0,cnt(r),s32);arr&zv=std::get<arr>(z.v);
     for(I h;h=lc/2;lc-=h){arr t=zv+h;replace(zv,lv(t)>rv,t);}
-    zv=arr(select(lv(zv)==rv,ix(zv).as(s32),(I)cnt(l)),c);},
+    zv=arr(select(lv(zv)==rv,ix(zv).as(s32),(L)cnt(l)),c);},
    [&](CVEC<A>&lv,carr&rv){err(16);},
    [&](carr&lv,CVEC<A>&rv){err(16);},
    [&](CVEC<A>&lv,CVEC<A>&rv){err(16);}},

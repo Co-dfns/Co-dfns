@@ -37,3 +37,4 @@ attic/*.pdf
 *.obj
 *.log
 *.cpp
+/tests/.vs

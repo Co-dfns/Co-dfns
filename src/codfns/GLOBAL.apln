@@ -1,6 +1,6 @@
 :Namespace GLOBAL
 
- ##.(⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB)←0 1 3 (4 1 3) '/opt/arrayfire' 'cuda'
+ ##.(⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB)←0 1 3 (4 1 4) '/opt/arrayfire' 'cuda'
  ##.(f∆ N∆)←'ptknfsrdx' ' ABCEFGKLMNOPSVZ'
  ##.VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
  ##.VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
