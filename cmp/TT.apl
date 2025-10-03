@@ -1,5 +1,10 @@
 TT←{
 	(p d t k n lx vb pos end)exp sym IN←⍵
+	
+	⍝ Kill the dynamic closures
+	t n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂i←⍸(≠p)∧((t=C)∧vb≥0)[p]
+	p t k n lx pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡~p∊p[i]
+	p(⊣-1+⍸⍨)←⍸~msk
 
 	⍝ Kill the contents of Z¯2 nodes
 	p t k n lx pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2

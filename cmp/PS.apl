@@ -361,15 +361,16 @@ PS←{⍺←⊢
 	lx←(≢p)⍴¯1 ⋄ lx[⍸t=P]←¯3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←¯4
 
 	⍝ Add localized dfns/ns bindings to the H-set
-	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(t[r]=F)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧((t=F)∨(t=T)∧k=0)[r]∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	bm←{bm⊣bm[p]∧←⍵}⍣≡bm←t∊A V Z
 	zv∧←(0⍪(2>⌿zv⍪0)⌿1⌽n[i]∊-sym⍳,¨'←' '⍠←' '∘←')[+⍀2<⌿0⍪zv←km∧bm[i]]
 	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv]
 	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0 ⋄ _←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
 	zv[i]←i←⍸t=T ⋄ lx[i]←i←⍸(t=T)∧k=0
 	i←⍸(t∊F T V)∧zv≠0 ⋄ i←(≠n[i],⍪rf[i])⌿i←i[⍋n[i],r[i],rz[i],⍪end[rz[i]]-pos[i]]
-	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz lx vb pos end(⊣⍪I)←⊂i
+	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i
 	vb[i[j]]←(p-⍥≢i)+j←⍸t[i]=T
+	vb[p[p]⍳zv[j]]←j←(p-⍥≢i)+⍸zv[i]∊p[⍸(t=C)∧(≠p)∧⌽≠⌽p]
 
 	⍝ Resolve names
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
@@ -396,20 +397,21 @@ PS←{⍺←⊢
 		⍝ Add namespace bindings to H-set; free variables to C-set
 		i ir←j lr⌿⍨¨⊂msk←(t[lr]=T)∧k[lr]=0
 		np←x[p[x←⍸(t[p]=T)∧(k[p]=0)∧t=H]⍳ir]
-		p r rf rz lx vb⍪←⊂(≢ui)⍴¯1 ⋄ t k n pos end(⊣⍪I)←⊂ui
+		p r rf rz lx vb⍪←⊂(≢ui)⍴¯1 ⋄ t k n zv pos end(⊣⍪I)←⊂ui
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
 		
 		⍝ Propagate Free Variables to Dynamic Closures
 		nj np←j i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[j]] ⋄ j⍪←(≢p)+⍳≢nj
-		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb pos end(⊣⍪I)←⊂nj
-		
+		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb zv pos end(⊣⍪I)←⊂nj
+
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
-		i x tv⌿⍨←⊂(≢ti)≠tv←vb[ti←⍸(t=T)∧k≠0]⍳x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧~t[p]∊C H
-		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[ti][tv]]
-		p⍪←i ⋄ t k n r rf rz lx vb pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
-		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨¯1 ¯1
-		t[i]←C ⋄ k[i]←k[x] ⋄ vb[i]←px
+		fvb←vb[fi←⍸(t∊T F)∧vb≠¯1]
+		i x fv⌿⍨←⊂(≢fi)≠fv←fvb⍳x←vb I@{vb[⍵]≠¯1}⍣≡i←⍸(t=V)∧(zv=0)∧~t[p]∊C H
+		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[fi][fv]]
+		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
+		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n zv pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨¯1 ¯1
+		t[i]←C ⋄ k[i]←k[fi[fv]] ⋄ vb[i]←px
 	j⍪uv}⍣≡⍸(t[p]≠H)∧(t=V)∧vb=¯1
 
 	⍝ XXX Handle specific known structural forms for assignment/binding
