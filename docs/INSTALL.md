@@ -10,7 +10,8 @@ released less frequently.
 
 The `master` branch is expected to track the versioning closely, and so the 
 compiler can also be thought of as operating on a running release 
-cycle/deployment model. 
+cycle/deployment model. It is important to note that master is considered 
+unstable, and should not be relied on unless you are developing Co-dfns. 
 
 ## Obtaining a copy of the compiler
 
