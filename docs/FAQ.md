@@ -10,23 +10,9 @@ You can also check out Dyalog's getting started page:
 
 https://www.dyalog.com/getting-started.htm
 
-**How do I get started with developing Co-dfns?**
+**How do I use the compiler?**
 
-First and foremost, read the code and understand how things are put together. These will help:
-
-[A Data Parallel Compiler Hosted on the GPU](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C26&q=%22A+data+parallel+compiler+hosted+on+the+gpu%22+Aaron+Hsu&btnG=)
-
-[Exploring Things with Dyalog APL](https://asherbhs.github.io/apl-site)
-
-Dev workflow: see **Why is your code so unreadable?**
-
-[Living The Loopless Life: Techniques For Removing Explicit Loops And Recursion, LambdaConf 2024](https://www.youtube.com/watch?v=F1q-ZxXmYbo)
-
-[Essentials of Compilation](https://github.com/IUCompilerCourse/Essentials-of-Compilation)
-
-[The Nano-parsing Architecture: Sane And Portable Parsing For Perverse Environments, LambdaConf 2024](https://www.youtube.com/watch?v=uInwQEMYAP8)
-
-[Nano-parsing: A Data-parallel Architecture for Perverse Parsing Environments, ARRAY 2024](https://youtube.com/watch?v=Ym2TIKgiRkM)
+See the [docs](../docs) directory in the Co-dfns repository. If you are still confused, please contact me so that I can improve the documentation.
 
 **What does the Co-dfns compiler do/buy me?**
 
@@ -82,9 +68,28 @@ The Co-dfns compiler is Free Software, but releasing Co-dfns under terms that ma
 
 Let's not bite the hand that feeds us, and even better, as an open-source community, let's find ways of better making our own food instead of relying on the charity of others to feed us. 
 
-**How do I use the compiler?**
+**Do I need a discrete GPU to use Co-dfns?**
 
-See the [docs](../docs) directory in the Co-dfns repository. If you are still confused, please contact me so that I can improve the documentation.
+No, you can also use it with standard Intel CPUs or anything with OpenCL support. The best performance is still with GPUs, though.
+
+**How do I get started with developing Co-dfns?**
+
+Co-dfns has made the choice to optimize for developer productivity and tight developer collaboration instead of trying to make onboarding a "do it yourself" process. 
+However, you should still be able to learn how the compiler works on your own by reading the code and understanding how things flow together. These might help:
+
+[A Data Parallel Compiler Hosted on the GPU](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C26&q=%22A+data+parallel+compiler+hosted+on+the+gpu%22+Aaron+Hsu&btnG=)
+
+[Exploring Things with Dyalog APL](https://asherbhs.github.io/apl-site)
+
+[Living The Loopless Life: Techniques For Removing Explicit Loops And Recursion, LambdaConf 2024](https://www.youtube.com/watch?v=F1q-ZxXmYbo)
+
+[Essentials of Compilation](https://github.com/IUCompilerCourse/Essentials-of-Compilation)
+
+[The Nano-parsing Architecture: Sane And Portable Parsing For Perverse Environments, LambdaConf 2024](https://www.youtube.com/watch?v=uInwQEMYAP8)
+
+[Nano-parsing: A Data-parallel Architecture for Perverse Parsing Environments, ARRAY 2024](https://youtube.com/watch?v=Ym2TIKgiRkM)
+
+The best way to get started with developing Co-dfns is to reach out via [email](mailto:arcfide@sacrideo.us) with questions or projects you'd like help with getting off the ground. 
 
 **Why is your code so unreadable?**
 
@@ -95,7 +100,3 @@ See [here](https://www.youtube.com/watch?v=gcUWTa16Jc0&feature=youtu.be), and al
 Chances are, you're a programmer if you're saying that:
 
 https://youtu.be/v7Mt0GYHU9A
-
-**Do I need a discrete GPU to use Co-dfns?**
-
-No, you can also use it with standard Intel CPUs or anything with OpenCL support. The best performance is still with GPUs, though.
