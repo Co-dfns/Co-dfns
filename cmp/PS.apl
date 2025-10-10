@@ -362,10 +362,11 @@ PS←{⍺←⊢
 
 	⍝ Add localized dfns/ns bindings to the H-set
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧((t=F)∨(t=T)∧k=0)[r]∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
-	bm←{bm⊣bm[p]∧←⍵}⍣≡bm←t∊A V Z
+	bm←{bm⊣bm[p]∧←⍵}⍣≡bm←(t∊A V Z)∨dm←(t=P)∧n=-sym⍳⊂,'.'
 	zv∧←(0⍪(2>⌿zv⍪0)⌿1⌽n[i]∊-sym⍳,¨'←' '⍠←' '∘←')[+⍀2<⌿0⍪zv←km∧bm[i]]
 	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv]
 	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0 ⋄ _←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
+	zv×←{⍵∧⍵[p]}⍣≡~⊃¯1 0 1∨.⌽⊂dm
 	zv[i]←i←⍸t=T ⋄ lx[i]←i←⍸(t=T)∧k=0
 	i←⍸(t∊F T V)∧zv≠0 ⋄ i←(≠n[i],⍪rf[i])⌿i←i[⍋n[i],r[i],rz[i],⍪end[rz[i]]-pos[i]]
 	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i
@@ -406,7 +407,7 @@ PS←{⍺←⊢
 		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb zv pos end(⊣⍪I)←⊂nj
 
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
-		i←⍸(t=V)∧(zv=0)∧~t[p]∊C H ⋄ fvb←vb[fi←⍸(t∊T F)∧vb≠¯1]
+		i←⍸(t=V)∧(zv=0)∧~t[p]∊C H ⋄ fvb←vb[fi←⍸(vb≠¯1)∧(t=F)∨(t=T)∧k≠0]
 		i x fv⌿⍨←⊂(≢fi)≠fv←fvb⍳x←vb I@{vb[⍵]≠¯1}⍣≡i
 		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[fi][fv]]
 		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
@@ -492,7 +493,7 @@ PS←{⍺←⊢
 		k[z]←nk ⋄ k[zd[i]]←k[i←z⌿⍨(vb[z]≠¯1)∧nk≠0] ⋄ k[v]←k[vb[v]]
 		z za zb zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
-	k[⍸(t∊V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
+	k[⍸(t∊N V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
 
 	⍝ Enclose V+[X;...] in Z nodes for parsing
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
