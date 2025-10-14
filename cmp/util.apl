@@ -11,11 +11,9 @@ assert←{
  Z←∊pos[I]+⍳¨end[I]-pos[I]
 ∇
 
-∇ {Z}←{MSG}SIGNAL N;CR;LF;linestarts;lineof;mkdm;quotelines;en;msg;dmx
+∇ {Z}←{MSG}SIGNAL N;CR;LF;linestarts;mkdm;quotelines;en;msg;dmx
   CR LF←⎕UCS 13 10
   linestarts←⍸1⍪IN∊CR LF
- 
-  lineof←{∊b+⍳¨linestarts[l+1]-b←linestarts[l←linestarts⍸⍵]}
  
   mkdm←{⍺←2
   	line←linestarts⍸⍵

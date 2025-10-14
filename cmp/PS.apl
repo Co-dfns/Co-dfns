@@ -106,10 +106,10 @@ PS←{⍺←⊢
 
 	⍝ Mark trad-fns regions as tm
 	tm←(d=0)∧'∇'=x
-	∨⌿msk←tm∧¯1⌽Z≠t:'∇ MUST BE FIRST ON A LINE'SIGNAL lineof msk⌿pos
-	0≠⊃tm←¯1⌽≠⍀tm:'UNBALANCED TRAD-FNS'SIGNAL lineof pos[⊃⌽⍸2<⌿0⍪tm]
+	∨⌿msk←tm∧¯1⌽Z≠t:'∇ MUST BE FIRST ON A LINE'SIGNAL SELECT ⍸msk
+	0≠⊃tm←¯1⌽≠⍀tm:'UNBALANCED TRAD-FNS'SIGNAL SELECT ⊃⌽⍸2<⌿0⍪tm
 	msk←(1⌽Z≠t)∧(2>⌿tm)⍪0
-	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL lineof msk⌿pos
+	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL SELECT ⍸msk
 	
 	⍝ Flatten trad-fns headers
 	d[⍸msk←∊∨⍀¨(t=Z)⊂2<⌿tm⍪0]←0 ⋄ t[⍸msk∧x∊'{}']←P
@@ -280,8 +280,8 @@ PS←{⍺←⊢
 	t[nsi←⍸1⌽nss]←M ⋄ t[nei←⍸1⌽nse]←-M
 	n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ end[nsi]←end[nei]
 	x←⍸p=⍳≢p ⋄ d←+⍀(t[x]=M)+-t[x]=-M
-	0<⊃⌽d:':NAMESPACE NOT CLOSED'SIGNAL lineof pos[x[⊃⌽⍸(d=⊃⌽d)∧2<⌿0⍪d]]
-	∨⌿0>d:'EXCESSIVE :ENDNAMESPACE'SIGNAL lineof pos[x[⊃⍸d<0]]
+	0<⊃⌽d:':NAMESPACE NOT CLOSED'SIGNAL SELECT x[⊃⌽⍸(d=⊃⌽d)∧2<⌿0⍪d]
+	∨⌿0>d:'EXCESSIVE :ENDNAMESPACE'SIGNAL SELECT x[⊃⍸d<0]
 	p[x]←x[D2P ¯1⌽d]
 	msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
