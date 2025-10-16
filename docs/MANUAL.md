@@ -81,7 +81,6 @@ E    | 1      | ---      | Fun Arr         | Monadic Expression
 E    | 2      | ---      | Arr Fun Arr     | Dyadic Expression
 E    | 4      | ---      | AENV Fun Arr    | Assignment Expression
 E    | 6      | ---      | Arr+            | Bracket Expression ([...])
-F    | 0      | Symbol   | ABCEGNOPV*[H]   | Namespace Module
 F    | 2..15  | ---      | ABEGNPV*        | D-fn
 G    | 0      | ---      | Arr Arr         | Guarded Expression
 H    | 0..2*9 | 65536⊥NM | PV*             | Trad-fn Header NMSARLZXY
@@ -100,6 +99,7 @@ P    | 1      | Symbol   | ---             | Array Primitive
 P    | 2      | Symbol   | ---             | Function Primitive
 P    | 3      | Symbol   | ---             | Mon. Oper. Primitive
 P    | 4      | Symbol   | ---             | Dya. Oper. Primitive
+T    | 0      | Symbol   | ABCEGNOPV*[H]   | Namespace Module
 T    | 1..15  | Symbol   | HABCEGNOPV*     | Trad-fn
 V    | 1      | Symbol   | ---             | Array Variable
 V    | 2      | Symbol   | ---             | Function Variable
