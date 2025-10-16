@@ -6,10 +6,8 @@
 	codfns.Compile 'file.apln'
 	codfns.Exec 'file.apln'
 	]codfns.compile <namespace> <target>
-	(depth type kind name src_start src_end) symbols source←codfns.TK 'line1' 'line2' ...
-        (depth type kind name src_start src_end) symbols source←codfns.TK 'source code ...'
-	(parent depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
-        (parent depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
+	(parent depth type kind name lex varbind src_start src_end) exports symbols source←codfns.PS 'line1' 'line2'
+        (parent depth type kind name lex varbind src_start src_end) exports symbols source←codfns.PS 'source code...'
 
 ## Description
 
@@ -52,16 +50,63 @@ Source  | A character vector of the original parsed source
 
 A parsed AST is an inverted table of nodes containing the following columns. The nodes in the table are ordered according to their depth-first pre-order traversal.
 
-Name  | Description
------ | -----------
-parent| The parent node of the node in the AST. Root nodes are their own parents.
-depth | The depth of the node in the AST. Root nodes are depth 0.
-type  | The type of the node, as an index into the `N∆` constant.
-kind  | The sub-type or kind of the node, as an integer.
-name  | A positive integer referencing another node in the table or a negative index into the symbol table.
-lex   | An indicator of the scope of a given variable/node
-start | The starting index into the source corresponding to this node.
-end   | The exclusive ending index into the source corresponding to this node.
+Name    | Description
+------- | ----------
+parent  | The parent node of the node in the AST. Root nodes are their own parents.
+depth   | The depth of the node in the AST. Root nodes are depth 0.
+type    | The type of the node, as an index into the `N∆` constant.
+kind    | The sub-type or kind of the node, as an integer.
+name    | A positive integer referencing another node in the table or a negative index into the symbol table.
+lex     | An indicator of the scope of a given variable/node
+varbind | The binding site or definition of the current node
+start   | The starting index into the source corresponding to this node.
+end     | The exclusive ending index into the source corresponding to this node.
+
+### Node Types and Kinds
+
+type | kind   | name     | Children        | Description
+---- | ------ | -------- | --------------- | -----------
+A    | 0      | Symbol   | ---             | Niladic APL symbol
+A    | 1      | Symbol   | ---             | Flat Literal; character or number
+A    | 7      | ---      | Arr+            | Stranded array
+B    | 1      | ---      | AV Arr          | Array Binding
+B    | 2      | ---      | V Fun           | Function Binding
+B    | 3      | ---      | V Mop           | Monadic Operator Binding
+B    | 4      | ---      | V Dop           | Dyadic Operator Binding
+C    | 1      | Symbol   | T V*            | Niladic Closure
+C    | 2      | Symbol   | FT{1, 2} V*     | Function Closure
+C    | 3      | Symbol   | FT{2, 4} V*     | Monadic Operator Closure
+C    | 4      | Symbol   | FT{4, 8} V*     | Dyadic Operator Closure
+E    | 1      | ---      | Fun Arr         | Monadic Expression
+E    | 2      | ---      | Arr Fun Arr     | Dyadic Expression
+E    | 4      | ---      | AENV Fun Arr    | Assignment Expression
+E    | 6      | ---      | Arr+            | Bracket Expression ([...])
+F    | 0      | Symbol   | ABCEGNOPV*[H]   | Namespace Module
+F    | 2..15  | ---      | ABEGNPV*        | D-fn
+G    | 0      | ---      | Arr Arr         | Guarded Expression
+H    | 0..2*9 | 65536⊥NM | PV*             | Trad-fn Header NMSARLZXY
+L    | 0      | Symbol   | ---             | Label
+N    | 1      | ---      | Arr Arr         | Array Namespace Reference
+N    | 2      | ---      | Arr Fun         | Function Namespace Reference
+N    | 3      | ---      | Arr Mop         | Mon. Operator Namespace Ref.
+N    | 4      | ---      | Arr Dop         | Dya. Operator Namespace Ref.
+O    | 1      | ---      | Arr Mop         | Monadic Operator Expression
+O    | 2      | ---      | Fun Mop         | Monadic Operator Expression
+O    | 4      | ---      | Arr Dop Arr     | Dyadic Operator Expression
+O    | 5      | ---      | Fun Dop Arr     | Dyadic Operator Expression
+O    | 7      | ---      | Arr Dop Fun     | Dyadic Operator Expression
+O    | 8      | ---      | Fun Dop Fun     | Dyadic Operator Expression
+P    | 1      | Symbol   | ---             | Array Primitive
+P    | 2      | Symbol   | ---             | Function Primitive
+P    | 3      | Symbol   | ---             | Mon. Oper. Primitive
+P    | 4      | Symbol   | ---             | Dya. Oper. Primitive
+T    | 1..15  | Symbol   | HABCEGNOPV*     | Trad-fn
+V    | 1      | Symbol   | ---             | Array Variable
+V    | 2      | Symbol   | ---             | Function Variable
+V    | 3      | Symbol   | ---             | Mon. Oper. Variable
+V    | 4      | Symbol   | ---             | Dya. Oper. Variable
+V    | 5      | Symbol   | ---             | Schizophrenic Variable
+Z    | ¯2     | ---      | *               | Syntax Error
 
 ### Exports/Env structure
 
