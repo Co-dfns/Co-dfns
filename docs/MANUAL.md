@@ -6,7 +6,7 @@
 	codfns.Compile 'file.apln'
 	codfns.Exec 'file.apln'
 	]codfns.compile <namespace> <target>
-	(parent depth type kind name lex varbind src_start src_end) exports symbols source←codfns.PS 'line1' 'line2'
+        (parent depth type kind name lex varbind src_start src_end) exports symbols source←codfns.PS 'line1' 'line2'
         (parent depth type kind name lex varbind src_start src_end) exports symbols source←codfns.PS 'source code...'
 
 ## Description
