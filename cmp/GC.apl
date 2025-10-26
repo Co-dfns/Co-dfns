@@ -39,7 +39,7 @@ GC←{
 	}
 
 	var_scopes←{
-		(0⍴⊂''),'loc->' 'lex->' 'cdf_prim.' '' '' ''[|1+lx[⍵]]
+		(0⍴⊂''),'loc->' 'lex->' 'dyn->' 'cdf_prim.' '' '' ''[|1+lx[⍵]]
 	}
 
 	var_nmvec←{
@@ -51,12 +51,12 @@ GC←{
 
 	decl_vars←{⍺←0
 		0=≢⍵:0⍴⊂''
-		z  ←'' 'extern '[lx[⍵]=¯5]
-		z,¨←'' 'struct cell_'[lx[⍵]≠¯4]
+		z  ←'' 'extern '[lx[⍵]=¯6]
+		z,¨←'' 'struct cell_'[lx[⍵]≠¯5]
 		z,¨←var_ckinds ⍵
-		z,¨←'' '_ptr'[lx[⍵]=¯4]
+		z,¨←'' '_ptr'[lx[⍵]=¯5]
 		z,¨←' ' ' *'[⍺]
-		z,¨←'' '*'[lx[⍵]≠¯4]
+		z,¨←'' '*'[lx[⍵]≠¯5]
 		z,¨←var_names ⍵
 		z,¨';'
 	}
@@ -69,14 +69,14 @@ GC←{
 	}
 
 	var_refs←{
-		z←'&' ''[lx[⍵]=¯2]
+		z←'&' ''[lx[⍵]∊¯2 ¯3]
 		z,¨←(var_scopes,¨var_names)⍵
 		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'z'
 		'(',¨z,¨')'
 	}
 
 	var_values←{
-		z←'' '*'[lx[⍵]=¯2]
+		z←'' '*'[lx[⍵]∊¯2 ¯3]
 		z,¨←(var_scopes,¨var_names)⍵
 		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'(*z)'
 		'(',¨z,¨')'
@@ -102,7 +102,7 @@ GC←{
 	pref,←⊂''
 
 	⍝ We declare all external variables in the prefix
-	pref,←decl_vars ⍸msk∧msk⍀≠n⌿⍨msk←(t=V)∧lx=¯5
+	pref,←decl_vars ⍸msk∧msk⍀≠n⌿⍨msk←(t=V)∧lx=¯6
 	pref,←⊂''
 	
 	⍝ Define all literals as static values

@@ -358,7 +358,7 @@ PS←{⍺←⊢
 	vb←¯1⍴⍨≢p
 
 	⍝ Mark lexical scope of non-variable primitives and trad-fns locals
-	lx←(≢p)⍴¯1 ⋄ lx[⍸t=P]←¯3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←¯4
+	lx←(≢p)⍴¯1 ⋄ lx[⍸t=P]←¯4 ⋄ lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←¯5
 
 	⍝ Add localized dfns/ns bindings to the H-set
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧((t=F)∨(t=T)∧k=0)[r]∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
@@ -372,6 +372,9 @@ PS←{⍺←⊢
 	p⍪←j[p[j←⍸t=H]⍳r[i]] ⋄ t⍪←V⍴⍨≢i ⋄ k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i
 	vb[i[j]]←(p-⍥≢i)+j←⍸t[i]=T
 	vb[p[p]⍳zv[j]]←j←(p-⍥≢i)+⍸zv[i]∊p[⍸(t=C)∧(≠p)∧⌽≠⌽p]
+
+	⍝ Tag all variables as either lexical or dynamic
+	lx[i]←¯3+F=t[r[i←⍸(t[p]≠H)∧(t=V)∧vb=¯1]]
 
 	⍝ Resolve names
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
@@ -388,32 +391,37 @@ PS←{⍺←⊢
 		b←(bi⍪0)[j←bnr⍳n[i],⍪lrf] ⋄ lm←(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
 		j[⍸msk]←bnr⍳n[x←msk⌿i],⍪lr⌿⍨msk←(j=≢bnr)∨fm⍱lm ⋄ b←(bi⍪0)[j]
 		msk←(j≠≢bnr)∧fm∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
-		vb[msk⌿i]←msk⌿b ⋄ i lr⌿⍨←⊂~msk ⋄ lx[i]←¯2@{(t[lr]≠T)∨k[lr]≠0}lx[i]
+		vb[msk⌿i]←msk⌿b ⋄ i lr⌿⍨←⊂~msk
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
-		vb[i]←(j,¯1)[x←(n[j],⍪p[j])⍳n[i],⍪p[lr]] ⋄ i lr⌿⍨←⊂x=≢j
+		vb[i]←(j,¯1)[x←(n[j],lx[j],⍪p[j])⍳n[i],lx[i],⍪p[lr]] ⋄ i lr⌿⍨←⊂x=≢j
 
 		⍝ Bind unresolved variables to new bindings
-		j←(≢p)+⍳≢ui←i⌿⍨msk←≠n[i],⍪lr ⋄ vb[i]←j[(n[ui],⍪lr←msk⌿lr)⍳n[i],⍪lr]
+		msk←≠x←n[i],lr,⍪¯1@{(t[lr]=T)∧k[lr]=0}lx[i]
+		j←(≢p)+⍳≢ui←msk⌿i ⋄ lr⌿⍨←msk ⋄ vb[i]←j[x⍳⍨msk⌿x]
 		
 		⍝ Add namespace bindings to H-set; free variables to C-set
 		i ir←j lr⌿⍨¨⊂msk←(t[lr]=T)∧k[lr]=0
 		np←x[p[x←⍸(t[p]=T)∧(k[p]=0)∧t=H]⍳ir]
-		p r rf rz lx vb⍪←⊂(≢ui)⍴¯1 ⋄ t k n zv pos end(⊣⍪I)←⊂ui
+		p r rf rz vb⍪←⊂(≢ui)⍴¯1 ⋄ t k n lx zv pos end(⊣⍪I)←⊂ui
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
 		
 		⍝ Propagate Free Variables to Dynamic Closures
-		nj np←j i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[j]] ⋄ j⍪←(≢p)+⍳≢nj
+		nj np←dj i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3]]
+		j⍪←(≢p)+⍳≢nj
 		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb zv pos end(⊣⍪I)←⊂nj
 
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
 		i←⍸(t=V)∧(zv=0)∧~t[p]∊C H ⋄ fvb←vb[fi←⍸(vb≠¯1)∧(t=F)∨(t=T)∧k≠0]
 		i x fv⌿⍨←⊂(≢fi)≠fv←fvb⍳x←vb I@{vb[⍵]≠¯1}⍣≡i
-		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧p∊px←p[fi][fv]]
+		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv]]
 		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
-		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n zv pos end(⊣⍪I)←⊂vi ⋄ lx vb⍪←(≢pi)⍴¨¯1 ¯1
+		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n lx zv pos end(⊣⍪I)←⊂vi ⋄ vb⍪←(≢pi)⍴¯1
 		t[i]←C ⋄ k[i]←k[fi[fv]] ⋄ vb[i]←px
 	j⍪uv}⍣≡⍸(t[p]≠H)∧(t=V)∧vb=¯1
+
+	⍝ All local variables are lx=¯1
+	lx[⍸(t=V)∧(t[p]=H)∨t[p[vb⌈0]]=H]←¯1
 
 	⍝ XXX Handle specific known structural forms for assignment/binding
 	⍝ j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
@@ -463,7 +471,7 @@ PS←{⍺←⊢
 	iz←i[∊hk[6;]⌿j+⍳¨zc]
 	id←(hk[5;]⌿hk[4;])⌿1+im←hk[5;]⌿j+zc+hk[7;] ⋄ im←i[im] ⋄ id←i[id]
 	k[iz,iy,ix]←1 ⋄ k[im]←(¯16↑12⍴2⌿1 2)[k[r[im]]] ⋄ k[id]←(¯16↑4⌿1 2)[k[r[id]]]
-	lx[im,id,iz,ix,iy]←¯4
+	lx[im,id,iz,ix,iy]←¯5
 
 	⍝ Error if brackets are not addressing something
 	∨⌿msk←(≠p)∧t=¯1:{
@@ -531,7 +539,7 @@ PS←{⍺←⊢
 		msg←'UNEXPECTED COMPOUND AXIS EXPRESSION'
 		99 msg SIGNAL SELECT {⊃⍺⌿⍨1<≢⍵}⌸i
 	}⍬
-	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←¯3 ⋄ end[i]←1+pos[i]
+	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←¯4 ⋄ end[i]←1+pos[i]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
 	i←⍸t=¯1 ⋄ p←(x←p[i]@i⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
@@ -544,7 +552,7 @@ PS←{⍺←⊢
 		msg SIGNAL SELECT i⌿⍨msk∨¯1⌽msk
 	}⍬
 	vi←i⌿⍨1⌽msk←i∊j ⋄ pi←msk⌿i
-	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←¯5 ⋄ end[vi]←end[pi]
+	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←¯6 ⋄ end[vi]←end[pi]
 	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
 
 	⍝ Group function and value expressions
@@ -611,8 +619,8 @@ PS←{⍺←⊢
 	k[p[i←⍸msk]]←1 ⋄ n[∪pi]←-sym⍳sym∪←(pi←p[i]){⊂⍵}⌸sym[|n[i]]
 	vb I@(≥∘0)⍨←pi@i⍳≢p ⋄ p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂⍸msk
 	
-	⍝ All A1 nodes should be lexical scope 6
-	lx[⍸(t=A)∧k=1]←¯6
+	⍝ All A1 nodes should be lexical scope 7
+	lx[⍸(t=A)∧k=1]←¯7
 
 	⍝ Check for bindings/assignments without targets
 	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
@@ -648,7 +656,7 @@ PS←{⍺←⊢
 	⍝ Rationalize V[X;...] → E2(V, P2([), E6)
 	i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
-	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴¯3 0 ⋄ vb,←nc⍴¯1
+	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴¯4 0 ⋄ vb,←nc⍴¯1
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 	
 	⍝ Check for nested ⍠← forms
