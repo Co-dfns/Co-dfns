@@ -47,6 +47,10 @@ system here:
 
 http://arrayfire.org/docs/installing.htm
 
+Make sure that you have the appropriate paths set for ArrayFire. The 
+ArrayFire installer gives you an option to set these on install, or 
+lets you do this manually. 
+
 ## Loading the compiler
 
 The source code consists of a set of utility functions defined in `ws\` 
@@ -67,6 +71,10 @@ You need to build the runtime for the compiler if you wish to use it.
 
 This will build the runtime in `rtm/` and also copy the necessary distributables 
 to the `tests/` directory so that you can run the test suite.
+
+The runtime distributables must be placed in a location that your operating 
+system will search when looking for shared variables. The assumption Co-dfns 
+generally makes is that the current working directory is in this lookup path. 
 
 By default, the runtime will be linked against the Unifed ArrayFire backend. 
 However, if you wish to select a specific backend, you can provide one of the 
