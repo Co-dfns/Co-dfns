@@ -353,7 +353,7 @@ PS←{⍺←⊢
 	⍝ Enclosing frames and lines for all nodes
 	msk←~t[p]∊F G T ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨rf←I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨p[rz]
-	
+
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p
 
@@ -380,8 +380,8 @@ PS←{⍺←⊢
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Scope variables
-		sm←(t[i-2]=V)∧(t[i-1]=P)∧n[i-1]=-sym⍳⊂,'.'
-		rm←sm∧t[p[dv←vb I@{vb[⍵]≠¯1}⍣≡i-2]]=H
+		sm←(t[0⌈i-2]=V)∧(t[0⌈i-1]=P)∧n[0⌈i-1]=-sym⍳⊂,'.'
+		rm←sm∧t[p[dv←vb I@{vb[⍵]≠¯1}⍣≡0⌈i-2]]=H
 		lx[rm⌿i]←lx[rm⌿dv] ⋄ uv i←⌿∘i¨(sm>rm)(sm≤rm)
 		lr←(lx[i]×msk)+r[i]×~msk←lx[i]≥0 ⋄ lrf←(lx[i]×msk)+rf[i]×~msk
 		t[¯1+msk⌿i]←N
@@ -393,7 +393,8 @@ PS←{⍺←⊢
 		msk←(j≠≢bnr)∧fm∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
 		vb[msk⌿i]←msk⌿b ⋄ i lr⌿⍨←⊂~msk
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
-		vb[i]←(j,¯1)[x←(n[j],lx[j],⍪p[j])⍳n[i],lx[i],⍪p[lr]] ⋄ i lr⌿⍨←⊂x=≢j
+		vb[i]←(j,¯1)[x←(n[j],lx[j],⍪p[j])⍳n[i],lx[i],⍪p[lr]]
+		i lr⌿⍨←⊂(x=≢j)∧t[r][i]≠Z
 
 		⍝ Bind unresolved variables to new bindings
 		msk←≠x←n[i],lr,⍪¯1@{(t[lr]=T)∧k[lr]=0}lx[i]
