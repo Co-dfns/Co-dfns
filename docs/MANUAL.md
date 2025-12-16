@@ -192,6 +192,7 @@ The following limitations are known to exist:
 * Execute (⍎) is not supported
 * Only ⎕NC, ⎕SIGNAL, and ⎕DR are supported Dyalog system functions
 * Objects/Classes are not supported in the system
+* Some ArrayFire backends do not support double precision floats on some hardware platforms
 
 ## Authors
 
