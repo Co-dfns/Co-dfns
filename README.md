@@ -13,12 +13,20 @@ Our mission is to deliver scalable APL programming to information and domain
 experts across many fields, expanding the scope and capabilities of what
 you can effectively accomplish with APL.
 
+## Getting Started
+
+Make sure to read the [installation guide](docs/INSTALL.md) carefully to get
+a clear picture of how to get the compiler installed and avoid common
+pitfalls. There is also an [FAQ](docs/FAQ.md) to cover some of the most 
+common questions that I get about the compiler. 
+
 ## Getting Help
 
 Documentation on Co-dfns can be found in the [docs/](docs/) folder. 
 
 APL and Co-dfns can be a little different at first. I encourage you to contact 
-me (arcfide@sacrideo.us) for any questions you may have regarding either APL or Co-dfns. 
+me (arcfide@sacrideo.us) for any questions you may have regarding 
+either APL or Co-dfns. 
 
 Additionally, if you have general Dyalog APL inquiries, please do not hesitate to 
 email Dyalog's support email: support@dyalog.com.
@@ -26,7 +34,9 @@ email Dyalog's support email: support@dyalog.com.
 ## Contributing and Helping
 
 We are seeking to create an open funding model for Co-dfns research through 
-user and patron contributions. You can support the project by contributing code, feedback, benchmarks, and so forth, but you can also directly support the Co-dfns project by funding the author: 
+user and patron contributions. You can support the project by contributing 
+code, feedback, benchmarks, and so forth, but you can also directly support 
+the Co-dfns project by funding the author: 
 
 https://www.patreon.com/arcfide
 
