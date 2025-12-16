@@ -59,6 +59,8 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[Static Analysis of APL for Tooling and Compliance // DYNA Fall 2025](https://www.youtube.com/watch?v=d4pRvKMcp_g)
+
 [Comparing Parallel Functional Array Languages: Programming and Performance](https://arxiv.org/abs/2505.08906)
 
 [My favorite verbose programming technique - LambdaConf 2025](https://www.youtube.com/watch?v=hkNwku81ehw)
