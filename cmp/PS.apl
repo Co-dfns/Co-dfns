@@ -376,6 +376,12 @@ PS←{⍺←⊢
 	⍝ Tag all variables as either lexical or dynamic
 	lx[i]←¯3+F=t[r[i←⍸(t[p]≠H)∧(t=V)∧vb=¯1]]
 
+	⍝ Type known namespace-assigned variables
+	i←⍸(t=V)∧(≠p)∧1⌽(t=P)∧n∊-sym⍳,¨'←' '∘←'
+	j←⍸(t[p]=Z)∧~(t∊A)∨(t=P)∧n=-sym⍳⊂,'.'
+	j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']
+	k[i⌿⍨p[i]∊p[j]]←1
+
 	⍝ Resolve names
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
 	_←{i←⍵
@@ -406,6 +412,13 @@ PS←{⍺←⊢
 		p r rf rz vb⍪←⊂(≢ui)⍴¯1 ⋄ t k n lx zv pos end(⊣⍪I)←⊂ui
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
+
+		⍝ Add Namespace T0's if a name is namespace-assigned
+		i←∪vb[⍵]⌿⍨(k[⍵]=1)∧((t[p]=H)∧lx<0)[vb[⍵]⌈0]
+		lx,←lx[i]←(≢p)+⍳≢i ⋄ p,←r[i] ⋄ t k⍪←(≢i)⍴¨T 0 ⋄ vb⍪←i
+		n r rf rz zv pos end(⊣⍪I)←⊂i
+		p⍪←r⍪←rf⍪←rz⍪←lx[i] ⋄ t k n lx vb zv⍪←(≢i)⍴¨H 0 0 ¯1 ¯1 0
+		pos end(⊣⍪I)←⊂i
 		
 		⍝ Propagate Free Variables to Dynamic Closures
 		nj np←dj i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3]]
