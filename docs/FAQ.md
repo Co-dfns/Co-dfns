@@ -24,6 +24,14 @@ That depends. Please check out the [limitations](https://github.com/Co-dfns/Co-d
 
 Keep in mind that some code that people write will simply not perform well on a GPU, even if the compiler did compile that code.
 
+**The compiler is complaining about lack of double precision support**
+
+This has to do with the underlying ArrayFire backend support for double precision for your specific hardware. 
+If you get this message, it means that the ArrayFire backend that you are using doesn't support double precision floating points. 
+We are working on a fix for this, but at the moment, the easiest thing to do is to try a different backend.
+We believe that the cuda and cpu backends tend to have full support for double precision floats, while the opencl and oneapi 
+backends seem to be more sensitive to this. 
+
 **How is Co-dfns licensed?**
 
 The Co-dfns compiler, and any objects that are compiled by Co-dfns, are dual-licensed. You can use the compiled objects and the compiler itself in accordance with the terms of the AGPL if that works for you. Additionally, if you have a Dyalog APL license, then you may also use the Co-dfns compiler and objects compiled by the Co-dfns compiler under the terms of your license agreement with Dyalog, as if Co-dfns were an integral component of Dyalog APL.
