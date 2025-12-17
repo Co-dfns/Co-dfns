@@ -377,10 +377,10 @@ PS←{⍺←⊢
 	lx[i]←¯3+F=t[r[i←⍸(t[p]≠H)∧(t=V)∧vb=¯1]]
 
 	⍝ Type known namespace-assigned variables
-	i←⍸(t=V)∧(≠p)∧1⌽(t=P)∧n∊-sym⍳,¨'←' '∘←'
-	j←⍸(t[p]=Z)∧~(t∊A)∨(t=P)∧n=-sym⍳⊂,'.'
-	j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']
-	k[i⌿⍨p[i]∊p[j]]←1
+	gm←(t=P)∧n∊-sym⍳,¨'←' '∘←' ⋄ dm←(t=P)∧n=-sym⍳⊂,'.' ⋄ hv←(t=V)∧≠p
+	j←⍸(t[p]=Z)∧~dm∨t∊A ⋄ j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']
+	i←⍸hv∧1⌽gm ⋄ i⌿⍨←p[i]∊p[j] ⋄ i⍪←⍸hv∧1⌽dm∧1⌽(t=V)∧1⌽gm
+	k[i]←1
 
 	⍝ Resolve names
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
