@@ -436,7 +436,7 @@ PS←{⍺←⊢
 	j⍪uv}⍣≡⍸(t[p]≠H)∧(t=V)∧vb=¯1
 
 	⍝ All local variables are lx=¯1
-	lx[⍸(t=V)∧(t[p]=H)∨t[p[vb⌈0]]=H]←¯1
+	lx[⍸(t=V)∧(lx<0)∧(t[p]=H)∨t[p[vb⌈0]]=H]←¯1
 
 	⍝ XXX Handle specific known structural forms for assignment/binding
 	⍝ j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
