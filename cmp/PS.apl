@@ -405,12 +405,13 @@ PS←{⍺←⊢
 
 		⍝ Bind unresolved variables to new bindings
 		msk←≠x←n[i],lr,⍪¯1@{(t[lr]=T)∧k[lr]=0}lx[i]
-		j←(≢p)+⍳≢ui←msk⌿i ⋄ lr⌿⍨←msk ⋄ vb[i]←j[x⍳⍨msk⌿x]
+		j←(≢p)+⍳≢ui←msk⌿i ⋄ lr⌿⍨←msk ⋄ vb[i]←ij←j[x⍳⍨msk⌿x]
 		
 		⍝ Add namespace bindings to H-set; free variables to C-set
+		k⍪←(≢j)⍴¯1 ⋄ k[ij]⌈←k[i] ⋄ lx⍪←¯1⌊lx[ui]
 		i ir←j lr⌿⍨¨⊂msk←(t[lr]=T)∧k[lr]=0
 		np←x[p[x←⍸(t[p]=T)∧(k[p]=0)∧t=H]⍳ir]
-		p r rf rz vb⍪←⊂(≢ui)⍴¯1 ⋄ t k n lx zv pos end(⊣⍪I)←⊂ui
+		p r rf rz vb⍪←⊂(≢ui)⍴¯1 ⋄ t n zv pos end(⊣⍪I)←⊂ui
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
 
