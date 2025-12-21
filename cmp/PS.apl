@@ -379,7 +379,8 @@ PS←{⍺←⊢
 	⍝ Type known namespace-assigned variables
 	gm←(t=P)∧n∊-sym⍳,¨'←' '∘←' ⋄ dm←(t=P)∧n=-sym⍳⊂,'.' ⋄ hv←(t=V)∧≠p
 	j←⍸(t[p]=Z)∧~dm∨t∊A ⋄ j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']
-	i←⍸hv∧1⌽gm ⋄ i⌿⍨←p[i]∊p[j] ⋄ i⍪←⍸hv∧1⌽dm∧1⌽(t=V)∧1⌽gm
+	i←⍸hv∧1⌽gm ⋄ i⌿⍨←p[i]∊p[j]
+	i⍪←⍸(t=V)∧m2<msk⍀∊(⊆⍨msk)∧(hv⌿⍨2<⌿0⍪msk)∧(1⌽gm)⌿⍨m2←2>⌿0⍪⍨msk←dm∨t=V
 	k[i]←1
 
 	⍝ Resolve names
