@@ -2,6 +2,7 @@
 
  src←⊂':Namespace codfns'
 
+ src,←⊃⎕NGET (root,'/cmp/global.apl') 1
  src,←⊃⎕NGET (root,'/cmp/main.apl') 1
  src,←⊃⎕NGET (root,'/cmp/util.apl') 1
  src,←⊃⎕NGET (root,'/cmp/PS.apl') 1
