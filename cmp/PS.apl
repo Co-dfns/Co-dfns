@@ -500,6 +500,10 @@ PS←{⍺←⊢
 	zp←p[zi←{⍵[⍋p[⍵]]}⍸(t[p]∊N Z)∧(k[p]=0)∧t≠¯1]
 	za←zi⌿⍨≠zp ⋄ zb←zi⌿⍨1⌽msk←⌽≠⌽zp ⋄ zc←msk⌿zi ⋄ z←p[za]
 	zd[i]←vb I@{vb[⍵]≠¯1}⍣≡vb[i←⍸(t=Z)∧vb≠¯1]⊣zd←(≢p)⍴¯1
+	zl←lx[vb[z]⌈0]=¯1 ⋄ zo←(≢p)⍴0
+	zo[zc]←vb[zc]∊∊p[i]{
+		⊂⍵[((2≤4|k[⍺])+((4≤8|k[⍺])>k[⍺]≥256)+⌊n[⍺]÷2*16)+⍳1+16≤32|k[⍺]]
+	}⌸i←⍸(t[p]=H)∧8≤32|k[p]
 	_←{
 		nk←k[zc]×(za=zc)∨t[z]=N
 		nk+←(k[zc])×(nk=0)∧za=vb[zc]
@@ -514,8 +518,11 @@ PS←{⍺←⊢
 			vd←vb I@{vb[⍵]≠¯1}⍣≡vb[vi]
 			_←{dz⊣m2[dz←dz⍪vp⌿⍨vd∊zd[dz←tm[⍵]⌿p[⍵]]]←1}⍣{0=≢⍺}msk⌿zp
 		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
-		k[z]←nk ⋄ k[zd[i]]←k[i←z⌿⍨(vb[z]≠¯1)∧nk≠0] ⋄ k[v]←k[vb[v]]
-		z za zb zc⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
+		opm←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
+		k[z]←nk ⋄ zo[z]∨←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
+		k[zd[i]]←k[i←z⌿⍨msk←(vb[z]≠¯1)∧(nk≠0)∧zl≥zo[z]] ⋄ zo[zd[i]]←zo[i]
+		k[v]←k[vb[v]] ⋄ zo[v]∨←zo[vb[v]]
+		z za zb zc zl⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊N V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
 
