@@ -377,11 +377,11 @@ PS←{⍺←⊢
 	lx[i]←¯3+F=t[r[i←⍸(t[p]≠H)∧(t=V)∧vb=¯1]]
 
 	⍝ Type known namespace-assigned variables
-	gm←(t=P)∧n∊-sym⍳,¨'←' '∘←' ⋄ dm←(t=P)∧n=-sym⍳⊂,'.' ⋄ hv←(t=V)∧≠p
-	j←⍸(t[p]=Z)∧~dm∨t∊A ⋄ j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']
-	i←⍸hv∧1⌽gm ⋄ i⌿⍨←p[i]∊p[j]
-	i⍪←⍸(t=V)∧m2<msk⍀∊(⊆⍨msk)∧(hv⌿⍨2<⌿0⍪msk)∧(1⌽gm)⌿⍨m2←2>⌿0⍪⍨msk←dm∨t=V
-	k[i]←1
+	gm←(t=P)∧n∊-sym⍳,¨'←' '∘←' ⋄ dm←(t=P)∧n=-sym⍳⊂,'.'
+	i←i[⍋p[i←⍸(gm∨⌽≠⌽p)<p∊p[⍸gm]]]
+	j←⍸(t[p]=Z)∧~dm∨t∊A ⋄ j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']	
+	msk←(dm[i]∧1⌽t[i]∊V Z)∨(t[i]∊V Z ¯1)∧(p[i]≠1⌽p[i])∨1⌽dm[i]∨t[i]=¯1
+	k[i⌿⍨(t[i]=V)∧((p[i]∊p[j])∨p[i]=1⌽p[i])∧∊(∧⌿∧⊢)¨msk⊆⍨1+p[i]]←1
 
 	⍝ Resolve names
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
