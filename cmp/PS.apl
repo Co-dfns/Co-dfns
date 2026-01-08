@@ -520,8 +520,9 @@ PS←{⍺←⊢
 		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
 		opm←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
 		k[z]←nk ⋄ zo[z]∨←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
-		k[zd[i]]←k[i←z⌿⍨msk←(vb[z]≠¯1)∧(nk≠0)∧zl≥zo[z]] ⋄ zo[zd[i]]←zo[i]
-		k[v]←k[vb[v]] ⋄ zo[v]∨←zo[vb[v]]
+		i←z⌿⍨(vb[z]≠¯1)∧(nk≠0)∧(zl≥zo[z])∧k[zd[z]⌈0]=0
+		k[zd[i]]←k[i] ⋄ k[v]←k[vb[v]]
+		zo[zd[i]]←zo[i] ⋄ zo[v]∨←zo[vb[v]]
 		z za zb zc zl⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊N V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
