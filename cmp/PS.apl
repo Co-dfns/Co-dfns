@@ -386,9 +386,17 @@ PS←{⍺←⊢
 	⍝ Resolve names
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
 	_←{i←⍵
-		⍝ Scope variables
+		⍝ Identify dotted-scope variables that are resolved
 		sm←(t[0⌈i-2]=V)∧(t[0⌈i-1]=P)∧n[0⌈i-1]=-sym⍳⊂,'.'
 		rm←sm∧t[p[dv←vb I@{vb[⍵]≠¯1}⍣≡0⌈i-2]]=H
+		
+		⍝ Ensure that every dotted namespace references a T0
+		j←∪dv⌿⍨rm∧(k[dv]=1)∧lx[dv]<0 ⋄ lx,←lx[j]←(≢p)+⍳≢j
+		p,←r[j] ⋄ t k vb⍪←(≢j)⍴¨T 0 j ⋄ n r rf rz zv pos end(⊣⍪I)←⊂j
+		p⍪←r⍪←rf⍪←rz⍪←lx[j] ⋄ t k n lx vb zv⍪←(≢j)⍴¨H 0 0 ¯1 ¯1 0
+		pos end(⊣⍪I)←⊂j
+		
+		⍝ Scope variables
 		lx[rm⌿i]←lx[rm⌿dv] ⋄ uv i←⌿∘i¨(sm>rm)(sm≤rm)
 		lr←(lx[i]×msk)+r[i]×~msk←lx[i]≥0 ⋄ lrf←(lx[i]×msk)+rf[i]×~msk
 		t[¯1+msk⌿i]←N
@@ -402,6 +410,9 @@ PS←{⍺←⊢
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],lx[j],⍪p[j])⍳n[i],lx[i],⍪p[lr]]
 		i lr⌿⍨←⊂(x=≢j)∧t[r][i]≠Z
+		
+		⍝ Propagate kind to declaration
+		k[vb[j]]←k[j←⍵⌿⍨(k[⍵]≠0)∧(k[vb[⍵]⌈0]=0)∧vb[⍵]≠¯1]
 
 		⍝ Bind unresolved variables to new bindings
 		msk←≠x←n[i],lr,⍪¯1@{(t[lr]=T)∧k[lr]=0}lx[i]
@@ -415,13 +426,6 @@ PS←{⍺←⊢
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
 
-		⍝ Add Namespace T0's if a name is namespace-assigned
-		i←∪vb[⍵]⌿⍨(k[⍵]=1)∧((t[p]=H)∧lx<0)[vb[⍵]⌈0]
-		lx,←lx[i]←(≢p)+⍳≢i ⋄ p,←r[i] ⋄ t k⍪←(≢i)⍴¨T 0 ⋄ vb⍪←i
-		n r rf rz zv pos end(⊣⍪I)←⊂i
-		p⍪←r⍪←rf⍪←rz⍪←lx[i] ⋄ t k n lx vb zv⍪←(≢i)⍴¨H 0 0 ¯1 ¯1 0
-		pos end(⊣⍪I)←⊂i
-		
 		⍝ Propagate Free Variables to Dynamic Closures
 		nj np←dj i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3]]
 		j⍪←(≢p)+⍳≢nj
