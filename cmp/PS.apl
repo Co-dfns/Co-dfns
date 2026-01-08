@@ -87,7 +87,7 @@ PS←{⍺←⊢
 
 	⍝ Tokenize primitives and atoms
 	t[⍸x∊syna]←A ⋄ t[⍸dm<x∊prms]←P
-	end[i]←end[1+i←⍸dm<⊃'⍠←' '∘←' '∘.'∨.⍷⊂x] ⋄ t[i+1]←0
+	end[i]←end[1+i←⍸dm<⊃'⍠←' '∘←' '∘.' '##'∨.⍷⊂x] ⋄ t[i+1]←0
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⌶'=x ⋄ t[⍸m2<msk]←0
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'∇'=x ⋄ t[⍸m2<msk]←0
 	∨⌿msk←2<end[i]-pos[i←⍸msk∧x='∇']:{
@@ -328,6 +328,7 @@ PS←{⍺←⊢
 	t[i←⍸n∊-sym⍳,¨'⎕⍞']←A ⋄ k[i]←0
 
 	⍝ Unify A1, N, and C tokens to A1 nodes
+	t[⍸(t=A)∧n∊-sym⍳,¨'#' '##']←P
 	t k(⊣@(⍸t∊N C))⍨←A 1
 
 	⍝ Mark binding primitives
