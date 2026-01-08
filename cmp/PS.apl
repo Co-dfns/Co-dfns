@@ -516,7 +516,7 @@ PS←{⍺←⊢
 			m2←(≢p)⍴0 ⋄ tm←(⍳≢p)∊ti←zi⌿⍨msk∨zi∊zc
 			vi←ti⌿⍨(t[ti]=V)∧vb[ti]≠¯1 ⋄ vp←p[vi]
 			vd←vb I@{vb[⍵]≠¯1}⍣≡vb[vi]
-			_←{dz⊣m2[dz←dz⍪vp⌿⍨vd∊zd[dz←tm[⍵]⌿p[⍵]]]←1}⍣{0=≢⍺}msk⌿zp
+			_←{dz⊣m2[dz←dz⍪vp⌿⍨m2[vp]<vd∊zd[dz←tm[⍵]⌿p[⍵]]]←1}⍣{0=≢⍺}msk⌿zp
 		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
 		opm←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
 		k[z]←nk ⋄ zo[z]∨←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
