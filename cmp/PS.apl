@@ -380,16 +380,19 @@ PS←{⍺←⊢
 	⍝ Type known namespace-assigned variables
 	gm←(t=P)∧n∊-sym⍳,¨'←' '∘←' ⋄ dm←(t=P)∧n=-sym⍳⊂,'.'
 	i←i[⍋p[i←⍸(gm∨⌽≠⌽p)<p∊p[⍸gm]]]
-	j←⍸(t[p]=Z)∧~dm∨t∊A ⋄ j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']	
-	msk←(dm[i]∧1⌽t[i]∊V Z)∨(t[i]∊V Z ¯1)∧(p[i]≠1⌽p[i])∨1⌽dm[i]∨t[i]=¯1
+	j←⍸(t[p]=Z)∧~dm∨t∊A ⋄ j←p[j⌿⍨(≠p[j])∧(t[j]=P)∧n[j]=-sym⍳⊂'⎕ns']
+	msk←(t[i]∊V Z)∨(t[i]=P)∧k[i]=1	
+	msk←(dm[i]∧1⌽msk)∨(msk∨t[i]=¯1)∧(p[i]≠1⌽p[i])∨1⌽dm[i]∨t[i]=¯1
 	k[i⌿⍨(t[i]=V)∧((p[i]∊p[j])∨p[i]=1⌽p[i])∧∊(∧⌿∧⊢)¨msk⊆⍨1+p[i]]←1
 
 	⍝ Resolve names
+	vb[i]←p I⍣≡i←⍸(t=P)∧n=-sym⍳⊂,'#'
 	bi←i←⍸t[p]=H ⋄ bnr←n[i],⍪rf[i]
 	_←{i←⍵
 		⍝ Identify dotted-scope variables that are resolved
-		sm←(t[0⌈i-2]=V)∧(t[0⌈i-1]=P)∧n[0⌈i-1]=-sym⍳⊂,'.'
-		rm←sm∧t[p[dv←vb I@{vb[⍵]≠¯1}⍣≡0⌈i-2]]=H
+		sm←(t[j]=V)∨(t[j]=P)∧n[j←0⌈i-2]∊-sym⍳,¨'#' '##' '⎕this'
+		sm∧←(t[j]=P)∧n[j←0⌈i-1]=-sym⍳⊂,'.'
+		rm←sm∧t[p[dv←vb I@{vb[⍵]≠¯1}⍣≡0⌈i-2]]∊H T
 		
 		⍝ Ensure that every dotted namespace references a T0
 		j←∪dv⌿⍨rm∧(k[dv]=1)∧lx[dv]<0 ⋄ lx,←lx[j]←(≢p)+⍳≢j
@@ -401,6 +404,10 @@ PS←{⍺←⊢
 		lx[rm⌿i]←lx[rm⌿dv] ⋄ uv i←⌿∘i¨(sm>rm)(sm≤rm)
 		lr←(lx[i]×msk)+r[i]×~msk←lx[i]≥0 ⋄ lrf←(lx[i]×msk)+rf[i]×~msk
 		t[¯1+msk⌿i]←N
+		
+		⍝ Resolve ## and ⎕THIS
+		vb[msk⌿i]←vb I@{vb[⍵]≠¯1}r I@{n[⍵]=-sym⍳⊂'##'}r I@{(t[⍵]=T)⍲k[⍵]=0}⍣≡lr⌿⍨msk←t[i]=P
+		i lr lrf⌿⍨←⊂t[i]≠P
 
 		⍝ Resolve locals and free variables
 		fm←((t[lr]=T)∧k[lr]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
@@ -411,9 +418,9 @@ PS←{⍺←⊢
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],lx[j],⍪p[j])⍳n[i],lx[i],⍪p[lr]]
 		i lr⌿⍨←⊂(x=≢j)∧t[r][i]≠Z
-		
+
 		⍝ Propagate kind to declaration
-		k[vb[j]]←k[j←⍵⌿⍨(k[⍵]≠0)∧(k[vb[⍵]⌈0]=0)∧vb[⍵]≠¯1]
+		k[vb[j]]←k[j←⍵⌿⍨(k[⍵]≠0)∧(t[vb[⍵]⌈0]=V)∧(k[vb[⍵]⌈0]=0)∧vb[⍵]≠¯1]
 
 		⍝ Bind unresolved variables to new bindings
 		msk←≠x←n[i],lr,⍪¯1@{(t[lr]=T)∧k[lr]=0}lx[i]
@@ -439,7 +446,7 @@ PS←{⍺←⊢
 		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
 		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n lx zv pos end(⊣⍪I)←⊂vi ⋄ vb⍪←(≢pi)⍴¯1
 		t[i]←C ⋄ k[i]←k[fi[fv]] ⋄ vb[i]←px
-	j⍪uv}⍣≡⍸(t[p]≠H)∧(t=V)∧vb=¯1
+	j⍪uv}⍣≡⍸((t[p]≠H)∧(t=V)∧vb=¯1)∨(t=P)∧n∊-sym⍳'##' '⎕this'
 
 	⍝ All local variables are lx=¯1
 	lx[⍸(t=V)∧(lx<0)∧(t[p]=H)∨t[p[vb⌈0]]=H]←¯1
