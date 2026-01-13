@@ -156,6 +156,7 @@ PS←{⍺←⊢
 	KW,←'ENDWITH' 'HOLD' 'ENDHOLD' 'TRAP' 'ENDTRAP' 'GOTO' 'RETURN' 'CONTINUE'
 	KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE' 'CLASS' 'ENDCLASS'
 	KW,←'IMPLEMENTS' 'BASE' 'ACCESS' 'PROPERTY' 'ENDPROPERTY' 'FIELD' 'USING'
+	KW,←⊂'INCLUDE'
 	KW,←':' ''
 	KW,¨⍨←':' ⋄ KW←⎕C KW
 	msk←~KW∊⍨kws←n⌿⍨km←t=K
@@ -236,7 +237,7 @@ PS←{⍺←⊢
 	t[j←⍸(≠p)∧t[p]=T]←H ⋄ p[i]←j[p[j]⍳p[p][i←⍸p∊p[⍸(t[p][p]=T)∧(≠p)∧n=-sym⍳⊂,';']]]
 	∨⌿msk←(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H:'EMPTY RETURN HEADER'SIGNAL SELECT ⍸msk
 	∨⌿msk←(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H:'MISSING SIGNATURE'SIGNAL SELECT ⍸msk
-	msysv←'⎕IO' '⎕ML' '⎕CT' '⎕PP' '⎕PW' '⎕RTL' '⎕FR' '⎕PATH' '⎕RL' '⎕DIV' '⎕TRAP' '⎕USING'
+	msysv←'⎕IO' '⎕ML' '⎕CT' '⎕PP' '⎕PW' '⎕RTL' '⎕FR' '⎕PATH' '⎕RL' '⎕DIV' '⎕TRAP' '⎕USING' '⎕WX'
 	msk←(t[p]=H)∧~(t=V)∨(n∊-sym⍳,¨'←(){};')∨(t=S)∧n∊-sym⍳⎕C¨msysv
 	∨⌿msk:'INVALID TRAD-FNS HEADER TOKEN'SIGNAL SELECT ⍸msk
 	_←p[i]{
