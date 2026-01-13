@@ -436,7 +436,10 @@ PS←{⍺←⊢
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
 
 		⍝ Propagate Free Variables to Dynamic Closures
-		nj np←dj i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3]]
+		⍝ nj np←dj i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3]]
+		i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3] ⋄ dj pj⌿⍨←⊂p[dj]∊vi←vb[i]
+		dj←dj[⍋pj] ⋄ i←i[⍋vi] ⋄ hi hj←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨vi pj
+		nj←dj⌿⍨hj⌿hi ⋄ np←i[∊(+⍀0,¯1↓hi)+hi|⍳¨hj×hi]
 		j⍪←(≢p)+⍳≢nj
 		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb zv pos end(⊣⍪I)←⊂nj
 
@@ -444,6 +447,10 @@ PS←{⍺←⊢
 		i←⍸(t=V)∧(zv=0)∧~t[p]∊C H ⋄ fvb←vb[fi←⍸(vb≠¯1)∧(t=F)∨(t=T)∧k≠0]
 		i x fv⌿⍨←⊂(≢fi)≠fv←fvb⍳x←vb I@{vb[⍵]≠¯1}⍣≡i
 		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv]]
+		⍝ vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv] ⋄ px⌿⍨←msk←px∊pv←p[vs]
+		⍝ px←px[⍋px] ⋄ vs←vs[⍋pv] ⋄ hv hx←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨pv px
+		⍝ pi←(msk⌿i)⌿⍨hx⌿hv ⋄ vi←vs[∊(+⍀0,¯1↓hv)+hv|⍳¨hx×hv]
+		⍝ ∘∘∘
 		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
 		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n lx zv pos end(⊣⍪I)←⊂vi ⋄ vb⍪←(≢pi)⍴¯1
 		t[i]←C ⋄ k[i]←k[fi[fv]] ⋄ vb[i]←px
