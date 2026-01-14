@@ -394,22 +394,28 @@ PS←{⍺←⊢
 		sm←(t[j]=V)∨(t[j]=P)∧n[j←0⌈i-2]∊-sym⍳,¨'#' '##' '⎕this'
 		sm∧←(t[j]=P)∧n[j←0⌈i-1]=-sym⍳⊂,'.'
 		rm←sm∧t[p[dv←vb I@{vb[⍵]≠¯1}⍣≡0⌈i-2]]∊H T
-		
+		⍞←'Id '
+
 		⍝ Ensure that every dotted namespace references a T0
 		j←∪dv⌿⍨rm∧(k[dv]=1)∧lx[dv]<0 ⋄ lx,←lx[j]←(≢p)+⍳≢j
-		p,←r[j] ⋄ t k vb⍪←(≢j)⍴¨T 0 j ⋄ n r rf rz zv pos end(⊣⍪I)←⊂j
-		p⍪←r⍪←rf⍪←rz⍪←lx[j] ⋄ t k n lx vb zv⍪←(≢j)⍴¨H 0 0 ¯1 ¯1 0
-		pos end(⊣⍪I)←⊂j
+		p,←r[j] ⋄ t,←(≢j)⍴T ⋄ k,←(≢j)⍴0 ⋄ vb,←j ⋄ n,←n[j]
+		r,←r[j] ⋄ rf,←rf[j] ⋄ rz,←rz[j] ⋄ zv,←zv[j] 
+		pos,←pos[j] ⋄ end,←end[j]
+		p⍪←r⍪←rf⍪←rz⍪←lx[j] ⋄ t,←(≢j)⍴H ⋄ k,←(≢j)⍴0 ⋄ n,←(≢j)⍴0
+		lx,←(≢j)⍴¯1 ⋄ vb,←(≢j)⍴¯1 ⋄ zv,←(≢j)⍴0
+		pos,←pos[j] ⋄ end,←end[j]
 		
 		⍝ Scope variables
 		lx[rm⌿i]←lx[rm⌿dv] ⋄ uv i←⌿∘i¨(sm>rm)(sm≤rm)
 		lr←(lx[i]×msk)+r[i]×~msk←lx[i]≥0 ⋄ lrf←(lx[i]×msk)+rf[i]×~msk
 		t[¯1+msk⌿i]←N
-		
+		⍞←'Scope '
+				
 		⍝ Resolve ## and ⎕THIS
 		vb[msk⌿i]←vb I@{vb[⍵]≠¯1}r I@{n[⍵]=-sym⍳⊂'##'}r I@{(t[⍵]=T)⍲k[⍵]=0}⍣≡lr⌿⍨msk←t[i]=P
 		i lr lrf⌿⍨←⊂t[i]≠P
-
+		⍞←'## '
+		
 		⍝ Resolve locals and free variables
 		fm←((t[lr]=T)∧k[lr]=0)∨(t[x]=C)∧vb[x←p[i]]=¯1
 		b←(bi⍪0)[j←bnr⍳n[i],⍪lrf] ⋄ lm←(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
@@ -419,43 +425,57 @@ PS←{⍺←⊢
 		j←⍸(t[p]=C)∧(vb[p]=¯1)∧t=V
 		vb[i]←(j,¯1)[x←(n[j],lx[j],⍪p[j])⍳n[i],lx[i],⍪p[lr]]
 		i lr⌿⍨←⊂(x=≢j)∧t[r][i]≠Z
-
+		⍞←'Local '
+		
 		⍝ Propagate kind to declaration
 		k[vb[j]]←k[j←⍵⌿⍨(k[⍵]≠0)∧(t[vb[⍵]⌈0]=V)∧(k[vb[⍵]⌈0]=0)∧vb[⍵]≠¯1]
-
+		⍞←'Kind '
+		
 		⍝ Bind unresolved variables to new bindings
 		msk←≠x←n[i],lr,⍪¯1@{(t[lr]=T)∧k[lr]=0}lx[i]
 		j←(≢p)+⍳≢ui←msk⌿i ⋄ lr⌿⍨←msk ⋄ vb[i]←ij←j[x⍳⍨msk⌿x]
+		⍞←'Unres '
 		
 		⍝ Add namespace bindings to H-set; free variables to C-set
 		k⍪←(≢j)⍴¯1 ⋄ k[ij]⌈←k[i] ⋄ lx⍪←¯1⌊lx[ui]
 		i ir←j lr⌿⍨¨⊂msk←(t[lr]=T)∧k[lr]=0
 		np←x[p[x←⍸(t[p]=T)∧(k[p]=0)∧t=H]⍳ir]
-		p r rf rz vb⍪←⊂(≢ui)⍴¯1 ⋄ t n zv pos end(⊣⍪I)←⊂ui
+		p,←x←(≢ui)⍴¯1 ⋄ r,←x ⋄ rf,←x ⋄ rz,←x ⋄ vb,←x
+		t,←t[ui] ⋄ n,←n[ui] ⋄ zv,←zv[ui] ⋄ pos,←pos[ui] ⋄ end,←end[ui]
 		p[i]←np ⋄ bnr⍪←n[i],⍪r[i]←rz[i]←ir ⋄ bi⍪←i ⋄ j ui⌿⍨←⊂~msk
 		p[j]←x←p[r[ui]] ⋄ r rf rz(I⊣@j⊣)←⊂x
-
+		⍞←'Add '
+		
 		⍝ Propagate Free Variables to Dynamic Closures
 		⍝ nj np←dj i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3]]
 		i←⍸(t=C)∧vb∊p[dj←j⌿⍨lx[j]=¯3]
 		dj⌿⍨←p[dj]∊vb[i] ⋄ dj←dj[⍋p[dj]] ⋄ i←i[⍋vb[i]]
 		hi hj←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨(vb[i])(p[dj])
 		nj←dj⌿⍨hj⌿hi ⋄ np←i[∊(+⍀0,¯1↓hi)+hi|⍳¨hj×hi]
-		j⍪←(≢p)+⍳≢nj
-		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb zv pos end(⊣⍪I)←⊂nj
-
+		j,←(≢p)+⍳≢nj
+		p,←np ⋄ r,←r[np] ⋄ rf,←rf[np] ⋄ rz,←rz[np]
+		t,←t[nj] ⋄ k,←k[nj] ⋄ n,←n[nj] ⋄ lx,←lx[nj] ⋄ vb,←vb[nj]
+		zv,←zv[nj] ⋄ pos,←pos[nj] ⋄ end,←end[nj]
+		⍞←'Free '
+		
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
 		i←⍸(t=V)∧(zv=0)∧~t[p]∊C H ⋄ fvb←vb[fi←⍸(vb≠¯1)∧(t=F)∨(t=T)∧k≠0]
 		i x fv⌿⍨←⊂(≢fi)≠fv←fvb⍳x←vb I@{vb[⍵]≠¯1}⍣≡i
 		⍝ pi_ vi_←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv]]
 		vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv]
-		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i
+		p,←i ⋄ t,←t[i] ⋄ k,←k[i] ⋄ n,←n[i] ⋄ r,←r[i] ⋄ rf,←rf[i]
+		rz,←rz[i] ⋄ lx,←lx[i] ⋄ vb,←vb[i] ⋄ zv,←zv[i]
+		pos,←pos[i] ⋄ end,←end[i]
 		t[i]←C ⋄ k[i]←k[fi[fv]] ⋄ vb[i]←px
 		i px⌿⍨←⊂px∊p[vs] ⋄ i px I∘⊢←⊂⍋px ⋄ vs←vs[⍋p[vs]]
 		hv hx←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨p[vs] px
 		i←i⌿⍨hx⌿hv ⋄ vi←vs[∊(+⍀0,¯1↓hv)+hv|⍳¨hx×hv]
-		j⍪←(≢p)+⍳≢i
-		p⍪←i ⋄ r rf rz(⊣⍪I)←⊂i ⋄ t k n lx zv pos end(⊣⍪I)←⊂vi ⋄ vb⍪←(≢i)⍴¯1
+		j,←(≢p)+⍳≢i ⋄ p,←i ⋄ r,←r[i] ⋄ rf,←rf[i] ⋄ rz,←rz[i] 
+		t,←t[vi] ⋄ k,←k[vi] ⋄ n,←n[vi] ⋄ lx,←lx[vi] ⋄ zv,←zv[vi]
+		pos,←pos[vi] ⋄ end,←end[vi] ⋄ vb,←(≢i)⍴¯1
+		⍞←'Defs '
+		
+		⎕←≢¨⍵ j uv
 	j⍪uv}⍣≡⍸((t[p]≠H)∧(t=V)∧vb=¯1)∨(t=P)∧n∊-sym⍳'##' '⎕this'
 
 	⍝ All local variables are lx=¯1
