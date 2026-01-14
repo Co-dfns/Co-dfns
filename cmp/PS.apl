@@ -437,8 +437,9 @@ PS←{⍺←⊢
 
 		⍝ Propagate Free Variables to Dynamic Closures
 		⍝ nj np←dj i I¨↓⍉↑⍸pj∘.=vb[i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3]]
-		i←⍸(t=C)∧vb∊pj←p[dj←j⌿⍨lx[j]=¯3] ⋄ dj pj⌿⍨←⊂p[dj]∊vi←vb[i]
-		dj←dj[⍋pj] ⋄ i←i[⍋vi] ⋄ hi hj←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨vi pj
+		i←⍸(t=C)∧vb∊p[dj←j⌿⍨lx[j]=¯3]
+		dj⌿⍨←p[dj]∊vb[i] ⋄ dj←dj[⍋p[dj]] ⋄ i←i[⍋vb[i]]
+		hi hj←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨(vb[i])(p[dj])
 		nj←dj⌿⍨hj⌿hi ⋄ np←i[∊(+⍀0,¯1↓hi)+hi|⍳¨hj×hi]
 		j⍪←(≢p)+⍳≢nj
 		p⍪←np ⋄ r rf rz(⊣⍪I)←⊂np ⋄ t k n lx vb zv pos end(⊣⍪I)←⊂nj
@@ -446,14 +447,15 @@ PS←{⍺←⊢
 		⍝ Propagate Definition Closures to new Dynamic Call Sites
 		i←⍸(t=V)∧(zv=0)∧~t[p]∊C H ⋄ fvb←vb[fi←⍸(vb≠¯1)∧(t=F)∨(t=T)∧k≠0]
 		i x fv⌿⍨←⊂(≢fi)≠fv←fvb⍳x←vb I@{vb[⍵]≠¯1}⍣≡i
-		pi vi←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv]]
-		⍝ vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv] ⋄ px⌿⍨←msk←px∊pv←p[vs]
-		⍝ px←px[⍋px] ⋄ vs←vs[⍋pv] ⋄ hv hx←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨pv px
-		⍝ pi←(msk⌿i)⌿⍨hx⌿hv ⋄ vi←vs[∊(+⍀0,¯1↓hv)+hv|⍳¨hx×hv]
-		⍝ ∘∘∘
-		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i ⋄ j⍪←(≢p)+⍳≢pi
-		p⍪←pi ⋄ r rf rz(⊣⍪I)←⊂pi ⋄ t k n lx zv pos end(⊣⍪I)←⊂vi ⋄ vb⍪←(≢pi)⍴¯1
+		⍝ pi_ vi_←i vs I¨↓⍉↑⍸px∘.=p[vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv]]
+		vs←⍸(t=V)∧(lx=¯3)∧p∊px←p[fi][fv]
+		p⍪←i ⋄ t k n r rf rz lx vb zv pos end(⊣⍪I)←⊂i
 		t[i]←C ⋄ k[i]←k[fi[fv]] ⋄ vb[i]←px
+		i px⌿⍨←⊂px∊p[vs] ⋄ i px I∘⊢←⊂⍋px ⋄ vs←vs[⍋p[vs]]
+		hv hx←{0=≢⍵:⍬ ⋄ +⍀⍣¯1⊢(1,⍨2≠/⍵)⌿1+⍳≢⍵}¨p[vs] px
+		i←i⌿⍨hx⌿hv ⋄ vi←vs[∊(+⍀0,¯1↓hv)+hv|⍳¨hx×hv]
+		j⍪←(≢p)+⍳≢i
+		p⍪←i ⋄ r rf rz(⊣⍪I)←⊂i ⋄ t k n lx zv pos end(⊣⍪I)←⊂vi ⋄ vb⍪←(≢i)⍴¯1
 	j⍪uv}⍣≡⍸((t[p]≠H)∧(t=V)∧vb=¯1)∨(t=P)∧n∊-sym⍳'##' '⎕this'
 
 	⍝ All local variables are lx=¯1
