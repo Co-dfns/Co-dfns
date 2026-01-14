@@ -629,10 +629,10 @@ PS←{⍺←⊢
 	dm←(¯1⌽(k[i]=4)∧t[i]∊C N P V Z)∧km∧~k[i]∊0 3 4
 	
 	⍝ Refine schizophrenic types
-	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽(~km)∨(~dm)∧k[i]∊¯1 0 1 6 7]←2 ⋄ k[i⌿⍨k[i]=5]←3
+	jm←(t[i]=P)∧n[i]∊-sym⍳⊂,'∘.'
+	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽jm∨(~km)∨(~dm)∧k[i]∊¯1 0 1 6 7]←2 ⋄ k[i⌿⍨k[i]=5]←3
 
 	⍝ Mask and verify monadic and dyadic operator left operands
-	jm←(t[i]=P)∧n[i]∊-sym⍳⊂,'∘.'
 	∨⌿msk←jm∧1⌽(~km)∨k[i]∊3 4:{
 		'MISSING OPERAND TO ∘.'SIGNAL SELECT msk⌿i
 	}⍬
