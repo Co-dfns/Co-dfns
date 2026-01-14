@@ -589,7 +589,7 @@ PS←{⍺←⊢
 	_←p[i]{
 		⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX' SIGNAL SELECT ⍵
 		k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
-	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
+	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2 5
 	
 	⍝ Parse strands/plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸(t[p]=Z)∨(t[p]=¯1)∧k[p]=4
@@ -622,7 +622,7 @@ PS←{⍺←⊢
 	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
 
 	⍝ Group function and value expressions
-	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2]]
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2 5]]
 	km←((-≢x)↑(≢pi)⍴1)[x]
 	
 	⍝ Mask dyadic operator right operands
