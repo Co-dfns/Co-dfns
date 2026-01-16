@@ -622,7 +622,7 @@ PS←{⍺←⊢
 	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
 
 	⍝ Group function and value expressions
-	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2 5]]
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2]]
 	km←((-≢x)↑(≢pi)⍴1)[x]
 	
 	⍝ Mask dyadic operator right operands
