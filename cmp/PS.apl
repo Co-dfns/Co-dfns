@@ -543,7 +543,7 @@ PS←{⍺←⊢
 	za←zi⌿⍨≠zp ⋄ zb←zi⌿⍨1⌽msk←⌽≠⌽zp ⋄ zc←msk⌿zi ⋄ z←p[za]
 	zd[i]←vb I@{vb[⍵]≠¯1}⍣≡vb[i←⍸(t=Z)∧vb≠¯1]⊣zd←(≢p)⍴¯1
 	zl←lx[vb[z]⌈0]=¯1 ⋄ zo←(≢p)⍴0
-	zo[zc]←vb[zc]∊∊p[i]{
+	zo[zc]←vb[zc]∊∊p[i]{0=≢⍵:⊂⍬
 		⊂⍵[((2≤4|k[⍺])+((4≤8|k[⍺])>k[⍺]≥256)+⌊n[⍺]÷2*16)+⍳1+16≤32|k[⍺]]
 	}⌸i←⍸(t[p]=H)∧8≤32|k[p]
 	_←{
