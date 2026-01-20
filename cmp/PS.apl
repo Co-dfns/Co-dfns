@@ -398,12 +398,9 @@ PS←{⍺←⊢
 
 		⍝ Ensure that every dotted namespace references a T0
 		j←∪dv⌿⍨rm∧(k[dv]=1)∧lx[dv]<0 ⋄ lx,←lx[j]←(≢p)+⍳≢j
-		p,←r[j] ⋄ t,←(≢j)⍴T ⋄ k,←(≢j)⍴0 ⋄ vb,←j ⋄ n,←n[j]
-		r,←r[j] ⋄ rf,←rf[j] ⋄ rz,←rz[j] ⋄ zv,←zv[j] 
-		pos,←pos[j] ⋄ end,←end[j]
-		p⍪←r⍪←rf⍪←rz⍪←lx[j] ⋄ t,←(≢j)⍴H ⋄ k,←(≢j)⍴0 ⋄ n,←(≢j)⍴0
-		lx,←(≢j)⍴¯1 ⋄ vb,←(≢j)⍴¯1 ⋄ zv,←(≢j)⍴0
-		pos,←pos[j] ⋄ end,←end[j]
+		p,←r[j] ⋄ t k vb⍪←(≢j)⍴¨T 0 j ⋄ n r rf rz zv pos end(⊣⍪I)←⊂j
+		p⍪←r⍪←rf⍪←rz⍪←lx[j] ⋄ t k n lx vb zv⍪←(≢j)⍴¨H 0 0 ¯1 ¯1 0
+		pos end(⊣⍪I)←⊂j
 		
 		⍝ Scope variables
 		lx[rm⌿i]←lx[rm⌿dv] ⋄ uv i←⌿∘i¨(sm>rm)(sm≤rm)
