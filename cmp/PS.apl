@@ -347,9 +347,7 @@ PS←{⍺←⊢
 	t k n pos end,←(≢nz)⍴¨Z 0 0(1+pos[bi])(end[p[bi]])
 	p[km⌿i]←np[¯1+km⌿+⍀¯1⌽bp[i]∨~km]
 
-	⍝ Enclose definitions in closures; add H node to each F and T0 node
-	i←⍸(t=F)∨(t=T)∧k≠0 ⋄ p[j]←(((≢p)+⍳≢i)@i⊢⍳≢p)[p[j←⍸p≠⍳≢p]]
-	p⍪←i ⋄ t k n pos end(⊣⍪I)←⊂i ⋄ t[i]←C
+	⍝ Add H node to each F and T0 node
 	i←⍸(t=F)∨(t∊T)∧k=0 ⋄ p⍪←i ⋄ t n k⍪←(≢i)⍴¨H 0 0 ⋄ pos⍪←pos[i] ⋄ end⍪←pos[i]+1
 	
 	⍝ Enclosing frames and lines for all nodes
@@ -495,6 +493,11 @@ PS←{⍺←⊢
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←i⌿⍨msk←t[i]=N
 	p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk ⋄ p[i⌿⍨¯1⌽msk]←j ⋄ p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)>¯1⌽msk
 	k[j]←k[i⌿⍨¯1⌽msk]
+	
+	⍝ Enclose definitions in closures
+	i←⍸(t=F)∨(t=T)∧k≠0 ⋄ np←((≢p)+⍳≢i)@i⊢⍳≢p
+	p[j]←np[p[j←⍸p≠⍳≢p]] ⋄ r←np[r]
+	p⍪←i ⋄ t k n r vb lx pos end(⊣⍪I)←⊂i ⋄ t[i]←C
 
 	⍝ Specialize functions to specific formal binding types
 	rc←(≢p)⍴1 ⋄ isa isd←⊣@p⍨¨↓(⊂3 7)⌷(9⍴2)⊤k
