@@ -552,7 +552,7 @@ PS←{⍺←⊢
 		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
 		opm←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
 		k[z]←nk ⋄ zo[z]∨←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
-		i←z⌿⍨(vb[z]≠¯1)∧(nk≠0)∧(zl≥zo[z])∧k[zd[z]⌈0]=0
+		i←z⌿⍨(vb[z]≠¯1)∧(zl≥zo[z])∧(k[zd[z]⌈0]=0)∧(nk>1)∨(nk=1)∧(≠p)[0⌈vb[z]]
 		k[zd[i]]←k[i] ⋄ k[v]←k[vb[v]]
 		zo[zd[i]]←zo[i] ⋄ zo[v]∨←zo[vb[v]]
 		z za zb zc zl⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
