@@ -574,7 +574,7 @@ PS←{⍺←⊢
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂k[i]≥2
 	p[(jt←i[j-1]),jv←i[j+1]]←,⍨ij←i[j] ⋄ t[ij]←B ⋄ k[ij]←k[jv] ⋄ lx[ij]←lx[jt]
 	pos[ij]←pos[jt] ⋄ end[ij]←end[jv]
-	
+
 	⍝ Mark F[X] forms with k=4
 	_←p[i]{
 		⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX' SIGNAL SELECT ⍵
