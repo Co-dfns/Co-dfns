@@ -478,18 +478,6 @@ PS←{⍺←⊢
 	⍝ All local variables are lx=¯1
 	lx[⍸(t=V)∧(lx<0)∧(t[p]=H)∨t[p[vb⌈0]]=H]←¯1
 
-	⍝ XXX Handle specific known structural forms for assignment/binding
-	⍝ j←(jh⍪j)[x←⍋(jh←∪pi)⍪pi←p[j←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
-	⍝ tm←(1⌽tm)∨tm←((1⌽tm)∧t[j]=¯1)∨tm←(1⌽tm)∨tm←¯1⌽(t[j]=P)∧n[j]=-sym⍳⊂,'.'
-	⍝ tm∨←(t[j]∊V Z)∧jt∨(¯1⌽~km)∨1⌽(t[j]=¯1)∧jt←j∊bt
-	⍝ m2←(~km)∨(0⍪msk⌿¯1⌽~km)[+⍀msk←2<⌿0⍪m2←km∧(t[j]=P)∨(t[j]=A)∧k[j]=1]
-	⍝ tm∧←(0⍪msk⌿¯1⌽m2)[+⍀msk←2<⌿0⍪tm]
-	⍝ vb[bi←msk⌿bt]←nz⌿⍨msk←bt∊tm⌿j ⋄ i~←bi
-	⍝ bm←bm∨(km∧(t[j]=¯1)∨(t[j]∊F P)∧k[j]∊3 5)∧1⌽bm←km∧n[j]=-sym⍳⊂,'←'
-	⍝ bm←(km∧t[j]∊V Z)∧(2⌽bm)∧(1⌽km∧(k[j]=2)∧t[j]∊F P)∨tm∧1⌽km∧(t[j]=¯1)∨(k[j]=5)∧t[j]∊F P
-	⍝ x←j⌿⍨bm∨(p[j]∊j⌿⍨msk←bm∨j∊bi)∧m2←km∧(t[j]=V)∧(1⌽~km)∨1⌽km∧(t[j]=¯1)∧1⌽~km
-	⍝ k[x]←1 ⋄ vb[x]←x ⋄ i~←x
-	⍝ k[x←j⌿⍨tm∧(~msk)∧(0⍪(msk←2>⌿tm⍪0)⌿msk)[+⍀2<⌿0⍪tm]]←1 ⋄ k[j⌿⍨m2∧p[j]∊x]←1
 
 	⍝ Parse Namespace References as Nk(Nk(...), E)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←i⌿⍨msk←t[i]=N
