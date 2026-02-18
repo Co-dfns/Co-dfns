@@ -432,22 +432,19 @@ PS←{⍺←⊢
 		cgc←r[x] ⋄ cgo←x[vb[x←⍸t∊T F]⍳vb[x]]
 		_←{0=≢cgc,←r[cgo,←cgc⌿⍨(vb[cgc]=¯1)∧(~cgc∊cgo)∧k[r[cgc]]≠0]}⍣⊣0
 		cgc[j]←x[vb[x]⍳vb[cgc][j←⍸vb[cgc]≠¯1]]
-		cgo cgc⌿⍨←⊂cgo≠cgc ⋄ cgo cgc I∘⊢←⊂⍋cgo
-		cgo∪←∪cgc ⋄ cgc←cgo⍳cgc ⋄ cgc,←¯1⍴⍨cgo-⍥≢cgc ⋄ cgo cgc,←¯1
-		cgu←∪cgo ⋄ cgi←cgu⍳cgo
-		cgm←(2⍴≢cgu)⍴0 ⋄ cgm[(msk⌿cgi),¨cgi[cgc⌿⍨msk←cgc≠¯1]]←1
+		cgo cgc⌿⍨←⊂cgo≠cgc
+		cgs←(≢cgu←∪cgo,cgc)⍴⊂⍬ ⋄ cgs[cgu⍳cgo],←cgu⍳cgc
 
 		⍝ Resolve frees dynamically
 		j jr←i(r I@{t[⍵]≠T}⍣≡r[i]) ⋄ jr←x[vb[x←⍸t=T]⍳vb[jr]]
 		j jr⌿⍨←⊂(k[jr]≠0)∧(lx[j]<0)∧(jr∊cgo)∧n[j]∊n[bi] ⋄ dj dr←j jr
 		j jr⌿⍨←⊂≠n[j],⍪jr ⋄ dr←j[(n[j],⍪jr)⍳n[dj],⍪dr]
-		jm←jr{⊂⍵}⌸j ⋄ vr←cgm[cgu⍳∪jr;] ⋄ jm vr⌿⍨←⊂∨/vr
+		j←jr{⊂⍵}⌸j ⋄ vr←cgs[cgu⍳∪jr] ⋄ j vr⌿⍨←⊂0≠≢¨vr
 		_←{
-			vr∨←fr←vr<⍵∨.∧cgm
-			vr fr jm⌿⍨←⊂0≠≢¨jm∘←fr{j←⊃⍵
-				0=≢cr←⍺⌿cgu:⊂⍬
-				⊂j⌿⍨¯1=vb[j]←(bi,¯1)[⌊/(≢¨j cr)⍴bnr⍳↑,n[j]∘.,cr]
-			}⍤¯1⊢jm
+			vr,¨←fr←vr{(∪∊cgs[⍵])~∊⍺}¨⍵
+			vr fr j⌿⍨←⊂0≠≢¨j∘←fr{0=≢⍺:⍬
+				⍵⌿⍨¯1=vb[⍵]←(bi,¯1)[⌊/(≢¨⍵ ⍺)⍴bnr⍳↑,n[⍵]∘.,cgu[⍺]]
+			}¨j
 		fr}⍣{0=≢⍺}vr
 		vb[dj]←vb[dr]
 		⍞←' D:',⍕vb[i]+.≠¯1
