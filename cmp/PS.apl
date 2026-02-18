@@ -207,7 +207,7 @@ PS←{⍺←⊢
 	k[⍸n∊⊂'⌶⌶⌶⌶']←¯1
 
 	⍝ Convert n field to symbols and add a symbol table
-	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
+	sym←1500⌶∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
 	n←-sym⍳n
 
 	⍝ Compute parent vector from d
