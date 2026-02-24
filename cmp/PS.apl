@@ -543,6 +543,11 @@ PS←{⍺←⊢
 		z za zb zc zl⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
 	v z}⍣≡⍬
 	k[⍸(t∊N V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
+	
+	⍝ Catch missing namespace references → Nk(Nk(...), E)
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←i⌿⍨msk←(t[i]=P)∧(n[i]=dot)∧¯1⌽k[i]=1
+	p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk ⋄ p[i⌿⍨¯1⌽msk]←j ⋄ p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)>¯1⌽msk
+	t[j]←N ⋄ k[j]←k[i⌿⍨¯1⌽msk]
 
 	⍝ Enclose V+[X;...] in Z nodes for parsing
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
