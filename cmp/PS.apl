@@ -520,14 +520,15 @@ PS←{⍺←⊢
 	zo[zc]←vb[zc]∊∊p[i]{0=≢⍵:⊂⍬
 		⊂⍵[((2≤4|k[⍺])+((4≤8|k[⍺])>k[⍺]≥256)+⌊n[⍺]÷2*16)+⍳1+16≤32|k[⍺]]
 	}⌸i←⍸(t[p]=H)∧8≤32|k[p]
+	dot←-sym⍳⊂,'.'
 	_←{
 		nk←k[zc]×(za=zc)∨t[z]=N
 		nk+←(k[zc])×(nk=0)∧za=vb[zc]
 		nk+←3×(nk=0)∧(k[za]∊3 4)∧n[za]≠-sym⍳⊂,'∘.'
 		nk+←(|k[zc])×(nk=0)∧k[zc]∊¯3 ¯4
-		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨4=|k[zb]
+		nk+←2×(nk=0)∧(k[zc]∊2 3 5)∨(4=|k[zb])∧n[zb]≠dot
 		nk+←2×{zp zi←zp zi⌿⍨¨⊂zp∊z
-			msk←(k[zi]=4)∧⌽∘≠∘⌽U((~k[zi]∊0 1)⌿⊢)zp
+			msk←(k[zi]=4)∧(n[zi]≠dot)∧⌽∘≠∘⌽U((~k[zi]∊0 1)⌿⊢)zp
 			msk<←≠⍀(⊢∨0⍪¯1↓⊢)U((msk∨≠zp)⌿⊢)msk
 			m2←(≢p)⍴0 ⋄ tm←(⍳≢p)∊ti←zi⌿⍨msk∨zi∊zc
 			vi←ti⌿⍨(t[ti]=V)∧vb[ti]≠¯1 ⋄ vp←p[vi]
