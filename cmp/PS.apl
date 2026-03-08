@@ -551,7 +551,7 @@ PS←{⍺←⊢
 
 	⍝ Enclose V+[X;...] in Z nodes for parsing
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
-	msk←km∧(t[i]∊A)∨((t[i]∊P V Z)∧k[i]=1)∨(t[i]=P)∧n[i]=-sym⍳⊂,'.'
+	msk←km∧(t[i]∊A)∨((t[i]∊N P V Z)∧k[i]=1)∨(t[i]=P)∧n[i]=-sym⍳⊂,'.'
 	msk∧←(0,(2>⌿msk⍪0)⌿1⌽t[i]=¯1)[+⍀2<⌿0⍪msk]
 	msk∨←(t[i]=¯1)∧(¯1⌽msk)∧1⌽msk
 	msk∧←(0,gm⌿km⍲k[i]=4)[+⍀gm←2<⌿0⍪msk]
