@@ -602,34 +602,20 @@ PS←{⍺←⊢
 	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←¯6 ⋄ end[vi]←end[pi]
 	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
 
-	⍝ Group function and value expressions
-	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2]]
-	km←((-≢x)↑(≢pi)⍴1)[x]
-	
-	⍝ Mask dyadic operator right operands
-	dm←(¯1⌽(k[i]=4)∧t[i]∊C N P V Z)∧km∧~k[i]∊0 3 4
-	
-	⍝ Refine schizophrenic types
-	jm←(t[i]=P)∧n[i]∊-sym⍳⊂,'∘.'
-	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽jm∨(~km)∨(~dm)∧k[i]∊¯1 0 1 6 7]←2 ⋄ k[i⌿⍨k[i]=5]←3
-
-	⍝ Mask and verify monadic and dyadic operator left operands
-	∨⌿msk←jm∧1⌽(~km)∨k[i]∊3 4:{
-		'MISSING OPERAND TO ∘.'SIGNAL SELECT msk⌿i
-	}⍬
-	∨⌿msk←jm∧1⌽k[i]≠2:{
-		'∘. REQUIRES FUNCTION OPERAND'SIGNAL SELECT msk⌿i
-	}⍬
-	mm←(~jm)∧(k[i]=3)∧(t[i]∊C N P V Z)∧(¯2⌽dm⍲km)∧¯1⌽km∧~k[i]∊0 4
-
 	⍝ Parse function expressions
+	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2 3]]
+	km←((-≢x)↑(≢pi)⍴1)[x]
+	dm←(¯1⌽km∧(k[i]=4)∧t[i]∊C N P V Z)∧km∧~k[i]∊0 3 4
+	jm←km∧(t[i]=P)∧(n[i]∊-sym⍳⊂,'∘.')∧1⌽km∧k[i]∊1 2 5
+	k[i⌿⍨(k[i]=5)∧dm∨¯1⌽jm∨(~km)∨(~dm)∧k[i]∊¯1 0 1 6 7]←2 ⋄ k[i⌿⍨k[i]=5]←3
+	mm←km∧(~jm)∧(k[i]=3)∧(t[i]∊C N P V Z)∧(¯2⌽~dm)∧¯1⌽km∧~k[i]∊0 4
 	msk←jm∨dm∨mm ⋄ np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(x←np@oi⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
 	p,←oi ⋄ t k n lx vb pos end(⊣,I)←⊂oi
-	jl←¯1⌽jm ⋄ ml←(jm∧2⌽mm)∨(~jl)∧1⌽mm ⋄ dl←(jm∧3⌽dm)∨(~jl)∧2⌽dm
-	p[g⌿i]←oi[(g←(~msk)∧(1⌽dm)∨om←jl∨ml∨dl)⌿(xc-⌽+⍀⌽msk)-jl]
+	jl←¯1⌽jm ⋄ ml←(1⌽jl∧1⌽mm)∨(~jl)∧1⌽mm ⋄ dl←(1⌽jl∧2⌽dm)∨(km∧(~jl)∧2⌽dm)∨¯1⌽(~km)∧2⌽dm
+	p[g⌿i]←oi[(g←(~msk)∧(1⌽dm)∨om←jl∨ml∨dl)⌿(+⍀msk)-jl]
 	p[g⌿oi]←(g←msk⌿om)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←0 ⋄ vb[oi]←¯1
 	pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←jm∨(~msk)∧ml∨dl] ⋄ end[jm⌿i]←end[jl⌿i]
-	ol←1+(k[i⌿⍨1⌽om]=4)∨k[i⌿⍨om]∊2 3 ⋄ or←(msk⌿dm)⍀1+k[dm⌿i]=2
+	ol←(k[om⌿i]≠4)×1+(k[i⌿⍨1⌽om]=4)∨k[om⌿i]∊2 3 ⋄ or←(msk⌿dm)⍀1+k[dm⌿i]=2
 	k[oi]←3 3⊥↑or ol
 
 	⍝ Parse value expressions
