@@ -561,8 +561,9 @@ PS←{⍺←⊢
 	p,←j ⋄ t k n lx vb pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿+⍀jm]
 
-	⍝ Wrap non-array bindings as B2+(V, Z)
-	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧⊃¯1 1∧.⌽⊂k[i]≥2
+	⍝ Wrap obvious and non-array bindings as B2+(V, Z)
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
+	j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧(⊃¯1 1∧.⌽⊂k[i]≥2)∨((≠p)∧t=V)[¯1⌽i]
 	p[(jt←i[j-1]),jv←i[j+1]]←,⍨ij←i[j] ⋄ t[ij]←B ⋄ k[ij]←k[jv] ⋄ lx[ij]←lx[jt]
 	pos[ij]←pos[jt] ⋄ end[ij]←end[jv]
 
