@@ -544,12 +544,6 @@ PS←{⍺←⊢
 	v z}⍣≡⍬
 	k[⍸(t∊N V Z)∧k=0]←1 ⋄ t[⍸(t=V)∧n=¯2]←P
 
-	⍝ Catch missing namespace references → Nk(Nk(...), E)
-	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
-	j←i⌿⍨msk←(t[i]=P)∧(n[i]=dot)∧(¯1⌽k[i]=1)∧(⊢=¯1⌽⊢)p[i]
-	p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk ⋄ p[i⌿⍨¯1⌽msk]←j ⋄ p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)>¯1⌽msk
-	t[j]←N ⋄ k[j]←k[i⌿⍨¯1⌽msk]
-
 	⍝ Enclose V+[X;...] in Z nodes for parsing
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	msk←km∧(t[i]∊A)∨((t[i]∊N P V Z)∧k[i]=1)∨(t[i]=P)∧n[i]=-sym⍳⊂,'.'
@@ -560,6 +554,12 @@ PS←{⍺←⊢
 	np←(≢p)+⍳≢j ⋄ p←(x←np@j⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
 	p,←j ⋄ t k n lx vb pos end(⊣,I)←⊂j ⋄ t[j]←Z ⋄ k[j]←1
 	p[msk⌿i]←j[msk⌿+⍀jm]
+
+	⍝ Catch missing namespace references → Nk(Nk(...), E)
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
+	j←i⌿⍨msk←(t[i]=P)∧(n[i]=dot)∧(¯1⌽k[i]=1)∧(⊢=¯1⌽⊢)p[i]
+	p[m2⌿i]←i⌿⍨¯2⌽m2←msk∧2⌽msk ⋄ p[i⌿⍨¯1⌽msk]←j ⋄ p[m2⌿i]←i⌿⍨¯1⌽m2←(1⌽msk)>¯1⌽msk
+	t[j]←N ⋄ k[j]←k[i⌿⍨¯1⌽msk]
 
 	⍝ Wrap obvious and non-array bindings as B2+(V, Z)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
