@@ -1,8 +1,11 @@
 TT←{
 	(p d t k n lx vb pos end)exp sym IN←⍵
+
+	⍝ Report parse errors
+	∨⌿msk←(t=X)∧k≠0: SIGNAL SELECT ⍸msk
 	
-	⍝ Kill the contents of Z¯2 nodes
-	p t k n lx vb pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
+	⍝ Kill the contents of X nodes
+	p t k n lx vb pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡t[p]=X
 	p vb(⊣-1+⍸⍨)←⊂⍸~msk
 	
 	⍝ Convert E4(APV, APV, O, ...) mod. assignments to E4(APV, APV, C, ...)
@@ -236,8 +239,8 @@ TT←{
 	i←⍸(t=S)∨(t=B)∧k=0
 	p t k n lx vb mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽+⍀¯1⌽t[i]=B] ⋄ p vb I@{⍵≥0}⍨←⊂i@j⍳≢p
 
-	⍝ Remove dead code paths: Empty B0; post-Z¯2 nodes
-	_←p[i]{msk[⍵]←∨⍀¯1⌽msk[⍵]}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←(t=Z)∧k=¯2
+	⍝ Remove dead code paths: Empty B0; post-X nodes
+	_←p[i]{msk[⍵]←∨⍀¯1⌽msk[⍵]}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←t=X
 	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0 ⋄ msk>←t=H
 	msk←{1@(n⌿⍨⍵∧(t=V)∧(lx=¯5)∧n∊⍸t=F)⊢⍵∨⍵[p]}⍣≡msk
 	p t k n lx vb mu r pos end⌿⍨←⊂~msk
