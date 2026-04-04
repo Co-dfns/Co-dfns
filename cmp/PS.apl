@@ -661,9 +661,6 @@ PS←{⍺←⊢
 	i←⍸(p=⍳≢p)[p][p]∧(k[p][p]=0)∧(t[p][p]=T)∧t[p]=H
 	xn←sym[|n[i]] ⋄ xt←k[i]
 
-	⍝ Normaliz error kinds into EM∆ indices
-	k[i]←|k[i←⍸t=X]
-
 	⍝ Sort AST by depth-first pre-order traversal
 	d i←P2D p ⋄ p d t k n lx vb pos end I∘⊢←⊂i ⋄ p←i⍳p ⋄ vb←i⍳@{⍵≥0}vb
 
