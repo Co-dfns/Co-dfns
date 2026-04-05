@@ -36,9 +36,8 @@ PS←{⍺←⊢
 	t←⊃0⍴⊂pos ⋄ t pos msk(∊,∘⍪⍨)←Z (⊃¨pos) 0 ⋄ end←1+pos
 
 	⍝ Tokenize strings
-	end[i←⍸sm←2<⌿0⍪msk]←end⌿⍨em←2>⌿msk⍪0
-	t[err←i⌿⍨em⌿1⌽t=Z]←¯1
-	t[i←i~err]←C ⋄ end[i]+←1
+	t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←1+end[⍸2>⌿msk⍪0]
+	t[i⌿⍨IN[end[i]-1]≠'''']←¯1
 	t pos end⌿⍨←⊂(t=0)⍲(t≠Z)∧¯1⌽msk
 
 	⍝ ⋄ should be Z nodes/groups
