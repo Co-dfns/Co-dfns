@@ -54,11 +54,11 @@ PS←{⍺←⊢
 	x←' '@{t≠0}IN[pos]
 
 	⍝ Tokenize numbers
-	dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm←x∊num ⋄ ei em←⊂0⍴0
-	ei⍪←i←⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←('.'=x)∧dm ⋄ em⍪←(≢i)⍴¯3
+	dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm←x∊num
+	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←('.'=x)∧dm]←¯3
 	dm∨←('¯'=x)∧1⌽dm
-	ei⍪←i←⍸('¯'=x)∧¯1⌽dm ⋄ em⍪←(≢i)⍴¯4
-	ei⍪←i←⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←dm∧'¯'=x ⋄ em⍪←(≢i)⍴¯5
+	t[⍸('¯'=x)∧¯1⌽dm]←¯4
+	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←dm∧'¯'=x]←¯5
 	t[⍸dm<'¯'=x]←¯6
 	dm∨←(msk←x∊'Ee')∧(¯1⌽dm)∧1⌽dm
 	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
@@ -66,9 +66,10 @@ PS←{⍺←⊢
 	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	(msk⌿dm)←∊∧⍀¨(msk←x∊alp,num)⊆dm
 	dm[⍸dm∧(x='.')∧(¯1⌽dm)⍱1⌽dm]←0
-	ei⍪←i←⍸dm∧(x='.')∧¯1⌽(~dm)∧x∊num ⋄ em⍪←(≢i)⍴¯7
-	ei⍪←i←⍸('.'=x)∧(0⍪hm⌿¯1⌽dm∧x∊'Ee')[msk∧+⍀hm←2<⌿0⍪msk←dm∧~x∊'EeJj'] ⋄ em⍪←(≢i)⍴¯8
-	t[i←⍸(t=0)∧2<⌿0⍪dm]←N ⋄ t[j]←em[j←i[i⍸ei]] ⋄ end[i]←end⌿⍨2>⌿dm⍪0
+	t[⍸dm∧(x='.')∧¯1⌽(~dm)∧x∊num]←¯7
+	t[⍸('.'=x)∧(0⍪hm⌿¯1⌽dm∧x∊'Ee')[msk∧+⍀hm←2<⌿0⍪msk←dm∧~x∊'EeJj']]←¯8
+	t[i←⍸(t=0)∧2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
+	t[i[i⍸j←⍸msk]]←t⌿⍨msk←dm∧t<0 ⋄ t[j~i]←0
 
 	⍝ Tokenize variables
 	msk←dm<(t=0)∧x∊alp,num ⋄ t[i←⍸2<⌿0⍪msk]←V ⋄ end[i]←end⌿⍨2>⌿msk⍪0
