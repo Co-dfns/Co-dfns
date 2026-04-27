@@ -471,8 +471,8 @@ PS←{⍺←⊢
 	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc ⋄ j←(+⍀x)-x ⋄ ro←∊⍳¨x
 	p t k n r vb lx rc isa isd pos end⌿⍨←⊂x
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
-	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸(t=F)∨(t=T)∧isa]
-	k[i]←0 1 2 4 8[k[i]](⊣+isd[i]+2×|)ro[i←⍸(t=T)∧~isa]
+	k[i]←j+(1⌈j←0 1 2 4 8[k[i]])|ro[i←⍸(t=F)∨isa∧t=T]
+	k[i]←j+isd[i]+2×(1⌈j←0 1 2 4 8[k[i]])|ro[i←⍸isa<t=T]
 	
 	⍝ Link Z nodes of V←Z forms to V target
 	i←{⍵[⍋p[⍵]]}⍸p∊p⌿⍨msk←n∊-sym⍳,¨'←' '∘←'
