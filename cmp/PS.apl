@@ -408,7 +408,6 @@ PS←{⍺←⊢
 		⍝ Resolve ## and ⎕THIS
 		vb[msk⌿i]←vb I@{vb[⍵]≠¯1}r I@{n[⍵]=-sym⍳⊂'##'}r I@{(t[⍵]=T)⍲k[⍵]=0}⍣≡lr⌿⍨msk←t[i]=P
 		i lr lrf⌿⍨←⊂t[i]≠P
-		⍞←' ##:',⍕+⌿msk
 		
 		⍝ Resolve locals
 		fm←(t[lr]=T)∧k[lr]=0 ⋄ b←(bi⍪0)[j←bnr⍳n[i],⍪lrf]
@@ -416,16 +415,12 @@ PS←{⍺←⊢
 		j[⍸msk]←bnr⍳n[x←msk⌿i],⍪lr⌿⍨msk←(j=≢bnr)∨fm⍱lm ⋄ b←(bi⍪0)[j]
 		msk←(j≠≢bnr)∧fm∨(t[b]=L)∨(rz[b]<rz[i])∨(rz[b]=rz[i])∧pos[b]≥pos[i]
 		vb[msk⌿i]←msk⌿b ⋄ lx[i⌿⍨msk∧lx[i]<0]←¯1 ⋄ i lr⌿⍨←⊂~msk
-		⍞←' L:',⍕+⌿msk
 		
-		xstart←≢i
 		⍝ Resolve frees lexically
 		bix←bi,¯1
 		i lr←{i lr←⍵
 			vb[i]←bix[j←bnr⍳n[i],⍪lr←r I@{(t[⍵]=T)⍲k[⍵]=0}lr]
 		(j=≢bnr)∘⌿¨i lr}⍣≡i lr
-		xend←≢i
-		⍞←' X:',⍕xstart-xend
 		
 		⍝ Construct call graph
 		x←(≠vb[x],⍪r[x])⌿x←⍸(t=V)∧(vb≠¯1)∧(vb∊vb[⍸(t∊T F)∧k≠0])∧(k[r]≠0)∧lx<0
@@ -447,9 +442,7 @@ PS←{⍺←⊢
 			}¨j
 		fr}⍣{0=≢⍺}vr
 		vb[dj]←vb[dr]
-		⍞←' D:',⍕vb[i]+.≠¯1
 		
-		⍞←' N:',⍕vb[i]+.=¯1
 		⍝ Resolve namespace-frees
 		i lr⌿⍨←⊂vb[i]=¯1 ⋄ j←(≢p)+⍳≢ui←i⌿⍨msk←lr⌿⍨←≠x←n[i],⍪lr
 		vb[i]←ij←j[x⍳⍨msk⌿x] ⋄ k⍪←(≢j)⍴¯1 ⋄ k[ij]⌈←k[i] ⋄ lx⍪←¯1⌊lx[ui]
@@ -459,8 +452,6 @@ PS←{⍺←⊢
 		
 		⍝ Propagate kind to declaration
 		k[vb[j]]←k[j←⍵⌿⍨(k[⍵]≠0)∧(t[vb[⍵]⌈0]=V)∧(k[vb[⍵]⌈0]=0)∧vb[⍵]≠¯1]
-		
-		⍞←' U:',⍕≢uv ⋄ ⎕←''
 	uv}⍣≡⍸((t[p]≠H)∧(t=V)∧vb=¯1)∨(t=P)∧n∊-sym⍳'##' '⎕this'
 
 	⍝ Parse Namespace References as Nk(Nk(...), E)
