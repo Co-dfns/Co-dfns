@@ -389,7 +389,7 @@ PS←{⍺←⊢
 	⍝ Resolve names
 	vb[i]←p I⍣≡i←⍸(t=P)∧n=-sym⍳⊂,'#'
 	bi←i←⍸(t[p]=H)∨t=L ⋄ bnr←n[i],⍪rf[i]
-	_←{i←⍵ ⋄ ⍞←≢⍵ ⋄ bnr∘←1500⌶bnr
+	_←{i←⍵ ⋄ bnr∘←1500⌶bnr
 		⍝ Identify dotted-scope variables that are resolved
 		sm←(t[j]=V)∨(t[j]=P)∧n[j←0⌈i-2]∊-sym⍳,¨'#' '##' '⎕this'
 		rm←(¯1≠dv←vb[0⌈i-2])∧sm←sm∧(t[j]=P)∧n[j←0⌈i-1]=-sym⍳⊂,'.'
