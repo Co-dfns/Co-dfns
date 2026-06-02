@@ -5,16 +5,11 @@ mk_nested_array(struct cell_array **arr, size_t count)
 	
 	*arr = NULL;
 	
-	CHKFN(mk_array(arr, ARR_NESTED, STG_HOST, 1), fail);
+	CHKFN(mk_array(arr, ARR_NESTED, STG_HOST, 1, count), fail);
 	
 	(*arr)->shape[0] = count;
 	
-	CHKFN(alloc_array(*arr), fail);
-	
 fail:
-	if (err)
-		release_array(*arr);
-	
 	return err;
 }
 

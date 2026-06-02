@@ -52,35 +52,6 @@ set_dwafns(void *p)
 	return 0;
 }
 
-enum array_type
-dwa_array_type(enum dwa_type dtype)
-{
-	switch (dtype) {
-	case APLU8:
-		return ARR_BOOL;
-	case APLTI:
-		return ARR_SINT;
-	case APLSI:
-		return ARR_SINT;
-	case APLI:
-		return ARR_INT;
-	case APLD:
-		return ARR_DBL;
-	case APLZ:
-		return ARR_CMPX;
-	case APLU:
-		return ARR_CHAR8;
-	case APLV:
-		return ARR_CHAR16;
-	case APLW:
-		return ARR_CHAR32;
-	case APLP:
-		return ARR_NESTED;
-	default:
-		return -1;
-	}
-}
-
 enum dwa_type
 array_dwa_type(enum array_type type)
 {
@@ -112,33 +83,6 @@ array_dwa_type(enum array_type type)
 	}
 }
 
-enum array_storage
-dwa_array_storage(struct pocket *pkt)
-{
-	size_t count;
-	unsigned int type;
-	
-	type = pkt->type;
-	
-	if (type != 15 && type != 7)
-		return -1;
-	
-	if (type == 7)
-		return STG_HOST;
-	
-	count = 1;
-	
-	for (unsigned int i = 0; i < pkt->rank; i++) 
-		count *= pkt->shape[i];
-	
-	if (count > STORAGE_DEVICE_THRESHOLD)
-		return STG_DEVICE;
-	
-	return STG_HOST;
-}
-
-int dwa2array(struct cell_array **tgt, struct pocket *pkt);
-
 int
 dwa2array(struct cell_array **tgt, struct pocket *pkt)
 {
@@ -147,34 +91,59 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	struct	cell_array **cells;
 	struct	pocket **pkts;
 	size_t	count;
-	int	err, free_data, proto;
+	int	err, proto;
 	enum	array_type type;
 	enum	array_storage storage;
 	
 	arr		= NULL;
-	free_data	= 0;
+	count		= 1;
 		
 	if (pkt == NULL) {
 		*tgt = NULL;
 		
 		return 0;
 	}
-	
-	storage	= dwa_array_storage(pkt);
-	type	= dwa_array_type(pkt->eltype);
-	
-	CHK(storage == -1, done, "Unsupported DWA type");
-	CHK(type == -1, done, "Unsupported DWA element type");
 
-	CHKFN(mk_array(&arr, type, storage, pkt->rank), done);
+	if (pkt->type !=15 && pkt->type != 7)
+		CHK(16, fail, "Unsupported DWA type");
+
+	switch (pkt->eltype) {
+	case APLU8:type = ARR_BOOL;break;
+	case APLTI:type = ARR_SINT;break;
+	case APLSI:type = ARR_SINT;break;
+	case APLI:type = ARR_INT;break;
+	case APLD:type = ARR_DBL;break;
+	case APLZ:type = ARR_CMPX;break;
+	case APLU:type = ARR_CHAR8;break;
+	case APLV:type = ARR_CHAR16;break;
+	case APLW:type = ARR_CHAR32;break;
+	case APLP:type = ARR_NESTED;break;
+	default:
+		CHK(16, fail, "Unsupported DWA element type");
+	}
+
+	count = 1;
+
+	for (unsigned int i = 0; i < pkt->rank; i++)
+		count *= pkt->shape[i];
+
+	storage = STG_HOST;
+
+	if (count > STORAGE_DEVICE_THRESHOLD)
+		storage = STG_DEVICE;
+
+	if (pkt->type == 7)
+		storage = STG_HOST;
+
+	CHKFN(mk_array(&arr, type, storage, pkt->rank, count ? count : 1), fail);
 	
 	for (unsigned int i = 0; i < arr->rank; i++)
 		arr->shape[i] = pkt->shape[i];
 	
 	if (arr->storage == STG_DEVICE && arr->type == ARR_NESTED)
-		CHK(10, done, "Cannot store nested data on device");
+		CHK(10, fail, "Cannot store nested data on device");
 	
-	if (!(count = array_count(arr))) {
+	if (!count) {
 		proto	= is_char_array(arr) ? 32 : 0;
 		data	= arr->type == ARR_NESTED ? DATA(pkt) : &proto;
 		count	= 1;
@@ -185,63 +154,65 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 			uint8_t	*buf;
 			
 			buf	= DATA(pkt);
-			res	= calloc(count, sizeof(char));
+			res	= &arr->shape[arr->rank];
+			data	= res;
 			
-			CHK(res == NULL, done, 
-			    "Failed to allocate APLU8 buffer");
-
 			for (size_t i = 0; i < count; i++)
 				res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
-			
-			data 		= res;
-			free_data	= 1;
-			
-			break;
-		}
+		}break;
 		case APLTI:{
 			int16_t	*res;
 			int8_t	*buf;
 			
 			buf	= DATA(pkt);
-			res	= calloc(count, sizeof(int16_t));
-			
-			CHK(res == NULL, done, 
-			    "Failed to allocate APLTI buffer");
+			res	= &arr->shape[arr->rank];
+			data	= res;
 			
 			for (size_t i = 0; i < count; i++)
 				res[i] = buf[i];
-			
-			data		= res;
-			free_data	= 1;
-			
-			break;
-		}
+		}break;
 		default:
 			data		= DATA(pkt);
 		}
 	}
-	
-	if (arr->type != ARR_NESTED) {
-		CHKFN(fill_array(arr, data), done);
-		goto done;
+
+	if (arr->storage == STG_DEVICE) {
+		af_array *t = &arr->values;
+		af_dtype dtp = array_af_dtype(arr);
+
+		CHKAF(af_create_array(t, data, 1 &count, dtp), fail);
+
+		*tgt = arr;
+
+		return 0;
 	}
 	
-	CHKFN(alloc_array(arr), done);
-	
+	if (pkt->eltype == APLU8 || pkt->eltype == APLTI) {
+		*tgt = arr;
+
+		return 0;
+	}
+
+	if (arr->type != ARR_NESTED) {
+		memcpy(arr->values, data, array_values_bytes(arr));
+
+		*tgt = arr;
+
+		return 0;
+	}
+
 	cells	= arr->values;
 	pkts	= data;
 	
 	for (size_t i = 0; i < count; i++)
-		CHKFN(dwa2array(&cells[i], pkts[i]), done);
+		CHKFN(dwa2array(&cells[i], pkts[i]), fail);
 	
-done:
-	if (free_data)
-		free(data);
-	
-	if (err)
-		release_array(arr);
-	else
-		*tgt = arr;
+	*tgt = arr;
+
+	return 0;
+
+fail:
+	release_array(arr);
 	
 	return err;
 }
@@ -281,8 +252,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 		
 		CHKAF(af_get_data_ptr(DATA(pkt), arr->values), done);
 	} else if (arr->type != ARR_NESTED) {
-		memcpy(DATA(pkt), arr->values,
-		    array_values_count(arr) * array_element_size(arr));
+		memcpy(DATA(pkt), arr->values, array_values_bytes(arr));
 	} else if (arr->type == ARR_NESTED) {
 		struct pocket **pkts = DATA(pkt);
 		struct cell_array **ptrs = arr->values;

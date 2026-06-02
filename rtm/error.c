@@ -29,13 +29,10 @@ debug_trace(int err, const char *file, int line, const char *func,
 	
 	msgcnt = snprintf(NULL, 0, fmt, dbg, file, line, func, expr);
 	
-	if (mk_array(&tmp, ARR_CHAR8, STG_HOST, 1))
+	if (mk_array(&tmp, ARR_CHAR8, STG_HOST, 1, msgcnt + 1))
 		return;
 	
 	tmp->shape[0] = msgcnt + 1;
-	
-	if (alloc_array(tmp))
-		return;
 	
 	snprintf(tmp->values, msgcnt + 1, fmt, dbg, file, line, func, expr);
 	
