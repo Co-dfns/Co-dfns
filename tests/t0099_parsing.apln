@@ -8,8 +8,8 @@ ERRS←{⍺←⊢ ⋄ ⍵⍵::1 ⋄ 0⊣⍺ ⍺⍺ ⍵}
 ∇{Z}←{E}PARSE X
  Z←1
  →(⎕NC'E')⌿HASE
- (p d t k n lx pos end)(xn xt)sym IN←##.codfns.PS src←X ⋄ →0
- HASE:(p d t k n lx pos end)(xn xt)sym IN←E ##.codfns.PS src←X
+ (p d t k n lx vb pos end)(xn xt)sym IN←##.codfns.PS src←X ⋄ →0
+ HASE:(p d t k n lx vb pos end)(xn xt)sym IN←E ##.codfns.PS src←X
 ∇
 
 ∇Z←NS src
