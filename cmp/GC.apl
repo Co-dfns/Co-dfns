@@ -91,8 +91,106 @@ GC←{
 	}
 
 	⍝ All code has an initial prefix
-	pref ←⊂'#include "codfns.h"'
-	pref,←⊂'#include "',⍺,'.h"'
+	pref ←⊂'#include <stddef.h>'
+	pref,←⊂'#include <stdint.h>'
+	pref,←⊂'#include <stdio.h>'
+	pref,←⊂'#include <stdlib.h>'
+	pref,←⊂''
+	pref,←⊂'#ifdef _WIN32'
+	pref,←⊂' #define EXPORT __declspec(dllexport)'
+	pref,←⊂'#elif defined(__GNUC__)'
+	pref,←⊂' #define EXPORT __attribute__ ((visibility ("default")))'
+	pref,←⊂'#else'
+	pref,←⊂' #define EXPORT'
+	pref,←⊂'#endif'
+	pref,←⊂''
+	pref,←⊂'enum elem_type { '
+	pref,←⊂'	ELEM_VOID, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_DEV, ELEM_IOTA, ELEM_CELL'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'enum cell_type { CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };'
+	pref,←⊂''
+	pref,←⊂'struct apl_cmpx {'
+	pref,←⊂'	double real;'
+	pref,←⊂'	double imag;'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'struct iota_range {'
+	pref,←⊂'	double shift;'
+	pref,←⊂'	double step;'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'struct cell_scalar {'
+	pref,←⊂'	enum elem_type etyp;'
+	pref,←⊂'	union {'
+	pref,←⊂'		int64_t i;'
+	pref,←⊂'		double f;'
+	pref,←⊂'		struct apl_cmpx j;'
+	pref,←⊂'		uint64_t c;'
+	pref,←⊂'		struct cell *p;'
+	pref,←⊂'	};'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'struct host_buffer {'
+	pref,←⊂'	int refc;'
+	pref,←⊂'	int64_t size;'
+	pref,←⊂'	struct host_buffer *next;'
+	pref,←⊂'	union {'
+	pref,←⊂'		int64_t *i;'
+	pref,←⊂'		double *f;'
+	pref,←⊂'		struct apl_cmpx *j;'
+	pref,←⊂'		uint64_t *c;'
+	pref,←⊂'		struct cell **p;'
+	pref,←⊂'	};'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'struct cell_vector {'
+	pref,←⊂'	enum elem_type etyp;'
+	pref,←⊂'	int64_t cnt, bnd;'
+	pref,←⊂'	union {'
+	pref,←⊂'		struct host_buffer *host;'
+	pref,←⊂'		void *dev;'
+	pref,←⊂'		struct iota_range iota;'
+	pref,←⊂'	};'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'struct cell_array {'
+	pref,←⊂'	struct cell *s;'
+	pref,←⊂'	struct cell *e;'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'struct cell {'
+	pref,←⊂'	int refc;'
+	pref,←⊂'	enum cell_type ctyp;'
+	pref,←⊂'	struct cell *next;'
+	pref,←⊂'	union {'
+	pref,←⊂'		struct cell_scalar s;'
+	pref,←⊂'		struct cell_vector v;'
+	pref,←⊂'		struct cell_array a;'
+	pref,←⊂'	};'
+	pref,←⊂'};'
+	pref,←⊂''
+	pref,←⊂'int set_dwafns(void *);'
+	pref,←⊂'struct cell *get_cell(void);'
+	pref,←⊂'void release_debug_info(void);'
+	pref,←⊂'struct cell *get_debug_info(void);'
+	pref,←⊂'void debug_trace(const char *, int, const char *, const char *);'
+	pref,←⊂'void print_debug_info(int);'
+	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
+	pref,←⊂''
+	pref,←⊂'#define CHK(expr, fail, msg)					\'
+	pref,←⊂'if (0 < (err = (expr))) {					\'
+	pref,←⊂'	debug_trace(__FILE__, __LINE__, __func__, msg);	\'
+	pref,←⊂'	goto fail;						\'
+	pref,←⊂'}								\'
+	pref,←⊂''
+	pref,←⊂'#define CHKFN(expr, fail) CHK(expr, fail, "" #expr)'
+	pref,←⊂'#define CHKIG(expr, fail) if (0 < (err = (expr))) goto fail;'
+	pref,←⊂''
+	pref,←⊂'#define TRC(expr, msg)						\'
+	pref,←⊂'if (0 < (err = (expr))) {					\'
+	pref,←⊂'	debug_trace(__FILE__, __LINE__, __func__, msg);	\'
+	pref,←⊂'}								\'
 	pref,←⊂''
 	pref,←⊂'EXPORT int'
 	pref,←⊂'DyalogGetInterpreterFunctions(void *p)'
@@ -102,30 +200,45 @@ GC←{
 	pref,←⊂''
 
 	⍝ We declare all external variables in the prefix
-	pref,←decl_vars ⍸msk∧msk⍀≠n⌿⍨msk←(t=V)∧lx=¯6
-	pref,←⊂''
+	pref,←decl_vars⊢i←⍸msk∧msk⍀≠n⌿⍨msk←(t=V)∧lx=¯6
+	pref,←(0≠≢i)⍴⊂''
 	
 	⍝ Define all literals as static values
-	atypes←'BOOL' 'SINT'    'SINT'    'INT'     'DBL'    'CMPX' 
-	ctypes←'char' 'int16_t' 'int16_t' 'int32_t' 'double' 'struct apl_cmpx'
-	drtypes←11     83        163       323       645      1289
-	atypes,←'CHAR8'   'CHAR16'   'CHAR32'
-	ctypes,←'uint8_t' 'uint16_t' 'uint32_t'
+	ftypes←'.i'      '.i'      '.i'      '.i'      '.f'     '.j'
+	atypes←'INT'     'INT'     'INT'     'INT'     'FLOAT'  'CMPX' 
+	ctypes←'int64_t' 'int64_t' 'int64_t' 'int64_t' 'double' 'struct apl_cmpx'
+	drtypes←11       83        163       323       645      1289
+	ftypes,←'.c'       '.c'       '.c'
+	atypes,←'CHAR'     'CHAR'     'CHAR'
+	ctypes,←'uint64_t' 'uint64_t' 'uint64_t'
 	drtypes,←80        160        320
 	pref,←⊃⍪⌿{
 		rnk←≢shp←⍴dat←⍵⊃sym ⋄ dri←drtypes⍳⎕DR dat
-		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes
+		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes ⋄ ftp←dri⊃ftypes
 		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
 		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
 		nam←'cdf_l',⍕⍵
-		z ←⊂'static ',ctp,' ',nam,'_dat[] = {',(csep dat),'};'
-		z,←⊂'static struct cell_array ',nam,'_val = {'
-		z,←⊂'	CELL_ARRAY, 1, STG_HOST, ARR_',atp,','
-		z,←⊂'	',nam,'_dat, NULL, ',(⍕rnk),','
-		z,←⊂'	{',(csep shp,0),'}'
+		rnk≡0:{
+			z ←⊂'struct cell ',nam,'_val = {'
+			z,←⊂'	1, CELL_SCALAR, NULL, '
+			z,←⊂'	.s = {ELEM_',atp,', ',ftp,' = ',(⊃dat),'}'
+			z,←⊂'};'
+			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
+		z,⊂''}⍵
+		z ←⊂ctp,' ',nam,'_dat[] = {',(csep dat),'};'
+		z,←⊂'struct host_buffer ',nam,'_buf = {'
+		z,←⊂'	1, ',((2×5=dri)×8×≢dat),', NULL, ',ftp,' = ',nam,'_dat'
 		z,←⊂'};'
-		z,←⊂'static struct cell_array *',nam,' = &',nam,'_val;'
-		z,⊂''
+		rnk≡1:{
+			z,←⊂'struct cell ',nam,'_val = {'
+			z,←⊂'	1, CELL_VECTOR, NULL, '
+			z,←⊂'	.v = {ELEM_',atp,', ',(⍕≢dat),', ',(⍕≢dat),', '
+			z,←⊂'		.host = &',nam,'_buf'
+			z,←⊂'	}'
+			z,←⊂'};'
+			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
+		z,⊂''}⍵
+		⎕SIGNAL 16
 	}¨∪|n⌿⍨(t=A)∧k=1
 
 	⍝ We have a vector output for each node in the AST
@@ -490,41 +603,35 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
-	pref,←⊂''
+	pref,←(0≠≢i)⍴⊂''
 
 	⍝ T0: Initialization functions for namespaces
 	i←⍸(t=T)∧k=0
 	zz[i],←{
 
 		id←⊃var_names ⍵
-		z ←⊂'int ',id,'_flag = 0;'
-		z,←⊂''
-		z,←⊂(id,'_names')var_nmvec ⊃lv[⍵]
+		z ←⊂(id,'_names')var_nmvec ⊃lv[⍵]
 		z,←⊂''
 		z,←⊂'EXPORT int'
 		z,←⊂id,'_init(void)'
 		z,←⊂'{'
-		z,←⊂'	struct ',id,'_loc *loc;'
+		z,←⊂'	struct cell *loc;'
 		z,←'	'∘,¨decl_vars ⍵⊃sv
 		z,←⊂'	void *tmp;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'	if (',id,'_flag)'
+		z,←⊂'	if (',id,'.v.host)'
 		z,←⊂'		return 0;'
 		z,←⊂''
 		z,←⊂'	tmp = NULL;'
 		z,←⊂'	err = 0;'
-		z,←⊂'	',id,'_flag = 1;'
 		z,←⊂'	loc = &',id,';'
-		z,←⊂'	loc->__count = ',(⍕≢⊃lv[⍵]),';'
-		z,←⊂'	loc->__names = ',id,'_names;'
+		z,←⊂'	loc->v.host = get_host_buffer(',(⍕8×≢⍵⊃lv),');'
 		z,←⊂''
 		z,←⊂'	release_debug_info();'
 		z,←⊂''
 		z,←'	'∘,¨init_vars ⍵⊃sv
 		z,←'	'∘,¨init_vars ⍵⊃lv
-		z,←⊂''
-		z,←⊂'	CHKFN(cdf_prim_init(), cleanup);'
 		z,←⊂''
 		z,←'	'∘,¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
@@ -540,16 +647,14 @@ GC←{
 	}¨i
 
 	⍝ Export headers
-	header←{∊(⊃⍪⌿⍵),¨⊂⎕UCS 13 10}{
+	pref,←⊃⍪⌿{
 		0=≢i:0⍴⊂''
-		id←⊃var_names ⍵
-		pref,←⊂'EXPORT struct ',id,'_loc ',id,';'
-		z ←⊂'struct ',id,'_loc {'
-		z,←⊂'	unsigned int __count;'
-		z,←⊂'	char **__names;'
-		z,←(⊂'	'),¨decl_vars ⊃lv[⍵]
+		id←⊃var_names ⍵ ⋄ cnt←⍕≢⍵⊃lv
+		z ←⊂'struct cell ',id,' = {'
+		z,←⊂'	1, CELL_VECTOR, NULL, .v = {'
+		z,←⊂'		ELEM_CELL, ',cnt,', ',cnt,', NULL'
+		z,←⊂'	}'
 		z,←⊂'};'
-		z,←⊂''
 		z
 	}¨i
 	pref,←⊂''
@@ -563,7 +668,7 @@ GC←{
 		z,←⊂fn,'(struct cell_array **z, struct cell_array *l, struct cell_array *r)'
 		z,←⊂'{'
 		z,←⊂'	struct cell_func *self;'
-		z,←⊂'	struct ',ns,'_loc *loc;'
+		z,←⊂'	struct cell *loc;'
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	CHKFN(',ns,'_init(), fail);'
@@ -592,20 +697,14 @@ GC←{
 	exp,←⊂'int'
 	exp,←⊂'main(int argc, char *argv[])'
 	exp,←⊂'{'
-	exp,←⊂'	struct cell_array *dbg;'
 	exp,←⊂'	int err;'
 	exp,←⊂''
 	exp,←⊃⍪⌿{⊂'	CHKFN(',(⊃var_names ⍵),'_init(), fail);'}¨⍸(t=T)∧k=0
 	exp,←⊂''
-	exp,←⊂'	print_cell_stats();'
-	exp,←⊂'	print_ibeam_stats();'
-	exp,←⊂''
 	exp,←⊂'	return 0;'
 	exp,←⊂''
 	exp,←⊂'fail:'
-	exp,←⊂'	dbg = get_debug_info();'
-	exp,←⊂'	printf("\n%s\n", (char *)dbg->values);'
-	exp,←⊂'	printf("ERROR %d\n", err);'
+	exp,←⊂'	print_debug_info(err);'
 	exp,←⊂'	release_debug_info();'
 	exp,←⊂'	return err;'
 	exp,←⊂'}'
@@ -618,5 +717,5 @@ GC←{
 	data←∊(pref,(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
 
 	⍝ Return data+headers
-	data header
+	data
 }

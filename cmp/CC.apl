@@ -1,7 +1,6 @@
 CC←{
-	data header←⍵
+	data←⍵
 	ostype←opsys 'win' 'linux' 'mac'
-	_←header ⎕NPUT (⍺,'.h')1
 	_←data ⎕NPUT (⍺,'.c')1
 	'win'≡ostype:⍺{
 		vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
@@ -52,9 +51,8 @@ CC←{
 }
 
 CX←{
-	data header←⍵
+	data←⍵
 	ostype←opsys 'win' 'linux' 'mac'
-	_←header ⎕NPUT (⍺,'.h')1
 	_←data ⎕NPUT (⍺,'.c')1
 	'win'≡ostype:⍺{
 		vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'

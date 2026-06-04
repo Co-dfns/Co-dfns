@@ -31,6 +31,10 @@
  #define DECLSPEC
 #endif
 
+/******************
+ * CORE DATATYPES *
+ ******************/
+ 
 enum elem_type { 
 	ELEM_VOID, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_DEV, ELEM_IOTA, ELEM_CELL
 };
@@ -86,11 +90,6 @@ struct cell_array {
 	struct cell *e;
 };
 
-struct cell_func {
-	int cnt;
-	struct host_buffer *env;
-};
-
 struct cell {
 	int refc;
 	enum cell_type ctyp;
@@ -99,14 +98,13 @@ struct cell {
 		struct cell_scalar s;
 		struct cell_vector v;
 		struct cell_array a;
-		struct cell_func f;
 	};
 };
 
 struct cell *next_cell;
-struct host_buffer *next_buffer[6]; /* 32 128 512 2048 8192 16384 */
+struct host_buffer *next_buffer[7]; /* 32 128 512 2048 8192 16384 */
 
-struct host_buffer *
+EXPORT struct host_buffer *
 get_host_buffer(int64_t size)
 {
 	struct host_buffer *res;
@@ -131,7 +129,7 @@ get_host_buffer(int64_t size)
 		i = 5;
 		size = 16384;
 	} else {
-		return NULL;
+		i = 6;
 	}
 	
 	if (next_buffer[i]) {
@@ -179,7 +177,7 @@ free_host_buffer(struct host_buffer *b)
 	next_buffer[i] = b;
 }
 
-struct cell *
+EXPORT struct cell *
 get_cell(void)
 {
 	struct cell *res;
@@ -199,7 +197,7 @@ get_cell(void)
 	return res;
 }
 
-void
+EXPORT void
 free_cell(struct cell *c)
 {
 	if (!c->refc)
@@ -265,14 +263,108 @@ buffer_size(enum elem_type t, int64_t c)
 	return sizeof(int64_t) * c;
 }
 
-int
-main(void)
+/***************
+ * DWA HELPERS *
+ ***************/
+ 
+#define DATA(pp) ((void *)&(pp)->shape[(pp)->rank])
+
+enum dwa_type { 
+	APLNC=0, APLU8, APLTI, APLSI, APLI, APLD, 
+	APLP,    APLU,  APLV,  APLW,  APLZ, APLR, APLF, APLQ
+};
+
+struct pocket {
+	long    long length;
+	long    long refcount;
+	unsigned        int type        : 4;
+	unsigned        int rank        : 4;
+	unsigned        int eltype      : 4;
+	unsigned        int _0          : 13;
+	unsigned        int _1          : 16;
+	unsigned        int _2          : 16;
+	long    long shape[1];
+};
+
+struct localp {
+	struct pocket *pocket;
+	void *i;
+};
+
+struct dwa_fns {
+	long long size;
+	struct {
+		long long size;
+		struct pocket *(*getarray)(enum dwa_type, unsigned int, long long *, struct localp *);
+		void *fns1[11];
+		struct pocket *(*scalnum)(int);
+		void *fns2[5];
+	} *ws;
+};
+
+struct pocket *(*getarray)(enum dwa_type, unsigned int, long long *, struct localp *);
+struct pocket *(*scalnum)(int);
+
+EXPORT int
+set_dwafns(void *p)
 {
-	printf("Scalar: %zd\n", sizeof(struct cell_scalar));
-	printf("Vector: %zd\n", sizeof(struct cell_vector));
-	printf("Array: %zd\n", sizeof(struct cell_array));
-	printf("Cell: %zd\n", sizeof(struct cell));
-			
+	struct dwa_fns *dwa;
+
+	if (p == NULL)
+		return 0;
+
+	dwa = p;
+
+	if (dwa->size < (long long)sizeof(struct dwa_fns))
+		return 16;
+
+	getarray = dwa->ws->getarray;
+	scalnum = dwa->ws->scalnum;
+
 	return 0;
 }
 
+/******************
+ * ERROR HANDLING *
+ ******************/
+ 
+char *debug_msg;
+char *fmt = "%hs:%d(%hs) %s\n";
+
+EXPORT struct cell *
+get_debug_info(void)
+{
+	return NULL;
+}
+
+EXPORT void
+release_debug_info(void)
+{
+	free(debug_msg);
+	debug_msg = NULL;
+}
+
+EXPORT void
+debug_trace(const char *file, int line, const char *func, 
+    const char *expr)
+{
+	size_t msgcnt, oldcnt;
+	char *dbg;
+	
+	oldcnt = debug_msg ? strlen(debug_msg) : 0;
+	msgcnt = snprintf(NULL, 0, fmt, file, line, func, expr);
+	
+	if (!(dbg = realloc(debug_msg, oldcnt + msgcnt + 1)))
+		return;
+	
+	snprintf(dbg + oldcnt, msgcnt + 1, fmt, file, line, func, expr);
+	
+	debug_msg = dbg;
+}
+
+EXPORT void
+print_debug_info(int err)
+{
+	printf("\n%s\n", debug_msg);
+	printf("ERROR %d\n", err);
+}
