@@ -73,14 +73,14 @@ GC←{
 		z←'&' ''[lx[⍵]∊¯2 ¯3]
 		z,¨←(var_scopes,¨var_names)⍵
 		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'z'
-		'(',¨z,¨')'
+		z
 	}
 
 	var_values←{
 		z←'' '*'[lx[⍵]∊¯2 ¯3]
 		z,¨←(var_scopes,¨var_names)⍵
 		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'(*z)'
-		'(',¨z,¨')'
+		z
 	}
 	
 	check_vars←{
@@ -106,7 +106,7 @@ GC←{
 	pref,←⊂'#endif'
 	pref,←⊂''
 	pref,←⊂'enum elem_type { '
-	pref,←⊂'	ELEM_VOID, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_DEV, ELEM_IOTA, ELEM_CELL'
+	pref,←⊂'	ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_DEV, ELEM_IOTA, ELEM_CELL'
 	pref,←⊂'};'
 	pref,←⊂''
 	pref,←⊂'enum cell_type { CELL_VOID, CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };'
@@ -180,6 +180,7 @@ GC←{
 	pref,←⊂'void print_debug_info(int);'
 	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
 	pref,←⊂'int println(struct cell **, struct cell *);'
+	pref,←⊂'int ravel(struct cell **, struct cell *);'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
@@ -371,7 +372,7 @@ GC←{
 		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->fptr_mon)(',tref,', ',y,', ',fn,'), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⍴⊂'release_array(tmp); tmp = NULL;'
 		z,←(n[fi]>0)⍴⊂'release_func(',fn,'); ',fn,' = NULL;'
-		z,←(n[yi]>0)⍴⊂'release_array(',y,'); ',y,' = NULL;'
+		z,←(n[yi]>0)⍴⊂'free_cell(',y,');'
 		z,⊂''
 	}¨i
 	
