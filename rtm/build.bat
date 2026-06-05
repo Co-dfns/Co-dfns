@@ -1,2 +1,1 @@
-cl /W4 /WX /LD /std:c17 /O2 /I"%AF_PATH%\include" /D"NOMINMAX" codfns.c /link /LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af.lib"
-@REM cl /W4 /WX /std:c17 /O2 /I"%AF_PATH%\include" /D"NOMINMAX" codfns.c /link /LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af.lib"
+cl /W4 /WX /LD /std:c17 /Zi /O2 /Fd"codfns.pdb" /I"%AF_PATH%\include" /D"NOMINMAX" codfns.c /link /LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af.lib"

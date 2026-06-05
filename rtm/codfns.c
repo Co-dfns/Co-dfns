@@ -39,7 +39,7 @@ enum elem_type {
 	ELEM_VOID, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_DEV, ELEM_IOTA, ELEM_CELL
 };
 
-enum cell_type { CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };
+enum cell_type { CELL_VOID, CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };
 
 struct apl_cmpx {
 	double real;
@@ -200,7 +200,7 @@ get_cell(void)
 EXPORT void
 free_cell(struct cell *c)
 {
-	if (!c->refc)
+	if (!c || !c->refc)
 		return;
 		
 	c->refc--;
@@ -209,6 +209,7 @@ free_cell(struct cell *c)
 		return;
 	}
 	
+	c->ctyp = CELL_VOID;
 	c->next = next_cell;
 	next_cell = c;
 	
@@ -404,6 +405,31 @@ print_debug_info(int err)
 		default:
 			return 99;
 		}
+		break;
+	case CELL_VECTOR:
+		switch (r->v.etyp) {
+		case ELEM_VOID: return 6;
+		case ELEM_INT:
+			for (int64_t i = 0; i < r->v.cnt; i++)
+				printf("%lld ", r->v.host->i[i % r->v.bnd]);
+			break;
+		case ELEM_FLOAT:
+			for (int64_t i = 0; i < r->v.cnt; i++)
+				printf("%f ", r->v.host->f[i % r->v.bnd]);
+			break;
+		case ELEM_CHAR:
+			for (int64_t i = 0; i < r->v.cnt; i++)
+				printf("%lc ", (uint16_t)r->v.host->c[i % r->v.bnd]);
+			break;
+		case ELEM_CMPX:
+		case ELEM_DEV:
+		case ELEM_IOTA:
+		case ELEM_CELL:
+			return 16;
+		default:
+			return 99;
+		}
+		printf("\n");
 		break;
 	default:
 		return 16;

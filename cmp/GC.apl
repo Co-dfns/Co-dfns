@@ -109,7 +109,7 @@ GC←{
 	pref,←⊂'	ELEM_VOID, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_DEV, ELEM_IOTA, ELEM_CELL'
 	pref,←⊂'};'
 	pref,←⊂''
-	pref,←⊂'enum cell_type { CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };'
+	pref,←⊂'enum cell_type { CELL_VOID, CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };'
 	pref,←⊂''
 	pref,←⊂'struct apl_cmpx {'
 	pref,←⊂'	double real;'
@@ -230,14 +230,12 @@ GC←{
 		z,⊂''}⍵
 		z ←⊂ctp,' ',nam,'_dat[] = {',(csep dat),'};'
 		z,←⊂'struct host_buffer ',nam,'_buf = {'
-		z,←⊂'	1, ',((2×5=dri)×8×≢dat),', NULL, ',ftp,' = ',nam,'_dat'
+		z,←⊂'	1, ',(⍕(1+5=dri)×8×≢dat),', NULL, ',ftp,' = ',nam,'_dat'
 		z,←⊂'};'
 		rnk≡1:{
 			z,←⊂'struct cell ',nam,'_val = {'
 			z,←⊂'	2, CELL_VECTOR, NULL, '
-			z,←⊂'	.v = {ELEM_',atp,', ',(⍕≢dat),', ',(⍕≢dat),', '
-			z,←⊂'		.host = &',nam,'_buf'
-			z,←⊂'	}'
+			z,←⊂'	.v = {ELEM_',atp,', ',(⍕≢dat),', ',(⍕≢dat),', .host = &',nam,'_buf}'
 			z,←⊂'};'
 			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
 		z,⊂''}⍵
