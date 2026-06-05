@@ -377,6 +377,44 @@ print_debug_info(int err)
 	printf("ERROR %d\n", err);
 }
 
+/**********************
+ * Character Handling *
+ **********************/
+ 
+static void 
+print_char(uint64_t point)
+{
+	int count;
+	unsigned char buf[4];
+	
+	count = 0;
+	
+	/* https://stackoverflow.com/a/42013433 */
+	
+	if (point <= 0x7F) {
+		buf[0] = (unsigned char)point;
+		count = 1;
+	} else if (point <= 0x7FF) {
+		buf[0] = (unsigned char)(0xC0 | (point >> 6));	/* 110xxxxx */
+		buf[1] = 0x80 | (point & 0x3F);			/* 10xxxxxx */
+		count = 2;
+	} else if (point <= 0xFFFF) {
+		buf[0] = (unsigned char)(0xE0 | (point >> 12));	/* 1110xxxx */
+		buf[1] = 0x80 | ((point >> 6) & 0x3F);		/* 10xxxxxx */
+		buf[2] = 0x80 | (point & 0x3F);			/* 10xxxxxx */
+		count = 3;
+	} else if (point <= 0x10FFFF) {
+		buf[0] = (unsigned char)(0xF0 | (point >> 18));	/* 11110xxx */
+		buf[1] = 0x80 | ((point >> 12) & 0x3F);		/* 10xxxxxx */
+		buf[2] = 0x80 | ((point >> 6) & 0x3F);		/* 10xxxxxx */
+		buf[3] = 0x80 | (point & 0x3F);			/* 10xxxxxx */
+		count = 4;
+	}
+
+	for (int i = 0; i < count; i++)
+		putchar(buf[i]);
+}
+
 /**************
  * PRIMITIVES *
  **************/
@@ -398,7 +436,8 @@ print_debug_info(int err)
 			printf("%fJ%f\n", r->s.j.real, r->s.j.imag);
 			break;
 		case ELEM_CHAR:
-			printf("%lc\n", (uint16_t)r->s.c);
+			print_char(r->s.c);
+			printf("\n");
 			break;
 		case ELEM_CELL:
 			return 16;
@@ -418,7 +457,7 @@ print_debug_info(int err)
 			break;
 		case ELEM_CHAR:
 			for (int64_t i = 0; i < r->v.cnt; i++)
-				printf("%lc ", (uint16_t)r->v.host->c[i % r->v.bnd]);
+				print_char(r->v.host->c[i % r->v.bnd]);
 			break;
 		case ELEM_CMPX:
 			for (int64_t i = 0; i < r->v.cnt; i++) {
