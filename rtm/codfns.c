@@ -254,6 +254,14 @@ free_cell(struct cell *c)
 	}
 }
 
+EXPORT struct cell *
+ref_cell(struct cell *c)
+{
+	c->refc++;
+	
+	return c;
+}
+
 int64_t
 buffer_size(enum elem_type t, int64_t c)
 {
@@ -367,4 +375,41 @@ print_debug_info(int err)
 {
 	printf("\n%s\n", debug_msg);
 	printf("ERROR %d\n", err);
+}
+
+/**************
+ * PRIMITIVES *
+ **************/
+ 
+ EXPORT int
+ println(struct cell **z, struct cell *r)
+ {
+	switch (r->ctyp) {
+	case CELL_SCALAR:
+		switch (r->s.etyp) {
+		case ELEM_VOID: return 6;
+		case ELEM_INT:
+			printf("%lld\n", r->s.i);
+			break;
+		case ELEM_FLOAT:
+			printf("%f\n", r->s.f);
+			break;
+		case ELEM_CMPX:
+			return 16;
+		case ELEM_CHAR:
+			printf("%lc\n", (uint16_t)r->s.c);
+			break;
+		case ELEM_CELL:
+			return 16;
+		default:
+			return 99;
+		}
+		break;
+	default:
+		return 16;
+	}
+	
+	*z = ref_cell(r);
+	
+	return 0;
 }

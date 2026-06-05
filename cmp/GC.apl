@@ -19,7 +19,7 @@ GC←{
 
 	⍝ Variable generation utilities
 	var_ckinds←{
-		types←'' 'array' 'func' 'moper' 'doper' 'env' 'void' 'array'
+		types←'' 'cell' 'func' 'moper' 'doper' 'env' 'void' 'cell'
 		isa←t[⍵]∊A E S
 		isfn←(t[⍵]=O)∨(t[⍵]∊F T)∧k[⍵]<5
 		isdop←(t[⍵]∊F T)∧k[⍵]≥11
@@ -35,11 +35,13 @@ GC←{
 		nam[i]←'l',∘⍕¨|n[⍵[i←⍸islit]]
 		nam[i]←(⊃¨var_ckinds ⍵[i]),¨⍕¨n[⍵[i←⍸(~islit)∧n[⍵]≥0]]
 		nam[i]←sym[|n[⍵[i←⍸(~islit)∧n[⍵]<0]]]
-		'cdf_'∘,¨(,¨asym)⎕R ceqv⊢(0⍴⊂''),nam
+		nam←(,¨asym)⎕R ceqv⊢(0⍴⊂''),nam
+		'' 'cdf_'[lx[⍵]>¯3],¨nam
+		⍝ 'cdf_'∘,¨(,¨asym)⎕R ceqv⊢(0⍴⊂''),nam
 	}
 
 	var_scopes←{
-		(0⍴⊂''),'loc->' 'lex->' 'dyn->' 'cdf_prim.' '' '' ''[|1+lx[⍵]]
+		(0⍴⊂''),'loc->' 'lex->' 'dyn->' '' '' '' ''[|1+lx[⍵]]
 	}
 
 	var_nmvec←{
@@ -52,8 +54,7 @@ GC←{
 	decl_vars←{⍺←0
 		0=≢⍵:0⍴⊂''
 		z  ←'' 'extern '[lx[⍵]=¯6]
-		z,¨←'' 'struct cell_'[lx[⍵]≠¯5]
-		z,¨←var_ckinds ⍵
+		z,¨←'struct '∘,¨var_ckinds ⍵
 		z,¨←'' '_ptr'[lx[⍵]=¯5]
 		z,¨←' ' ' *'[⍺]
 		z,¨←'' '*'[lx[⍵]≠¯5]
@@ -87,7 +88,7 @@ GC←{
 	}
 	
 	release_vars←{
-		'release_'∘,¨(var_ckinds ⍵),¨'(',¨(var_values ⍵),¨⊂');'
+		'free_cell'∘,¨'(',¨(var_values ⍵),¨⊂');'
 	}
 
 	⍝ All code has an initial prefix
@@ -172,11 +173,13 @@ GC←{
 	pref,←⊂''
 	pref,←⊂'int set_dwafns(void *);'
 	pref,←⊂'struct cell *get_cell(void);'
+	pref,←⊂'void *free_cell(struct cell *);'
 	pref,←⊂'void release_debug_info(void);'
 	pref,←⊂'struct cell *get_debug_info(void);'
 	pref,←⊂'void debug_trace(const char *, int, const char *, const char *);'
 	pref,←⊂'void print_debug_info(int);'
 	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
+	pref,←⊂'int println(struct cell **, struct cell *);'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
@@ -217,10 +220,10 @@ GC←{
 		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes ⋄ ftp←dri⊃ftypes
 		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
 		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
-		nam←'cdf_l',⍕⍵
+		nam←'l',⍕⍵
 		rnk≡0:{
 			z ←⊂'struct cell ',nam,'_val = {'
-			z,←⊂'	1, CELL_SCALAR, NULL, '
+			z,←⊂'	2, CELL_SCALAR, NULL, '
 			z,←⊂'	.s = {ELEM_',atp,', ',ftp,' = ',(⊃dat),'}'
 			z,←⊂'};'
 			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
@@ -231,7 +234,7 @@ GC←{
 		z,←⊂'};'
 		rnk≡1:{
 			z,←⊂'struct cell ',nam,'_val = {'
-			z,←⊂'	1, CELL_VECTOR, NULL, '
+			z,←⊂'	2, CELL_VECTOR, NULL, '
 			z,←⊂'	.v = {ELEM_',atp,', ',(⍕≢dat),', ',(⍕≢dat),', '
 			z,←⊂'		.host = &',nam,'_buf'
 			z,←⊂'	}'
@@ -343,7 +346,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		vv←⊃var_values⊢vi←⊃⍵⊃kk
-		(n[vi]>0)⌿('release_cell(',vv,'); ',vv,' = NULL;')''
+		(n[vi]>0)⌿('free_cell(',vv,');')''
 	}¨i
 
 	⍝ E0: Returning end of line statement
@@ -365,11 +368,12 @@ GC←{
 		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		fn y←var_values⊢fi yi←⍵⊃kk
 		z ←check_vars fi yi
-		z ←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
-		z,←⊂'CHK((',fn,'->fptr_mon)(',tref,', ',y,', ',fn,'), cleanup, ',dbg,');'
-		z,←(n[⍵]<0)⌿⊂'release_array(tmp); tmp = NULL;'
-		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
-		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
+		z ←(n[⍵]<0)⍴⊂'tmp = ',tgt,';'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'(',tref,', ',y,'), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->fptr_mon)(',tref,', ',y,', ',fn,'), cleanup, ',dbg,');'
+		z,←(n[⍵]<0)⍴⊂'release_array(tmp); tmp = NULL;'
+		z,←(n[fi]>0)⍴⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,←(n[yi]>0)⍴⊂'release_array(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
 	
@@ -608,25 +612,27 @@ GC←{
 	⍝ T0: Initialization functions for namespaces
 	i←⍸(t=T)∧k=0
 	zz[i],←{
-
 		id←⊃var_names ⍵
-		z ←⊂(id,'_names')var_nmvec ⊃lv[⍵]
+		z ←⊂'struct ',id,'_loc {'
+		z,←⊂'	int flag;'
+		z,←(⊂'	'),¨decl_vars ⊃lv[⍵]
+		z,←⊂'} ',id,';'
 		z,←⊂''
 		z,←⊂'EXPORT int'
 		z,←⊂id,'_init(void)'
 		z,←⊂'{'
-		z,←⊂'	struct cell *loc;'
+		z,←⊂'	struct ',id,'_loc *loc;'
 		z,←'	'∘,¨decl_vars ⍵⊃sv
 		z,←⊂'	void *tmp;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'	if (',id,'.v.host)'
+		z,←⊂'	if (',id,'.flag)'
 		z,←⊂'		return 0;'
 		z,←⊂''
 		z,←⊂'	tmp = NULL;'
 		z,←⊂'	err = 0;'
+		z,←⊂'	',id,'.flag = 1;'
 		z,←⊂'	loc = &',id,';'
-		z,←⊂'	loc->v.host = get_host_buffer(',(⍕8×≢⍵⊃lv),');'
 		z,←⊂''
 		z,←⊂'	release_debug_info();'
 		z,←⊂''
@@ -645,19 +651,6 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
-
-	⍝ Export headers
-	pref,←⊃⍪⌿{
-		0=≢i:0⍴⊂''
-		id←⊃var_names ⍵ ⋄ cnt←⍕≢⍵⊃lv
-		z ←⊂'struct cell ',id,' = {'
-		z,←⊂'	1, CELL_VECTOR, NULL, .v = {'
-		z,←⊂'		ELEM_CELL, ',cnt,', ',cnt,', NULL'
-		z,←⊂'	}'
-		z,←⊂'};'
-		z
-	}¨i
-	pref,←⊂''
 
 	⍝ Export functions
 	i←⍸(t[p][p]=T)∧(k[p][p]=0)∧(t[p]=H)∧k=2
