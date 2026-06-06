@@ -262,7 +262,16 @@ ref_cell(struct cell *c)
 	return c;
 }
 
-int64_t
+EXPORT int
+is_bound(struct cell *c)
+{
+	if (!c || c->ctyp == CELL_VOID || !c->refc)
+		return 6;
+		
+	return 0;
+}
+
+EXPORT int64_t
 buffer_size(enum elem_type t, int64_t c)
 {
 	if (t == ELEM_CMPX)
@@ -419,25 +428,26 @@ print_char(uint64_t point)
  * PRIMITIVES *
  **************/
  
- EXPORT int
- println(struct cell **z, struct cell *r)
+ int
+ println_pad(struct cell *r, char *pad)
  {
 	switch (r->ctyp) {
 	case CELL_VOID: return 6;
 	case CELL_SCALAR:
+		printf("%s", pad);
 		switch (r->s.etyp) {
 		case ELEM_INT:
-			printf("%lld\n", r->s.i);
+			printf("%lld ", r->s.i);
 			break;
 		case ELEM_FLOAT:
-			printf("%f\n", r->s.f);
+			printf("%f ", r->s.f);
 			break;
 		case ELEM_CMPX:
-			printf("%fJ%f\n", r->s.j.real, r->s.j.imag);
+			printf("%fJ%f ", r->s.j.real, r->s.j.imag);
 			break;
 		case ELEM_CHAR:
 			print_char(r->s.c);
-			printf("\n");
+			printf(" ");
 			break;
 		case ELEM_CELL:
 			return 16;
@@ -446,6 +456,7 @@ print_char(uint64_t point)
 		}
 		break;
 	case CELL_VECTOR:
+		printf("%s", pad);
 		switch (r->v.etyp) {
 		case ELEM_INT:
 			for (int64_t i = 0; i < r->v.cnt; i++)
@@ -471,15 +482,33 @@ print_char(uint64_t point)
 		case ELEM_DEV:
 		case ELEM_IOTA:
 		case ELEM_CELL:
-			return 16;
+			for (int64_t i = 0; i < r->v.cnt; i++) {
+				int err;
+				
+				if ((err = println_pad(r->v.host->p[i % r->v.bnd], " ")))
+					return err;
+			}
+			break;
 		default:
 			return 99;
 		}
-		printf("\n");
 		break;
 	default:
 		return 16;
 	}
+	
+	return 0;
+ }
+ 
+ EXPORT int
+ println(struct cell **z, struct cell *r)
+ {
+	int err;
+	
+	if ((err = println_pad(r, "")))
+		return err;
+		
+	printf("\n");
 	
 	*z = ref_cell(r);
 	

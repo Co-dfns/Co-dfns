@@ -83,7 +83,8 @@ GC←{
 	}
 	
 	check_vars←{
-		(highlight¨⍵){'CHK(var_ref(',⍵,'), cleanup, ',⍺,');'}¨var_values ⍵
+		vs←⍵⌿⍨lx[⍵]≥¯3
+		(highlight¨vs){'CHK(is_bound(',⍵,'), cleanup, ',⍺,');'}¨var_values vs
 	}
 	
 	release_vars←{
@@ -176,6 +177,8 @@ GC←{
 	pref,←⊂'struct cell *ref_cell(struct cell *);'
 	pref,←⊂'void release_debug_info(void);'
 	pref,←⊂'struct cell *get_debug_info(void);'
+	pref,←⊂'int is_bound(struct cell *);'
+	pref,←⊂'int64_t buffer_size(enum elem_type, int64_t);'
 	pref,←⊂'void debug_trace(const char *, int, const char *, const char *);'
 	pref,←⊂'void print_debug_info(int);'
 	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
@@ -260,14 +263,13 @@ GC←{
 		dbg←highlight ⍵
 		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵ ⋄ vs←var_values⊢ks←⍵⊃kk
 		z ←check_vars⊢ks←⍵⊃kk
-		z,←⊂'CHK(mk_nested_array(',tref,', ',(⍕≢ks),'), cleanup, ',dbg,');'
-		z,←⊂''
-		z,←⊂'{'
-		z,←⊂'	struct cell_array **dat = ',tgt,'->values;'
-		z,←⊂''
-		z,←'	'∘,¨(⍳≢ks){'dat[',(⍕⍺),'] = retain_cell(',⍵,');'}¨vs
-		z,←⊂'}'
-		z,←(n[ks]>0)⌿{'release_array(',⍵,'); ',⍵,' = NULL;'}¨vs
+		z,←⊂'CHK(!(',tgt,' = get_cell()), cleanup, ',dbg,');'
+		z,←⊂tgt,'->ctyp = CELL_VECTOR;'
+		z,←⊂tgt,'->v.etyp = ELEM_CELL;'
+		z,←⊂tgt,'->v.cnt = ',tgt,'->v.bnd = ',(⍕≢ks),';'
+		z,←⊂'CHK(!(',tgt,'->v.host = get_host_buffer(buffer_size(ELEM_CELL, ',(⍕≢ks),'))), cleanup, ',dbg,');'
+		z,←(⍳≢ks){tgt,'->v.host->p[',(⍕⍺),'] = ref_cell(',⍵,');'}¨vs
+		z,←(n[ks]>0)⌿{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨vs
 		z,⊂''
 	}¨i
 	
