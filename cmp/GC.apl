@@ -36,8 +36,7 @@ GC←{
 		nam[i]←(⊃¨var_ckinds ⍵[i]),¨⍕¨n[⍵[i←⍸(~islit)∧n[⍵]≥0]]
 		nam[i]←sym[|n[⍵[i←⍸(~islit)∧n[⍵]<0]]]
 		nam←(,¨asym)⎕R ceqv⊢(0⍴⊂''),nam
-		'' 'cdf_'[lx[⍵]>¯3],¨nam
-		⍝ 'cdf_'∘,¨(,¨asym)⎕R ceqv⊢(0⍴⊂''),nam
+		'' 'cdf_'[lx[⍵]≥0],¨nam
 	}
 
 	var_scopes←{
@@ -174,6 +173,7 @@ GC←{
 	pref,←⊂'int set_dwafns(void *);'
 	pref,←⊂'struct cell *get_cell(void);'
 	pref,←⊂'void *free_cell(struct cell *);'
+	pref,←⊂'struct cell *ref_cell(struct cell *);'
 	pref,←⊂'void release_debug_info(void);'
 	pref,←⊂'struct cell *get_debug_info(void);'
 	pref,←⊂'void debug_trace(const char *, int, const char *, const char *);'
@@ -231,7 +231,7 @@ GC←{
 		z,⊂''}⍵
 		z ←⊂ctp,' ',nam,'_dat[] = {',(csep dat),'};'
 		z,←⊂'struct host_buffer ',nam,'_buf = {'
-		z,←⊂'	1, ',(⍕(1+5=dri)×8×≢dat),', NULL, ',ftp,' = ',nam,'_dat'
+		z,←⊂'	2, ',(⍕(1+5=dri)×8×≢dat),', NULL, ',ftp,' = ',nam,'_dat'
 		z,←⊂'};'
 		rnk≡1:{
 			z,←⊂'struct cell ',nam,'_val = {'
@@ -319,7 +319,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵ ⋄ kv←⊃var_values ⍵⊃kk
 		z ←check_vars ⍵⊃kk
-		z ←⊂'retain_cell(',kv,'); release_cell(',tgt,');'
+		z ←⊂'ref_cell(',kv,'); free_cell(',tgt,');'
 		z,←⊂tgt,' = ',kv,';'
 		z,⊂''
 	}¨i

@@ -16,5 +16,10 @@
 ⎕←'abcdABCD'
 ⎕←'⍺⌈⌊⍛'
 
+X←5 10 15
+Y←5
+⎕←X
+⎕←Y
+
 
 :EndNamespace
