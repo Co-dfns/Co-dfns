@@ -182,8 +182,11 @@ GC←{
 	pref,←⊂'void debug_trace(const char *, int, const char *, const char *);'
 	pref,←⊂'void print_debug_info(int);'
 	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
-	pref,←⊂'int println(struct cell **, struct cell *);'
-	pref,←⊂'int ravel(struct cell **, struct cell *);'
+	pref,←⊂''
+	pref,←⊂'int println_f(struct cell **, struct cell *, struct cell *, void **);'
+	pref,←⊂'int ravel_f(struct cell **, struct cell *, struct cell *, void **);'
+	pref,←⊂'int first_f(struct cell **, struct cell *, struct cell *, void **);'
+	pref,←⊂'int pick_f(struct cell **, struct cell *, struct cell *, void **);'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
@@ -279,39 +282,21 @@ GC←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ lbl1 lbl2←'l',¨(⍕⍵)∘,¨⍕¨1 2
 		kc←⍕≢ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
-		z ←{'release_array(',⍵,');'}¨kv
+		z ←{'free_cell(',⍵,');'}¨kv
 		z,←⊂''
-		z,←⊂'if (',tgt,'->rank) {'
-		z,←⊂'	struct cell_func *pick;'
-		z,←⊂'	struct cell_array *idx;'
-		z,←⊂'	int32_t *idxv;'
-		z,←⊂''
-		z,←⊂'	CHKFN(mk_array_int32(&idx, 0), cleanup);'
-		z,←⊂'	idxv = idx->values;'
-		z,←⊂'	pick = cdf_prim.cdf_pick;'
-		z,←⊂''
-		z,←kd{'	CHK(pick->fptr_dya(',⍵,', idx, ',tgt,', pick), ',lbl1,', ',⍺,'); (*idxv)++;'}¨kr
-		z,←⊂''
-		z,←⊂lbl1,':'
-		z,←⊂'	release_array(idx);'
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
+		z,←⊂'if (',tgt,'->ctyp != CELL_SCALAR) {'
+		z,←⊂'	CHK(!(tmp = get_cell()), cleanup, ',dbg,');'
+		z,←⊂'	tmp->ctyp = CELL_SCALAR;'
+		z,←⊂'	tmp->s.etyp = ELEM_INT;'
+		z,←⊂'	tmp->s.i = 0;'
+		z,←kd{'	CHK(pick_f(',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->s.i++;'}¨kr
+		z,←⊂'	free_cell(tmp);'
 		z,←⊂'} else {'
-		z,←⊂'	struct cell_func *first;'
-		z,←⊂'	struct cell_array *val;'
-		z,←⊂''
-		z,←⊂'	first = cdf_prim.cdf_first;'
-		z,←⊂'	CHK(first->fptr_mon(&val, ',tgt,', first), ',lbl2,', ',dbg,');'
-		z,←'	'∘,¨kv,¨⊂' = retain_cell(val);'
-		z,←⊂''
-		z,←⊂lbl2,':'
-		z,←⊂'	release_array(val);'
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
+		z,←⊂'	CHK(first_f(&tmp, NULL, ',tgt,', NULL), cleanup, ',dbg,');'
+		z,←'	'∘,¨kv,¨⊂' = ref_cell(tmp);'
+		z,←⊂'	free_cell(tmp);'
 		z,←⊂'}'
-		z,←(k[⍵]≠0)⌿''('release_array(',tgt,'); ',tgt,' = NULL;')
+		z,←(k[⍵]≠0)⌿''('free_cell(',tgt,');')
 		z,⊂''
 	}¨i
 	
@@ -370,7 +355,7 @@ GC←{
 		fn y←var_values⊢fi yi←⍵⊃kk
 		z ←check_vars fi yi
 		z ←(n[⍵]<0)⍴⊂'tmp = ',tgt,';'
-		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'(',tref,', ',y,'), cleanup, ',dbg,');'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(',tref,', NULL, ',y,', NULL), cleanup, ',dbg,');'
 		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->fptr_mon)(',tref,', ',y,', ',fn,'), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⍴⊂'release_array(tmp); tmp = NULL;'
 		z,←(n[fi]>0)⍴⊂'release_func(',fn,'); ',fn,' = NULL;'
@@ -624,7 +609,7 @@ GC←{
 		z,←⊂'{'
 		z,←⊂'	struct ',id,'_loc *loc;'
 		z,←'	'∘,¨decl_vars ⍵⊃sv
-		z,←⊂'	void *tmp;'
+		z,←⊂'	struct cell *tmp;'
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	if (',id,'.flag)'
@@ -644,6 +629,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	if (err) {'
+		z,←⊂'		free_cell(tmp);'
 		z,←'		'∘,¨release_vars ⍵⊃lv
 		z,←'		'∘,¨release_vars ⍵⊃sv
 		z,←⊂'	}'

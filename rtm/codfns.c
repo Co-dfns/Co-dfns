@@ -262,15 +262,6 @@ ref_cell(struct cell *c)
 	return c;
 }
 
-EXPORT int
-is_bound(struct cell *c)
-{
-	if (!c || c->ctyp == CELL_VOID || !c->refc)
-		return 6;
-		
-	return 0;
-}
-
 EXPORT int64_t
 buffer_size(enum elem_type t, int64_t c)
 {
@@ -424,6 +415,55 @@ print_char(uint64_t point)
 		putchar(buf[i]);
 }
 
+/*********************
+ * ARRAYFIRE HELPERS *
+ *********************/
+ 
+#define CHKAF(expr, fail)							\
+if (0 < (err = (expr))) {							\
+	debug_trace(__FILE__, __LINE__, __func__, af_err_to_string(err));	\
+	goto fail;								\
+}										\
+
+#define TRCAF(expr)								\
+if (0 < (err = (expr))) {							\
+	debug_trace(__FILE__, __LINE__, __func__, af_err_to_string(err));	\
+}										\
+ 
+enum elem_type
+convert_af_dtype(af_array *a)
+{
+	af_dtype typ;
+	
+	af_get_type(&typ, a);
+	
+	switch (typ) {
+	case s64: return ELEM_INT;
+	case f64: return ELEM_FLOAT;
+	case c64: return ELEM_CMPX;
+	case u64: return ELEM_CHAR;
+	default:
+		return -1;
+	}
+}
+
+/*******************
+ * RUNTIME HELPERS *
+ *******************/
+ 
+EXPORT int
+is_bound(struct cell *c)
+{
+	if (!c || c->ctyp == CELL_VOID || !c->refc)
+		return 6;
+		
+	return 0;
+}
+
+/*************
+ * Utilities *
+ *************/
+ 
 /**************
  * PRIMITIVES *
  **************/
@@ -501,9 +541,11 @@ print_char(uint64_t point)
  }
  
  EXPORT int
- println(struct cell **z, struct cell *r)
+ println_f(struct cell **z, struct cell *l, struct cell *r, void **env)
  {
 	int err;
+	
+	l; env;
 	
 	if ((err = println_pad(r, "")))
 		return err;
@@ -516,10 +558,12 @@ print_char(uint64_t point)
 }
 
 EXPORT int
-ravel(struct cell **z, struct cell *r)
+ravel_f(struct cell **z, struct cell *l, struct cell *r, void **env)
 {
 	int err;
 	struct cell *t;
+	
+	l; env;
 	
 	switch (r->ctyp){
 	case CELL_VOID: return 6;
@@ -564,4 +608,170 @@ fail:
 	free_cell(t);
 	
 	return err;
+}
+
+EXPORT int
+first_f(struct cell **z, struct cell *l, struct cell *r, void **env)
+{
+	struct cell *t;
+	int err;
+	
+	l; env;
+	
+	switch (r->ctyp) {
+	case CELL_VOID: return 6;
+	
+	case CELL_SCALAR:
+		switch (r->s.etyp) {
+		case ELEM_INT:
+		case ELEM_FLOAT:
+		case ELEM_CMPX:
+		case ELEM_CHAR:
+			*z = ref_cell(r);
+			break;
+			
+		case ELEM_CELL:
+			*z = ref_cell(r->s.p);
+			break;
+			
+		default:
+			return 99;
+		}
+		
+		return 0;
+		
+	case CELL_ARRAY:
+		r = r->a.e; /* Fall through */
+		
+	case CELL_VECTOR:
+		if (r->v.etyp == ELEM_CELL) {
+			*z = ref_cell(r->v.host->p[0]);
+			
+			return 0;
+		}
+		
+		t = get_cell();
+		t->ctyp = CELL_SCALAR;
+		
+		if (r->v.etyp == ELEM_DEV)
+			t->s.etyp = convert_af_dtype(r->v.dev);
+		else
+			t->s.etyp = r->v.etyp;
+		
+		switch (r->v.etyp) {
+		case ELEM_INT:
+			t->s.i = r->v.host->i[0];
+			break;
+			
+		case ELEM_FLOAT:
+			t->s.f = r->v.host->f[0];
+			break;
+			
+		case ELEM_CMPX:
+			t->s.j = r->v.host->j[0];
+			break;
+			
+		case ELEM_CHAR:
+			t->s.c = r->v.host->c[0];
+			break;
+			
+		case ELEM_DEV:
+			CHKAF(af_get_scalar(&t->s.i, r->v.dev), fail);
+			break;
+		
+		case ELEM_IOTA:
+			err =16; goto fail;
+			
+		default:
+			err = 99; goto fail;
+		}
+		
+		*z = t;
+		
+		return 0;
+
+	default:
+		return 99;
+	}
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+EXPORT int
+pick_f(struct cell **z, struct cell *l, struct cell *r, void **env)
+{
+	struct cell *t;
+	
+	env;
+	
+	switch (l->ctyp) {
+	case CELL_SCALAR:
+		switch (l->s.etyp) {
+		case ELEM_INT:
+			switch (r->ctyp) {
+			case CELL_SCALAR:
+			case CELL_ARRAY:
+				return 4;
+				
+			case CELL_VECTOR:
+				break;
+				
+			default:
+				return 99;
+			}
+			
+			if (l->s.i >= r->v.cnt)
+				return 3;
+			
+			if (r->v.etyp == ELEM_CELL) {
+				*z = ref_cell(r->v.host->p[l->s.i]);
+				return 0;
+			}
+			
+			if (!(*z = t = get_cell()))
+				return 1;
+			
+			t->ctyp = CELL_SCALAR;
+			t->s.etyp = r->v.etyp;
+				
+			switch (r->v.etyp) {
+			case ELEM_INT: t->s.i = r->v.host->i[l->s.i % r->v.bnd]; return 0;
+			case ELEM_FLOAT: t->s.f = r->v.host->f[l->s.i % r->v.bnd]; return 0;
+			case ELEM_CMPX: t->s.j = r->v.host->j[l->s.i % r->v.bnd]; return 0;
+			case ELEM_CHAR: t->s.c = r->v.host->c[l->s.i % r->v.bnd]; return 0;
+			case ELEM_DEV:
+				return 16;
+				
+			case ELEM_IOTA:
+				return 16;
+				
+			default:
+				return 99;
+			}
+		
+		case ELEM_FLOAT:
+		case ELEM_CMPX:
+			return 11;
+			
+		case ELEM_CELL:
+			return 16;
+			
+		case ELEM_CHAR:
+			return 11;
+			
+		default:
+			return 99;
+		}
+		
+	case CELL_VECTOR:
+		return 16;
+		
+	case CELL_ARRAY:
+		return 4;
+	default:
+		return 99;
+	}
 }
