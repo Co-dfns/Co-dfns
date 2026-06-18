@@ -42,13 +42,11 @@ enum elem_type {
 enum cell_type { CELL_VOID, CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };
 
 struct apl_cmpx {
-	double real;
-	double imag;
+	double real, imag;
 };
 
 struct iota_range {
-	double shift;
-	double step;
+	double shift, step;
 };
 
 struct cell_scalar {
