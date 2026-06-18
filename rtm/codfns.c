@@ -84,8 +84,12 @@ struct cell_vector {
 };
 
 struct cell_array {
-	struct cell *s;
-	struct cell *e;
+	struct cell *s, *e;
+};
+
+struct cell_func {
+	int (**fn)(struct cell *, struct cell **, struct cell *, struct cell *, struct cell **);
+	struct cell *aa, *ww, *axis;
 };
 
 struct cell {
@@ -96,6 +100,7 @@ struct cell {
 		struct cell_scalar s;
 		struct cell_vector v;
 		struct cell_array a;
+		struct cell_func f;
 	};
 };
 
@@ -462,10 +467,6 @@ is_bound(struct cell *c)
  * Utilities *
  *************/
  
-/**************
- * PRIMITIVES *
- **************/
- 
  int
  println_pad(struct cell *r, char *pad)
  {
@@ -538,12 +539,16 @@ is_bound(struct cell *c)
 	return 0;
  }
  
+/**************
+ * PRIMITIVES *
+ **************/
+ 
  EXPORT int
- println_f(struct cell **z, struct cell *l, struct cell *r, void **env)
+ println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
  {
 	int err;
 	
-	l; env;
+	s; l; env;
 	
 	if ((err = println_pad(r, "")))
 		return err;
@@ -556,12 +561,12 @@ is_bound(struct cell *c)
 }
 
 EXPORT int
-ravel_f(struct cell **z, struct cell *l, struct cell *r, void **env)
+ravel_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
 {
 	int err;
 	struct cell *t;
 	
-	l; env;
+	s; l; env;
 	
 	switch (r->ctyp){
 	case CELL_VOID: return 6;
@@ -609,12 +614,12 @@ fail:
 }
 
 EXPORT int
-first_f(struct cell **z, struct cell *l, struct cell *r, void **env)
+first_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
 {
 	struct cell *t;
 	int err;
 	
-	l; env;
+	s; l; env;
 	
 	switch (r->ctyp) {
 	case CELL_VOID: return 6;
@@ -699,11 +704,11 @@ fail:
 }
 
 EXPORT int
-pick_f(struct cell **z, struct cell *l, struct cell *r, void **env)
+pick_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
 {
 	struct cell *t;
 	
-	env;
+	s; env;
 	
 	switch (l->ctyp) {
 	case CELL_SCALAR:

@@ -77,8 +77,8 @@ TT←{
 	k[r[i]]+←2=k[i]
 	
 	⍝ Lift dfns to the top-level
-	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
-	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V ⋄ k[i]←3+5 11⍸k[i]
+	p,←n[i]←(≢p)+⍳≢i←⍸(t∊C F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
+	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ k[j]←3+5 11⍸k[j←i⌿⍨t[i]=F] ⋄ t[i]←V
 
 	⍝ Wrap expressions as binding or return statements
 	i←(⍸(t[p]∊F T)>t∊F G H T),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
@@ -184,10 +184,8 @@ TT←{
 	syms,←⊂,'⊸'	  ⋄ nams⍪←'dove'       'dove'	       'dove'			'idxerr'
 	syms,←⊂,'⍺'	  ⋄ nams⍪←'alpha'      'alpha'	       'alpha'			'idxerr'
 	syms,←⊂,'⍵'	  ⋄ nams⍪←'omega'      'omega'	       'omega'			'idxerr'
-	syms,←⊂,'⍺⍺'	  ⋄ nams⍪←'alphaalpha' 'alphaalpha'    'alphaalpha'		'idxerr'
-	syms,←⊂,'⍵⍵'	  ⋄ nams⍪←'omegaomega' 'omegaomega'    'omegaomega'		'idxerr'
-	syms,←⊂,'∇'	  ⋄ nams⍪←'self'       'self'	       'self'			'idxerr'
-	syms,←⊂,'∇∇'	  ⋄ nams⍪←'deldel'     'deldel'	       'deldel'			'idxerr'
+	syms,←⊂,'⍺⍺'	  ⋄ nams⍪←'s->aa' 	's->aa'    	's->aa'		'idxerr'
+	syms,←⊂,'⍵⍵'	  ⋄ nams⍪←'s->ww' 	's->ww'		's->ww'		'idxerr'
 
 	syms,←⊂,'⎕PRINT_MEMSTATS' ⋄ nams⍪←(3⍴⊂'q_print_memstats'),⊂'idxerr'
 	syms,←⊂,'%u'      ⋄ nams⍪←''           ''              ''			''
@@ -200,17 +198,17 @@ TT←{
 	n[i]←-sym⍳sym∪←nams[si,¨(t[p[i]]=E)∧(2⌊k[p[i]])⌈3×(((t=E)∧k=4)[p]∧~⌽≠⌽p)[p][i]]
 
 	⍝ Allocate named targets in the n field for bound application nodes
-	msk←((t[p]=B)∧~k[p]∊0 7)∧(t∊C E O)∨((t=A)∧k=7)∨(t=B)∧~k∊0 7
+	msk←((t[p]=B)∧~k[p]∊0 7)∧(t∊E O)∨((t=A)∧k=7)∨(t=B)∧~k∊0 7
 	msk[p⌿⍨(t[p]=B)∧(t=V)∨(t=A)∧k=1]←0 ⋄ i←⍸msk
 	n mu lx{⍺[⍵]@i⊢⍺}←⊂p[i] ⋄ i←⍸msk←(~msk)∧(⍳≢p)∊p[i] ⋄ p←(p[i]@i⍳≢p)[p]
 	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
 	
 	⍝ Allocate frame variables for unbound application results
-	msk←((t=B)∧k=0)∨((t[p]=B)⍲k[p]=0)∧(k≠0)∧(t∊C E O)∨(t∊A S)∧k=7
+	msk←((t=B)∧k=0)∨((t[p]=B)⍲k[p]=0)∧(k≠0)∧(t∊E O)∨(t∊A S)∧k=7
 	pi←p[i←⍸msk∧n≥0] ⋄ d←⊃P2D p ⋄ msk←(t=E)∧k∊0 ¯1 ⋄ lx[i]←¯7
 	cg←(pi∘.=i)∨(∘.=⍨pi)∨(∘.<⍨i)∧(∘.>⍨d[i])∧∘.=⍨p I@{~msk[⍵]}⍣≡i
 	cg∨←i∘.=(t[ppi]=B)∧(k[ppi]=0)∧ppi←p[pi]
-	cg∧←∘.=⍨t[i]∊C O ⋄ cg∨←⍉cg ⋄ cg∧←~∘.=⍨⍳≢i
+	cg∧←∘.=⍨t[i]=O ⋄ cg∨←⍉cg ⋄ cg∧←~∘.=⍨⍳≢i
 	wgt←?0⍴⍨≢i
 	_←{
 		mis←wgt{wgt←⍺ ⋄ mis←⍵
@@ -225,12 +223,12 @@ TT←{
 	n[p[i]]←n[i←⍸(t[p]=E)∧k[p]=¯1] ⋄ lx[p[i]]←lx[i]
 	
 	⍝ Add V nodes for each application node in preparation for lifting
-	msk←((t[p]=B)⍲k[p]=0)∧(t∊B C O S)∨((t=E)∧k>0)∨(t=A)∧k=7 ⋄ i←(+⍀1+msk)-1
+	msk←((t[p]=B)⍲k[p]=0)∧(t∊B O S)∨((t=E)∧k>0)∨(t=A)∧k=7 ⋄ i←(+⍀1+msk)-1
 	p t k n lx mu r pos end⌿⍨←⊂1+msk ⋄ p r{⍵[⍺]}←⊂i ⋄ n[j]←i[n[j←⍸n>0]]
 	j←¯1+msk⌿i ⋄ k[j⌿⍨(t[j]∊A E S)∨(t[j]=B)∧k[j]=0]←1 ⋄ k[j⌿⍨t[j]=O]←2 ⋄ t[j]←V
 	
 	⍝ Lift and flatten expressions
-	i←⍸(t∊B C E G O S Z)∨(t=A)∧k≠1
+	i←⍸(t∊B E G O S Z)∨(t=A)∧k≠1
 	msk←~(t∊F G T)∨((t=B)∧k=7)∨gm←(t[p]=G)∧~(t=V)∨((t=A)∧k=1)∨(t=E)∧k=0
 	p[i]←p[x←p[p] I@{gm[p[⍵]]}p I@{msk[p[⍵]]}⍣≡p I@{gm[⍵]}i]
 	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]

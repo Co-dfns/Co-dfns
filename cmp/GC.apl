@@ -160,6 +160,11 @@ GC←{
 	pref,←⊂'	struct cell *e;'
 	pref,←⊂'};'
 	pref,←⊂''
+	pref,←⊂'struct cell_func {'
+	pref,←⊂'	int (**fn)(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'	struct cell *aa, *ww, *axis;'
+	pref,←⊂'};'
+	pref,←⊂''
 	pref,←⊂'struct cell {'
 	pref,←⊂'	int refc;'
 	pref,←⊂'	enum cell_type ctyp;'
@@ -168,6 +173,7 @@ GC←{
 	pref,←⊂'		struct cell_scalar s;'
 	pref,←⊂'		struct cell_vector v;'
 	pref,←⊂'		struct cell_array a;'
+	pref,←⊂'		struct cell_func f;'
 	pref,←⊂'	};'
 	pref,←⊂'};'
 	pref,←⊂''
@@ -183,10 +189,10 @@ GC←{
 	pref,←⊂'void print_debug_info(int);'
 	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
 	pref,←⊂''
-	pref,←⊂'int println_f(struct cell **, struct cell *, struct cell *, void **);'
-	pref,←⊂'int ravel_f(struct cell **, struct cell *, struct cell *, void **);'
-	pref,←⊂'int first_f(struct cell **, struct cell *, struct cell *, void **);'
-	pref,←⊂'int pick_f(struct cell **, struct cell *, struct cell *, void **);'
+	pref,←⊂'int println_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int ravel_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int first_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int pick_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
@@ -264,7 +270,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵ ⋄ vs←var_values⊢ks←⍵⊃kk
+		tgt←⊃var_values ⍵ ⋄ vs←var_values⊢ks←⍵⊃kk
 		z ←check_vars⊢ks←⍵⊃kk
 		z,←⊂'CHK(!(',tgt,' = get_cell()), cleanup, ',dbg,');'
 		z,←⊂tgt,'->ctyp = CELL_VECTOR;'
@@ -272,7 +278,7 @@ GC←{
 		z,←⊂tgt,'->v.cnt = ',tgt,'->v.bnd = ',(⍕≢ks),';'
 		z,←⊂'CHK(!(',tgt,'->v.host = get_host_buffer(buffer_size(ELEM_CELL, ',(⍕≢ks),'))), cleanup, ',dbg,');'
 		z,←(⍳≢ks){tgt,'->v.host->p[',(⍕⍺),'] = ref_cell(',⍵,');'}¨vs
-		z,←(n[ks]>0)⌿{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨vs
+		z,←(n[ks]>0)⌿{'free_cell(',⍵,');'}¨vs
 		z,⊂''
 	}¨i
 	
@@ -280,8 +286,8 @@ GC←{
 	i←⍸t=S
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ lbl1 lbl2←'l',¨(⍕⍵)∘,¨⍕¨1 2
-		kc←⍕≢ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
+		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵
+		ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
 		z ←{'free_cell(',⍵,');'}¨kv
 		z,←⊂''
 		z,←⊂'if (',tgt,'->ctyp != CELL_SCALAR) {'
@@ -289,10 +295,10 @@ GC←{
 		z,←⊂'	tmp->ctyp = CELL_SCALAR;'
 		z,←⊂'	tmp->s.etyp = ELEM_INT;'
 		z,←⊂'	tmp->s.i = 0;'
-		z,←kd{'	CHK(pick_f(',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->s.i++;'}¨kr
+		z,←kd{'	CHK(pick_f(NULL, ',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->s.i++;'}¨kr
 		z,←⊂'	free_cell(tmp);'
 		z,←⊂'} else {'
-		z,←⊂'	CHK(first_f(&tmp, NULL, ',tgt,', NULL), cleanup, ',dbg,');'
+		z,←⊂'	CHK(first_f(NULL, &tmp, NULL, ',tgt,', NULL), cleanup, ',dbg,');'
 		z,←'	'∘,¨kv,¨⊂' = ref_cell(tmp);'
 		z,←⊂'	free_cell(tmp);'
 		z,←⊂'}'
@@ -304,29 +310,15 @@ GC←{
 	i←⍸(t=B)∧~k∊0 7
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵ ⋄ kv←⊃var_values ⍵⊃kk
-		z ←check_vars ⍵⊃kk
-		z ←⊂'ref_cell(',kv,'); free_cell(',tgt,');'
+		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵ ⋄ kv←⊃var_values⊢ki←⍵⊃kk
+		z ←⊂'/* ',dbg,' */'
+		z,←check_vars ki
+		z,←⊂'ref_cell(',kv,');'
+		z,←⊂'free_cell(',tgt,');'
 		z,←⊂tgt,' = ',kv,';'
 		z,⊂''
 	}¨i
 	
-	⍝ C: Closures for functions
-	i←⍸t=C
-	zz[i],←{
-		0=≢i:0⍴⊂''
-		ks←⍵⊃kk
-		ctyp←k[⍵]⊃'func' 'func' 'func' 'moper' 'doper'
-		vc←(≢ks)-fc←0 1 2 4 8[k[⍵]]
-		fs vs←{(fc↑⍵)(fc↓⍵)}ks
-		fids←var_refs fs ⋄ vids←{var_refs ⍵}vs[⍋n[vs]]
-		tgt←⊃var_values ⍵ ⋄ tref←⊃var_refs ⍵ ⋄ dbg←highlight ⍵
-		z ←⊂'CHK(mk_',ctyp,'(',tref,', ',(csep fids),', ',(⍕vc),'), cleanup, ',dbg,');'
-		z,←⊂''
-		z,←(⍳vc){tgt,'->fv[',(⍕⍺),'] = ',⍵,';'}¨vids
-		z,⊂''
-	}¨i
-
 	⍝ E¯1: Non-returning end of line statement
 	i←⍸(t=E)∧k=¯1
 	zz[i],←{
@@ -342,7 +334,7 @@ GC←{
 		0≡≢⍵⊃kk:⊂'goto cleanup;'
 		kv←⊃var_values⊢ki←⊃⍵⊃kk
 		z ←check_vars ki
-		z ←((t[ki]=A)∨(n[ki]≠0))⌿⊂'*z = retain_cell(',kv,');'
+		z,←((t[ki]=A)∨(n[ki]≠0))⌿⊂'*z = ref_cell(',kv,');'
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
@@ -354,11 +346,11 @@ GC←{
 		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		fn y←var_values⊢fi yi←⍵⊃kk
 		z ←check_vars fi yi
-		z ←(n[⍵]<0)⍴⊂'tmp = ',tgt,';'
-		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(',tref,', NULL, ',y,', NULL), cleanup, ',dbg,');'
-		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->fptr_mon)(',tref,', ',y,', ',fn,'), cleanup, ',dbg,');'
-		z,←(n[⍵]<0)⍴⊂'release_array(tmp); tmp = NULL;'
-		z,←(n[fi]>0)⍴⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,←(n[⍵]<0)⍴⊂'tmp = ',tgt,';'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',tref,', NULL, ',y,', NULL), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[0])(',fn,', ',tref,', NULL, ',y,', env), cleanup, ',dbg,');'
+		z,←(n[⍵]<0)⍴⊂'free_cell(tmp);'
+		z,←((lx[fi]=¯7)∧n[fi]>0)⍴⊂'free_cell(',fn,');'
 		z,←(n[yi]>0)⍴⊂'free_cell(',y,');'
 		z,⊂''
 	}¨i
@@ -530,48 +522,27 @@ GC←{
 		isop←k[⍵]≥5
 		isdop←k[⍵]≥11
 		self←'cdf_self' 'cdf_deldel'⊃⍨isop
-		pref,←⊂'int ',id,'(struct cell_array **,'
-		pref,←(⊂'    struct cell_array *,')⌿⍨~ism
-		pref,←⊂'    struct cell_array *,'
-		pref,←⊂'    struct cell_func *);'
+		pref,←⊂'int ',id,'(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 		z ←⊂'int'
-		z,←⊂id,'(struct cell_array **z,'
-		z,←(⊂'    struct cell_array *cdf_alpha,')⌿⍨~ism
-		z,←⊂'    struct cell_array *cdf_omega,'
-		z,←⊂'    struct cell_func *cdf_self)'
+		z,←⊂id,'(struct cell *s, struct cell **z, struct cell *alpha, struct cell *omega, struct cell ***fv)'
 		z,←⊂'{'
-		z,←(⊂'	struct cell_',atyp,' *cdf_alpha;')⌿⍨ism
-		z,←(⊂'	struct cell_',ddtyp,' *cdf_deldel;')⌿⍨isop
-		z,←(⊂'	struct cell_',aatyp,' *cdf_alphaalpha;')⌿⍨isop
-		z,←(⊂'	struct cell_',wwtyp,' *cdf_omegaomega;')⌿⍨isdop
 		z,←'	'∘,¨decl_vars svs
 		z,←⊂'	void *tmp;'
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	tmp = NULL;'
-		z,←(⊂'	cdf_alpha = NULL;')⌿⍨ism
-		z,←(⊂'	cdf_deldel = cdf_self->fv[0];')⌿⍨isop
-		z,←(⊂'	cdf_alphaalpha = cdf_self->fv[1];')⌿⍨isop
-		z,←(⊂'	cdf_omegaomega = cdf_self->fv[2];')⌿⍨isdop
-		z,←(⊂'')⌿⍨ism∨isop
+		z,←⊂''
 		z,←(⊂'	struct {')⌿⍨haslvs
 		z,←'		'∘,¨decl_vars lvs
 		z,←(⊂'	} loc_frm, *loc;')⌿⍨haslvs
 		z,←(⊂'')⌿⍨haslvs
 		z,←(⊂'	loc = &loc_frm;')⌿⍨haslvs
 		z,←(⊂'')⌿⍨haslvs
-		z,←(⊂'	struct lex_vars {')⌿⍨hasfvs
-		z,←'		'∘,¨1 decl_vars fvs
-		z,←(⊂'	} *lex;')⌿⍨hasfvs
-		z,←(⊂'')⌿⍨hasfvs
-		z,←(⊂'	lex = (struct lex_vars *)',self,'->fv;')⌿⍨hasfvs
-		z,←(⊂'')⌿⍨hasfvs
-		z,←(⊂'	struct opt_vars {')⌿⍨hasopts
-		z,←'		'∘,¨decl_vars opts
-		z,←(⊂'	} *opts;')⌿⍨hasopts
-		z,←(⊂'')⌿⍨hasopts
-		z,←(⊂'	opts = (struct opt_vars *)cdf_self->opts;')⌿⍨hasopts
-		z,←(⊂'')⌿⍨hasopts
+		z,←⊂'	struct cell **env[] = {'
+		z,←⊂'		fv[0],'
+		z,←(⊂'		loc')⌿⍨haslvs
+		z,←⊂'	};'
+		z,←⊂''
 		z,←'	'∘,¨init_vars svs
 		z,←'	'∘,¨init_vars lvs
 		z,←⊂'	err = 0;'
@@ -582,26 +553,39 @@ GC←{
 		z,←⊂'cleanup:'
 		z,←'	'∘,¨release_vars lvs
 		z,←'	'∘,¨release_vars svs
-		z,←(⊂'	release_',atyp,'(cdf_alpha);')⌿⍨ism
+		z,←(⊂'	free_cell(alpha);')⌿⍨ism
 		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		return err;'
-		z,←⊂''
-		⍝ z,←⊂'	TRC(chk_array_valid(*z), '
-		⍝ z,←⊂'	    ',(highlight ⍵),');'
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
 	}¨i
 	pref,←(0≠≢i)⍴⊂''
 
+	⍝ C: Closures for functions
+	i←⍸t=C
+	pref,←⊃,⌿{
+		0=≢i:0⍴⊂''
+		fids←var_refs ⍵⊃kk ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		z ←⊂'/* ',dbg,' */'
+		z,←⊂'int (*',tgt,'_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {'
+		z,←⊂'	',csep fids
+		z,←⊂'};'
+		z,←⊂'struct cell ',tgt,'_c = {'
+		z,←⊂'	1, CELL_FUNC, NULL, .f = {'
+		z,←⊂'		',tgt,'_fn, NULL, NULL, NULL'
+		z,←⊂'	}'
+		z,←⊂'};'
+		z,←⊂'struct cell *',tgt,' = &',tgt,'_c;'
+		z,⊂''	
+	}¨i
+
 	⍝ T0: Initialization functions for namespaces
 	i←⍸(t=T)∧k=0
 	zz[i],←{
 		id←⊃var_names ⍵
 		z ←⊂'struct ',id,'_loc {'
-		z,←⊂'	int flag;'
 		z,←(⊂'	'),¨decl_vars ⊃lv[⍵]
+		z,←⊂'	int flag;'
 		z,←⊂'} ',id,';'
 		z,←⊂''
 		z,←⊂'EXPORT int'
@@ -619,6 +603,8 @@ GC←{
 		z,←⊂'	err = 0;'
 		z,←⊂'	',id,'.flag = 1;'
 		z,←⊂'	loc = &',id,';'
+		z,←⊂''
+		z,←⊂'	struct cell **env[] = {(struct cell **)loc};'
 		z,←⊂''
 		z,←⊂'	release_debug_info();'
 		z,←⊂''
@@ -645,10 +631,10 @@ GC←{
 		fn ns←var_names ⍵,p[p][⍵]
 		fnv←⊃var_values ⍵
 		z ←⊂'EXPORT int'
-		z,←⊂fn,'(struct cell_array **z, struct cell_array *l, struct cell_array *r)'
+		z,←⊂fn,'(struct cell **z, struct cell *l, struct cell *r)'
 		z,←⊂'{'
-		z,←⊂'	struct cell_func *self;'
-		z,←⊂'	struct cell *loc;'
+		z,←⊂'	struct cell *self;'
+		z,←⊂'	struct ',ns,'_loc *loc;'
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	CHKFN(',ns,'_init(), fail);'
@@ -656,16 +642,19 @@ GC←{
 		z,←⊂'	loc = &',ns,';'
 		z,←⊂'	self = ',fnv,';'
 		z,←⊂''
+		z,←⊂'	struct cell **env[] = {(struct cell **)loc};'
+		z,←⊂''
 		z,←⊂'	if (l == NULL) {'
-		z,←⊂'		CHKIG(self->fptr_mon(z, r, self), fail);'
+		z,←⊂'		CHKIG(self->f.fn[0](self, z, l, r, env), fail);'
 		z,←⊂'	} else {'
-		z,←⊂'		CHKIG(self->fptr_dya(z, l, r, self), fail);'
+		z,←⊂'		CHKIG(self->f.fn[1](self, z, l, r, env), fail);'
 		z,←⊂'	}'
 		z,←⊂''
 		z,←⊂'fail:'
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,←⊂''
+		z
 		z,←⊂'EXPORT int'
 		z,←⊂fn,'_dwa(void *z, void *l, void *r)'
 		z,←⊂'{'
