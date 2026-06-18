@@ -19,7 +19,7 @@ GC←{
 
 	⍝ Variable generation utilities
 	var_ckinds←{
-		types←'' 'cell' 'func' 'moper' 'doper' 'env' 'void' 'cell'
+		types←'' 'cell' 'cell ' 'moper' 'doper' 'env' 'void' 'cell'
 		isa←t[⍵]∊A E S
 		isfn←(t[⍵]=O)∨(t[⍵]∊F T)∧k[⍵]<5
 		isdop←(t[⍵]∊F T)∧k[⍵]≥11
