@@ -13,7 +13,7 @@ GC←{
 		s←pos[⍵] ⋄ e←end[⍵] ⋄ lineno←linestarts⍸s
 		line←IN[b+⍳te←linestarts[lineno+1]-b←linestarts[lineno]]
 		ls le←s e-b ⋄ line←∊'╠'⊂⍤,@ls⊢'╣'⊂⍤,⍨@(¯1+le⌊te)⊢line
-		'\\'⎕R'\\\\'⊢'"[',(⍕1+lineno),'] ',(line~CR LF),'"'
+		'\\' '\*/'⎕R'\\\\' '* /'⊢'"[',(⍕1+lineno),'] ',(line~CR LF),'"'
 	}
 
 
