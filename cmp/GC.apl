@@ -53,7 +53,7 @@ GC←{
 	decl_vars←{⍺←0
 		0=≢⍵:0⍴⊂''
 		z  ←'' 'extern '[lx[⍵]=¯6]
-		z,¨←'struct '∘,¨var_ckinds ⍵
+		z,¨←⊂'struct cell'
 		z,¨←'' '_ptr'[lx[⍵]=¯5]
 		z,¨←' ' ' *'[⍺]
 		z,¨←'' '*'[lx[⍵]≠¯5]
