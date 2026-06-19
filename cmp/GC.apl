@@ -188,6 +188,7 @@ GC←{
 	pref,←⊂'void debug_trace(const char *, int, const char *, const char *);'
 	pref,←⊂'void print_debug_info(int);'
 	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
+	pref,←⊂'void squeeze(struct cell *);'
 	pref,←⊂''
 	pref,←⊂'int println_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int ravel_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
@@ -278,6 +279,7 @@ GC←{
 		z,←⊂tgt,'->v.cnt = ',tgt,'->v.bnd = ',(⍕≢ks),';'
 		z,←⊂'CHK(!(',tgt,'->v.host = get_host_buffer(buffer_size(ELEM_CELL, ',(⍕≢ks),'))), cleanup, ',dbg,');'
 		z,←(⍳≢ks){tgt,'->v.host->p[',(⍕⍺),'] = ref_cell(',⍵,');'}¨vs
+		z,←⊂'squeeze(',tgt,');'
 		z,←(n[ks]>0)⌿{'free_cell(',⍵,');'}¨vs
 		z,⊂''
 	}¨i
@@ -363,11 +365,12 @@ GC←{
 		x fn y←var_values⊢xi fi yi←⍵⊃kk
 		z ←check_vars xi fi yi
 		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
-		z,←⊂'CHK((',fn,'->fptr_dya)(',tref,', ',x,', ',y,', ',fn,'), cleanup, ',dbg,');'
-		z,←(n[⍵]<0)⌿⊂'release_array(tmp); tmp = NULL;'
-		z,←(n[xi]>0)⌿⊂'release_array(',x,'); ',x,' = NULL;'
-		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
-		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',tref,', ',x,', ',y,', NULL), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',tref,', ',x,', ',y,', env), cleanup, ',dbg,');'
+		z,←(n[⍵]<0)⌿⊂'free_cell(tmp);'
+		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
+		z,←((lx[fi]=¯7)∧n[fi]>0)⌿⊂'free_cell(',fn,');'
+		z,←(n[yi]>0)⌿⊂'free_cell(',y,');'
 		z,⊂''
 	}¨i
 	

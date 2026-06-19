@@ -274,6 +274,153 @@ buffer_size(enum elem_type t, int64_t c)
 	return sizeof(int64_t) * c;
 }
 
+EXPORT void
+squeeze(struct cell *c)
+{
+	switch (c->ctyp) {
+	case CELL_SCALAR:{
+		struct cell *p;
+		
+		if (c->s.etyp != ELEM_CELL)
+			return;
+			
+		p = c->s.p;
+		
+		if (p->ctyp != CELL_SCALAR)
+			return;
+		
+		squeeze(p);
+		
+		switch (p->s.etyp) {
+		case ELEM_INT:
+			c->s.etyp = ELEM_INT;
+			c->s.i = p->s.i;
+			break;
+			
+		case ELEM_FLOAT:
+			c->s.etyp = ELEM_FLOAT;
+			c->s.f = p->s.f;
+			break;
+			
+		case ELEM_CMPX:
+			c->s.etyp = ELEM_CMPX;
+			c->s.j = p->s.j;
+			break;
+		
+		case ELEM_CHAR:
+			c->s.etyp = ELEM_CHAR;
+			c->s.c = p->s.c;
+			break;
+			
+		default:
+			return;
+		}
+		
+		free_cell(p);
+	}return;
+		
+	case CELL_VECTOR:{
+		enum elem_type sqzt;
+		struct cell **p;
+		
+		if (c->v.etyp != ELEM_CELL)
+			return;
+		
+		if (!c->v.cnt)
+			return;
+			
+		p = c->v.host->p;
+			
+		if (p[0]->ctyp != CELL_SCALAR)
+			return;
+			
+		squeeze(p[0]);
+		
+		sqzt = p[0]->s.etyp;
+		
+		switch (sqzt) {
+		case ELEM_INT:
+		case ELEM_FLOAT:
+		case ELEM_CMPX:
+		case ELEM_CHAR:
+			break;
+		default:
+			return;
+		}
+		
+		for (int64_t i = 1; i < c->v.bnd; i++) {
+			if (p[i]->ctyp != CELL_SCALAR)
+				return;
+				
+			squeeze(p[i]);
+				
+			if (p[i]->s.etyp != sqzt)
+				return;
+		}
+		
+		switch (sqzt) {
+		case ELEM_INT:
+			for (int64_t i = 0; i < c->v.bnd; i++) {
+				struct cell *t = p[i];
+				
+				c->v.host->i[i] = t->s.i;
+				free_cell(t);
+			}
+			break;
+			
+		case ELEM_FLOAT:
+			for (int64_t i = 0; i < c->v.bnd; i++) {
+				struct cell *t = p[i];
+				
+				c->v.host->f[i] = t->s.f;
+				free_cell(t);
+			}
+			break;
+
+		case ELEM_CHAR:
+			for (int64_t i = 0; i < c->v.bnd; i++) {
+				struct cell *t = p[i];
+				
+				c->v.host->c[i] = t->s.c;
+				free_cell(t);
+			}
+			break;
+
+		case ELEM_CMPX:
+			struct host_buffer *buf;
+			
+			buf = get_host_buffer(buffer_size(ELEM_CMPX, c->v.bnd));
+			
+			if (!buf)
+				return;
+			
+			for (int64_t i = 0; i < c->v.bnd; i++) {
+				struct cell *t = p[i];
+				
+				buf->j[i] = t->s.j;
+				free_cell(t);
+			}
+			
+			free_host_buffer(c->v.host);
+			
+			c->v.host = buf;
+			
+			break;
+		}
+		
+		c->v.etyp = sqzt;
+	}return;
+	
+	case CELL_ARRAY:
+		squeeze(c->a.e);
+		
+	case CELL_VOID:
+	case CELL_FUNC:
+	default:
+		return;
+	}
+}
+
 /***************
  * DWA HELPERS *
  ***************/
