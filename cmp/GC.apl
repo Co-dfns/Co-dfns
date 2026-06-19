@@ -513,18 +513,9 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		id←⊃var_values ⍵
-		atyp←'array' 'func'⊃⍨k[⍵]∊3 6 9 12 15 18 21
-		ddtyp←'' 'moper' 'doper'⊃⍨0 5 11⍸k[⍵]
-		aatyp←'array' 'func'⊃⍨k[⍵]∊8 9 10 14 15 16 20 21 22
-		wwtyp←'array' 'func'⊃⍨k[⍵]∊17 18 19 20 21 22
 		hassvs←0≠≢svs←⊃sv[⍵]
 		haslvs←0≠≢lvs←⊃lv[⍵]
-		hasfvs←0≠≢fvs←{⍵[⍋n[⍵]]}⊃fv[⍵]
-		hasopts←0≠≢opts←lvs⌿⍨k[lvs]=7
 		ism←k[⍵]∊2 3 5 6 8 9 11 12 14 15 17 18 20 21
-		isop←k[⍵]≥5
-		isdop←k[⍵]≥11
-		self←'cdf_self' 'cdf_deldel'⊃⍨isop
 		pref,←⊂'int ',id,'(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 		z ←⊂'int'
 		z,←⊂id,'(struct cell *s, struct cell **z, struct cell *alpha, struct cell *omega, struct cell ***fv)'
