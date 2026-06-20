@@ -415,6 +415,16 @@ GC←{
 		x op←var_values⊢xi oi←⍵⊃kk
 		z ←check_vars xi oi
 		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
+		z,←⊂'CHK(!(',tgt,' = get_cell()), cleanup, ',dbg,');'
+		z,←⊂tgt,'->ctyp = CELL_FUNC;'
+		z,←⊂tgt,'->f.fn = &',op,'->f.fn[',(⍕2×k[⍵]=2),'];'
+		z,←⊂tgt,'->f.aa = ref_cell(',x,');'
+		z,←(n[⍵]<0)⌿⊂'free_cell(tmp);'
+		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
+		z,←((lx[oi]=¯7)∧n[oi]>0)⌿⊂'free_cell(',op,');'
+		z,⊂''
+		
+		
 		z,←⊂'CHK(mk_derf(',tref,', ',op,'->fptr_',lt,'m, ',op,'->fptr_',lt,'d, 2), cleanup, ',dbg,');'
 		z,←⊂tgt,'->fv[0] = retain_cell(',op,');'
 		z,←⊂tgt,'->fv[1] = retain_cell(',x,');'
