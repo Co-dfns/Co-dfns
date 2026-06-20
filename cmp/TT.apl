@@ -184,8 +184,8 @@ TT←{
 	syms,←⊂,'⊸'	  ⋄ nams⍪←'dove'       'dove'	       'dove'			'idxerr'
 	syms,←⊂,'⍺'	  ⋄ nams⍪←'alpha'      'alpha'	       'alpha'			'idxerr'
 	syms,←⊂,'⍵'	  ⋄ nams⍪←'omega'      'omega'	       'omega'			'idxerr'
-	syms,←⊂,'⍺⍺'	  ⋄ nams⍪←'s->aa' 	's->aa'    	's->aa'		'idxerr'
-	syms,←⊂,'⍵⍵'	  ⋄ nams⍪←'s->ww' 	's->ww'		's->ww'		'idxerr'
+	syms,←⊂,'⍺⍺'	  ⋄ nams⍪←'s->f.aa' 	's->f.aa'    	's->f.aa'		'idxerr'
+	syms,←⊂,'⍵⍵'	  ⋄ nams⍪←'s->f.ww' 	's->f.ww'	's->f.ww'		'idxerr'
 
 	syms,←⊂,'⎕PRINT_MEMSTATS' ⋄ nams⍪←(3⍴⊂'q_print_memstats'),⊂'idxerr'
 	syms,←⊂,'%u'      ⋄ nams⍪←''           ''              ''			''
