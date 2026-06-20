@@ -19,7 +19,7 @@ GC←{
 
 	⍝ Variable generation utilities
 	var_ckinds←{
-		types←'' 'cell' 'cell ' 'moper' 'doper' 'env' 'void' 'cell'
+		types←' afmdeva'
 		isa←t[⍵]∊A E S
 		isfn←(t[⍵]=O)∨(t[⍵]∊F T)∧k[⍵]<5
 		isdop←(t[⍵]∊F T)∧k[⍵]≥11
@@ -33,7 +33,7 @@ GC←{
 		islit←(t[⍵]=A)∧k[⍵]=1
 		nam←⍵
 		nam[i]←'l',∘⍕¨|n[⍵[i←⍸islit]]
-		nam[i]←(⊃¨var_ckinds ⍵[i]),¨⍕¨n[⍵[i←⍸(~islit)∧n[⍵]≥0]]
+		nam[i]←(var_ckinds ⍵[i]),¨⍕¨n[⍵[i←⍸(~islit)∧n[⍵]≥0]]
 		nam[i]←sym[|n[⍵[i←⍸(~islit)∧n[⍵]<0]]]
 		nam←(,¨asym)⎕R ceqv⊢(0⍴⊂''),nam
 		'' 'cdf_'[lx[⍵]≥0],¨nam
