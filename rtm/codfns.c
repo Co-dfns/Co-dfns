@@ -615,64 +615,100 @@ is_bound(struct cell *c)
  *************/
  
  int
- println_pad(struct cell *r, char *pad)
+ println_pad(struct cell *r)
  {
 	switch (r->ctyp) {
 	case CELL_VOID: return 6;
 	case CELL_SCALAR:
-		printf("%s", pad);
 		switch (r->s.etyp) {
 		case ELEM_INT:
-			printf("%lld ", r->s.i);
+			printf("%lld", r->s.i);
 			break;
 		case ELEM_FLOAT:
-			printf("%f ", r->s.f);
+			printf("%f", r->s.f);
 			break;
 		case ELEM_CMPX:
-			printf("%fJ%f ", r->s.j.real, r->s.j.imag);
+			printf("%fJ%f", r->s.j.real, r->s.j.imag);
 			break;
 		case ELEM_CHAR:
 			print_char(r->s.c);
-			printf(" ");
 			break;
 		case ELEM_CELL:
-			return 16;
+			printf(" ");
+			println_pad(r->s.p);
+			printf(" ");
+			break;
 		default:
 			return 99;
 		}
 		break;
 	case CELL_VECTOR:
-		printf("%s", pad);
 		switch (r->v.etyp) {
 		case ELEM_INT:
-			for (int64_t i = 0; i < r->v.cnt; i++)
-				printf("%lld ", r->v.host->i[i % r->v.bnd]);
+			for (int64_t i = 0; i < r->v.cnt; i++) {
+				if (i > 0) printf(" ");
+				printf("%lld", r->v.host->i[i % r->v.bnd]);
+			}
 			break;
 		case ELEM_FLOAT:
-			for (int64_t i = 0; i < r->v.cnt; i++)
-				printf("%f ", r->v.host->f[i % r->v.bnd]);
+			for (int64_t i = 0; i < r->v.cnt; i++) {
+				if (i > 0) printf(" ");
+				printf("%f", r->v.host->f[i % r->v.bnd]);
+			}
 			break;
 		case ELEM_CHAR:
-			for (int64_t i = 0; i < r->v.cnt; i++)
+			for (int64_t i = 0; i < r->v.cnt; i++) {
 				print_char(r->v.host->c[i % r->v.bnd]);
+			}
 			break;
 		case ELEM_CMPX:
 			for (int64_t i = 0; i < r->v.cnt; i++) {
 				struct apl_cmpx x;
-				
+			
 				x = r->v.host->j[i % r->v.bnd];
 				
-				printf("%fJ%f ", x.real, x.imag);
+				if (i > 0) printf(" ");
+				printf("%fJ%f", x.real, x.imag);
 			}
 			break;
 		case ELEM_DEV:
 		case ELEM_IOTA:
 		case ELEM_CELL:
+			struct cell **p;
+			int nst;
+			
+			p = r->v.host->p;
+			nst = 1;
+			
 			for (int64_t i = 0; i < r->v.cnt; i++) {
-				int err;
+				int64_t ib;
+				int err, prv;
 				
-				if ((err = println_pad(r->v.host->p[i % r->v.bnd], " ")))
+				ib = i % r->v.bnd;
+				prv = nst;
+				nst = 1;
+				
+				if (p[ib]->ctyp == CELL_SCALAR) {
+					switch (p[ib]->s.etyp) {
+					case ELEM_INT:
+					case ELEM_FLOAT:
+					case ELEM_CMPX:
+					case ELEM_CHAR:
+						nst = 0;
+					}
+				}
+				
+				if (nst && !prv)
+					printf(" ");
+				
+				if (nst || i > 0)
+					printf(" ");
+				
+				if ((err = println_pad(p[i % r->v.bnd])))
 					return err;
+					
+				if (nst)
+					printf(" ");
 			}
 			break;
 		default:
@@ -697,7 +733,7 @@ is_bound(struct cell *c)
 	
 	s; l; env;
 	
-	if ((err = println_pad(r, "")))
+	if ((err = println_pad(r)))
 		return err;
 		
 	printf("\n");
