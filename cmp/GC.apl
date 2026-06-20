@@ -249,7 +249,7 @@ GC←{
 		rnk≡1:{
 			z,←⊂'struct cell ',nam,'_val = {'
 			z,←⊂'	2, CELL_VECTOR, NULL, '
-			z,←⊂'	.v = {ELEM_',atp,', ',(⍕≢dat),', ',(⍕≢dat),', .host = &',nam,'_buf}'
+			z,←⊂'	.v = {ELEM_',atp,', ',(⍕⊃shp),', ',(⍕⊃shp),', .host = &',nam,'_buf}'
 			z,←⊂'};'
 			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
 		z,⊂''}⍵
