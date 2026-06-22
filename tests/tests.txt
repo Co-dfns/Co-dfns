@@ -31,3 +31,5 @@ abcdABCD
 7
 5
 8
+yes
+no
