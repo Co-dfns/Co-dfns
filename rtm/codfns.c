@@ -88,7 +88,7 @@ struct cell_array {
 };
 
 struct cell_func {
-	int (**fn)(struct cell *, struct cell **, struct cell *, struct cell *, struct cell **);
+	int (**fn)(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);
 	struct cell *aa, *ww, *axis;
 };
 
@@ -248,7 +248,9 @@ free_cell(struct cell *c)
 		break;
 		
 	case CELL_FUNC:
-		/* XXX */
+		free_cell(c->f.aa);
+		free_cell(c->f.ww);
+		free_cell(c->f.axis);
 		break;
 		
 	case CELL_SCALAR:
@@ -961,3 +963,22 @@ pick_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct c
 		return 99;
 	}
 }
+
+EXPORT int
+rgt_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; l; fv;
+	
+	*z = ref_cell(r);
+	return 0;
+}
+
+int (*rgt_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	rgt_f, rgt_f
+};
+struct cell rgt_c = {
+	1, CELL_FUNC, NULL, .f = {
+		rgt_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *rgt = &rgt_c;

@@ -99,8 +99,10 @@ GC←{
 	pref,←⊂''
 	pref,←⊂'#ifdef _WIN32'
 	pref,←⊂' #define EXPORT __declspec(dllexport)'
+	pref,←⊂' #define DECLSPEC __declspec(dllimport)'
 	pref,←⊂'#elif defined(__GNUC__)'
 	pref,←⊂' #define EXPORT __attribute__ ((visibility ("default")))'
+	pref,←⊂' #define DECLSPEC extern __attribute__ ((visibility ("default")))'
 	pref,←⊂'#else'
 	pref,←⊂' #define EXPORT'
 	pref,←⊂'#endif'
@@ -194,6 +196,8 @@ GC←{
 	pref,←⊂'int ravel_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int first_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int pick_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int rgt_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'DECLSPEC struct cell *rgt;'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
@@ -569,7 +573,7 @@ GC←{
 	i←⍸t=C
 	pref,←⊃,⌿{
 		0=≢i:0⍴⊂''
-		fids←var_refs ⍵⊃kk ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		fids←var_values ⍵⊃kk ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		z ←⊂'/* ',dbg,' */'
 		z,←⊂'int (*',tgt,'_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {'
 		z,←⊂'	',csep fids
