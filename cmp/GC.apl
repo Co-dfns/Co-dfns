@@ -498,6 +498,27 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		tgt←⊃var_values⊢ti←⊃⍵⊃kk ⋄ dbg←highlight ti
+		z ←⊂'/* ',dbg,' */'
+		z,←⊂'if (',tgt,'->ctyp != CELL_SCALAR)'
+		z,←⊂'	CHK(4, cleanup, "Non-scalar test expression");'
+		z,←⊂''
+		z,←⊂'if (',tgt,'->s.etyp != ELEM_INT)'
+		z,←⊂'	CHK(11, cleanup, "Non-integer test expression");'
+		z,←⊂''
+		z,←⊂'if (',tgt,'->s.i != 0 && ',tgt,'->s.i != 1)'
+		z,←⊂'	CHK(11, cleanup, "Non-Boolean test expression");'
+		z,←⊂''
+		z,←⊂'if (',tgt,'->s.i) {'
+		z,←(n[ti]>0)⌿'	free_cell(',tgt,');' ''
+		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
+		z,←⊂'	err = -1;'
+		z,←⊂'	goto cleanup;'
+		z,←⊂'}'
+		z,←⊂''
+		z,←(n[ti]>0)⌿'free_cell(',tgt,');'
+		z,←⊂'err = 0;'
+		z,⊂''
+		
 		z ←⊂'TRC(guard_check(',tgt,'), ',dbg,');'
 		z,←(n[ti]>0)⌿⊂'release_array(',tgt,'); ',tgt,' = NULL;'
 		z,←⊂''
