@@ -451,16 +451,6 @@ GC←{
 		z,←((lx[oi]=¯7)∧n[oi]>0)⌿⊂'free_cell(',op,');'
 		z,←(n[yi]>0)⌿⊂'free_cell(',y,');'		
 		z,⊂''
-		
-		z,←⊂'CHK(mk_derf(',tref,', ',fns,', 3), cleanup, ',dbg,');'
-		z,←⊂tgt,'->fv[0] = retain_cell(',op,');'
-		z,←⊂tgt,'->fv[1] = retain_cell(',x,');'
-		z,←⊂tgt,'->fv[2] = retain_cell(',y,');'
-		z,←(n[⍵]<0)⌿⊂'release_func(tmp); tmp = NULL;'
-		z,←(n[xi]>0)⌿⊂'release_',ltyp,'(',x,'); ',x,' = NULL;'
-		z,←(n[oi]>0)⌿⊂'release_doper(',op,'); ',op,' = NULL;'
-		z,←(n[yi]>0)⌿⊂'release_',rtyp,'(',y,'); ',y,' = NULL;'
-		z,⊂''
 	}¨i
 	
 	⍝ Ox: Axis Operator and Variant Operator
