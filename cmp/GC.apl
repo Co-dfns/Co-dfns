@@ -427,15 +427,6 @@ GC←{
 		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
 		z,←((lx[oi]=¯7)∧n[oi]>0)⌿⊂'free_cell(',op,');'
 		z,⊂''
-		
-		
-		z,←⊂'CHK(mk_derf(',tref,', ',op,'->fptr_',lt,'m, ',op,'->fptr_',lt,'d, 2), cleanup, ',dbg,');'
-		z,←⊂tgt,'->fv[0] = retain_cell(',op,');'
-		z,←⊂tgt,'->fv[1] = retain_cell(',x,');'
-		z,←(n[⍵]<0)⌿⊂'release_func(tmp); tmp = NULL;'
-		z,←(n[xi]>0)⌿⊂'release_',ltyp,'(',x,'); ',x,' = NULL;'
-		z,←(n[oi]>0)⌿⊂'release_moper(',op,'); ',op,' = NULL;'
-		z,⊂''
 	}¨i
 	
 	⍝ Od: Dyadic operators
