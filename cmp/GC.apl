@@ -546,7 +546,7 @@ GC←{
 		z,←(⊂'')⌿⍨haslvs
 		z,←⊂'	struct cell **env[] = {'
 		z,←⊂'		fv[0],'
-		z,←(⊂'		loc')⌿⍨haslvs
+		z,←(⊂'		(struct cell **)loc')⌿⍨haslvs
 		z,←⊂'	};'
 		z,←⊂''
 		z,←'	'∘,¨init_vars svs
