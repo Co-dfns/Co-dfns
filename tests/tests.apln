@@ -54,5 +54,10 @@ fn←{⍺←5 ⋄ ⍺ ⍵}
 ⎕←1{⍺:⍵ ⋄ 'no'}'yes'
 ⎕←0{⍺:⍵ ⋄ 'no'}'yes'
 
+⎕←{axis⍠←5 ⋄ axis}[3]⍬
+⎕←{axis⍠←5 ⋄ axis}⍬
+⎕←{axis⍠←5 ⋄ axis}[X]⍬
+⎕←{axis⍠←5 ⋄ axis}[⊃X]⍬
+
 
 :EndNamespace
