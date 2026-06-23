@@ -262,7 +262,8 @@ free_cell(struct cell *c)
 EXPORT struct cell *
 ref_cell(struct cell *c)
 {
-	c->refc++;
+	if (c)
+		c->refc++;
 	
 	return c;
 }
