@@ -518,21 +518,6 @@ GC←{
 		z,←(n[ti]>0)⌿'free_cell(',tgt,');'
 		z,←⊂'err = 0;'
 		z,⊂''
-		
-		z ←⊂'TRC(guard_check(',tgt,'), ',dbg,');'
-		z,←(n[ti]>0)⌿⊂'release_array(',tgt,'); ',tgt,' = NULL;'
-		z,←⊂''
-		z,←⊂'if (err > 0)'
-		z,←⊂'	goto cleanup;'
-		z,←⊂''
-		z,←⊂'if (!err) {'
-		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
-		z,←⊂'	err = -1;'
-		z,←⊂'	goto cleanup;'
-		z,←⊂'}'
-		z,←⊂''
-		z,←⊂'err = 0;'
-		z,⊂''
 	}¨i
 	
 	⍝ FN: Non-zero functions
