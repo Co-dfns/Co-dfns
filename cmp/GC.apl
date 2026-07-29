@@ -108,30 +108,15 @@ GC←{
 	pref,←⊂'#endif'
 	pref,←⊂''
 	pref,←⊂'enum elem_type { '
-	pref,←⊂'	ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_DEV, ELEM_IOTA, ELEM_CELL'
+	pref,←⊂'	ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_CELL, ELEM_MAX'
 	pref,←⊂'};'
 	pref,←⊂''
-	pref,←⊂'enum cell_type { CELL_VOID, CELL_SCALAR, CELL_VECTOR, CELL_ARRAY, CELL_FUNC };'
+	pref,←⊂'enum cell_type { CELL_VOID, CELL_ARRAY, CELL_FUNC };'
+	pref,←⊂''
+	pref,←⊂'enum storage_type { STG_HOST, STG_DEVICE };'
 	pref,←⊂''
 	pref,←⊂'struct apl_cmpx {'
-	pref,←⊂'	double real;'
-	pref,←⊂'	double imag;'
-	pref,←⊂'};'
-	pref,←⊂''
-	pref,←⊂'struct iota_range {'
-	pref,←⊂'	double shift;'
-	pref,←⊂'	double step;'
-	pref,←⊂'};'
-	pref,←⊂''
-	pref,←⊂'struct cell_scalar {'
-	pref,←⊂'	enum elem_type etyp;'
-	pref,←⊂'	union {'
-	pref,←⊂'		int64_t i;'
-	pref,←⊂'		double f;'
-	pref,←⊂'		struct apl_cmpx j;'
-	pref,←⊂'		uint64_t c;'
-	pref,←⊂'		struct cell *p;'
-	pref,←⊂'	};'
+	pref,←⊂'	double real, imag;'
 	pref,←⊂'};'
 	pref,←⊂''
 	pref,←⊂'struct host_buffer {'
@@ -147,19 +132,20 @@ GC←{
 	pref,←⊂'	};'
 	pref,←⊂'};'
 	pref,←⊂''
-	pref,←⊂'struct cell_vector {'
+	pref,←⊂'struct cell_array {'
 	pref,←⊂'	enum elem_type etyp;'
-	pref,←⊂'	int64_t cnt, bnd;'
+	pref,←⊂'	enum storage_type stg;'
+	pref,←⊂'	int rnk;'
+	pref,←⊂'	struct host_buffer *shp;'
 	pref,←⊂'	union {'
 	pref,←⊂'		struct host_buffer *host;'
 	pref,←⊂'		void *dev;'
-	pref,←⊂'		struct iota_range iota;'
+	pref,←⊂'		int64_t i;'
+	pref,←⊂'		double f;'
+	pref,←⊂'		struct apl_cmpx j;'
+	pref,←⊂'		uint64_t c;'
+	pref,←⊂'		struct cell *p;'
 	pref,←⊂'	};'
-	pref,←⊂'};'
-	pref,←⊂''
-	pref,←⊂'struct cell_array {'
-	pref,←⊂'	struct cell *s;'
-	pref,←⊂'	struct cell *e;'
 	pref,←⊂'};'
 	pref,←⊂''
 	pref,←⊂'struct cell_func {'
@@ -172,8 +158,6 @@ GC←{
 	pref,←⊂'	enum cell_type ctyp;'
 	pref,←⊂'	struct cell *next;'
 	pref,←⊂'	union {'
-	pref,←⊂'		struct cell_scalar s;'
-	pref,←⊂'		struct cell_vector v;'
 	pref,←⊂'		struct cell_array a;'
 	pref,←⊂'		struct cell_func f;'
 	pref,←⊂'	};'
@@ -198,6 +182,8 @@ GC←{
 	pref,←⊂'int pick_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int rgt_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *rgt;'
+	pref,←⊂'int brkidx_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int set_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
@@ -241,19 +227,23 @@ GC←{
 		nam←'l',⍕⍵
 		rnk≡0:{
 			z ←⊂'struct cell ',nam,'_val = {'
-			z,←⊂'	2, CELL_SCALAR, NULL, '
-			z,←⊂'	.s = {ELEM_',atp,', ',ftp,' = ',(⊃dat),'}'
+			z,←⊂'	2, CELL_ARRAY, NULL, '
+			z,←⊂'	.a = {ELEM_',atp,', STG_HOST, 0, NULL, ',ftp,' = ',(⊃dat),'}'
 			z,←⊂'};'
 			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
 		z,⊂''}⍵
 		z ←⊂ctp,' ',nam,'_dat[] = {',(csep dat),'};'
 		z,←⊂'struct host_buffer ',nam,'_buf = {'
-		z,←⊂'	2, ',(⍕(1+5=dri)×8×≢dat),', NULL, ',ftp,' = ',nam,'_dat'
+		z,←⊂'	2, 0, NULL, ',ftp,' = ',nam,'_dat'
 		z,←⊂'};'
 		rnk≡1:{
+			z,←⊂'int64_t ',nam,'_shp_dat[] = {',(⍕⊃shp),'};'
+			z,←⊂'struct host_buffer ',nam,'_shp = {'
+			z,←⊂'	2, 0, NULL, .i = ',nam,'_shp_dat'
+			z,←⊂'};'
 			z,←⊂'struct cell ',nam,'_val = {'
-			z,←⊂'	2, CELL_VECTOR, NULL, '
-			z,←⊂'	.v = {ELEM_',atp,', ',(⍕⊃shp),', ',(⍕⊃shp),', .host = &',nam,'_buf}'
+			z,←⊂'	2, CELL_ARRAY, NULL, '
+			z,←⊂'	.a = {ELEM_',atp,', STG_HOST, 1, &',nam,'_shp, .host = &',nam,'_buf}'
 			z,←⊂'};'
 			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
 		z,⊂''}⍵
@@ -278,12 +268,15 @@ GC←{
 		tgt←⊃var_values ⍵ ⋄ vs←var_values⊢ks←⍵⊃kk
 		z ←check_vars⊢ks←⍵⊃kk
 		z,←⊂'CHK(!(',tgt,' = get_cell()), cleanup, ',dbg,');'
-		z,←⊂tgt,'->ctyp = CELL_VECTOR;'
-		z,←⊂tgt,'->v.etyp = ELEM_CELL;'
-		z,←⊂tgt,'->v.cnt = ',tgt,'->v.bnd = ',(⍕≢ks),';'
-		z,←⊂'CHK(!(',tgt,'->v.host = get_host_buffer(buffer_size(ELEM_CELL, ',(⍕≢ks),'))), cleanup, ',dbg,');'
-		z,←(⍳≢ks){tgt,'->v.host->p[',(⍕⍺),'] = ref_cell(',⍵,');'}¨vs
-		z,←⊂'squeeze(',tgt,');'
+		z,←⊂tgt,'->ctyp = CELL_ARRAY;'
+		z,←⊂tgt,'->a.etyp = ELEM_CELL;'
+		z,←⊂tgt,'->a.stg = STG_HOST;'
+		z,←⊂tgt,'->a.rnk = 1;'
+		z,←⊂'CHK(!(',tgt,'->a.shp = get_host_buffer(buffer_size(ELEM_INT, 1))), cleanup, ',dbg,');'
+		z,←⊂tgt,'->a.shp->i[0] = ',(⍕≢ks),';'
+		z,←⊂'CHK(!(',tgt,'->a.host = get_host_buffer(buffer_size(ELEM_CELL, ',(⍕≢ks),'))), cleanup, ',dbg,');'
+		z,←(⍳≢ks){tgt,'->a.host->p[',(⍕⍺),'] = ref_cell(',⍵,');'}¨vs
+		z,←(t[⍵]=A)⌿⊂'squeeze(',tgt,');'
 		z,←(n[ks]>0)⌿{'free_cell(',⍵,');'}¨vs
 		z,⊂''
 	}¨i
@@ -296,12 +289,15 @@ GC←{
 		ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
 		z ←{'free_cell(',⍵,');'}¨kv
 		z,←⊂''
-		z,←⊂'if (',tgt,'->ctyp != CELL_SCALAR) {'
+		z,←⊂'if (',tgt,'->a.shp) {'
 		z,←⊂'	CHK(!(tmp = get_cell()), cleanup, ',dbg,');'
-		z,←⊂'	tmp->ctyp = CELL_SCALAR;'
-		z,←⊂'	tmp->s.etyp = ELEM_INT;'
-		z,←⊂'	tmp->s.i = 0;'
-		z,←kd{'	CHK(pick_f(NULL, ',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->s.i++;'}¨kr
+		z,←⊂'	tmp->ctyp = CELL_ARRAY;'
+		z,←⊂'	tmp->a.etyp = ELEM_INT;'
+		z,←⊂'	tmp->a.stg = STG_HOST;'
+		z,←⊂'	tmp->a.rnk = 0;'
+		z,←⊂'	tmp->a.shp = NULL;'
+		z,←⊂'	tmp->a.i = 0;'
+		z,←kd{'	CHK(pick_f(NULL, ',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->a.i++;'}¨kr
 		z,←⊂'	free_cell(tmp);'
 		z,←⊂'} else {'
 		z,←⊂'	CHK(first_f(NULL, &tmp, NULL, ',tgt,', NULL), cleanup, ',dbg,');'
@@ -399,13 +395,12 @@ GC←{
 		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		bxr←⊃var_refs ⊃⍵⊃kk ⋄ bxv x fn y←var_values⊢bi xi fi yi←⍵⊃kk
 		z ←check_vars xi fi yi
-		z,←⊂'tmp = ',bxv,';'
-		z,←⊂tgt,' = retain_cell(',y,');'
-		z,←⊂'CHK((',fn,'->fptr_dya)(',bxr,', ',x,', ',tgt,', ',fn,'), cleanup, ',dbg,');'
-		z,←⊂'release_array(tmp); tmp = NULL;'
-		z,←(n[xi]>0)⌿⊂'release_array(',x,'); ',x,' = NULL;'
-		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
-		z,←(n[yi]>0)⌿⊂'release_array(',y,'); ',y,' = NULL;'
+		z,←⊂tgt,' = ref_cell(',y,');'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',bxr,', ',x,', ',tgt,', NULL), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',bxr,', ',x,', ',tgt,', env), cleanup, ',dbg,');'
+		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
+		z,←((lx[fi]≠¯7)∧n[fi]>0)⌿⊂'release_func(',fn,');'
+		z,←(n[yi]>0)⌿⊂'free_cell(',y,');'
 		z,⊂''
 	}¨i
 	
@@ -414,7 +409,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		lt←⊃ltyp←'array' 'func'⊃⍨k[⍵]=2
-		tref←'(struct cell_derf **)',⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵
+		tgt←⊃var_values ⍵
 		dbg←highlight ⍵
 		x op←var_values⊢xi oi←⍵⊃kk
 		z ←check_vars xi oi
@@ -435,10 +430,9 @@ GC←{
 		0=≢i:0⍴⊂''
 		ltyp←'array' 'func'⊃⍨k[⍵]∊5 8
 		rtyp←'array' 'func'⊃⍨k[⍵]∊7 8
-		tref←'(struct cell_derf **)',⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵
+		tgt←⊃var_values ⍵
 		dbg←highlight ⍵
 		x op y←var_values⊢xi oi yi←⍵⊃kk
-		fns←csep op∘,¨'->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
 		z ←check_vars xi oi yi
 		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK(!(',tgt,' = get_cell()), cleanup, ',dbg,');'
@@ -499,16 +493,16 @@ GC←{
 		0=≢i:0⍴⊂''
 		tgt←⊃var_values⊢ti←⊃⍵⊃kk ⋄ dbg←highlight ti
 		z ←⊂'/* ',dbg,' */'
-		z,←⊂'if (',tgt,'->ctyp != CELL_SCALAR)'
+		z,←⊂'if (',tgt,'->a.shp)'
 		z,←⊂'	CHK(4, cleanup, "Non-scalar test expression");'
 		z,←⊂''
-		z,←⊂'if (',tgt,'->s.etyp != ELEM_INT)'
+		z,←⊂'if (',tgt,'->a.etyp != ELEM_INT)'
 		z,←⊂'	CHK(11, cleanup, "Non-integer test expression");'
 		z,←⊂''
-		z,←⊂'if (',tgt,'->s.i != 0 && ',tgt,'->s.i != 1)'
+		z,←⊂'if (',tgt,'->a.i != 0 && ',tgt,'->a.i != 1)'
 		z,←⊂'	CHK(11, cleanup, "Non-Boolean test expression");'
 		z,←⊂''
-		z,←⊂'if (',tgt,'->s.i) {'
+		z,←⊂'if (',tgt,'->a.i) {'
 		z,←(n[ti]>0)⌿'	free_cell(',tgt,');' ''
 		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
 		z,←⊂'	err = -1;'
