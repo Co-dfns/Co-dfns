@@ -1,5 +1,5 @@
 AF∆PREFIX←'/opt/arrayfire'
-VS∆PATH←'\Program Files\Microsoft Visual Studio\2022\Community'
+VS∆PATH←'\Program Files\Microsoft Visual Studio\18\Community'
 
 Compile←{
 	m←(-≢2⊃⎕NPARTS ⍵)↓⍵
