@@ -227,7 +227,7 @@ GC←{
 		nam←'l',⍕⍵
 		rnk≡0:{
 			z ←⊂'struct cell ',nam,'_val = {'
-			z,←⊂'	2, CELL_ARRAY, NULL, '
+			z,←⊂'	1, CELL_ARRAY, NULL, '
 			z,←⊂'	.a = {ELEM_',atp,', STG_HOST, 0, NULL, ',ftp,' = ',(⊃dat),'}'
 			z,←⊂'};'
 			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
@@ -239,10 +239,10 @@ GC←{
 		rnk≡1:{
 			z,←⊂'int64_t ',nam,'_shp_dat[] = {',(⍕⊃shp),'};'
 			z,←⊂'struct host_buffer ',nam,'_shp = {'
-			z,←⊂'	2, 0, NULL, .i = ',nam,'_shp_dat'
+			z,←⊂'	1, 0, NULL, .i = ',nam,'_shp_dat'
 			z,←⊂'};'
 			z,←⊂'struct cell ',nam,'_val = {'
-			z,←⊂'	2, CELL_ARRAY, NULL, '
+			z,←⊂'	1, CELL_ARRAY, NULL, '
 			z,←⊂'	.a = {ELEM_',atp,', STG_HOST, 1, &',nam,'_shp, .host = &',nam,'_buf}'
 			z,←⊂'};'
 			z,←⊂'struct cell *',nam,' = &',nam,'_val;'
