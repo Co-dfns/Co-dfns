@@ -1001,10 +1001,333 @@ brkidx_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct
 	return 0;
 }
 
+int
+set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi, int64_t *ri)
+{
+	struct cell *idx;
+	
+	idx = l->a.host->p[k];
+	
+	if (k == l->a.shp->i[0] - 1) {
+		int64_t * restrict iv, cnt;
+		
+		iv = idx->a.host->i;
+		cnt = array_count(idx, 0);
+		*zi *= (*z)->a.shp->i[k];
+		
+		switch ((*z)->a.etyp) {
+		case ELEM_INT:{
+			int64_t * restrict zv = (*z)->a.host->i;
+			
+			switch (r->a.etyp) {
+			case ELEM_INT:{
+				int64_t * restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					zv[*zi + iv[i]] = rv[(*ri)++];
+			}break;
+			
+			default:
+				return 99;
+			}
+		}break;
+		
+		case ELEM_FLOAT:{
+			double * restrict zv = (*z)->a.host->f;
+			
+			switch (r->a.etyp) {
+			case ELEM_INT:{
+				int64_t * restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					zv[*zi + iv[i]] = (double)rv[(*ri)++];
+			}break;
+			
+			case ELEM_FLOAT:{
+				double * restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					zv[*zi + iv[i]] = rv[(*ri)++];
+			}break;
+			
+			default:
+				return 99;
+			}
+		}break;
+		
+		case ELEM_CMPX:{
+			struct apl_cmpx * restrict zv = (*z)->a.host->j;
+			
+			switch (r->a.etyp) {
+			case ELEM_INT:{
+				int64_t * restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					int64_t j = *zi + iv[i];
+					
+					zv[j].real = (double)rv[(*ri)++];
+					zv[j].imag = 0;
+				}
+			}break;
+			
+			case ELEM_FLOAT:{
+				double * restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					int64_t j = *zi + iv[i];
+					
+					zv[j].real = rv[(*ri)++];
+					zv[j].imag = 0;
+				}
+			}break;
+			
+			case ELEM_CMPX:{
+				struct apl_cmpx * restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					zv[*zi + iv[i]] = rv[(*ri)++];
+			}break;
+			
+			default:
+				return 99;
+			}
+		}break;
+		
+		case ELEM_CHAR:{
+			uint64_t * restrict zv = (*z)->a.host->c;
+			
+			switch (r->a.etyp) {
+			case ELEM_CHAR:{
+				uint64_t * restrict rv = r->a.host->c;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					zv[*zi + iv[i]] = rv[(*ri)++];
+			}break;
+			default:
+				return 99;
+			}
+		}break;
+		
+		case ELEM_CELL:{
+			struct cell ** restrict zv = (*z)->a.host->p;
+			
+			switch (r->a.etyp) {
+			case ELEM_INT:{
+				int64_t * restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) return 1;
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = ELEM_INT;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.i = rv[(*ri)++];
+					
+					zv[*zi + iv[i]] = c;
+				}
+			}break;
+			
+			case ELEM_FLOAT:{
+				double * restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) return 1;
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = ELEM_FLOAT;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.f = rv[(*ri)++];
+					
+					zv[*zi + iv[i]] = c;
+				}
+			}break;
+			
+			case ELEM_CMPX:{
+				struct apl_cmpx * restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) return 1;
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = ELEM_CMPX;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.j = rv[(*ri)++];
+					
+					zv[*zi + iv[i]] = c;
+				}
+			}break;
+			
+			case ELEM_CHAR:{
+				uint64_t * restrict rv = r->a.host->c;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) return 1;
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = ELEM_CHAR;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.i = rv[(*ri)++];
+					
+					zv[*zi + iv[i]] = c;
+				}
+			}break;
+			
+			case ELEM_CELL:{
+				struct cell ** restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					zv[*zi + iv[i]] = ref_cell(rv[(*ri)++]);
+			}break;
+			
+			default:
+				return 99;
+			}
+		}break;
+		
+		default:
+			return 99;
+		}
+			
+		return 0;
+	}
+	
+	return 16;
+}
+
 EXPORT int
 set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
-	s, z, l, r, fv;
+	int64_t cnt, zi, ri;
+	enum elem_type ztyp;
 	
-	return 16;
+	s, fv;
+	
+	if (l->a.rnk != 1 || l->a.etyp != ELEM_CELL)
+		return 99;
+		
+	if (r->a.rnk) {
+		int64_t j;
+		
+		j = 0;
+		
+		for (int64_t k = 0; k < l->a.shp->i[0]; k++) {
+			struct cell *idx = l->a.host->p[k];
+		
+			for (int64_t i = 0; i < idx->a.rnk; i++) {
+				if (j == r->a.rnk)
+					return 4;
+					
+				if (idx->a.shp->i[i] != r->a.shp->i[j++])
+					return 5;
+			}
+		}
+		
+		if (j != r->a.rnk)
+			return 4;
+	}
+	
+	cnt = 1;
+	
+	for (int64_t i = 0; i < l->a.shp->i[0]; i++) {
+		struct cell *idx = l->a.host->p[i];
+		
+		for (int64_t j = 0; j < idx->a.rnk; j++)
+			cnt *= idx->a.shp->i[j];
+	}
+	
+	if (!cnt)
+		return 0;
+	
+	if ((*z)->a.stg != STG_HOST)
+		return 16;
+		
+	ztyp = elem_type_merge_map[(*z)->a.etyp][r->a.etyp];
+	
+	if (ztyp != (*z)->a.etyp)
+		return 16;
+	
+	if ((*z)->refc != 1) {
+		struct cell *t = get_cell();
+		
+		if (!t) return 1;
+		
+		t->ctyp = CELL_ARRAY;
+		t->a = (*z)->a;
+		t->a.shp->refc++;
+		t->a.host->refc++;
+		
+		free_cell(*z);
+		
+		*z = t;
+	}
+	
+	if ((*z)->a.host->refc != 1){
+		int64_t zc;
+		struct host_buffer *h;
+		
+		zc = array_count(*z, 1);
+		h = get_host_buffer(buffer_size((*z)->a.etyp, zc));
+		
+		if (!h)
+			return 1;
+		
+		switch ((*z)->a.etyp) {
+		case ELEM_INT:
+			for (int64_t i = 0; i < zc; i++)
+				h->i[i] = (*z)->a.host->i[i];
+		break;
+		
+		case ELEM_FLOAT:
+			for (int64_t i = 0; i < zc; i++)
+				h->f[i] = (*z)->a.host->f[i];
+		break;
+		
+		case ELEM_CMPX:
+			for (int64_t i = 0; i < zc; i++)
+				h->j[i] = (*z)->a.host->j[i];
+		break;
+		
+		case ELEM_CHAR:
+			for (int64_t i = 0; i < zc; i++)
+				h->c[i] = (*z)->a.host->c[i];
+		break;
+		
+		case ELEM_CELL:
+			for (int64_t i = 0; i < zc; i++)
+				h->p[i] = ref_cell((*z)->a.host->p[i]);
+		break;
+		
+		default:
+			free_host_buffer(h);
+			return 99;
+		}
+		
+		(*z)->a.host->refc--;
+		(*z)->a.host = h;
+	}
+	
+	
+	if (r->a.stg != STG_HOST)
+		return 16;
+	
+	zi = 0;
+	ri = 0;
+	
+	return set_host(z, l, r, 0, &zi, &ri);
 }
