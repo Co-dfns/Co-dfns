@@ -1020,13 +1020,17 @@ set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi
 			int64_t * restrict zv = (*z)->a.host->i;
 			
 			switch (r->a.etyp) {
-			case ELEM_INT:{
-				int64_t * restrict rv = r->a.host->i;
+			case ELEM_INT:
+				if (r->a.rnk) {
+					int64_t * restrict rv = r->a.host->i;
 				
-				for (int64_t i = 0; i < cnt; i++)
-					zv[*zi + iv[i]] = rv[(*ri)++];
-			}break;
-			
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = rv[(*ri)++];
+				} else {
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = r->a.i;
+				}
+			break;
 			default:
 				return 99;
 			}
@@ -1036,19 +1040,29 @@ set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi
 			double * restrict zv = (*z)->a.host->f;
 			
 			switch (r->a.etyp) {
-			case ELEM_INT:{
-				int64_t * restrict rv = r->a.host->i;
-				
-				for (int64_t i = 0; i < cnt; i++)
-					zv[*zi + iv[i]] = (double)rv[(*ri)++];
-			}break;
+			case ELEM_INT:
+				if (r->a.rnk) {
+					int64_t * restrict rv = r->a.host->i;
+					
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = (double)rv[(*ri)++];
+				} else {
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = (double)r->a.i;
+				}
+			break;
 			
-			case ELEM_FLOAT:{
-				double * restrict rv = r->a.host->f;
-				
-				for (int64_t i = 0; i < cnt; i++)
-					zv[*zi + iv[i]] = rv[(*ri)++];
-			}break;
+			case ELEM_FLOAT:
+				if (r->a.rnk) {
+					double * restrict rv = r->a.host->f;
+					
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = rv[(*ri)++];
+				} else {
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = r->a.f;
+				}
+			break;
 			
 			default:
 				return 99;
@@ -1059,34 +1073,57 @@ set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi
 			struct apl_cmpx * restrict zv = (*z)->a.host->j;
 			
 			switch (r->a.etyp) {
-			case ELEM_INT:{
-				int64_t * restrict rv = r->a.host->i;
-				
-				for (int64_t i = 0; i < cnt; i++) {
-					int64_t j = *zi + iv[i];
+			case ELEM_INT:
+				if (r->a.rnk) {
+					int64_t * restrict rv = r->a.host->i;
 					
-					zv[j].real = (double)rv[(*ri)++];
-					zv[j].imag = 0;
+					for (int64_t i = 0; i < cnt; i++) {
+						int64_t j = *zi + iv[i];
+						
+						zv[j].real = (double)rv[(*ri)++];
+						zv[j].imag = 0;
+					}
+				} else {
+					for (int64_t i = 0; i < cnt; i++) {
+						int64_t j = *zi + iv[i];
+
+						zv[j].real = (double)r->a.i;
+						zv[j].imag = 0;
+					}
 				}
-			}break;
+			break;
 			
-			case ELEM_FLOAT:{
-				double * restrict rv = r->a.host->f;
-				
-				for (int64_t i = 0; i < cnt; i++) {
-					int64_t j = *zi + iv[i];
+			case ELEM_FLOAT:
+				if (r->a.rnk) {
+					double * restrict rv = r->a.host->f;
 					
-					zv[j].real = rv[(*ri)++];
-					zv[j].imag = 0;
+					for (int64_t i = 0; i < cnt; i++) {
+						int64_t j = *zi + iv[i];
+						
+						zv[j].real = rv[(*ri)++];
+						zv[j].imag = 0;
+					}
+				} else {
+					for (int64_t i = 0; i < cnt; i++) {
+						int64_t j = *zi + iv[i];
+						
+						zv[j].real = r->a.f;
+						zv[j].imag = 0;
+					}
 				}
-			}break;
+			break;
 			
-			case ELEM_CMPX:{
-				struct apl_cmpx * restrict rv = r->a.host->j;
-				
-				for (int64_t i = 0; i < cnt; i++)
-					zv[*zi + iv[i]] = rv[(*ri)++];
-			}break;
+			case ELEM_CMPX:
+				if (r->a.rnk) {
+					struct apl_cmpx * restrict rv = r->a.host->j;
+					
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = rv[(*ri)++];
+				} else {
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = r->a.j;
+				}
+			break;
 			
 			default:
 				return 99;
@@ -1097,12 +1134,17 @@ set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi
 			uint64_t * restrict zv = (*z)->a.host->c;
 			
 			switch (r->a.etyp) {
-			case ELEM_CHAR:{
-				uint64_t * restrict rv = r->a.host->c;
-				
-				for (int64_t i = 0; i < cnt; i++)
-					zv[*zi + iv[i]] = rv[(*ri)++];
-			}break;
+			case ELEM_CHAR:
+				if (r->a.rnk) {
+					uint64_t * restrict rv = r->a.host->c;
+					
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = rv[(*ri)++];
+				} else {
+					for (int64_t i = 0; i < cnt; i++)
+						zv[*zi + iv[i]] = r->a.c;
+				}
+			break;
 			default:
 				return 99;
 			}
@@ -1112,88 +1154,185 @@ set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi
 			struct cell ** restrict zv = (*z)->a.host->p;
 			
 			switch (r->a.etyp) {
-			case ELEM_INT:{
-				int64_t * restrict rv = r->a.host->i;
-				
-				for (int64_t i = 0; i < cnt; i++) {
-					struct cell *c = get_cell();
+			case ELEM_INT:
+				if (r->a.rnk) {
+					int64_t * restrict rv = r->a.host->i;
 					
-					if (!c) return 1;
-					
-					c->ctyp = CELL_ARRAY;
-					c->a.etyp = ELEM_INT;
-					c->a.stg = STG_HOST;
-					c->a.rnk = 0;
-					c->a.shp = NULL;
-					c->a.i = rv[(*ri)++];
-					
-					zv[*zi + iv[i]] = c;
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+						
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_INT;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.i = rv[(*ri)++];
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
+				} else {
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_INT;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.i = r->a.i;
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
 				}
-			}break;
+				break;
 			
-			case ELEM_FLOAT:{
-				double * restrict rv = r->a.host->f;
-				
-				for (int64_t i = 0; i < cnt; i++) {
-					struct cell *c = get_cell();
+			case ELEM_FLOAT:
+				if (r->a.rnk) {
+					double * restrict rv = r->a.host->f;
 					
-					if (!c) return 1;
-					
-					c->ctyp = CELL_ARRAY;
-					c->a.etyp = ELEM_FLOAT;
-					c->a.stg = STG_HOST;
-					c->a.rnk = 0;
-					c->a.shp = NULL;
-					c->a.f = rv[(*ri)++];
-					
-					zv[*zi + iv[i]] = c;
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_FLOAT;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.f = rv[(*ri)++];
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
+				} else {
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_FLOAT;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.f = r->a.f;
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
 				}
-			}break;
+				break;
 			
-			case ELEM_CMPX:{
-				struct apl_cmpx * restrict rv = r->a.host->j;
-				
-				for (int64_t i = 0; i < cnt; i++) {
-					struct cell *c = get_cell();
+			case ELEM_CMPX:
+				if (r->a.rnk) {
+					struct apl_cmpx * restrict rv = r->a.host->j;
 					
-					if (!c) return 1;
-					
-					c->ctyp = CELL_ARRAY;
-					c->a.etyp = ELEM_CMPX;
-					c->a.stg = STG_HOST;
-					c->a.rnk = 0;
-					c->a.shp = NULL;
-					c->a.j = rv[(*ri)++];
-					
-					zv[*zi + iv[i]] = c;
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_CMPX;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.j = rv[(*ri)++];
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
+				} else {
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_CMPX;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.j = r->a.j;
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
 				}
-			}break;
+			break;
 			
-			case ELEM_CHAR:{
-				uint64_t * restrict rv = r->a.host->c;
-				
-				for (int64_t i = 0; i < cnt; i++) {
-					struct cell *c = get_cell();
+			case ELEM_CHAR:
+				if (r->a.rnk) {
+					uint64_t * restrict rv = r->a.host->c;
 					
-					if (!c) return 1;
-					
-					c->ctyp = CELL_ARRAY;
-					c->a.etyp = ELEM_CHAR;
-					c->a.stg = STG_HOST;
-					c->a.rnk = 0;
-					c->a.shp = NULL;
-					c->a.i = rv[(*ri)++];
-					
-					zv[*zi + iv[i]] = c;
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_CHAR;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.c = rv[(*ri)++];
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
+				} else {
+					for (int64_t i = 0; i < cnt; i++) {
+						struct cell *c = get_cell();
+						int64_t j = *zi + iv[i];
+
+						if (!c) return 1;
+						
+						c->ctyp = CELL_ARRAY;
+						c->a.etyp = ELEM_CHAR;
+						c->a.stg = STG_HOST;
+						c->a.rnk = 0;
+						c->a.shp = NULL;
+						c->a.c = r->a.i;
+						
+						free_cell(zv[j]);
+						zv[j] = c;
+					}
 				}
-			}break;
+			break;
 			
-			case ELEM_CELL:{
-				struct cell ** restrict rv = r->a.host->p;
-				
-				for (int64_t i = 0; i < cnt; i++)
-					zv[*zi + iv[i]] = ref_cell(rv[(*ri)++]);
-			}break;
+			case ELEM_CELL:
+				if (r->a.rnk) {
+					struct cell ** restrict rv = r->a.host->p;
+
+					for (int64_t i = 0; i < cnt; i++) {
+						int64_t j = *zi + iv[i];
+						
+						free_cell(zv[j]);
+						zv[j] = ref_cell(rv[(*ri)++]);
+					}
+				} else {
+					for (int64_t i = 0; i < cnt; i++) {
+						int64_t j = *zi + iv[i];
+						
+						free_cell(zv[j]);
+						zv[j] = ref_cell(r->a.p);
+					}
+				}
+			break;
 			
 			default:
 				return 99;
