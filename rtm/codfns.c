@@ -1313,6 +1313,7 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 				h->p[i] = ref_cell((*z)->a.host->p[i]);
 		break;
 		
+			break;
 		default:
 			free_host_buffer(h);
 			return 99;
