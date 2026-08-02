@@ -1321,6 +1321,7 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 		
 		free_host_buffer((*z)->a.host);
 		(*z)->a.host = h;
+		(*z)->a.etyp = ztyp;
 	}
 	
 	
