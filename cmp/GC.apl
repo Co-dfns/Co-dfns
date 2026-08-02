@@ -234,7 +234,7 @@ GC←{
 		z,⊂''}⍵
 		z ←⊂ctp,' ',nam,'_dat[] = {',(csep dat),'};'
 		z,←⊂'struct host_buffer ',nam,'_buf = {'
-		z,←⊂'	2, 0, NULL, ',ftp,' = ',nam,'_dat'
+		z,←⊂'	1, 0, NULL, ',ftp,' = ',nam,'_dat'
 		z,←⊂'};'
 		rnk≡1:{
 			z,←⊂'int64_t ',nam,'_shp_dat[] = {',(⍕⊃shp),'};'
