@@ -222,8 +222,8 @@ GC←{
 	pref,←⊃⍪⌿{
 		rnk←≢shp←⍴dat←⍵⊃sym ⋄ dri←drtypes⍳⎕DR dat
 		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes ⋄ ftp←dri⊃ftypes
-		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
-		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
+		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:{'{',(⍕9○⍵),', ',(⍕11○⍵),'}'}¨⍵ ⋄ ⍕¨⍵}
+		dat←'¯'⎕R'-'¨fmt ⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
 		nam←'l',⍕⍵
 		rnk≡0:{
 			z ←⊂'struct cell ',nam,'_val = {'
@@ -277,7 +277,7 @@ GC←{
 		z,←⊂'CHK(!(',tgt,'->a.host = get_host_buffer(buffer_size(ELEM_CELL, ',(⍕≢ks),'))), cleanup, ',dbg,');'
 		z,←(⍳≢ks){tgt,'->a.host->p[',(⍕⍺),'] = ref_cell(',⍵,');'}¨vs
 		z,←(t[⍵]=A)⌿⊂'squeeze(',tgt,');'
-		z,←(n[ks]>0)⌿{'free_cell(',⍵,');'}¨vs
+		z,←(n[ks]>0)⌿{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨vs
 		z,⊂''
 	}¨i
 	
@@ -287,7 +287,7 @@ GC←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵
 		ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
-		z ←{'free_cell(',⍵,');'}¨kv
+		z ←{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨kv
 		z,←⊂''
 		z,←⊂'if (',tgt,'->a.shp) {'
 		z,←⊂'	CHK(!(tmp = get_cell()), cleanup, ',dbg,');'
@@ -298,13 +298,13 @@ GC←{
 		z,←⊂'	tmp->a.shp = NULL;'
 		z,←⊂'	tmp->a.i = 0;'
 		z,←kd{'	CHK(pick_f(NULL, ',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->a.i++;'}¨kr
-		z,←⊂'	free_cell(tmp);'
+		z,←⊂'	free_cell(tmp); tmp = NULL;'
 		z,←⊂'} else {'
 		z,←⊂'	CHK(first_f(NULL, &tmp, NULL, ',tgt,', NULL), cleanup, ',dbg,');'
 		z,←'	'∘,¨kv,¨⊂' = ref_cell(tmp);'
-		z,←⊂'	free_cell(tmp);'
+		z,←⊂'	free_cell(tmp); tmp = NULL;'
 		z,←⊂'}'
-		z,←(k[⍵]≠0)⌿''('free_cell(',tgt,');')
+		z,←(k[⍵]≠0)⌿''('free_cell(',tgt,'); ',tgt,' = NULL;')
 		z,⊂''
 	}¨i
 	
@@ -316,7 +316,7 @@ GC←{
 		z ←⊂'/* ',dbg,' */'
 		z,←check_vars ki
 		z,←⊂'ref_cell(',kv,');'
-		z,←⊂'free_cell(',tgt,');'
+		z,←⊂'free_cell(',tgt,'); ',tgt,' = NULL;'
 		z,←⊂tgt,' = ',kv,';'
 		z,⊂''
 	}¨i
@@ -326,7 +326,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		vv←⊃var_values⊢vi←⊃⍵⊃kk
-		(n[vi]>0)⌿('free_cell(',vv,');')''
+		(n[vi]>0)⌿('free_cell(',vv,'); ',vv,' = NULL;')''
 	}¨i
 
 	⍝ E0: Returning end of line statement
@@ -351,9 +351,9 @@ GC←{
 		z,←(n[⍵]<0)⍴⊂'tmp = ',tgt,';'
 		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',tref,', NULL, ',y,', NULL), cleanup, ',dbg,');'
 		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[0])(',fn,', ',tref,', NULL, ',y,', env), cleanup, ',dbg,');'
-		z,←(n[⍵]<0)⍴⊂'free_cell(tmp);'
-		z,←((lx[fi]=¯7)∧n[fi]>0)⍴⊂'free_cell(',fn,');'
-		z,←(n[yi]>0)⍴⊂'free_cell(',y,');'
+		z,←(n[⍵]<0)⍴⊂'free_cell(tmp); tmp = NULL;'
+		z,←((lx[fi]=¯7)∧n[fi]>0)⍴⊂'free_cell(',fn,'); ',fn,' = NULL;'
+		z,←(n[yi]>0)⍴⊂'free_cell(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
 	
@@ -367,10 +367,10 @@ GC←{
 		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',tref,', ',x,', ',y,', NULL), cleanup, ',dbg,');'
 		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',tref,', ',x,', ',y,', env), cleanup, ',dbg,');'
-		z,←(n[⍵]<0)⌿⊂'free_cell(tmp);'
-		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
-		z,←((lx[fi]=¯7)∧n[fi]>0)⌿⊂'free_cell(',fn,');'
-		z,←(n[yi]>0)⌿⊂'free_cell(',y,');'
+		z,←(n[⍵]<0)⌿⊂'free_cell(tmp); tmp = NULL;'
+		z,←(n[xi]>0)⌿⊂'free_cell(',x,'); ',x,' = NULL;'
+		z,←((lx[fi]=¯7)∧n[fi]>0)⌿⊂'free_cell(',fn,'); ',fn,' = NULL;'
+		z,←(n[yi]>0)⌿⊂'free_cell(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
 	
@@ -398,9 +398,9 @@ GC←{
 		z,←⊂tgt,' = ref_cell(',y,');'
 		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',bxr,', ',x,', ',tgt,', NULL), cleanup, ',dbg,');'
 		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',bxr,', ',x,', ',tgt,', env), cleanup, ',dbg,');'
-		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
-		z,←((lx[fi]≠¯7)∧n[fi]>0)⌿⊂'release_func(',fn,');'
-		z,←(n[yi]>0)⌿⊂'free_cell(',y,');'
+		z,←(n[xi]>0)⌿⊂'free_cell(',x,'); ',x,' = NULL;'
+		z,←((lx[fi]≠¯7)∧n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,←(n[yi]>0)⌿⊂'free_cell(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
 	
@@ -418,9 +418,9 @@ GC←{
 		z,←⊂tgt,'->ctyp = CELL_FUNC;'
 		z,←⊂tgt,'->f.fn = &',op,'->f.fn[',(⍕2×k[⍵]=2),'];'
 		z,←⊂tgt,'->f.aa = ref_cell(',x,');'
-		z,←(n[⍵]<0)⌿⊂'free_cell(tmp);'
-		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
-		z,←((lx[oi]=¯7)∧n[oi]>0)⌿⊂'free_cell(',op,');'
+		z,←(n[⍵]<0)⌿⊂'free_cell(tmp); tmp = NULL;'
+		z,←(n[xi]>0)⌿⊂'free_cell(',x,'); ',x,' = NULL;'
+		z,←((lx[oi]=¯7)∧n[oi]>0)⌿⊂'free_cell(',op,'); ',op,' = NULL;'
 		z,⊂''
 	}¨i
 	
@@ -440,10 +440,10 @@ GC←{
 		z,←⊂tgt,'->f.fn = &',op,'->f.fn[',(⍕2×2⊥(k[⍵]∊7 8)(k[⍵]∊5 8)),'];'
 		z,←⊂tgt,'->f.aa = ref_cell(',x,');'
 		z,←⊂tgt,'->f.ww = ref_cell(',y,');'
-		z,←(n[⍵]<0)⌿⊂'free_cell(tmp);'
-		z,←(n[xi]>0)⌿⊂'free_cell(',x,');'
-		z,←((lx[oi]=¯7)∧n[oi]>0)⌿⊂'free_cell(',op,');'
-		z,←(n[yi]>0)⌿⊂'free_cell(',y,');'		
+		z,←(n[⍵]<0)⌿⊂'free_cell(tmp); tmp = NULL;'
+		z,←(n[xi]>0)⌿⊂'free_cell(',x,'); ',x,' = NULL;'
+		z,←((lx[oi]=¯7)∧n[oi]>0)⌿⊂'free_cell(',op,'); ',op,' = NULL;'
+		z,←(n[yi]>0)⌿⊂'free_cell(',y,'); ',y,' = NULL;'
 		z,⊂''
 	}¨i
 	
@@ -462,8 +462,8 @@ GC←{
 		z,←⊂tgt,'->f.ww = ref_cell(',aa,'->f.ww);'
 		z,←⊂tgt,'->f.axis = ',ax,';'
 		z,←(n[xi]≤0)⌿⊂'ref_cell(',ax,');'
-		z,←(n[⍵]<0)⌿⊂'free_cell(tmp);'
-		z,←((lx[ai]=¯7)∧n[ai]>0)⌿⊂'free_cell(',aa,');'
+		z,←(n[⍵]<0)⌿⊂'free_cell(tmp); tmp = NULL;'
+		z,←((lx[ai]=¯7)∧n[ai]>0)⌿⊂'free_cell(',aa,'); ',aa,' = NULL;'
 		z,⊂''
 	}¨i
 
@@ -475,14 +475,14 @@ GC←{
 		opt←'s->f.',⊃var_names ⍵ ⋄ src←⊃var_values⊢si←⊃⍵⊃kk
 		z ←⊂'if (',opt,') {'
 		z,←⊂'	ref_cell(',opt,');'
-		z,←⊂'	free_cell(',tgt,');'
+		z,←⊂'	free_cell(',tgt,'); ',tgt,' = NULL;'
 		z,←⊂'	',tgt,' = ',opt,';'
 		z,←⊂'} else {'
 		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
 		z,←⊂'	ref_cell(',src,');'
-		z,←⊂'	free_cell(',tgt,');'
+		z,←⊂'	free_cell(',tgt,'); ',tgt,' = NULL;'
 		z,←⊂'	',tgt,' = ',src,';'
-		z,←(n[si]>0)⌿⊂'	free_cell(',src,');'
+		z,←(n[si]>0)⌿⊂'	free_cell(',src,'); ',src,' = NULL;'
 		z,←⊂'}'
 		z,⊂''
 	}¨i
@@ -503,13 +503,13 @@ GC←{
 		z,←⊂'	CHK(11, cleanup, "Non-Boolean test expression");'
 		z,←⊂''
 		z,←⊂'if (',tgt,'->a.i) {'
-		z,←(n[ti]>0)⌿'	free_cell(',tgt,');' ''
+		z,←(n[ti]>0)⌿('	free_cell(',tgt,'); ',tgt,' = NULL;') ''
 		z,← '	'∘,¨⊃⍪⌿(⍵=p)⌿zz
 		z,←⊂'	err = -1;'
 		z,←⊂'	goto cleanup;'
 		z,←⊂'}'
 		z,←⊂''
-		z,←(n[ti]>0)⌿'free_cell(',tgt,');'
+		z,←(n[ti]>0)⌿'free_cell(',tgt,'); ',tgt,' = NULL;'
 		z,←⊂'err = 0;'
 		z,⊂''
 	}¨i
@@ -553,7 +553,7 @@ GC←{
 		z,←⊂'cleanup:'
 		z,←'	'∘,¨release_vars lvs
 		z,←'	'∘,¨release_vars svs
-		z,←(⊂'	free_cell(alpha);')⌿⍨ism
+		z,←(⊂'	free_cell(alpha); alpha = NULL;')⌿⍨ism
 		z,←⊂''
 		z,←⊂'	return err;'
 		z,←⊂'}'
@@ -615,7 +615,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	if (err) {'
-		z,←⊂'		free_cell(tmp);'
+		z,←⊂'		free_cell(tmp); tmp = NULL;'
 		z,←'		'∘,¨release_vars ⍵⊃lv
 		z,←'		'∘,¨release_vars ⍵⊃sv
 		z,←⊂'	}'
