@@ -1319,7 +1319,7 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 			return 99;
 		}
 		
-		(*z)->a.host->refc--;
+		free_host_buffer((*z)->a.host);
 		(*z)->a.host = h;
 	}
 	
