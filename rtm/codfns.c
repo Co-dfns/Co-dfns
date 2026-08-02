@@ -1011,7 +1011,7 @@ set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi
 	if (k == l->a.shp->i[0] - 1) {
 		int64_t * restrict iv, cnt;
 		
-		iv = idx->a.host->i;
+		iv = idx->a.rnk ? idx->a.host->i : &idx->a.i;
 		cnt = array_count(idx, 0);
 		*zi *= (*z)->a.shp->i[k];
 		
