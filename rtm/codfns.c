@@ -1396,11 +1396,6 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 	if ((*z)->a.stg != STG_HOST)
 		return 16;
 		
-	ztyp = elem_type_merge_map[(*z)->a.etyp][r->a.etyp];
-	
-	if (ztyp != (*z)->a.etyp)
-		return 16;
-	
 	if ((*z)->refc != 1) {
 		struct cell *t = get_cell();
 		
@@ -1416,42 +1411,152 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 		*z = t;
 	}
 	
-	if ((*z)->a.host->refc != 1){
+	ztyp = elem_type_merge_map[(*z)->a.etyp][r->a.etyp];
+	
+	if ((*z)->a.host->refc != 1 || (*z)->a.etyp != ztyp){
 		int64_t zc;
 		struct host_buffer *h;
 		
 		zc = array_count(*z, 1);
-		h = get_host_buffer(buffer_size((*z)->a.etyp, zc));
+		h = get_host_buffer(buffer_size(ztyp, zc));
 		
 		if (!h)
 			return 1;
 		
-		switch ((*z)->a.etyp) {
+		switch (ztyp) {
 		case ELEM_INT:
 			for (int64_t i = 0; i < zc; i++)
 				h->i[i] = (*z)->a.host->i[i];
-		break;
-		
+			break;
+			
 		case ELEM_FLOAT:
-			for (int64_t i = 0; i < zc; i++)
-				h->f[i] = (*z)->a.host->f[i];
-		break;
-		
+			switch ((*z)->a.etyp) {
+			case ELEM_INT:
+				for (int64_t i = 0; i < zc; i++) 
+					h->f[i] = (double)(*z)->a.host->i[i];
+			break;
+			case ELEM_FLOAT:
+				for (int64_t i = 0; i < zc; i++)
+					h->f[i] = (*z)->a.host->f[i];
+			break;
+			}
+			break;
+			
 		case ELEM_CMPX:
-			for (int64_t i = 0; i < zc; i++)
-				h->j[i] = (*z)->a.host->j[i];
-		break;
-		
+			switch ((*z)->a.etyp) {
+			case ELEM_INT:
+				for (int64_t i = 0; i < zc; i++) {
+					h->j[i].real = (double)(*z)->a.host->i[i];
+					h->j[i].imag = 0;
+				}
+			break;
+				
+			case ELEM_FLOAT:
+				for (int64_t i = 0; i < zc; i++) {
+					h->j[i].real = (*z)->a.host->f[i];
+					h->j[i].imag = 0;
+				}
+			break;
+			
+			case ELEM_CMPX:
+				for (int64_t i = 0; i < zc; i++) 
+					h->j[i] = (*z)->a.host->j[i];
+			break;
+			}
+			break;
+			
 		case ELEM_CHAR:
 			for (int64_t i = 0; i < zc; i++)
 				h->c[i] = (*z)->a.host->c[i];
-		break;
-		
+			break;
+			
 		case ELEM_CELL:
-			for (int64_t i = 0; i < zc; i++)
-				h->p[i] = ref_cell((*z)->a.host->p[i]);
-		break;
-		
+			switch ((*z)->a.etyp) {
+			case ELEM_INT:
+				for (int64_t i = 0; i < zc; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) {
+						free_host_buffer(h);
+						return 1;
+					}
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = (*z)->a.etyp;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.i = (*z)->a.host->i[i];
+					
+					h->p[i] = c;
+				}
+				break;
+				
+			case ELEM_FLOAT:
+				for (int64_t i = 0; i < zc; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) {
+						free_host_buffer(h);
+						return 1;
+					}
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = (*z)->a.etyp;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.f = (*z)->a.host->f[i];
+					
+					h->p[i] = c;
+				}
+				break;
+			
+			case ELEM_CMPX:
+				for (int64_t i = 0; i < zc; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) {
+						free_host_buffer(h);
+						return 1;
+					}
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = (*z)->a.etyp;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.j = (*z)->a.host->j[i];
+					
+					h->p[i] = c;
+				}
+				break;
+			
+			case ELEM_CHAR:
+				for (int64_t i = 0; i < zc; i++) {
+					struct cell *c = get_cell();
+					
+					if (!c) {
+						free_host_buffer(h);
+						return 1;
+					}
+					
+					c->ctyp = CELL_ARRAY;
+					c->a.etyp = (*z)->a.etyp;
+					c->a.stg = STG_HOST;
+					c->a.rnk = 0;
+					c->a.shp = NULL;
+					c->a.c = (*z)->a.host->c[i];
+					
+					h->p[i] = c;
+				}
+				break;
+			
+			case ELEM_CELL:
+				for (int64_t i = 0; i < zc; i++)
+					h->p[i] = ref_cell((*z)->a.host->p[i]);
+				break;
+			}
 			break;
 		default:
 			free_host_buffer(h);
