@@ -237,7 +237,7 @@ TT←{
 
 	⍝ Remove dead code paths: Empty B0; post-Z¯2 nodes
 	_←p[i]{msk[⍵]←∨⍀¯1⌽msk[⍵]}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←(t=Z)∧k=¯2
-	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0
+	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0 ⋄ msk>←t=H
 	msk←{1@(n⌿⍨⍵∧(t=V)∧(lx=¯5)∧n∊⍸t=F)⊢⍵∨⍵[p]}⍣≡msk
 	p t k n lx mu r pos end⌿⍨←⊂~msk
 	p r(⊣-1+⍸⍨)←⊂i←⍸msk ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
