@@ -1,5 +1,5 @@
 GC←{
-	p t k n lx mu lv fv sv pos end sym IN←⍵
+	p t k n r lx vb mu pos end sym IN←⍵
 
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
@@ -63,9 +63,13 @@ GC←{
 
 	init_vars←{
 		0=≢⍵:0⍴⊂''
-		z←(≢⍵)⍴⊂''
 		(var_values ⍵),¨⊂' = NULL;'
-		⊃⍪⌿z
+	}
+	
+	init_free_vars←{
+		0=≢⍵:0⍴⊂''
+		fr←vb[p[vb[⍵]]] ⋄ fi←vb[vb[⍵]]
+		(var_values ⍵),¨fr{' = fv[',(⍕⍺),'][',(⍕⍵),'];'}¨fi
 	}
 
 	var_refs←{
@@ -76,8 +80,7 @@ GC←{
 	}
 
 	var_values←{
-		z←'' '*'[lx[⍵]∊¯2 ¯3]
-		z,¨←(var_scopes,¨var_names)⍵
+		z←(var_scopes,¨var_names)⍵
 		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'(*z)'
 		z
 	}
@@ -515,12 +518,15 @@ GC←{
 	}¨i
 	
 	⍝ FN: Non-zero functions
+	typ←1@(⍸(t∊A E S)∨(t=B)∧k=0)⊢2@(⍸t=O)⊢k[i]@(i←⍸t∊B C V)⊢(≢p)⍴0
 	i←⍸(t=F)∧k≠0
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		id←⊃var_values ⍵
-		hassvs←0≠≢svs←⊃sv[⍵]
-		haslvs←0≠≢lvs←⊃lv[⍵]
+		svs⌿⍨←≠(n,⍪typ)[svs←⍸(lx=¯7)∧(r=⍵)∧n>0;]
+		hlv←0≠≢lvs⌿⍨←≠lvs←⍸(t=V)∧(t[p]=H)∧r=⍵
+		hfv←0≠≢fvs⌿⍨←≠n[fvs←⍸(t∊B S V)∧(lx=¯2)∧(r=⍵)∧n<0]
+		frm←vb[⊃⍸(t=H)∧p=⍵]
 		ism←k[⍵]∊2 3 5 6 8 9 11 12 14 15 17 18 20 21
 		pref,←⊂'int ',id,'(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 		z ←⊂'int'
@@ -532,19 +538,26 @@ GC←{
 		z,←⊂''
 		z,←⊂'	tmp = NULL;'
 		z,←⊂''
-		z,←(⊂'	struct {')⌿⍨haslvs
+		z,←hlv⌿⊂'	struct {'
 		z,←'		'∘,¨decl_vars lvs
-		z,←(⊂'	} loc_frm, *loc;')⌿⍨haslvs
-		z,←(⊂'')⌿⍨haslvs
-		z,←(⊂'	loc = &loc_frm;')⌿⍨haslvs
-		z,←(⊂'')⌿⍨haslvs
+		z,←hlv⌿⊂'	} loc_frm, *loc;'
+		z,←hlv⌿⊂''
+		z,←hlv⌿⊂'	loc = &loc_frm;'
+		z,←hlv⌿⊂''
+		z,←hfv⌿⊂'	struct {'
+		z,←'		'∘,¨decl_vars fvs
+		z,←hfv⌿⊂'	} lex_frm, *lex;'
+		z,←hfv⌿⊂''
+		z,←hfv⌿⊂'	lex = &lex_frm;'
+		z,←hfv⌿⊂''
 		z,←⊂'	struct cell **env[] = {'
-		z,←⊂'		fv[0],'
-		z,←(⊂'		(struct cell **)loc')⌿⍨haslvs
+		z,←⊂'		',{'fv[',(⍕⍵),'], '}¨⍳frm
+		z,←⊂'		',hlv⊃'NULL' '(struct cell **)loc'
 		z,←⊂'	};'
 		z,←⊂''
 		z,←'	'∘,¨init_vars svs
 		z,←'	'∘,¨init_vars lvs
+		z,←'	'∘,¨init_free_vars fvs
 		z,←⊂'	err = 0;'
 		z,←⊂''
 		z,←(⊂'	'),¨⊃⍪⌿(p=⍵)⌿zz
@@ -583,16 +596,20 @@ GC←{
 	i←⍸(t=T)∧k=0
 	zz[i],←{
 		id←⊃var_names ⍵
+		svs⌿⍨←≠(n,⍪typ)[svs←⍸(lx=¯7)∧(r=⍵)∧n>0;]
+		lvs⌿⍨←≠lvs←⍸(t=V)∧(t[p]=H)∧r=⍵
 		z ←⊂'struct ',id,'_loc {'
-		z,←(⊂'	'),¨decl_vars ⊃lv[⍵]
+		z,←(⊂'	'),¨decl_vars lvs
 		z,←⊂'	int flag;'
 		z,←⊂'} ',id,';'
+		z,←⊂''
+		z,←⊂'struct cell **',id,'_env[] = {(struct cell **)&',id,'};'
 		z,←⊂''
 		z,←⊂'EXPORT int'
 		z,←⊂id,'_init(void)'
 		z,←⊂'{'
 		z,←⊂'	struct ',id,'_loc *loc;'
-		z,←'	'∘,¨decl_vars ⍵⊃sv
+		z,←'	'∘,¨decl_vars svs
 		z,←⊂'	struct cell *tmp;'
 		z,←⊂'	int err;'
 		z,←⊂''
@@ -604,20 +621,20 @@ GC←{
 		z,←⊂'	',id,'.flag = 1;'
 		z,←⊂'	loc = &',id,';'
 		z,←⊂''
-		z,←⊂'	struct cell **env[] = {(struct cell **)loc};'
+		z,←⊂'	struct cell ***env = ',id,'_env;'
 		z,←⊂''
 		z,←⊂'	release_debug_info();'
 		z,←⊂''
-		z,←'	'∘,¨init_vars ⍵⊃sv
-		z,←'	'∘,¨init_vars ⍵⊃lv
+		z,←'	'∘,¨init_vars svs
+		z,←'	'∘,¨init_vars lvs
 		z,←⊂''
 		z,←'	'∘,¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	if (err) {'
 		z,←⊂'		free_cell(tmp); tmp = NULL;'
-		z,←'		'∘,¨release_vars ⍵⊃lv
-		z,←'		'∘,¨release_vars ⍵⊃sv
+		z,←'		'∘,¨release_vars lvs
+		z,←'		'∘,¨release_vars svs
 		z,←⊂'	}'
 		z,←⊂''
 		z,←⊂'	return err;'
@@ -642,12 +659,10 @@ GC←{
 		z,←⊂'	loc = &',ns,';'
 		z,←⊂'	self = ',fnv,';'
 		z,←⊂''
-		z,←⊂'	struct cell **env[] = {(struct cell **)loc};'
-		z,←⊂''
 		z,←⊂'	if (l == NULL) {'
-		z,←⊂'		CHKIG(self->f.fn[0](self, z, l, r, env), fail);'
+		z,←⊂'		CHKIG(self->f.fn[0](self, z, l, r, ',ns,'_env), fail);'
 		z,←⊂'	} else {'
-		z,←⊂'		CHKIG(self->f.fn[1](self, z, l, r, env), fail);'
+		z,←⊂'		CHKIG(self->f.fn[1](self, z, l, r, ',ns,'_env), fail);'
 		z,←⊂'	}'
 		z,←⊂''
 		z,←⊂'fail:'

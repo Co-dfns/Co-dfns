@@ -2,17 +2,17 @@ TT←{
 	(p d t k n lx vb pos end)exp sym IN←⍵
 	
 	⍝ Kill the contents of Z¯2 nodes
-	p t k n lx pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
-	p(⊣-1+⍸⍨)←⍸~msk
+	p t k n lx vb pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡(t[p]=Z)⍲k[p]=¯2
+	p vb(⊣-1+⍸⍨)←⊂⍸~msk
 	
 	⍝ Convert E4(APV, APV, O, ...) mod. assignments to E4(APV, APV, C, ...)
 	j←p[i←⍸(≠p)∧((t=E)∧k=4)[p][p]∧((t=O)∧(p=¯1⌽p)∧(~⌽≠⌽p)∧¯1⌽t∊A P V)[p]]
-	t k n lx pos end(I⊣@j⊣)←⊂i ⋄ msk←p∊j ⋄ p←(j@i⊢⍳≢p)[p]
-	p t k n lx pos end⌿⍨←⊂~msk ⋄ p(⊣-1+⍸⍨)←⍸msk
+	t k n lx vb pos end(I⊣@j⊣)←⊂i ⋄ msk←p∊j ⋄ p←(j@i⊢⍳≢p)[p]
+	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂⍸msk
 	
 	⍝ Convert primitive niladic references to E3(P2) forms
 	i←⍸(t=P)∧(k=1)∧'⎕⍞'∊⍨⊃¨sym[|n]
-	p,←i ⋄ t n lx pos end(⊣,I)←⊂i ⋄ k,←(≢i)⍴2 ⋄ t[i]←E ⋄ k[i]←3 ⋄ n[i]←0
+	p,←i ⋄ t n lx vb pos end(⊣,I)←⊂i ⋄ k,←(≢i)⍴2 ⋄ t[i]←E ⋄ k[i]←3 ⋄ n[i]←0
 
 	⍝ Compute reference scope
 	r←I@{msk[⍵]}⍣≡⍨p⊣msk←~t∊F T
@@ -35,11 +35,11 @@ TT←{
 	vx←x,j1←j⌿⍨k[j]=1 ⋄ vp←p[p[x]],p[j1]
 	_←vp{n[⍺]←-sym⍳sym∪←⊂(k[r[⍺]]⊃ncmap)[ncvar⍳sym[|n[⍵]]]}⌸⍣(0≠≢vx)⊢vx
 	t[pi]←A ⋄ k[pi]←1 ⋄ lx[pi]←¯7
-	p t k n lx r pos end⌿⍨←⊂~msk←mi∨mj∨mx ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
+	p t k n lx vb r pos end⌿⍨←⊂~msk←mi∨mj∨mx ⋄ p r vb(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Convert O*(F, [, A) to Ox(F, A)
 	i←⍸msk←(t[p]=O)∧n=-sym⍳⊂,'[' ⋄ k[p[i]]←¯1
-	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i
+	p t k n lx vb r pos end⌿⍨←⊂~msk ⋄ p r vb(⊣-1+⍸⍨)←⊂i
 	
 	⍝ Report empty axis operand
 	i←⍸(t=P)∧(n=-sym⍳⊂,';')∧(t[p]=O)∧k[p]=¯1
@@ -54,7 +54,7 @@ TT←{
 	
 	⍝ Merge B node bindings
 	n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
-	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
+	p t k n lx vb r pos end⌿⍨←⊂~msk ⋄ p r vb(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Mark mutated bindings
 	i←⍸msk←(t∊B V S)∧(lx∊¯1 ¯2 ¯3)∧n<¯6 ⋄ j←⍸msk∧(t[p]=C)∨(t[p]=E)∧(k[p]=4)∧≠p
@@ -65,7 +65,7 @@ TT←{
 
 	⍝ Delete ⍺← forms for dyadic specializations
 	msk←p(⊢∧I⍨)⍣≡~(t=B)∧(n=¯2)∧k[r]∊3+2×⍳7
-	p t k n lx mu r pos end⌿⍨←⊂msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸~msk
+	p t k n lx vb mu r pos end⌿⍨←⊂msk ⋄ p r vb(⊣-1+⍸⍨)←⊂⍸~msk
 
 	⍝ Mark functions with their internal ⍺ type
 	⍝    0 1 2 3 4 5 6  7  8  9 10 11 12 13 14 15
@@ -77,13 +77,13 @@ TT←{
 	k[r[i]]+←2=k[i]
 	
 	⍝ Lift dfns to the top-level
-	p,←n[i]←(≢p)+⍳≢i←⍸(t∊C F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
-	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ k[j]←3+5 11⍸k[j←i⌿⍨t[i]=F] ⋄ t[i]←V
+	p,←n[i]←(≢p)+⍳≢i←⍸(t∊C F)∧p≠⍳≢p ⋄ t k n lx vb mu pos end r(⊣,I)←⊂i
+	p r I@{⍵≥0}⍨←⊂n[i]@i⊢⍳≢p ⋄ k[j]←3+5 11⍸k[j←i⌿⍨t[i]=F] ⋄ t[i]←V
 
 	⍝ Wrap expressions as binding or return statements
-	i←(⍸(t[p]∊F T)>t∊F G H T),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
-	p t k n lx mu r pos end⌿⍨←⊂m←2@i⊢1⍴⍨≢p
-	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
+	i←(⍸(t[p]∊F T)>t∊F G H T Z),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
+	p t k n lx vb mu r pos end⌿⍨←⊂m←2@i⊢1⍴⍨≢p
+	p r i vb I@{⍵≥0}⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@{⌽≠⌽(p×p≠⍳≢p)[j]}(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
 
@@ -199,9 +199,10 @@ TT←{
 
 	⍝ Allocate named targets in the n field for bound application nodes
 	msk←((t[p]=B)∧~k[p]∊0 7)∧(t∊E O)∨((t=A)∧k=7)∨(t=B)∧~k∊0 7
-	msk[p⌿⍨(t[p]=B)∧(t=V)∨(t=A)∧k=1]←0 ⋄ i←⍸msk
-	n mu lx{⍺[⍵]@i⊢⍺}←⊂p[i] ⋄ i←⍸msk←(~msk)∧(⍳≢p)∊p[i] ⋄ p←(p[i]@i⍳≢p)[p]
-	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
+	msk[p⌿⍨(t[p]=B)∧(t=V)∨(t=A)∧k=1]←0
+	i←⍸msk ⋄ n mu lx vb{⍺[⍵]@i⊢⍺}←⊂p[i]
+	i←⍸msk←(~msk)∧(⍳≢p)∊p[i] ⋄ p vb I@{⍵≥0}⍨←⊂p[i]@i⍳≢p
+	p t k n lx vb mu r pos end⌿⍨←⊂~msk ⋄ p r vb(⊣-1+⍸⍨)←⊂i ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
 	
 	⍝ Allocate frame variables for unbound application results
 	msk←((t=B)∧k=0)∨((t[p]=B)⍲k[p]=0)∧(k≠0)∧(t∊E O)∨(t∊A S)∧k=7
@@ -224,32 +225,28 @@ TT←{
 	
 	⍝ Add V nodes for each application node in preparation for lifting
 	msk←((t[p]=B)⍲k[p]=0)∧(t∊B O S)∨((t=E)∧k>0)∨(t=A)∧k=7 ⋄ i←(+⍀1+msk)-1
-	p t k n lx mu r pos end⌿⍨←⊂1+msk ⋄ p r{⍵[⍺]}←⊂i ⋄ n[j]←i[n[j←⍸n>0]]
+	p t k n lx vb mu r pos end⌿⍨←⊂1+msk ⋄ p r vb I@{⍵≥0}⍨←⊂i ⋄ n[j]←i[n[j←⍸n>0]]
 	j←¯1+msk⌿i ⋄ k[j⌿⍨(t[j]∊A E S)∨(t[j]=B)∧k[j]=0]←1 ⋄ k[j⌿⍨t[j]=O]←2 ⋄ t[j]←V
 	
 	⍝ Lift and flatten expressions
 	i←⍸(t∊B E G O S Z)∨(t=A)∧k≠1
 	msk←~(t∊F G T)∨((t=B)∧k=7)∨gm←(t[p]=G)∧~(t=V)∨((t=A)∧k=1)∨(t=E)∧k=0
 	p[i]←p[x←p[p] I@{gm[p[⍵]]}p I@{msk[p[⍵]]}⍣≡p I@{gm[⍵]}i]
-	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p←(i@j⍳≢p)[p]
+	p t k n lx vb mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p vb I@{⍵≥0}⍨←⊂i@j⍳≢p
 	i←⍸(t=S)∨(t=B)∧k=0
-	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽+⍀¯1⌽t[i]=B] ⋄ p←(i@j⍳≢p)[p]
+	p t k n lx vb mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽+⍀¯1⌽t[i]=B] ⋄ p vb I@{⍵≥0}⍨←⊂i@j⍳≢p
 
 	⍝ Remove dead code paths: Empty B0; post-Z¯2 nodes
 	_←p[i]{msk[⍵]←∨⍀¯1⌽msk[⍵]}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←(t=Z)∧k=¯2
 	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0 ⋄ msk>←t=H
 	msk←{1@(n⌿⍨⍵∧(t=V)∧(lx=¯5)∧n∊⍸t=F)⊢⍵∨⍵[p]}⍣≡msk
-	p t k n lx mu r pos end⌿⍨←⊂~msk
-	p r(⊣-1+⍸⍨)←⊂i←⍸msk ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
+	p t k n lx vb mu r pos end⌿⍨←⊂~msk
+	p r vb(⊣-1+⍸⍨)←⊂i←⍸msk ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]
 
-	⍝ Compute a function's local, free, and stack variables
-	lv←(≢p)⍴⊂⍬ ⋄ fv←(≢p)⍴⊂⍬ ⋄ sv←(≢p)⍴⊂⍬
-	lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B S V)∧(lx=¯1)∧n<0;]
-	typ←1@(⍸(t∊A E S)∨(t=B)∧k=0)⊢2@(⍸t=O)⊢k[i]@(i←⍸t∊B C V)⊢(≢p)⍴0
-	sv[r[i]],←i←i⌿⍨≠(r,n,⍪typ)[i←⍸(lx=¯7)∧n>0;]
-	fv[p[i]],←i←⍸(t=V)∧(t[p]=C)∧n<0
-	fv[n[i]]←fv[p[i←⍸(t=V)∧(t[p]=C)∧n≥0]]
-
-	p t k n lx mu lv fv sv pos end sym IN
+	⍝ Link local variables to a specific slot and dfns to a specific frame
+	_←i{vb[⍺]+←r[⍵]≠⍵ ⋄ r[⍵]}⍣≡i←⍸t=H
+	_←p[i]{vb[⍵]←⍳≢⍵}⌸i←⍸(t=V)∧t[p]=H
+	
+	p t k n r lx vb mu pos end sym IN
 }
 	
