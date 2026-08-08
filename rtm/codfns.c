@@ -992,6 +992,34 @@ struct cell rgt_c = {
 EXPORT struct cell *rgt = &rgt_c;
 
 EXPORT int
+lftid_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; l; fv;
+	
+	*z = ref_cell(r);
+	return 0;
+}
+
+EXPORT int
+left_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; r; fv;
+	
+	*z = ref_cell(l);
+	return 0;
+}
+
+int (*lft_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	lftid_f, left_f
+};
+struct cell lft_c = {
+	1, CELL_FUNC, NULL, .f = {
+		lft_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *lft = &lft_c;
+
+EXPORT int
 brkidx_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
 	s, l, fv;
