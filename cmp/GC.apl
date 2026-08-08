@@ -72,13 +72,6 @@ GC←{
 		(var_values ⍵),¨fr{' = fv[',(⍕⍺),'][',(⍕⍵),'];'}¨fi
 	}
 
-	var_refs←{
-		z←'&' ''[lx[⍵]∊¯2 ¯3]
-		z,¨←(var_scopes,¨var_names)⍵
-		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'z'
-		z
-	}
-
 	var_values←{
 		z←(var_scopes,¨var_names)⍵
 		z[⍸(n[,⍵]=0)∧(t[,⍵]=A)⍲k[,⍵]=1]←⊂,'(*z)'
@@ -292,7 +285,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵ ⋄ tgt←⊃var_values ⍵
-		ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kr←var_refs ks ⋄ kd←highlight¨ks
+		ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kd←highlight¨ks
 		z ←{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨kv
 		z,←⊂''
 		z,←⊂'if (',tgt,'->a.shp) {'
@@ -303,7 +296,7 @@ GC←{
 		z,←⊂'	tmp->a.rnk = 0;'
 		z,←⊂'	tmp->a.shp = NULL;'
 		z,←⊂'	tmp->a.i = 0;'
-		z,←kd{'	CHK(pick_f(NULL, ',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->a.i++;'}¨kr
+		z,←kd{'	CHK(pick_f(NULL, &',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->a.i++;'}¨kv
 		z,←⊂'	free_cell(tmp); tmp = NULL;'
 		z,←⊂'} else {'
 		z,←⊂'	CHK(first_f(NULL, &tmp, NULL, ',tgt,', NULL), cleanup, ',dbg,');'
@@ -351,12 +344,12 @@ GC←{
 	i←⍸(t=E)∧k=1
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		fn y←var_values⊢fi yi←⍵⊃kk
 		z ←check_vars fi yi
 		z,←(n[⍵]<0)⍴⊂'tmp = ',tgt,';'
-		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',tref,', NULL, ',y,', NULL), cleanup, ',dbg,');'
-		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[0])(',fn,', ',tref,', NULL, ',y,', env), cleanup, ',dbg,');'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, &',tgt,', NULL, ',y,', NULL), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[0])(',fn,', &',tgt,', NULL, ',y,', env), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⍴⊂'free_cell(tmp); tmp = NULL;'
 		z,←((lx[fi]=¯7)∧n[fi]>0)⍴⊂'free_cell(',fn,'); ',fn,' = NULL;'
 		z,←(n[yi]>0)⍴⊂'free_cell(',y,'); ',y,' = NULL;'
@@ -367,12 +360,12 @@ GC←{
 	i←⍸(t=E)∧k=2
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		x fn y←var_values⊢xi fi yi←⍵⊃kk
 		z ←check_vars xi fi yi
 		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
-		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',tref,', ',x,', ',y,', NULL), cleanup, ',dbg,');'
-		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',tref,', ',x,', ',y,', env), cleanup, ',dbg,');'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, &',tgt,', ',x,', ',y,', NULL), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', &',tgt,', ',x,', ',y,', env), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⌿⊂'free_cell(tmp); tmp = NULL;'
 		z,←(n[xi]>0)⌿⊂'free_cell(',x,'); ',x,' = NULL;'
 		z,←((lx[fi]=¯7)∧n[fi]>0)⌿⊂'free_cell(',fn,'); ',fn,' = NULL;'
@@ -384,11 +377,11 @@ GC←{
 	i←⍸(t=E)∧k=3
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		tref←⊃var_refs ⍵ ⋄ tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
+		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
 		fn←⊃var_values⊢fi←⊃⍵⊃kk
 		z ←check_vars fi
 		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
-		z,←⊂'CHK((',fn,'->fptr_mon)(',tref,', NULL, ',fn,'), cleanup, ',dbg,');'
+		z,←⊂'CHK((',fn,'->fptr_mon)(&',tgt,', NULL, ',fn,'), cleanup, ',dbg,');'
 		z,←(n[⍵]<0)⌿⊂'release_array(tmp); tmp = NULL;'
 		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
 		z,⊂''
@@ -399,11 +392,11 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		tgt←⊃var_values ⍵ ⋄ dbg←highlight ⍵
-		bxr←⊃var_refs ⊃⍵⊃kk ⋄ bxv x fn y←var_values⊢bi xi fi yi←⍵⊃kk
+		bxv x fn y←var_values⊢bi xi fi yi←⍵⊃kk
 		z ←check_vars xi fi yi
 		z,←⊂tgt,' = ref_cell(',y,');'
-		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, ',bxr,', ',x,', ',tgt,', NULL), cleanup, ',dbg,');'
-		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',bxr,', ',x,', ',tgt,', env), cleanup, ',dbg,');'
+		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, &',bxv,', ',x,', ',tgt,', NULL), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',bxv,', ',x,', ',tgt,', env), cleanup, ',dbg,');'
 		z,←(n[xi]>0)⌿⊂'free_cell(',x,'); ',x,' = NULL;'
 		z,←((lx[fi]≠¯7)∧n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
 		z,←(n[yi]>0)⌿⊂'free_cell(',y,'); ',y,' = NULL;'
