@@ -266,7 +266,7 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
-		tgt←⊃var_values ⍵ ⋄ vs←var_values⊢ks←⍵⊃kk
+		tgt←⊃var_values ⍵ ⋄ ks←⍵⊃kk
 		z ←check_vars⊢ks←⍵⊃kk
 		z,←⊂'CHK(!(',tgt,' = get_cell()), cleanup, ',dbg,');'
 		z,←⊂tgt,'->ctyp = CELL_ARRAY;'
@@ -276,9 +276,11 @@ GC←{
 		z,←⊂'CHK(!(',tgt,'->a.shp = get_host_buffer(buffer_size(ELEM_INT, 1))), cleanup, ',dbg,');'
 		z,←⊂tgt,'->a.shp->i[0] = ',(⍕≢ks),';'
 		z,←⊂'CHK(!(',tgt,'->a.host = get_host_buffer(buffer_size(ELEM_CELL, ',(⍕≢ks),'))), cleanup, ',dbg,');'
-		z,←(⍳≢ks){tgt,'->a.host->p[',(⍕⍺),'] = ref_cell(',⍵,');'}¨vs
+		z,←(⍳≢ks){v←⊃var_values ⍵
+			n[⍵]>0:tgt,'->a.host->p[',(⍕⍺),'] = ',v,'; ',v,' = NULL;'
+			tgt,'->a.host->p[',(⍕⍺),'] = ref_cell(',v,');'
+		}¨ks
 		z,←(t[⍵]=A)⌿⊂'squeeze(',tgt,');'
-		z,←(n[ks]>0)⌿{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨vs
 		z,⊂''
 	}¨i
 	
