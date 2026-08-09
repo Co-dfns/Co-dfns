@@ -290,7 +290,7 @@ GC←{
 		ks←⍵⊃kk ⋄ kv←var_values ks ⋄ kd←highlight¨ks
 		z ←{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨kv
 		z,←⊂''
-		z,←⊂'if (',tgt,'->a.shp) {'
+		z,←⊂'if (',tgt,'->a.rnk) {'
 		z,←⊂'	CHK(!(tmp = get_cell()), cleanup, ',dbg,');'
 		z,←⊂'	tmp->ctyp = CELL_ARRAY;'
 		z,←⊂'	tmp->a.etyp = ELEM_INT;'
@@ -317,7 +317,7 @@ GC←{
 		z ←⊂'/* ',dbg,' */'
 		z,←check_vars ki
 		z,←⊂'ref_cell(',kv,');'
-		z,←⊂'free_cell(',tgt,'); ',tgt,' = NULL;'
+		z,←⊂'free_cell(',tgt,');'
 		z,←⊂tgt,' = ',kv,';'
 		z,⊂''
 	}¨i
