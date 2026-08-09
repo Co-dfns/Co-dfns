@@ -80,7 +80,9 @@ GC←{
 	
 	check_vars←{
 		vs←⍵⌿⍨lx[⍵]≥¯3
-		(highlight¨vs){'CHK(is_bound(',⍵,'), cleanup, ',⍺,');'}¨var_values vs
+		(highlight¨vs){
+			'CHK(is_bound(',⍵,'), cleanup, ',⍺,');'
+		}¨var_values vs
 	}
 	
 	release_vars←{
