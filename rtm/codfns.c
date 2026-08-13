@@ -733,6 +733,14 @@ is_bound(struct cell *c)
  * PRIMITIVES *
  **************/
  
+ int64_t zero_list[] = {0};
+ struct host_buffer zero_buf = {2, 0, NULL, .i = zero_list};
+ struct cell mt_num_vec = {
+	1, CELL_ARRAY, NULL, .a = {
+		ELEM_INT, STG_HOST, 1, &zero_buf, .host = &zero_buf
+	}
+ };
+ 
  EXPORT int
  println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
  {
