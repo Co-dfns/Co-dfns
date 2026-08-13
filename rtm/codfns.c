@@ -3699,3 +3699,63 @@ struct cell div_c = {
 	}
 };
 EXPORT struct cell *cd_div = &div_c;
+
+EXPORT int
+index_gen_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt, rng, *restrict buf;
+	int err;
+	
+	s; l; fv;
+	
+	if (r->a.rnk > 1) return 4;
+	
+	if (r->a.etyp != ELEM_INT) return 11;
+	
+	cnt = array_count(r, 0);
+	
+	if (cnt > 1) return 16;
+	
+	if (!(t = get_cell())) return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	
+	if (!cnt) {
+		t->a.etyp = ELEM_CELL;
+		t->a.stg = STG_HOST;
+		t->a.rnk = 0;
+		t->a.shp = NULL;
+		t->a.p = ref_cell(&mt_num_vec);
+		
+		goto done;
+	}
+	
+	rng = r->a.rnk ? r->a.host->i[0] : r->a.i;
+	
+	t->a.etyp = ELEM_INT;
+	t->a.stg = STG_HOST;
+	t->a.rnk = 1;
+	t->a.shp = get_host_buffer(buffer_size(ELEM_INT, 1));
+	t->a.host = get_host_buffer(buffer_size(ELEM_INT, rng));
+	
+	if ((err = !t->a.shp)) goto fail;
+	if ((err = !t->a.host)) goto fail;
+	
+	t->a.shp->i[0] = rng;
+	
+	buf = t->a.host->i;
+	
+	for (int64_t i = 0; i < rng; i++)
+		buf[i] = i;
+	
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
