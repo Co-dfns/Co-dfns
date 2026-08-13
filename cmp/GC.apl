@@ -185,6 +185,8 @@ GC←{
 	pref,←⊂'DECLSPEC struct cell *lft;'
 	pref,←⊂'int brkidx_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int set_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int conjugate_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int plus_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
