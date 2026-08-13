@@ -389,8 +389,8 @@ GC←{
 		z ←check_vars fi
 		z,←(n[⍵]<0)⌿⊂'tmp = ',tgt,';'
 		z,←⊂'CHK((',fn,'->fptr_mon)(&',tgt,', NULL, ',fn,'), cleanup, ',dbg,');'
-		z,←(n[⍵]<0)⌿⊂'release_array(tmp); tmp = NULL;'
-		z,←(n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
+		z,←(n[⍵]<0)⌿⊂'free_cell(tmp); tmp = NULL;'
+		z,←(n[fi]>0)⌿⊂'free_cell(',fn,'); ',fn,' = NULL;'
 		z,⊂''
 	}¨i
 	
