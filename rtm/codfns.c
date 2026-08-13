@@ -218,10 +218,9 @@ free_cell(struct cell *c)
 	c->next = next_cell;
 	next_cell = c;
 	
-	free_host_buffer(c->a.shp);
-	
 	switch (c->ctyp) {
 	case CELL_ARRAY:
+		free_host_buffer(c->a.shp);
 		switch (c->a.stg) {
 		case STG_HOST:
 			if (!c->a.rnk)
