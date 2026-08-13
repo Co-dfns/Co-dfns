@@ -27,6 +27,8 @@ X Y←(3 2 1)(1 2 3)
 
 ⎕←X Y
 
+⎕←((1 2 3)(4 5 6)) X Y
+
 fn←{5 0 1}
 ⎕←fn⍬
 
@@ -103,6 +105,23 @@ left←{⍺}
 ⎕←⊣5 ⋄ ⎕←3 left 5 ⋄ ⎕←300 ⊣ 500 ⋄ ⎕←300 left 500
 
 {}⍬
+
+⍝ Basic function syntax tests
+
+monadic←{+⍵}
+dyadic←{⍺+⍵}
+literal←{5+5}
+litvar←{5+⍵}
+multi←{⍺×⍵+⍵÷5}
+parens←{((⍺+⍺)×(⍵+⍵))+(⍺÷1+⍵)×⍵}
+lists←{5 4 3 2 1×⍵}
+space←{2× ⍳⍵}
+
+X←0 1 2 3 4 ⋄ Y←1+X
+
+⎕←monadic X ⋄ ⎕←X dyadic X ⋄ ⎕←literal⍬ ⋄ ⎕←litvar X ⋄ ⎕←X multi X
+⎕←X parens X ⋄ ⎕←lists X ⋄ ⎕←space 5
+
 
 
 :EndNamespace
