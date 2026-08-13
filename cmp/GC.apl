@@ -293,15 +293,12 @@ GC←{
 		z ←{'free_cell(',⍵,'); ',⍵,' = NULL;'}¨kv
 		z,←⊂''
 		z,←⊂'if (',tgt,'->a.rnk) {'
-		z,←⊂'	CHK(!(tmp = get_cell()), cleanup, ',dbg,');'
-		z,←⊂'	tmp->ctyp = CELL_ARRAY;'
-		z,←⊂'	tmp->a.etyp = ELEM_INT;'
-		z,←⊂'	tmp->a.stg = STG_HOST;'
-		z,←⊂'	tmp->a.rnk = 0;'
-		z,←⊂'	tmp->a.shp = NULL;'
-		z,←⊂'	tmp->a.i = 0;'
-		z,←kd{'	CHK(pick_f(NULL, &',⍵,', tmp, ',tgt,', NULL), cleanup, ',⍺,'); tmp->a.i++;'}¨kv
-		z,←⊂'	free_cell(tmp); tmp = NULL;'
+		z,←⊂'	struct cell idx = {'
+		z,←⊂'		1, CELL_ARRAY, NULL, .a = {'
+		z,←⊂'			ELEM_INT, STG_HOST, 0, NULL, .i = 0'
+		z,←⊂'		}'
+		z,←⊂'	};'
+		z,←kd{'	CHK(pick_f(NULL, &',⍵,', &idx, ',tgt,', NULL), cleanup, ',⍺,'); idx.a.i++;'}¨kv
 		z,←⊂'} else {'
 		z,←⊂'	CHK(first_f(NULL, &tmp, NULL, ',tgt,', NULL), cleanup, ',dbg,');'
 		z,←'	'∘,¨kv,¨⊂' = ref_cell(tmp);'
