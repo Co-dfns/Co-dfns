@@ -3009,3 +3009,685 @@ div_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	
 	return z;
 }
+
+EXPORT int
+divide_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	t = NULL;
+	
+	if (l->a.etyp == ELEM_CHAR || r->a.etyp == ELEM_CHAR) {
+		err = 11;
+		goto fail;
+	}
+	
+	if ((err = get_scalar_cell(&t, l, r)))
+		goto fail;
+		
+	if (t->a.etyp == ELEM_INT)
+		t->a.etyp = ELEM_FLOAT;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 1);
+	
+	switch (l->a.etyp) {
+	case ELEM_INT:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			if (!t->a.rnk) {
+				if (!r->a.i) { err = 11; goto fail; }
+				t->a.f = (double)l->a.i / (double)r->a.i;
+			} else if (!l->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				int64_t lv = l->a.i;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if (!rv[i]) { err = 11; goto fail; }
+					tv[i] = (double)lv / (double)rv[i];
+				}
+			} else if (!r->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				int64_t *restrict lv = l->a.host->i;
+				int64_t rv = r->a.i;
+				
+				if (!rv) { err = 11; goto fail; }
+
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = (double)lv[i] / (double)rv;
+			} else {
+				double *restrict tv = t->a.host->f;
+				int64_t *restrict lv = l->a.host->i;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if (!rv[i]) { err = 11; goto fail; }
+					tv[i] = (double)lv[i] / (double)rv[i];
+				}
+			}
+		}break;
+		case ELEM_FLOAT:{
+			if (!t->a.rnk) {
+				if (!r->a.f) { err = 11; goto fail; } 
+				t->a.f = l->a.i / r->a.f;
+			} else if (!l->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				int64_t lv = l->a.i;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if (!rv[i]) { err = 11; goto fail; }
+					tv[i] = lv / rv[i];
+				}
+			} else if (!r->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				int64_t *restrict lv = l->a.host->i;
+				double rv = r->a.f;
+
+				if (!rv) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] / rv;
+			} else {
+				double *restrict tv = t->a.host->f;
+				int64_t *restrict lv = l->a.host->i;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if (!rv[i]) { err = 11; goto fail; }
+					tv[i] = lv[i] / rv[i];
+				}
+			}
+		}break;
+		case ELEM_CMPX:{
+			if (!t->a.rnk) {
+				struct apl_cmpx x = {(double)l->a.i, 0};
+				if (!r->a.j.real && ! r->a.j.imag) { err = 11; goto fail; }
+				t->a.j = div_cmpx(x, r->a.j);
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = {(double)l->a.i, 0};
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if (!rv[i].real && !rv[i].imag) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv, rv[i]);
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				int64_t *restrict lv = l->a.host->i;
+				struct apl_cmpx rv = r->a.j;
+				
+				if (!rv.real && !rv.imag) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {(double)lv[i], 0};
+					tv[i] = div_cmpx(x, rv);
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				int64_t *restrict lv = l->a.host->i;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {(double)lv[i], 0};
+					if (!rv[i].real && ! rv[i].imag) { err = 11; goto fail; }
+					tv[i] = div_cmpx(x, rv[i]);
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_INT, STG_HOST, 0, NULL, .i = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = divide_f(NULL, &t->a.p, l, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], l, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				int64_t *restrict lv = l->a.host->i;
+				struct cell *rv = r->a.p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = lv[i];
+					err = divide_f(NULL, &tv[i], &x, rv, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				int64_t *restrict lv = l->a.host->i;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = lv[i];
+					err = divide_f(NULL, &tv[i], &x, rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	case ELEM_FLOAT:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			if (!t->a.rnk) {
+				if(!r->a.i) { err = 11; goto fail; }
+				t->a.f = l->a.f / r->a.i;
+			} else if (!l->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double lv = l->a.f;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = lv / rv[i];
+				}
+			} else if (!r->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				int64_t rv = r->a.i;
+				
+				if(!rv) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] / rv;
+			} else {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = lv[i] / rv[i];
+				}
+			}
+		}break;
+		case ELEM_FLOAT:{
+			if (!t->a.rnk) {
+				if(!r->a.f) { err = 11; goto fail; }
+				t->a.f = l->a.f / r->a.f;
+			} else if (!l->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double lv = l->a.f;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = lv / rv[i];
+				}
+			} else if (!r->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				double rv = r->a.f;
+				
+				if(!rv) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] / rv;
+			} else {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = lv[i] / rv[i];
+				}
+			}
+		}break;
+		case ELEM_CMPX:{
+			if (!t->a.rnk) {
+				struct apl_cmpx x = {l->a.f, 0};
+				if(!r->a.j.real && !r->a.j.imag) { err = 11; goto fail; }
+				t->a.j = div_cmpx(x, r->a.j);
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = {l->a.f, 0};
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if(!rv[i].real && !rv[i].imag) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv, rv[i]);
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				double *restrict lv = l->a.host->f;
+				struct apl_cmpx rv = r->a.j;
+				
+				if(!rv.real && !rv.imag) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {lv[i], 0};
+					tv[i] = div_cmpx(x, rv);
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				double *restrict lv = l->a.host->f;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {lv[i], 0};
+					if(!rv[i].real && !rv[i].imag) { err = 11; goto fail; }
+					tv[i] = div_cmpx(x, rv[i]);
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_FLOAT, STG_HOST, 0, NULL, .f = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = divide_f(NULL, &t->a.p, l, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], l, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				double *restrict lv = l->a.host->f;
+				struct cell *rv = r->a.p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = lv[i];
+					err = divide_f(NULL, &tv[i], &x, rv, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				double *restrict lv = l->a.host->f;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = lv[i];
+					err = divide_f(NULL, &tv[i], &x, rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	case ELEM_CMPX:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			if (!t->a.rnk) {
+				struct apl_cmpx x = {(double)r->a.i, 0};
+				if(!r->a.i) { err = 11; goto fail; }
+				t->a.j = div_cmpx(l->a.j, x);
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = l->a.j;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {(double)rv[i], 0};
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv, x);
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct apl_cmpx rv = {(double)r->a.i, 0};
+				
+				if(!r->a.i) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i] = div_cmpx(lv[i], rv);
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {(double)rv[i], 0};
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv[i], x);
+				}
+			}
+		}break;
+		case ELEM_FLOAT:{
+			if (!t->a.rnk) {
+				struct apl_cmpx x = {r->a.f, 0};
+				if(!r->a.f) { err = 11; goto fail; }
+				t->a.j = div_cmpx(l->a.j, x);
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = l->a.j;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {rv[i], 0};
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv, x);
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct apl_cmpx rv = {r->a.f, 0};
+				
+				if(!r->a.f) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i] = div_cmpx(lv[i], rv);
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					struct apl_cmpx x = {rv[i], 0};
+					if(!rv[i]) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv[i], x);
+				}
+			}
+		}break;
+		case ELEM_CMPX:{
+			if (!t->a.rnk) {
+				if(!r->a.j.real && !r->a.j.imag) { err = 11; goto fail; }
+				t->a.j = div_cmpx(l->a.j, r->a.j);
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = l->a.j;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if(!rv[i].real && !rv[i].imag) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv, rv[i]);
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct apl_cmpx rv = r->a.j;
+				
+				if(!rv.real && ! rv.imag) { err = 11; goto fail; }
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i] = div_cmpx(lv[i], rv);
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					if(!rv[i].real && !rv[i].imag) { err = 11; goto fail; }
+					tv[i] = div_cmpx(lv[i], rv[i]);
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_CMPX, STG_HOST, 0, NULL, .j = {0, 0}
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = divide_f(NULL, &t->a.p, l, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], l, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct cell *rv = r->a.p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = lv[i];
+					err = divide_f(NULL, &tv[i], &x, rv, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = lv[i];
+					err = divide_f(NULL, &tv[i], &x, rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	case ELEM_CHAR:err = 99; goto fail;
+	case ELEM_CELL:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_INT, STG_HOST, 0, NULL, .i = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = divide_f(NULL, &t->a.p, l->a.p, r, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				int64_t *restrict rv = r->a.host->i;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = rv[i];
+					err = divide_f(NULL, &tv[i], l->a.p, &x, NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				x.a.i = r->a.i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = rv[i];
+					err = divide_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		case ELEM_FLOAT:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_FLOAT, STG_HOST, 0, NULL, .f = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = divide_f(NULL, &t->a.p, l->a.p, r, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				double *restrict rv = r->a.host->f;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = rv[i];
+					err = divide_f(NULL, &tv[i], l->a.p, &x, NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				x.a.f = r->a.f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = rv[i];
+					err = divide_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		case ELEM_CMPX:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_CMPX, STG_HOST, 0, NULL, .j = {0, 0}
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = divide_f(NULL, &t->a.p, l->a.p, r, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = rv[i];
+					err = divide_f(NULL, &tv[i], l->a.p, &x, NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				x.a.j = r->a.j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = rv[i];
+					err = divide_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			if (!t->a.rnk) {
+				err = divide_f(NULL, &t->a.p, l->a.p, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], l->a.p, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], lv[i], r->a.p, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = divide_f(NULL, &tv[i], lv[i], rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	default:
+		err = 99;
+		goto fail;
+	}
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+EXPORT int
+reciprocal_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	l; fv;
+	
+	struct cell one = {
+		1, CELL_ARRAY, NULL, .a = {
+			ELEM_INT, STG_HOST, 0, NULL, .i = 1
+		}
+	};
+	
+	return divide_f(s, z, &one, r, NULL);
+}
+
+int (*div_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	reciprocal_f, divide_f
+};
+struct cell div_c = {
+	1, CELL_FUNC, NULL, .f = {
+		div_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *cd_div = &div_c;
