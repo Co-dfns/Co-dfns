@@ -187,6 +187,8 @@ GC←{
 	pref,←⊂'int set_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int conjugate_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int plus_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int times_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int divide_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'

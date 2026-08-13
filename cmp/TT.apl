@@ -101,7 +101,7 @@ TT←{
 	syms,←⊂,'+'	  ⋄ nams⍪←'add'	       'conjugate'     'plus'			'idxerr'
 	syms,←⊂,'-'	  ⋄ nams⍪←'sub'	       'negate'	       'minus'			'idxerr'
 	syms,←⊂,'×'	  ⋄ nams⍪←'mul'	       'sign'	       'times'			'idxerr'
-	syms,←⊂,'÷'	  ⋄ nams⍪←'div'	       'recip'	       'divide'			'idxerr'
+	syms,←⊂,'÷'	  ⋄ nams⍪←'cd_div'	       'recip'	       'divide'			'idxerr'
 	syms,←⊂,'*'	  ⋄ nams⍪←'exp'	       'exponent'      'power'			'idxerr'
 	syms,←⊂,'⍟'	  ⋄ nams⍪←'log'	       'natlog'	       'logarithm'		'idxerr'
 	syms,←⊂,'|'	  ⋄ nams⍪←'res'	       'absolute'      'residue'		'idxerr'

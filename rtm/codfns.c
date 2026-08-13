@@ -2361,3 +2361,651 @@ struct cell add_c = {
 	}
 };
 EXPORT struct cell *add = &add_c;
+
+EXPORT int
+sign_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+}
+
+EXPORT int
+times_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	t = NULL;
+	
+	if (l->a.etyp == ELEM_CHAR || r->a.etyp == ELEM_CHAR) {
+		err = 11;
+		goto fail;
+	}
+	
+	if ((err = get_scalar_cell(&t, l, r)))
+		goto fail;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 1);
+	
+	switch (l->a.etyp) {
+	case ELEM_INT:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			if (!t->a.rnk) {
+				t->a.i = l->a.i * r->a.i;
+			} else if (!l->a.rnk) {
+				int64_t *restrict tv = t->a.host->i;
+				int64_t lv = l->a.i;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv * rv[i];
+			} else if (!r->a.rnk) {
+				int64_t *restrict tv = t->a.host->i;
+				int64_t *restrict lv = l->a.host->i;
+				int64_t rv = r->a.i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv;
+			} else {
+				int64_t *restrict tv = t->a.host->i;
+				int64_t *restrict lv = l->a.host->i;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv[i];
+			}
+		}break;
+		case ELEM_FLOAT:{
+			if (!t->a.rnk) {
+				t->a.f = l->a.i * r->a.f;
+			} else if (!l->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				int64_t lv = l->a.i;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv * rv[i];
+			} else if (!r->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				int64_t *restrict lv = l->a.host->i;
+				double rv = r->a.f;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv;
+			} else {
+				double *restrict tv = t->a.host->f;
+				int64_t *restrict lv = l->a.host->i;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv[i];
+			}
+		}break;
+		case ELEM_CMPX:{
+			if (!t->a.rnk) {
+				t->a.j.real = l->a.i * r->a.j.real;
+				t->a.j.imag = l->a.i * r->a.j.imag;
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				int64_t lv = l->a.i;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv * rv[i].real;
+					tv[i].imag = lv * rv[i].imag;
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				int64_t *restrict lv = l->a.host->i;
+				struct apl_cmpx rv = r->a.j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i] * rv.real;
+					tv[i].imag = lv[i] * rv.imag;
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				int64_t *restrict lv = l->a.host->i;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i] * rv[i].real;
+					tv[i].imag = lv[i] * rv[i].imag;
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_INT, STG_HOST, 0, NULL, .i = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = times_f(NULL, &t->a.p, l, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], l, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				int64_t *restrict lv = l->a.host->i;
+				struct cell *rv = r->a.p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = lv[i];
+					err = times_f(NULL, &tv[i], &x, rv, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				int64_t *restrict lv = l->a.host->i;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = lv[i];
+					err = times_f(NULL, &tv[i], &x, rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	case ELEM_FLOAT:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			if (!t->a.rnk) {
+				t->a.f = l->a.f * r->a.i;
+			} else if (!l->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double lv = l->a.f;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv * rv[i];
+			} else if (!r->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				int64_t rv = r->a.i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv;
+			} else {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv[i];
+			}
+		}break;
+		case ELEM_FLOAT:{
+			if (!t->a.rnk) {
+				t->a.f = l->a.f * r->a.f;
+			} else if (!l->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double lv = l->a.f;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv * rv[i];
+			} else if (!r->a.rnk) {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				double rv = r->a.f;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv;
+			} else {
+				double *restrict tv = t->a.host->f;
+				double *restrict lv = l->a.host->f;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++)
+					tv[i] = lv[i] * rv[i];
+			}
+		}break;
+		case ELEM_CMPX:{
+			if (!t->a.rnk) {
+				t->a.j.real = l->a.f * r->a.j.real;
+				t->a.j.imag = l->a.f * r->a.j.imag;
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				double lv = l->a.f;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv * rv[i].real;
+					tv[i].imag = lv * rv[i].imag;
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				double *restrict lv = l->a.host->f;
+				struct apl_cmpx rv = r->a.j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i] * rv.real;
+					tv[i].imag = lv[i] * rv.imag;
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				double *restrict lv = l->a.host->f;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i] * rv[i].real;
+					tv[i].imag = lv[i] * rv[i].imag;
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_FLOAT, STG_HOST, 0, NULL, .f = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = times_f(NULL, &t->a.p, l, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], l, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				double *restrict lv = l->a.host->f;
+				struct cell *rv = r->a.p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = lv[i];
+					err = times_f(NULL, &tv[i], &x, rv, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				double *restrict lv = l->a.host->f;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = lv[i];
+					err = times_f(NULL, &tv[i], &x, rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	case ELEM_CMPX:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			if (!t->a.rnk) {
+				t->a.j.real = l->a.j.real * r->a.i;
+				t->a.j.imag = l->a.j.imag * r->a.i;
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = l->a.j;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv.real * rv[i];
+					tv[i].imag = lv.imag * rv[i];
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				int64_t rv = r->a.i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i].real * rv;
+					tv[i].imag = lv[i].imag * rv;
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i].real * rv[i];
+					tv[i].imag = lv[i].imag * rv[i];
+				}
+			}
+		}break;
+		case ELEM_FLOAT:{
+			if (!t->a.rnk) {
+				t->a.j.real = l->a.j.real * r->a.f;
+				t->a.j.imag = l->a.j.imag * r->a.f;
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = l->a.j;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv.real * rv[i];
+					tv[i].imag = lv.imag * rv[i];
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				double rv = r->a.f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i].real * rv;
+					tv[i].imag = lv[i].imag * rv;
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i].real * rv[i];
+					tv[i].imag = lv[i].imag * rv[i];
+				}
+			}
+		}break;
+		case ELEM_CMPX:{
+			if (!t->a.rnk) {
+				t->a.j.real = l->a.j.real * r->a.j.real - l->a.j.imag * r->a.j.imag;
+				t->a.j.imag = l->a.j.imag * r->a.j.real + l->a.j.real * r->a.j.imag;
+			} else if (!l->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx lv = l->a.j;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv.real * rv[i].real - lv.imag * rv[i].imag;
+					tv[i].imag = lv.imag * rv[i].real + lv.real * rv[i].imag;
+				}
+			} else if (!r->a.rnk) {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct apl_cmpx rv = r->a.j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i].real * rv.real - lv[i].imag * rv.imag;
+					tv[i].imag = lv[i].imag * rv.real + lv[i].real * rv.imag;
+				}
+			} else {
+				struct apl_cmpx *restrict tv = t->a.host->j;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					tv[i].real = lv[i].real * rv[i].real - lv[i].imag * rv[i].imag;
+					tv[i].imag = lv[i].imag * rv[i].real + lv[i].real * rv[i].imag;
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_CMPX, STG_HOST, 0, NULL, .j = {0, 0}
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = times_f(NULL, &t->a.p, l, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], l, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct cell *rv = r->a.p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = lv[i];
+					err = times_f(NULL, &tv[i], &x, rv, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct apl_cmpx *restrict lv = l->a.host->j;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = lv[i];
+					err = times_f(NULL, &tv[i], &x, rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	case ELEM_CHAR:err = 99; goto fail;
+	case ELEM_CELL:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_INT, STG_HOST, 0, NULL, .i = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = times_f(NULL, &t->a.p, l->a.p, r, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				int64_t *restrict rv = r->a.host->i;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = rv[i];
+					err = times_f(NULL, &tv[i], l->a.p, &x, NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				x.a.i = r->a.i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				int64_t *restrict rv = r->a.host->i;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.i = rv[i];
+					err = times_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		case ELEM_FLOAT:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_FLOAT, STG_HOST, 0, NULL, .f = 0
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = times_f(NULL, &t->a.p, l->a.p, r, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				double *restrict rv = r->a.host->f;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = rv[i];
+					err = times_f(NULL, &tv[i], l->a.p, &x, NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				x.a.f = r->a.f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				double *restrict rv = r->a.host->f;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.f = rv[i];
+					err = times_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		case ELEM_CMPX:{
+			struct cell x = {
+				1, CELL_ARRAY, NULL, .a = {
+					ELEM_CMPX, STG_HOST, 0, NULL, .j = {0, 0}
+				}
+			};
+			
+			if (!t->a.rnk) {
+				err = times_f(NULL, &t->a.p, l->a.p, r, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = rv[i];
+					err = times_f(NULL, &tv[i], l->a.p, &x, NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				x.a.j = r->a.j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				struct apl_cmpx *restrict rv = r->a.host->j;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					x.a.j = rv[i];
+					err = times_f(NULL, &tv[i], lv[i], &x, NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL:{
+			if (!t->a.rnk) {
+				err = times_f(NULL, &t->a.p, l->a.p, r->a.p, NULL);
+				if (err) goto fail;
+			} else if (!l->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], l->a.p, rv[i], NULL);
+					if (err) goto fail;
+				}
+			} else if (!r->a.rnk) {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], lv[i], r->a.p, NULL);
+					if (err) goto fail;
+				}
+			} else {
+				struct cell **restrict tv = t->a.host->p;
+				struct cell **restrict lv = l->a.host->p;
+				struct cell **restrict rv = r->a.host->p;
+				
+				for (int64_t i = 0; i < cnt; i++) {
+					err = times_f(NULL, &tv[i], lv[i], rv[i], NULL);
+					if (err) goto fail;
+				}
+			}
+		}break;
+		default:err = 99; goto fail;
+		}
+	}break;
+	default:
+		err = 99;
+		goto fail;
+	}
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*mul_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	sign_f, times_f
+};
+struct cell mul_c = {
+	1, CELL_FUNC, NULL, .f = {
+		mul_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *mul = &mul_c;
+
+static struct apl_cmpx
+div_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+	double quot;
+	
+	quot = y.real * y.real + y.imag * y.imag;
+	
+	if (!quot) {
+		z.real = 0;
+		z.imag = 0;
+		return z;
+	}
+	
+	z.real = (x.real * y.real + x.imag * y.imag) / quot;
+	z.imag = (x.imag * y.real - x.real * y.imag) / quot;
+	
+	return z;
+}
