@@ -741,6 +741,14 @@ is_bound(struct cell *c)
 	}
  };
  
+ struct cell scl_zero = {
+	1, CELL_ARRAY, NULL, .a = {ELEM_INT, STG_HOST, 0, NULL, .i = 0}
+};
+
+struct cell scl_one = {
+	1, CELL_ARRAY, NULL, .a = {ELEM_INT, STG_HOST, 0, NULL, .i = 1}
+};
+ 
  EXPORT int
  println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
  {
