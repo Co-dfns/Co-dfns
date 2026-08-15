@@ -3767,3 +3767,281 @@ fail:
 	
 	return err;
 }
+
+static int
+syserr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+
+	return 99;
+}
+
+static int
+reduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t axis;
+	int err;
+	
+	l; fv;
+	
+	if (!r->a.rnk) return 11;
+	
+	if (s->f.axis->a.rnk) return 5;
+	if (s->f.axis->a.etyp != ELEM_INT) return 11;
+	
+	axis = s->f.axis->a.i;
+	
+	if (axis >= r->a.rnk) return 4;
+	
+	if (!(t = get_cell()))
+		return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.stg = r->a.stg;
+	t->a.rnk = r->a.rnk - 1;
+	t->a.shp = NULL;
+	t->a.host = NULL;
+	
+	if (t->a.rnk) {
+		t->a.shp = get_host_buffer(buffer_size(ELEM_INT, t->a.rnk));
+		
+		if (!t->a.shp) { err = 1; goto fail; }
+		
+		for (int64_t i = 0, k = 0; i < t->a.rnk; i++)
+			if (i != axis)
+				t->a.shp->i[k++] = r->a.shp->i[i];
+	}
+	
+	if (t->a.stg != STG_HOST) { err = 16; goto fail; }
+	
+	if (1 == r->a.shp->i[axis]) {
+		t->a.host = r->a.host;
+		t->a.host->refc++;
+		
+		goto done;
+	}
+	
+	if (!t->a.rnk && s->f.aa == add) {
+		int64_t cnt;
+		
+		cnt = array_count(r, 0);
+		
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			int64_t tv, *restrict rv;
+			
+			rv = r->a.host->i;
+			tv = 0;
+			t->a.etyp = ELEM_INT;
+			
+			for (int64_t i = 0; i < cnt; i++)
+				tv += rv[i];
+			
+			t->a.i = tv;
+		}break;
+		case ELEM_FLOAT:{
+			double tv, *restrict rv;
+			
+			rv = r->a.host->f;
+			tv = 0;
+			t->a.etyp = ELEM_FLOAT;
+			
+			for (int64_t i = 0; i < cnt; i++)
+				tv += rv[i];
+			
+			t->a.f = tv;
+		}break;
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CHAR: err = 11; goto fail;
+		case ELEM_CELL: err = 16; goto fail;
+		default: err = 99; goto fail;
+		}
+		
+		goto done;
+	}
+
+	err = 16;
+	
+	goto fail;
+	
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+	
+}
+
+static int
+nwreduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t axis, win, cnt, ts[3], rs[3];
+	int err, rev;
+	
+	s; z; l; r; fv;
+	
+	if (s->f.axis->a.rnk) return 5;		
+	if (s->f.axis->a.etyp != ELEM_INT) return 11;
+	
+	axis = s->f.axis->a.i;
+	rev = 0;
+	
+	if (axis < 0) {
+		axis = -1 * axis;
+		rev = 1;
+	}
+	
+	if (l->a.rnk) return 4;	
+	if (l->a.etyp != ELEM_INT) return 11;
+	
+	win = l->a.i;
+	
+	if (axis >= r->a.rnk) return 4;
+	if (win > 1 + r->a.shp->i[axis]) return 5;
+	
+	if (rev) return 16;
+	
+	if (win == 1) {
+		t = ref_cell(r);
+		goto done;
+	}
+	
+	if (!(t = get_cell())) return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.stg = r->a.stg;
+	t->a.rnk = r->a.rnk;
+	t->a.shp = NULL;
+	t->a.host = NULL;
+	
+	t->a.shp = get_host_buffer(buffer_size(ELEM_INT, t->a.rnk));
+	
+	if (!t->a.shp) { err = 1; goto fail; }
+	
+	for (int64_t i = 0; i < t->a.rnk; i++)
+		t->a.shp->i[i] = r->a.shp->i[i];
+	
+	t->a.shp->i[axis] = (1 + r->a.shp->i[axis]) - win;
+	
+	cnt = array_count(t, 0);
+	
+	if (t->a.stg != STG_HOST) { err = 16; goto fail; }
+	
+	ts[0] = ts[1] = ts[2] = rs[0] = rs[1] = rs[2] = 1;
+	
+	for (int64_t i = 0; i < t->a.rnk; i++) {
+		if (i < axis) {
+			ts[0] *= t->a.shp->i[i];
+			rs[0] *= r->a.shp->i[i];
+		} else if (i == axis) {
+			ts[1] *= t->a.shp->i[i];
+			rs[1] *= r->a.shp->i[i];
+		} else {
+			ts[2] *= t->a.shp->i[i];
+			rs[2] *= r->a.shp->i[i];
+		}
+	}
+		
+	if (s->f.aa == add) {
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			int64_t *restrict tv, *restrict rv;
+			
+			t->a.etyp = ELEM_INT;
+			t->a.host = get_host_buffer(buffer_size(ELEM_INT, cnt ? cnt : 1));
+			
+			if (!t->a.host) { err = 1; goto fail; }
+			
+			if (!cnt) {
+				t->a.host->i[0] = 0;
+				goto done;
+			}
+			
+			tv = t->a.host->i;
+			rv = r->a.host->i;
+			
+			for (int64_t i = 0; i < ts[0]; i++) {
+				for (int64_t j = 0; j < ts[2]; j++) {
+					for (int64_t k = 0; k < ts[1]; k++) {
+						int64_t ti = i * ts[1] * ts[2] + j + k * ts[2];
+						int64_t ri = i * rs[1] * rs[2] + j + k * rs[2];
+						
+						tv[ti] = 0;
+						
+						for (int64_t w = 0; w < win; w++) {
+							tv[ti] += rv[ri + w * rs[2]];
+						}
+					}
+				}
+			}
+		}break;
+		case ELEM_FLOAT: err = 16; goto fail;
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CHAR: err = 11; goto fail;
+		case ELEM_CELL: err = 16; goto fail;
+		default: err = 99; goto fail;
+		}
+		
+		goto done;
+	}
+	
+	err = 16;
+	goto fail;
+
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+static int 
+redfirst_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	if (!s || l)
+		return 99;
+	
+	if (s->f.axis)
+		return reduce_f(s, z, NULL, r, fv);
+	
+	s->f.axis = ref_cell(&scl_zero);
+	
+	return reduce_f(s, z, NULL, r, fv);
+}
+
+static int
+nwredfirst_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	if (!s || !l)
+		return 99;
+	
+	if (s->f.axis)
+		return nwreduce_f(s, z, l, r, fv);
+	
+	s->f.axis = ref_cell(&scl_zero);
+	
+	return nwreduce_f(s, z, l, r, fv);
+}
+
+int (*rdf_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syserr_f, syserr_f, redfirst_f, nwredfirst_f
+};
+struct cell rdf_c = {
+	1, CELL_FUNC, NULL, .f = {
+		rdf_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *rdf = &rdf_c;
+
