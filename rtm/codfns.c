@@ -729,10 +729,6 @@ is_bound(struct cell *c)
 	return 0;
  }
  
-/**************
- * PRIMITIVES *
- **************/
- 
  int64_t zero_list[] = {0};
  struct host_buffer zero_buf = {2, 0, NULL, .i = zero_list};
  struct cell mt_num_vec = {
@@ -748,6 +744,27 @@ is_bound(struct cell *c)
 struct cell scl_one = {
 	1, CELL_ARRAY, NULL, .a = {ELEM_INT, STG_HOST, 0, NULL, .i = 1}
 };
+
+static int
+syserr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+
+	return 99;
+}
+ 
+static int
+syntaxerr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+
+	return 2;
+}
+ 
+/**************
+ * PRIMITIVES *
+ **************/
+ 
  
  EXPORT int
  println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
@@ -3769,14 +3786,6 @@ fail:
 }
 
 static int
-syserr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
-{
-	s; z; l; r; fv;
-
-	return 99;
-}
-
-static int
 reduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
 	struct cell *t;
@@ -3884,7 +3893,7 @@ nwreduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, stru
 	int64_t axis, win, cnt, ts[3], rs[3];
 	int err, rev;
 	
-	s; z; l; r; fv;
+	fv;
 	
 	if (s->f.axis->a.rnk) return 5;		
 	if (s->f.axis->a.etyp != ELEM_INT) return 11;
@@ -4022,8 +4031,6 @@ redfirst_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, stru
 static int
 nwredfirst_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
-	s; z; l; r; fv;
-	
 	if (!s || !l)
 		return 99;
 	
