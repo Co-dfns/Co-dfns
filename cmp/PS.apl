@@ -108,7 +108,7 @@ PS←{⍺←⊢
 	t[⍸msk←2<⌿tm⍪0]←T ⋄ d+←msk<tm
 
 	⍝ Identify colons belonging to Labels
-	t[⍸tm∧(d=1)∧(¯1⌽t≠Z)∧≠(+⍀2<⌿0⍪t=Z)×':'=x]←L
+	t[⍸tm∧(d=1)∧∊0,¨(<⍀∧∘~⊃)¨':'=1↓¨(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
 	t[i←⍸2<⌿0⍪msk←(t=0)∧':'=x]←K ⋄ end[i]←end[⍸2>⌿0⍪⍨msk]
