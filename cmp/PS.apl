@@ -128,8 +128,7 @@ PS←{⍺←⊢
 	⍝ With tokens created, reify n field before tree-building
 	n←(w⌿1+⍳≢pos)⊆IN[(⍳≢x)+x←w⌿pos-+⍀0,¯1↓w←end-pos]
 	n←{¯1↓⍎¨⍵,⊂''''''}@{t=C}(⊂'')@{t∊Z F}⎕C@{t∊K S}(⊂⍬)@{n∊⊂,'⍬'}n
-	msk vals←⎕VFI ⍕n[i←⍸t=N] ⋄ t[⍸(t=N)⍀~msk]←¯17
-	n[msk⌿i]←msk⌿vals
+	msk x←⎕VFI ⍕n[i←⍸t=N] ⋄ n[msk⌿i]←x ⋄ t[i⌿⍨~msk]←¯17
 	
 	⍝ Split inheritance reference if necessary
 	msk←(t=K)∧¯1⌽(t=V)∧¯1⌽(t=K)∧n∊⊂':class'
