@@ -75,8 +75,8 @@ PS←{⍺←⊢
 	msk←dm<(t=0)∧x∊alp,num ⋄ t[i←⍸2<⌿0⍪msk]←V ⋄ end[i]←end⌿⍨2>⌿msk⍪0
 
 	⍝ Tokenize dfns formals
-	end[⍸mf←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍺'=x ⋄ end[⍸mf∨←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍵'=x
-	t[⍸mf∧1=end-pos]←A ⋄ t[⍸mf∧2=end-pos]←P ⋄ t[⍸mf∧3≤end-pos]←¯9
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍺'=x ⋄ end[⍸m2∨←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍵'=x
+	t[⍸m2∧1=end-pos]←A ⋄ t[⍸m2∧2=end-pos]←P ⋄ t[⍸m2∧3≤end-pos]←¯9
 
 	⍝ Tokenize primitives and atoms
 	t[⍸x∊syna]←A ⋄ t[⍸dm<x∊prms]←P
