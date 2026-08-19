@@ -3794,7 +3794,7 @@ reduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct
 	
 	l; fv;
 	
-	if (!r->a.rnk) return 11;
+	if (!r->a.rnk) return 16;
 	
 	if (s->f.axis->a.rnk) return 5;
 	if (s->f.axis->a.etyp != ELEM_INT) return 11;
