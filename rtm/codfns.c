@@ -4052,3 +4052,162 @@ struct cell rdf_c = {
 };
 EXPORT struct cell *rdf = &rdf_c;
 
+static int
+innerprod_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t la, lb, ra, rb, cnt;
+	int err;
+	
+	fv;
+	
+	if (l->a.rnk && r->a.rnk && l->a.shp->i[l->a.rnk - 1] != r->a.shp->i[0])
+		return 5;
+		
+	lb = l->a.rnk ? l->a.shp->i[l->a.rnk - 1] : 1;
+	la = array_count(l, 0) / lb;
+	ra = r->a.rnk ? r->a.shp->i[0] : 1;
+	rb = array_count(r, 0) / ra;
+	
+	if (l->a.stg == STG_DEVICE || r->a.stg == STG_DEVICE)
+		return 11;
+	
+	if (!(t = get_cell()))
+		return 1;
+		
+	t->ctyp = CELL_ARRAY;
+	t->a.stg = STG_HOST;
+	t->a.shp = NULL;
+	t->a.host = NULL;
+	t->a.rnk = l->a.rnk ? l->a.rnk - 1 : 0;
+	t->a.rnk += r->a.rnk ? r->a.rnk - 1 : 0;
+	
+	if (t->a.rnk) {
+		int64_t *restrict ts, *restrict ls, *restrict rs;
+		
+		t->a.shp = get_host_buffer(buffer_size(ELEM_INT, t->a.rnk));
+		
+		if (!t->a.shp) { err = 1; goto fail; }
+		
+		ts = t->a.shp->i;
+		ls = l->a.shp->i;
+		rs = r->a.shp->i;
+		
+		for (int64_t i = 0; i < l->a.rnk - 1; i++)
+			*ts++ = ls[i];
+		
+		for (int64_t i = 1; i < r->a.rnk; i++)
+			*ts++ = rs[i];
+	}
+	
+	cnt = la * ra;
+	
+	if (s->f.aa == add && s->f.ww == mul) {
+		if (r->a.etyp == ELEM_CHAR || l->a.etyp == ELEM_CHAR) {
+			err = 11;
+			goto fail;
+		}
+		
+		switch (l->a.etyp) {
+		case ELEM_INT:{
+			switch (r->a.etyp) {
+			case ELEM_INT:{
+				int64_t *restrict tv, *restrict rv, *restrict lv;
+				
+				t->a.etyp = ELEM_INT;
+				
+				if (!l->a.rnk && !r->a.rnk) {
+					t->a.i = l->a.i * r->a.i;
+					goto done;
+				}
+				
+				lv = l->a.host->i;
+				rv = r->a.host->i;
+
+				if (!t->a.rnk) {
+					t->a.i = 0;
+					
+					if (!l->a.rnk) {
+						for (int64_t i = 0; i < rb; i++)
+							t->a.i += l->a.i * rv[i];
+					} else if (!r->a.rnk) {
+						for (int64_t i = 0; i < lb; i++)
+							t->a.i += lv[i] * r->a.i;
+					} else {
+						for (int64_t i = 0; i < lb; i++)
+							t->a.i += lv[i] * rv[i];
+					}
+					
+					goto done;
+				}
+				
+				t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt ? cnt : 1));
+				
+				if (!t->a.host) { err = 1; goto fail; }
+				
+				tv = t->a.host->i;
+				
+				if (!cnt) {
+					tv[0] = 0;
+					goto done;
+				}
+				
+				if (!l->a.rnk) {
+					err = 16;
+					goto fail;
+				}
+				
+				if (!r->a.rnk) {
+					err = 16;
+					goto fail;
+				}
+				
+				for (int64_t i = 0; i < la; i++) { 
+					for (int64_t j = 0; j < rb; j++) {
+						int64_t a = 0;
+						for (int64_t k = 0; k < lb; k++)
+							a += lv[i * lb + k] * rv[k * rb + j];
+						*tv++ = a;
+					}
+				}
+			}break;
+			case ELEM_FLOAT: err = 16; goto fail;
+			case ELEM_CMPX: err = 16; goto fail;
+			case ELEM_CELL: err = 16; goto fail;
+			default: err = 99; goto fail;
+			}
+		}break;
+		case ELEM_FLOAT: err = 16; goto fail;
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CELL: err = 16; goto fail;
+		default: err = 99; goto fail;
+		}
+		
+		goto done;
+	}
+	
+	err = 16;
+	goto fail;
+	
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*dot_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, syntaxerr_f, syntaxerr_f, syntaxerr_f, syntaxerr_f, syntaxerr_f, 
+	syntaxerr_f, innerprod_f
+};
+struct cell dot_c = {
+	1, CELL_FUNC, NULL, .f = {
+		dot_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *dot = &dot_c;
+
