@@ -122,6 +122,11 @@ X←0 1 2 3 4 ⋄ Y←1+X
 ⎕←monadic X ⋄ ⎕←X dyadic X ⋄ ⎕←literal⍬ ⋄ ⎕←litvar X ⋄ ⎕←X multi X
 ⎕←X parens X ⋄ ⎕←lists X ⋄ ⎕←space 5
 
+⍝ Operator Syntax Tests
+
+X←0 1 2 3 4 ⋄ Y←0 1 2 3 4 5 6 7 8 9
+
+⎕←+⌿X ⋄ ⎕←2+⌿Y ⋄ ⎕←X+.×X ⋄ ⍝ ⎕←*⍣2⊢5 ⋄ ⎕←{5+⍺+⍵}⌿X ⋄ ⎕←∘.(+⍨)⌿X ⋄ ⎕←X∘.(+⍨)X
 
 
 :EndNamespace
