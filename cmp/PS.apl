@@ -254,15 +254,14 @@ PS←{⍺←⊢
 
 	⍝ Parse :Namespace syntax into M nodes
 	nss←(t=K)∧n∊-sym⍳⎕C⊂':NAMESPACE' ⋄ nse←(t=K)∧n∊-sym⍳⎕C⊂':ENDNAMESPACE'
-	fm←msk⍀≠ip←p⌿⍨msk←p≠⍳≢p ⋄ lm←msk⍀⌽≠⌽ip
-	t[err←⍸nss>←nss>fm]←X ⋄ k[err]←¯24
-	t[err←⍸nss>←nss∧lm⍱1⌽(t=V)∧lm]←X ⋄ k[err]←¯25
-	t[err←⍸nse>←nse>fm∧lm]←X ⋄ k[err]←¯26
-	t[nsi←⍸1⌽nss]←M ⋄ t[nei←⍸1⌽nse]←-M
-	x←⍸p=⍳≢p ⋄ d←+⍀xni←(xns←t[x]=M)-xne←t[x]=-M
-	t[err←x[⍸xns>←xns∧d=⌽⌊⍀⌽d]]←X ⋄ k[err]←¯27
-	t[err←x[⍸xne>←xne∧(⊢=⌊⍀)d-xni]]←X ⋄ k[err]←¯28
-	p[x]←x[D2P ¯1⌽+⍀xns-xne] ⋄ n[i]←n[2+i←⍸(t=M)∧2⌽t=V] ⋄ end[xns⌿x]←end[1+xne⌿x]
+	msk←(≠p)∧p≠⍳≢p ⋄ m2←(⌽≠⌽p)∧p≠⍳≢p
+	t[i←⍸nss>←nss∧~msk]←X ⋄ k[i]←¯24
+	t[i←⍸nss>←nss∧m2⍱1⌽(t=V)∧m2]←X ⋄ k[i]←¯25
+	t[i←⍸nse>←nse∧msk⍲m2]←X ⋄ k[i]←¯26
+	t[⍸1⌽nss]←M ⋄ t[⍸1⌽nse]←-M ⋄ n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ d←+⍀x←×t[i←⍸M=|t]
+	t[j←i⌿⍨(x=1)∧d=⌊⍀d]←X ⋄ k[j]←¯27
+	t[j←i⌿⍨(x=¯1)∧d=⌽⌊⍀⌽d←d-x]←X ⋄ k[j]←¯28
+	p[x]←x[D2P ¯1⌽+⍀(××M=|)t[x←⍸p=⍳≢p]] ⋄ end[p[i]]←end[i←⍸t=-M]
 	msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
