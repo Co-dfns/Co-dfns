@@ -145,11 +145,8 @@ PS←{⍺←⊢
 	KW,←⊂'INCLUDE'
 	KW,←':' ''
 	KW,¨⍨←':' ⋄ KW←⎕C KW
-	t[⍸km⍀~KW∊⍨kws←n⌿⍨km←t=K]←¯18
-
-	⍝ Check that all namespaces/sections are top level
 	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':CLASS' ':ENDCLASS' ':SECTION' ':ENDSECTION'
-	t[⍸km⍀(kws∊nssec)∧km⌿tm]←¯19
+	t[i⌿⍨~n[i←⍸t=K]∊KW]←¯18 ⋄ t[i⌿⍨tm[i]∧n[i]∊nssec]←¯19
 
 	⍝ Verify system variables used
 	SYSV←,¨'Á' 'A' 'AI' 'AN' 'AV' 'ATX' 'AVU' 'BASE' 'CT' 'D' 'DCT' 'DIV' 'DM'
