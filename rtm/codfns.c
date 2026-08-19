@@ -3967,13 +3967,13 @@ nwreduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, stru
 			
 			if (!t->a.host) { err = 1; goto fail; }
 			
-			if (!cnt) {
-				t->a.host->i[0] = 0;
-				goto done;
-			}
-			
 			tv = t->a.host->i;
 			rv = r->a.host->i;
+			
+			if (!cnt) {
+				tv[0] = 0;
+				goto done;
+			}
 			
 			for (int64_t i = 0; i < ts[0]; i++) {
 				for (int64_t j = 0; j < ts[2]; j++) {
