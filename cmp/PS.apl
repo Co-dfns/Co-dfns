@@ -217,7 +217,7 @@ PS←{⍺←⊢
 
 	⍝ Parse the first line of a trad-fn as an H node
 	⍝ N M S A R L Z X Y←(9⍴2)⊤k ⋄ N M←0(2*16)⊤n
-	t[i←⍸(≠p)∧t[p]=T]←H ⋄ p[j]←i[p[i]⍳p[p][j←⍸p∊p[⍸(t[p][p]=T)∧(≠p)∧n=-sym⍳⊂,';']]]
+	t[j←⍸(≠p)∧t[p]=T]←H ⋄ p[i]←j[p[j]⍳p[p][i←⍸p∊p[⍸(t[p][p]=T)∧(≠p)∧n=-sym⍳⊂,';']]]
 	t[err←p[⍸(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H]]←X ⋄ k[err]←¯21
 	t[err←p[⍸(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H]]←X ⋄ k[err]←¯22
 	msysv←'⎕IO' '⎕ML' '⎕CT' '⎕PP' '⎕PW' '⎕RTL' '⎕FR' '⎕PATH' '⎕RL' '⎕DIV' '⎕TRAP' '⎕USING' '⎕WX'
