@@ -221,8 +221,7 @@ PS←{⍺←⊢
 	t[i←p[⍸(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←¯21
 	t[i←p[⍸(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←¯22
 	msysv←'⎕IO' '⎕ML' '⎕CT' '⎕PP' '⎕PW' '⎕RTL' '⎕FR' '⎕PATH' '⎕RL' '⎕DIV' '⎕TRAP' '⎕USING' '⎕WX'
-	err←p[⍸(t[p]=H)∧~(t=V)∨(n∊-sym⍳,¨'←(){};')∨(t=S)∧n∊-sym⍳⎕C¨msysv]
-	t[err]←X ⋄ k[err]←¯23
+	t[i←⍸(t[p]=H)∧~(t=V)∨(n∊-sym⍳,¨'←(){};')∨(t=S)∧n∊-sym⍳⎕C¨msysv]←X ⋄ k[i]←¯23
 	_←p[i]{
 		0=≢i:0
 		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯99
