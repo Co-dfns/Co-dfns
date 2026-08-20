@@ -4211,3 +4211,143 @@ struct cell dot_c = {
 };
 EXPORT struct cell *dot = &dot_c;
 
+EXPORT int
+exponent_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	s; l; fv;
+	
+	t = NULL;
+	
+	if (r->a.etyp == ELEM_CHAR) { err = 11; goto fail; }
+	
+	cnt = array_count(r, 0);
+	
+	if (!cnt) {
+		t = ref_cell(r);
+		goto done;
+	}
+	
+	if (r->a.stg == STG_DEVICE) { err = 16; goto fail; }
+	
+	if (!(t = get_cell())) { err = 1; goto fail; }
+	
+	t->ctyp = CELL_ARRAY;
+	t->a = r->a;
+	
+	if (t->a.etyp == ELEM_INT) t->a.etyp = ELEM_FLOAT;
+	if (t->a.rnk) {
+		t->a.shp->refc++;
+		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt ? cnt : 1));
+		
+		if (!t->a.host) { err = 1; goto fail; }
+	}
+	
+	switch (r->a.etyp) {
+	case ELEM_INT:{
+		if (!t->a.rnk) {
+			t->a.f = exp((double)r->a.i);
+		} else {
+			double *restrict tv = t->a.host->f;
+			int64_t *restrict rv = r->a.host->i;
+			
+			for (int64_t i = 0; i < cnt; i++)
+				tv[i] = exp((double)rv[i]);
+		}
+	}break;
+	case ELEM_FLOAT:{
+		if (!t->a.rnk) {
+			t->a.f = exp(r->a.f);
+		} else {
+			double *restrict tv = t->a.host->f;
+			double *restrict rv = r->a.host->f;
+			
+			for (int64_t i = 0; i < cnt; i++)
+				tv[i] = exp(rv[i]);
+		}
+	}break;
+	case ELEM_CMPX: err = 16; goto fail;
+	case ELEM_CELL: err = 16; goto fail;
+	default: err = 99; goto fail;
+	}
+	
+	
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+EXPORT int
+power_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+	
+}
+
+int (*exp_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	exponent_f, power_f
+};
+struct cell exp_c = {
+	1, CELL_FUNC, NULL, .f = {
+		exp_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *cd_exp = &exp_c;
+
+static int
+powerop_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t, *tmp, *fn;
+	int64_t cnt;
+	int err, fi;
+	
+	if (s->f.ww->ctyp != CELL_ARRAY) return 16;
+	
+	if (s->f.ww->a.etyp != ELEM_INT) return 11;
+	if (s->f.ww->a.rnk) return 4;
+	if (s->f.ww->a.i < 0) return 16;
+	
+	cnt = s->f.ww->a.i;
+	fn = s->f.aa;
+	t = ref_cell(r);
+	fi = l ? 1 : 0;
+	
+	for (int64_t i = 0; i < cnt; i++) {
+		tmp = t;
+		if ((err = fn->f.fn[fi](fn, &t, l, t, fv)))
+			goto fail;
+		free_cell(tmp);
+	}
+	
+	*z = t;
+	
+	return 0;
+		
+fail:
+	free_cell(tmp);
+	
+	return err;
+}
+
+int (*powo_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, syntaxerr_f, powerop_f, powerop_f, syntaxerr_f, syntaxerr_f, 
+	powerop_f, powerop_f
+};
+struct cell powo_c = {
+	1, CELL_FUNC, NULL, .f = {
+		powo_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *powo = &powo_c;
+
