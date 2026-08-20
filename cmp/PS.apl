@@ -261,6 +261,7 @@ PS←{⍺←⊢
 	t[⍸1⌽nss]←M ⋄ t[⍸1⌽nse]←-M ⋄ n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ d←+⍀x←×t[i←⍸M=|t]
 	t[j←i⌿⍨(x=1)∧d=⌊⍀d]←X ⋄ k[j]←¯27
 	t[j←i⌿⍨(x=¯1)∧d=⌽⌊⍀⌽d←d-x]←X ⋄ k[j]←¯28
+	t[i]←t[⌽i[⌽⍒+⍀2≠⌿0⍪x]]
 	p[x]←x[D2P ¯1⌽+⍀(××M=|)t[x←⍸p=⍳≢p]] ⋄ end[p[i]]←end[i←⍸t=-M]
 	msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
