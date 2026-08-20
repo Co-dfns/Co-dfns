@@ -270,7 +270,7 @@ PS←{⍺←⊢
 	i←i[⍋p[i←⍸(t[p][p]=F)∧p∊p⌿⍨t=K]] ⋄ fm←≠p[i] ⋄ km←t[i]=K
 	i fm km⌿⍨←⊂1+1⌽fm ⋄ i[⍸1⌽fm]←(≢p)+⍳fc←+⌿fm
 	t[p[j←fm⌿i]]←G ⋄ p⍪←p[j] ⋄ t k n pos end⍪←⊂fc⍴0 ⋄ _←gz¨i⊂⍨fm∨¯1⌽km
-	t[err←p[i]⌿⍨fm∧msk←t[p[i]]=G]←X ⋄ k[err]←¯29
+	t[i←p[i]⌿⍨fm∧msk←t[p[i]]=G]←X ⋄ k[i]←¯29
 
 	⍝ Delete keywords we can't handle
 	t k n pos end⌿⍨←⊂msk←t≠K ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
