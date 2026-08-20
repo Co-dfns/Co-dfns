@@ -3788,11 +3788,13 @@ fail:
 static int
 reduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
-	struct cell *t;
-	int64_t axis;
+	struct cell *t, **restrict pv, *fn, *x, *y;
+	int64_t axis, ra, rb, rc;
 	int err;
 	
-	l; fv;
+	l;
+	
+	x = y = t = NULL;
 	
 	if (!r->a.rnk) return 16;
 	
@@ -3869,11 +3871,88 @@ reduce_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct
 		
 		goto done;
 	}
+	
+	t->a.etyp = ELEM_CELL;
+	
+	ra = rc = 1;
+	rb = r->a.shp->i[axis];
+	
+	for (int64_t i = 0; i < axis; i++) 
+		ra *= r->a.shp->i[i];
+	for (int64_t i = axis + 1; i < r->a.rnk; i++)
+		rc *= r->a.shp->i[i];
+	
+	if (!t->a.rnk) {
+		pv = &t->a.p;
+	} else {
+		t->a.host = get_host_buffer(buffer_size(ELEM_CELL, ra * rc));
+		
+		if (!t->a.host) { err = 1; goto fail; }
+		
+		pv = t->a.host->p;
+		
+		memset(pv, 0, sizeof(*pv) * ra * rc);
+	}
+	
+	fn = s->f.aa;
+	
+	switch (r->a.etyp) {
+	case ELEM_INT:{
+		int64_t *restrict rv = r->a.host->i;
+		
+		for (int64_t i = 0; i < ra; i++) {
+			for (int64_t j = 0; j < rc; j++) {
+				int64_t off = i * rb * rc + j;
+				
+				if (!(y = get_cell())) { err = 1; goto fail; }
+				
+				y->ctyp = CELL_ARRAY;
+				y->a.etyp = r->a.etyp;
+				y->a.stg = STG_HOST;
+				y->a.rnk = 0;
+				y->a.shp = NULL;
+				y->a.i = rv[off + (rb - 1) * rc];
+				
+				for (int64_t k = rb - 2; k >= 0; k--) {
+					struct cell *tmp = y;
+					
+					if (!(x = get_cell())) { err = 1; goto fail; }
+					
+					x->ctyp = CELL_ARRAY;
+					x->a.etyp = r->a.etyp;
+					x->a.stg = STG_HOST;
+					x->a.rnk = 0;
+					x->a.shp = NULL;
+					x->a.i = rv[off + k * rc];
+					
+					if ((err = fn->f.fn[1](fn, &y, x, y, fv)))
+						goto fail;
+						
+					free_cell(tmp);
+					free_cell(x);
+				}
+				
+				pv[off] = y;
+			}
+		}
+	}break;
+	case ELEM_FLOAT:{
+		err = 16; goto fail;
+	}break;
+	case ELEM_CMPX:{
+		err = 16; goto fail;
+	}break;
+	case ELEM_CHAR:{
+		err = 16; goto fail;
+	}break;
+	case ELEM_CELL:{
+		err = 16; goto fail;
+	}break;
+	default: err = 99; goto fail;
+	}
+	
+	if ((err = squeeze(t))) goto fail;
 
-	err = 16;
-	
-	goto fail;
-	
 done:
 	*z = t;
 	
@@ -3881,6 +3960,8 @@ done:
 	
 fail:
 	free_cell(t);
+	free_cell(y);
+	free_cell(x);
 	
 	return err;
 	
