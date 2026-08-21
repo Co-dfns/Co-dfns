@@ -770,21 +770,63 @@ syntaxerr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, str
  EXPORT int
  println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
  {
+	struct host_buffer *shp;
+	char *vs;
+	int64_t mc, cc, sz;
 	int err;
 	
 	s; l; env;
 	
-	if ((err = println_pad(r)))
-		return err;
 	if (r->a.stg == STG_DEVICE)
 		return 16;
 	
-		
-	printf("\n");
+	if (r->a.rnk <= 1) {
+		if ((err = println_pad(r)))
+			return err;
+
+		printf("\n");
+		goto done;
+	}
 	
+	mc = r->a.shp->i[0];
+	cc = array_count(r, 0) / mc;
+	
+	if (!(shp = get_host_buffer(buffer_size(ELEM_INT, r->a.rnk - 1))))
+		return 1;
+	
+	for (int64_t i = 0; i < r->a.rnk - 1; i++)
+		shp->i[i] = r->a.shp->i[i + 1];
+		
+	sz = buffer_size(r->a.etyp, cc);
+	vs = (char *)r->a.host->i;
+	
+	for (int64_t i = 0; i < mc; i++) {
+		struct host_buffer hb = {
+			1, 0, NULL, .i = (int64_t *)(vs + i * sz)
+		};
+		struct cell x = {
+			1, CELL_ARRAY, NULL, .a = {
+				r->a.etyp, STG_HOST, r->a.rnk - 1, shp,
+				.host = &hb
+			}
+		};
+		struct cell *nil;
+		
+		if ((err = println_f(NULL, &nil, NULL, &x, NULL)))
+			goto fail;
+	}
+	
+	free_host_buffer(shp);
+	
+done:
 	*z = ref_cell(r);
 	
 	return 0;
+
+fail:
+	free_host_buffer(shp);
+	
+	return err;
 }
 
 EXPORT int
