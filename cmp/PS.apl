@@ -318,7 +318,7 @@ PS←{⍺←⊢
 
 	⍝ Add H node to each F and T0 node
 	i←⍸(t=F)∨(t∊T)∧k=0 ⋄ p⍪←i ⋄ t n k⍪←(≢i)⍴¨H 0 0 ⋄ pos⍪←pos[i] ⋄ end⍪←pos[i]+1
-
+	
 	⍝ Enclosing frames and lines for all nodes
 	msk←~t[p]∊F G T ⋄ rz←p I@{msk[⍵]}⍣≡⍳≢p
 	r←I@{t[0⌈⍵]=G}⍨rf←I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}⍨p[rz]
