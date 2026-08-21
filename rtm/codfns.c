@@ -657,9 +657,6 @@ is_bound(struct cell *c)
 		}
 	}
 	
-	if (r->a.stg == STG_DEVICE)
-		return 16;
-	
 	cnt = array_count(r, 0);
 		
 	switch (r->a.etyp) {
@@ -779,6 +776,9 @@ syntaxerr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, str
 	
 	if ((err = println_pad(r)))
 		return err;
+	if (r->a.stg == STG_DEVICE)
+		return 16;
+	
 		
 	printf("\n");
 	
