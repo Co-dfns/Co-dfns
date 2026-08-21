@@ -223,10 +223,14 @@ free_cell(struct cell *c)
 		free_host_buffer(c->a.shp);
 		switch (c->a.stg) {
 		case STG_HOST:
-			if (!c->a.rnk)
+			if (!c->a.rnk) {
+				if (c->a.etyp == ELEM_CELL)
+					free_cell(c->a.p);
+					
 				break;
+			}
 				
-			if (c->a.etyp == ELEM_CELL) {
+			if (c->a.etyp == ELEM_CELL && c->a.host) {
 				int64_t cnt = array_count(c, 1);
 				
 				for (int64_t i = 0; i < cnt; i++) 
