@@ -619,9 +619,9 @@ PS←{⍺←⊢
 	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂i
 	
 	⍝ Check that we have well-formed E4 nodes
-	t[err←⍸p[(~t∊A P V)∧msk←((t=E)⍲k=2)∧(≠p)∧(t[p]=E)∧k[p]=4]]←X ⋄ k[err]←¯41
-	t[err←⍸p[p][(t≠V)∧msk←((t=A)⍲k=¯1)∧(⌽≠⌽p)∧p∊⍸msk]]←X ⋄ k[err]←¯42
-	t[err←⍸p[p][p][(t≠V)∧(≠p)∧p∊⍸msk]]←X ⋄ k[err]←¯43
+	t[i←⍸p[(~t∊A P V)∧msk←((t=E)⍲k=2)∧(≠p)∧(t[p]=E)∧k[p]=4]]←X ⋄ k[i]←¯41
+	t[i←⍸p[p][(t≠V)∧msk←((t=A)⍲k=¯1)∧(⌽≠⌽p)∧p∊⍸msk]]←X ⋄ k[i]←¯42
+	t[i←⍸p[p][p][(t≠V)∧(≠p)∧p∊⍸msk]]←X ⋄ k[i]←¯43
 
 	⍝ Convert E4 nodes to have their assigned target as the first child
 	i←j←⍸(em←(≠p)∧(t[p]=E)∧k[p]=4)∧(t∊P V)∨(t=A)∧k∊0 7
