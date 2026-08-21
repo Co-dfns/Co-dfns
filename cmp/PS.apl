@@ -538,9 +538,9 @@ PS←{⍺←⊢
 	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]
 
 	⍝ Rationalize F[X] syntax
-	i←p[j←⍸(t[p]=¯1)∧k[p]=4]
-	t[err←i⌿⍨~≠i]←X ⋄ k[err]←¯37
-	p[j]←p[i] ⋄ t[j←i~err]←P ⋄ lx[j]←¯4 ⋄ end[i]←1+pos[i]
+	pi←p[i←⍸(t[p]=¯1)∧k[p]=4]
+	t[j←pi⌿⍨~msk←≠pi]←X ⋄ k[j]←¯37
+	p[i]←p[pi] ⋄ t[j←msk⌿pi]←P ⋄ lx[j]←¯4 ⋄ end[pi]←1+pos[pi]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
 	i←⍸t=¯1 ⋄ p←(x←p[i]@i⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
