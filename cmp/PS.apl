@@ -209,7 +209,7 @@ PS←{⍺←⊢
 	'Non-Z top-level node'assert t[⍸p=⍳≢p]=Z:
 
 	⍝ Wrap all function expression bodies as Z nodes
-	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t≠L)∧t[p]∊T F
+	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t=L)<t[p]∊T F
 	'Non-Z/L function body node'assert t[⍸t[p]∊T F]∊Z L:
 
 	⍝ Mark lines with tokenization errors
