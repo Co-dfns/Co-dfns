@@ -547,9 +547,9 @@ PS←{⍺←⊢
 	p t k n lx vb pos end⌿⍨←⊂t≠¯1 ⋄ p vb(⊣-1+⍸⍨)←⊂i
 
 	⍝ Parse ⌶* nodes to V nodes
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
-	t[err←i⌿⍨msk←(i∊j)∧¯1⌽km∧(t[i]=A)⍲k[i]=1]←X ⋄ k[err]←¯38
-	vi←i⌿⍨1⌽msk←msk<i∊j ⋄ pi←msk⌿i
+	i←i[⍋p[i←⍸p∊p[⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']]]
+	t[j←i⌿⍨pm[i]>(~≠p[i])∧¯1⌽(t[i]=A)∧k[i]=1]←X ⋄ k[j]←¯39 ⋄ pm[j]←0
+	vi←i⌿⍨1⌽pm[i] ⋄ pi←pm[i]⌿i
 	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←¯6 ⋄ end[vi]←end[pi]
 	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
 
