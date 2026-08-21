@@ -4557,3 +4557,166 @@ struct cell com_c = {
 };
 EXPORT struct cell *com = &com_c;
 
+static int
+oup_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t, *fn, **restrict pv;
+	int64_t cnt, lc, rc;
+	int err;
+	
+	t = NULL;
+	pv = NULL;
+	
+	if (l->a.stg == STG_DEVICE || r->a.stg == STG_DEVICE) { err = 16; goto fail; }
+	
+	if (!(t = get_cell())) { err = 1; goto fail; }
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.etyp = ELEM_CELL;
+	t->a.stg = STG_HOST;
+	t->a.rnk = l->a.rnk + r->a.rnk;
+	t->a.shp = NULL;
+	t->a.host = NULL;
+	
+	if (t->a.rnk) {
+		int64_t *restrict ts;
+		
+		t->a.shp = get_host_buffer(buffer_size(ELEM_INT, t->a.rnk));
+		
+		if (!t->a.shp) { err = 1; goto fail; }
+		
+		ts = t->a.shp->i;
+		
+		for (int64_t i = 0; i < l->a.rnk; i++)
+			*ts++ = l->a.shp->i[i];
+		for (int64_t i = 0; i < r->a.rnk; i++)
+			*ts++ = r->a.shp->i[i];
+	}
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) { err = 16; goto fail; }
+	
+	if (t->a.rnk) {
+		t->a.host = get_host_buffer(buffer_size(ELEM_CELL, cnt));
+		
+		if (!t->a.host) { err = 1; goto fail; }
+
+		pv = t->a.host->p;
+		
+		memset(pv, 0, sizeof(struct cell *) * cnt);
+	}
+	
+	fn = s->f.aa;
+	lc = array_count(l, 0);
+	rc = array_count(r, 0);
+	
+	switch (l->a.etyp) {
+	case ELEM_INT:{
+		switch (r->a.etyp) {
+		case ELEM_INT:{
+			if (!t->a.rnk) {
+				if ((err = fn->f.fn[1](fn, &t->a.p, l, r, fv)))
+					goto fail;
+			} else if (!l->a.rnk) {
+				for (int64_t i = 0; i < cnt; i++) {
+					struct cell *x = get_cell();
+					
+					if (!x) { err = 1; goto fail; }
+					
+					x->ctyp = CELL_ARRAY;
+					x->a.etyp = r->a.etyp;
+					x->a.stg = STG_HOST;
+					x->a.rnk = 0;
+					x->a.shp = NULL;
+					x->a.i = r->a.host->i[i];
+					
+					err = fn->f.fn[1](fn, &pv[i], l, x, fv);
+					
+					if (err) goto fail;
+					
+					free_cell(x);
+				}
+			} else if (!r->a.rnk) {
+				for (int64_t i = 0; i < cnt; i++) {
+					struct cell *x = get_cell();
+					
+					if (!x) { err = 1; goto fail; }
+					
+					x->ctyp = CELL_ARRAY;
+					x->a.etyp = l->a.etyp;
+					x->a.stg = STG_HOST;
+					x->a.rnk = 0;
+					x->a.shp = NULL;
+					x->a.i = l->a.host->i[i];
+					
+					err = fn->f.fn[1](fn, &pv[i], x, r, fv);
+					
+					if (err) goto fail;
+					
+					free_cell(x);
+				}
+			} else {
+				for (int64_t i = 0; i < lc; i++) {
+					for (int64_t j = 0; j < rc; j++) {
+						struct cell *x = get_cell();
+						struct cell *y = get_cell();
+						
+						if (!x) { err = 1; goto fail; }
+						if (!y) { err = 1; goto fail; }
+						
+						x->ctyp = y->ctyp = CELL_ARRAY;
+						x->a.etyp = l->a.etyp;
+						y->a.etyp = r->a.etyp;
+						x->a.stg = y->a.stg = STG_HOST;
+						x->a.rnk = y->a.rnk = 0;
+						x->a.shp = y->a.shp = NULL;
+						x->a.i = l->a.host->i[i];
+						y->a.i = r->a.host->i[j];
+						
+						err = fn->f.fn[1](fn, pv++, x, y, fv);
+						
+						if (err) goto fail;
+						
+						free_cell(x);
+						free_cell(y);
+					}
+				}
+			}
+		}break;
+		case ELEM_FLOAT: err = 16; goto fail;
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CHAR: err = 16; goto fail;
+		case ELEM_CELL: err = 16; goto fail;
+		default: err = 99; goto fail;
+		}
+	}break;
+	case ELEM_FLOAT: err = 16; goto fail;
+	case ELEM_CMPX: err = 16; goto fail;
+	case ELEM_CHAR: err = 16; goto fail;
+	case ELEM_CELL: err = 16; goto fail;
+	default: err = 99; goto fail;
+	}
+	
+	if ((err = squeeze(t))) goto fail;
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*oup_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, syntaxerr_f, syntaxerr_f, oup_f
+};
+struct cell oup_c = {
+	1, CELL_FUNC, NULL, .f = {
+		oup_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *oup = &oup_c;
+
