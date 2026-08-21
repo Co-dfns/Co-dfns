@@ -583,12 +583,12 @@ PS←{⍺←⊢
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
 
 	⍝ Unparsed Z nodes become syntax error nodes
-	t[err←⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←X ⋄ k[err]←¯39
-	t[err←zs⌿⍨1<1⊃zs zc←↓⍉p[i]⍪∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←X ⋄ k[err]←¯39
-	t[err←p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←X ⋄ k[err]←¯39
-	t[err←p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←X ⋄ k[err]←¯39
-	t[err←p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←X ⋄ k[err]←¯39
-	t[err←p[⍸(t[p]=G)∧(≠p)∧(t∊A E)⍱k=1]]←X ⋄ k[err]←¯39
+	t[i←⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←X ⋄ k[i]←¯39
+	t[i←zs⌿⍨1<1⊃zs zc←↓⍉p[i]⍪∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←X ⋄ k[i]←¯39
+	t[i←p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←X ⋄ k[i]←¯39
+	t[i←p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←X ⋄ k[i]←¯39
+	t[i←p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←X ⋄ k[i]←¯39
+	t[i←p[⍸(t[p]=G)∧(≠p)∧(t∊A E)⍱k=1]]←X ⋄ k[i]←¯39
 
 	⍝ Eliminate Z nodes from the tree
 	msk←(t≠Z)∧m2←t[p]=Z
