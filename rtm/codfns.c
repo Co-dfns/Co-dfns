@@ -4523,3 +4523,37 @@ struct cell powo_c = {
 };
 EXPORT struct cell *powo = &powo_c;
 
+static int
+coma_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	l; r; fv;
+	
+	*z = ref_cell(s->f.aa);
+	
+	return 0;
+}
+
+static int
+comf_m(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	l;
+	
+	return s->f.aa->f.fn[1](s->f.aa, z, r, r, fv);
+}
+
+static int
+comf_d(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	return s->f.aa->f.fn[1](s->f.aa, z, r, l, fv);
+}
+
+int (*com_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	coma_f, coma_f, comf_m, comf_d
+};
+struct cell com_c = {
+	1, CELL_FUNC, NULL, .f = {
+		com_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *com = &com_c;
+
