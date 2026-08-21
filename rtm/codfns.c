@@ -4433,13 +4433,27 @@ struct cell exp_c = {
 EXPORT struct cell *cd_exp = &exp_c;
 
 static int
-powerop_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+powofn_m(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+}
+
+static int
+powofn_d(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+}
+
+static int
+powoarr_m(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
 	struct cell *t, *tmp, *fn;
 	int64_t cnt;
-	int err, fi;
-	
-	if (s->f.ww->ctyp != CELL_ARRAY) return 16;
+	int err;
 	
 	if (s->f.ww->a.etyp != ELEM_INT) return 11;
 	if (s->f.ww->a.rnk) return 4;
@@ -4448,11 +4462,42 @@ powerop_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 	cnt = s->f.ww->a.i;
 	fn = s->f.aa;
 	t = ref_cell(r);
-	fi = l ? 1 : 0;
 	
 	for (int64_t i = 0; i < cnt; i++) {
 		tmp = t;
-		if ((err = fn->f.fn[fi](fn, &t, l, t, fv)))
+		if ((err = fn->f.fn[0](fn, &t, l, t, fv)))
+			goto fail;
+		free_cell(tmp);
+	}
+	
+	*z = t;
+	
+	return 0;
+		
+fail:
+	free_cell(tmp);
+	
+	return err;
+}
+
+static int
+powoarr_d(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t, *tmp, *fn;
+	int64_t cnt;
+	int err;
+	
+	if (s->f.ww->a.etyp != ELEM_INT) return 11;
+	if (s->f.ww->a.rnk) return 4;
+	if (s->f.ww->a.i < 0) return 16;
+	
+	cnt = s->f.ww->a.i;
+	fn = s->f.aa;
+	t = ref_cell(r);
+	
+	for (int64_t i = 0; i < cnt; i++) {
+		tmp = t;
+		if ((err = fn->f.fn[1](fn, &t, l, t, fv)))
 			goto fail;
 		free_cell(tmp);
 	}
@@ -4468,8 +4513,8 @@ fail:
 }
 
 int (*powo_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
-	syntaxerr_f, syntaxerr_f, powerop_f, powerop_f, syntaxerr_f, syntaxerr_f, 
-	powerop_f, powerop_f
+	syntaxerr_f, syntaxerr_f, powoarr_m, powoarr_d, syntaxerr_f, syntaxerr_f, 
+	powofn_m, powofn_d
 };
 struct cell powo_c = {
 	1, CELL_FUNC, NULL, .f = {
