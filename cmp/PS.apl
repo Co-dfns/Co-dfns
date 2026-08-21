@@ -636,7 +636,7 @@ PS←{⍺←⊢
 	t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←0 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
 	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴¯4 0 ⋄ vb,←nc⍴¯1
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
-
+	
 	⍝ Check for nested ⍠← forms
 	t[err←⍸(t=B)∧(n∊-sym⍳⊂'⍠←')∧t[p]≠F]←X ⋄ k[err]←¯44
 	t[i←p[err]]←X ⋄ k[i]←0
