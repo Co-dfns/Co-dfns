@@ -526,8 +526,8 @@ PS←{⍺←⊢
 
 	⍝ Mark F[X] forms with k=4
 	i←i[⍋p[i←⍸(p≠⍳≢p)∧(t[p]=Z)∧k[p]∊1 2 5]]
-	t[err←i⌿⍨msk←(t[i]=¯1)∧≠p[i]]←X ⋄ k[err]←¯36
-	k[i⌿⍨msk<(t[i]=¯1)∧¯1⌽(k[i]∊2 3 5)∨¯1⌽k[i]=4]←4
+	t[j←i⌿⍨(t[i]=¯1)∧≠p[i]]←X ⋄ k[j]←¯36
+	k[i⌿⍨(t[i]=¯1)∧¯1⌽(k[i]∊2 3 5)∨¯1⌽k[i]=4]←4
 
 	⍝ Parse strands/plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸(t[p]=Z)∨(t[p]=¯1)∧k[p]=4
