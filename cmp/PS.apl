@@ -466,7 +466,7 @@ PS←{⍺←⊢
 	lx[im,id,iz,ix,iy]←¯5
 
 	⍝ Mark brackets not addressing something as errors
-	t[err←⍸(≠p)∧t=¯1]←X ⋄ k[err]←¯35
+	t[i←⍸(≠p)∧t=¯1]←X ⋄ k[i]←¯35
 
 	⍝ Infer the type of groups and variables
 	t[⍸(t=P)∧n=¯2]←V ⋄ v←⍸(t=V)∧(k=0)∧vb≥0
