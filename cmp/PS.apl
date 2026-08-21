@@ -37,7 +37,7 @@ PS←{⍺←⊢
 
 	⍝ Tokenize strings
 	t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←1+end[⍸2>⌿msk⍪0]
-	t[i⌿⍨IN[end[i]-1]≠'''']←¯1
+	t[i⌿⍨IN[end[i]-1]≠'''']←ESTRING
 	t pos end⌿⍨←⊂(t=0)⍲(t≠Z)∧¯1⌽msk
 
 	⍝ ⋄ should be Z nodes/groups
@@ -48,26 +48,26 @@ PS←{⍺←⊢
 	t pos end⌿⍨←⊂(t≠0)∨(~IN[pos]∊WS)∨⊃¯1 1∧.⌽⊂IN[pos]∊alp,num,'¯⍺⍵⎕.:'
 
 	⍝ Verify all open characters are valid
-	t[⍸~IN[pos]∊alp,num,syna,synb,prms,WS]←¯2
+	t[⍸~IN[pos]∊alp,num,syna,synb,prms,WS]←EBADCHR
 
 	⍝ This simplifies the following expressions
 	x←' '@{t≠0}IN[pos]
 
 	⍝ Tokenize numbers
 	dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm←x∊num
-	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←('.'=x)∧dm]←¯3
+	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←('.'=x)∧dm]←EFLTDOT
 	dm∨←('¯'=x)∧1⌽dm
-	t[⍸('¯'=x)∧¯1⌽dm]←¯4
-	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←dm∧'¯'=x]←¯5
-	t[⍸dm<'¯'=x]←¯6
+	t[⍸('¯'=x)∧¯1⌽dm]←EBTWMIN
+	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←dm∧'¯'=x]←EMULMIN
+	t[⍸dm<'¯'=x]←EORPMIN
 	dm∨←(msk←x∊'Ee')∧(¯1⌽dm)∧1⌽dm
 	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	dm∨←(msk←x∊'Jj')∧(¯1⌽dm)∧1⌽dm
 	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	(msk⌿dm)←∊∧⍀¨(msk←x∊alp,num)⊆dm
 	dm[⍸dm∧(x='.')∧(¯1⌽dm)⍱1⌽dm]←0
-	t[⍸dm∧(x='.')∧¯1⌽(~dm)∧x∊num]←¯7
-	t[⍸('.'=x)∧(0⍪hm⌿¯1⌽dm∧x∊'Ee')[msk∧+⍀hm←2<⌿0⍪msk←dm∧~x∊'EeJj']]←¯8
+	t[⍸dm∧(x='.')∧¯1⌽(~dm)∧x∊num]←EAMBNUM
+	t[⍸('.'=x)∧(0⍪hm⌿¯1⌽dm∧x∊'Ee')[msk∧+⍀hm←2<⌿0⍪msk←dm∧~x∊'EeJj']]←EBADEXP
 	t[i←⍸(t=0)∧2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 	t[i[i⍸⌽j]]←t[j←⍸dm∧t<0] ⋄ t[j~i]←0
 
@@ -76,29 +76,29 @@ PS←{⍺←⊢
 
 	⍝ Tokenize dfns formals
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍺'=x ⋄ end[⍸m2∨←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍵'=x
-	t[⍸m2]←0 A P ¯9[3⌊end[i]-pos[i←⍸m2]]
+	t[⍸m2]←0 A P EAMBFML[3⌊end[i]-pos[i←⍸m2]]
 
 	⍝ Tokenize primitives and atoms
 	t[⍸x∊syna]←A ⋄ t[⍸dm<x∊prms]←P
 	end[i]←end[1+i←⍸dm<⊃'⍠←' '∘←' '∘.' '##'∨.⍷⊂x] ⋄ t[i+1]←0
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⌶'=x ⋄ t[⍸m2<msk]←0
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'∇'=x ⋄ t[⍸m2<msk]←0
-	t[⍸m2∧3≤end-pos]←¯10
+	t[⍸m2∧3≤end-pos]←EAMBNAB
 
 	⍝ Mark depths of dfns regions and give F type, with } as a child
 	d←+⍀bi←(bo←'{'=bi)-bc←'}'=bi←x⌿⍨bm←x∊'{}' ⋄ err←0⍴⍨≢d
 	(bo⌿err)←(bo⌿bo∧d=⌽⌊⍀⌽d)[⌽⍒+⍀bo⌿2<⌿0⍪bo]
 	(bc⌿err)←(bc⌿bc∧(⊢=⌊⍀)d-bi)[⌽⍒+⍀bc⌿2<⌿0⍪bc]
 	bo bi(bm⍀×)←⊂~err
-	t[err⌿⍸bm]←¯11 ⋄ t[⍸bo]←F ⋄ d←¯1⌽+⍀bi
+	t[err⌿⍸bm]←EBRCBAL ⋄ t[⍸bo]←F ⋄ d←¯1⌽+⍀bi
 
 	⍝ Check for out of context dfns formals
-	t[⍸(d=0)∧(t∊A P)∧(x∊'⍺⍵')∨(x='∇')∧2=end-pos]←¯12
+	t[⍸(d=0)∧(t∊A P)∧(x∊'⍺⍵')∨(x='∇')∧2=end-pos]←EDFNFML
 
 	⍝ Mark trad-fns regions as tm
 	tm←(d=0)∧x='∇'
-	t[⍸tm>←tm∧¯1⌽t≠Z]←¯13
-	t[⍸tm>←tm⍀(sm∧1⌽sm)∨(em∧¯1⌽em)∨((≢em)↑⊃em)∨(-≢sm)↑⊃⌽sm←~em←tm⌿1⌽t=Z]←¯14
+	t[⍸tm>←tm∧¯1⌽t≠Z]←ENABPOS
+	t[⍸tm>←tm⍀(sm∧1⌽sm)∨(em∧¯1⌽em)∨((≢em)↑⊃em)∨(-≢sm)↑⊃⌽sm←~em←tm⌿1⌽t=Z]←ETRFBAL
 	tm←¯1⌽≠⍀tm
 
 	⍝ Flatten trad-fns headers
@@ -112,7 +112,7 @@ PS←{⍺←⊢
 
 	⍝ Tokenize Keywords
 	t[i←⍸2<⌿0⍪msk←(t=0)∧':'=x]←K ⋄ end[i]←end[⍸2>⌿0⍪⍨msk]
-	t[⍸(t=K)∧3≤end-pos]←¯15
+	t[⍸(t=K)∧3≤end-pos]←ECOLONS
 	end[i]←end[1+i←⍸(t=K)∧(1⌽t=V)∧(d=0)∨tm∧d=1] ⋄ t[i+1]←0
 
 	⍝ Tokenize system variables
@@ -122,13 +122,13 @@ PS←{⍺←⊢
 	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{};'
 
 	⍝ Tokenize labels
-	t[⍸(t=L)∧¯1⌽(t=V)⍲¯1⌽t=Z]←¯16
+	t[⍸(t=L)∧¯1⌽(t=V)⍲¯1⌽t=Z]←ELBLNAM
 	t[⍸1⌽msk←t=L]←L ⋄ d tm t pos end⌿⍨←⊂~msk
 
 	⍝ With tokens created, reify n field before tree-building
 	n←(w⌿1+⍳≢pos)⊆IN[(⍳≢x)+x←w⌿pos-+⍀0,¯1↓w←end-pos]
 	n←{¯1↓⍎¨⍵,⊂''''''}@{t=C}(⊂'')@{t∊Z F}⎕C@{t∊K S}(⊂⍬)@{n∊⊂,'⍬'}n
-	msk x←⎕VFI ⍕n[i←⍸t=N] ⋄ n[msk⌿i]←x ⋄ t[i⌿⍨~msk]←¯17
+	msk x←⎕VFI ⍕n[i←⍸t=N] ⋄ n[msk⌿i]←x ⋄ t[i⌿⍨~msk]←ENUMREP
 	
 	⍝ Split inheritance reference if necessary
 	msk←(t=K)∧¯1⌽(t=V)∧¯1⌽(t=K)∧n∊⊂':class'
@@ -146,7 +146,7 @@ PS←{⍺←⊢
 	KW,←':' ''
 	KW,¨⍨←':' ⋄ KW←⎕C KW
 	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':CLASS' ':ENDCLASS' ':SECTION' ':ENDSECTION'
-	t[i⌿⍨~n[i←⍸t=K]∊KW]←¯18 ⋄ t[i⌿⍨tm[i]∧n[i]∊nssec]←¯19
+	t[i⌿⍨~n[i←⍸t=K]∊KW]←EUNKKWD ⋄ t[i⌿⍨tm[i]∧n[i]∊nssec]←ENSPCTX
 
 	⍝ Verify system variables used
 	SYSV←,¨'Á' 'A' 'AI' 'AN' 'AV' 'ATX' 'AVU' 'BASE' 'CT' 'D' 'DCT' 'DIV' 'DM'
@@ -171,7 +171,7 @@ PS←{⍺←⊢
 	SYSM←,¨,⊂'VEACH'
 	SYSD←,¨'OPT' 'R' 'S' 'AMBIV'
 	SYSV SYSF SYSM SYSD←⎕C '⎕',¨¨SYSV SYSF SYSM SYSD
-	t[⍸(t=S)∧~n∊SYSV,SYSF,SYSM,SYSD,⎕C¨ENVN]←¯20
+	t[⍸(t=S)∧~n∊SYSV,SYSF,SYSM,SYSD,⎕C¨ENVN]←ESYSNAM
 
 	⍝ Introduce k field and mark errors as type X
 	k←(t⌊0)+2×t=F ⋄ t[⍸t<0]←X
@@ -218,10 +218,10 @@ PS←{⍺←⊢
 	⍝ Parse the first line of a trad-fn as an H node
 	⍝ N M S A R L Z X Y←(9⍴2)⊤k ⋄ N M←0(2*16)⊤n
 	t[j←⍸(≠p)∧t[p]=T]←H ⋄ p[i]←j[p[j]⍳p[p][i←⍸p∊p[⍸(t[p][p]=T)∧(≠p)∧n=-sym⍳⊂,';']]]
-	t[i←p[⍸(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←¯21
-	t[i←p[⍸(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←¯22
+	t[i←p[⍸(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←EMTHRET
+	t[i←p[⍸(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←ENOHSIG
 	msysv←'⎕IO' '⎕ML' '⎕CT' '⎕PP' '⎕PW' '⎕RTL' '⎕FR' '⎕PATH' '⎕RL' '⎕DIV' '⎕TRAP' '⎕USING' '⎕WX'
-	t[i←⍸(t[p]=H)∧~(t=V)∨(n∊-sym⍳,¨'←(){};')∨(t=S)∧n∊-sym⍳⎕C¨msysv]←X ⋄ k[i]←¯23
+	t[i←⍸(t[p]=H)∧~(t=V)∨(n∊-sym⍳,¨'←(){};')∨(t=S)∧n∊-sym⍳⎕C¨msysv]←X ⋄ k[i]←EHDRTOK
 	_←p[i]{
 		0=≢i:0
 		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯99
@@ -254,12 +254,12 @@ PS←{⍺←⊢
 
 	⍝ Parse :Namespace syntax into M nodes
 	nss←(t=K)∧n∊-sym⍳⎕C⊂':NAMESPACE' ⋄ nse←(t=K)∧n∊-sym⍳⎕C⊂':ENDNAMESPACE'
-	t[i←⍸nss>←nss∧¯1⌽t≠Z]←X ⋄ k[i]←¯24
-	t[i←⍸nss>←nss∧(1⌽t=Z)⍱(1⌽t=V)∧2⌽t=Z]←X ⋄ k[i]←¯25
-	t[i←⍸nse>←nse∧⊃¯1 1⍲.⌽⊂t=Z]←X ⋄ k[i]←¯26
+	t[i←⍸nss>←nss∧¯1⌽t≠Z]←X ⋄ k[i]←ENSPPOS
+	t[i←⍸nss>←nss∧(1⌽t=Z)⍱(1⌽t=V)∧2⌽t=Z]←X ⋄ k[i]←ENSPDCL
+	t[i←⍸nse>←nse∧⊃¯1 1⍲.⌽⊂t=Z]←X ⋄ k[i]←EENSPOS
 	t[⍸1⌽nss]←M ⋄ t[⍸1⌽nse]←-M ⋄ n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ d←+⍀x←×t[i←⍸M=|t]
-	t[j←i⌿⍨(x=1)∧d=⌽⌊⍀⌽d]←X ⋄ k[j]←¯27
-	t[j←i⌿⍨(x=¯1)∧d=⌊⍀d←d-x]←X ⋄ k[j]←¯28
+	t[j←i⌿⍨(x=1)∧d=⌽⌊⍀⌽d]←X ⋄ k[j]←ENSPCLS
+	t[j←i⌿⍨(x=¯1)∧d=⌊⍀d←d-x]←X ⋄ k[j]←EXTRENS
 	t[i]←t[j←i[⌽⍒+⍀2≠⌿0⍪x]] ⋄ k[i]←k[j]
 	p[x]←x[D2P ¯1⌽+⍀(××M=|)t[x←⍸p=⍳≢p]] ⋄ end[p[i]]←end[i←⍸t=-M]
 	msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
@@ -269,7 +269,7 @@ PS←{⍺←⊢
 	i←i[⍋p[i←⍸(t[p][p]=F)∧p∊p⌿⍨t=K]] ⋄ fm←≠p[i] ⋄ km←t[i]=K
 	i fm km⌿⍨←⊂1+1⌽fm ⋄ i[⍸1⌽fm]←(≢p)+⍳fc←+⌿fm
 	t[p[j←fm⌿i]]←G ⋄ p⍪←p[j] ⋄ t k n pos end⍪←⊂fc⍴0 ⋄ _←gz¨i⊂⍨fm∨¯1⌽km
-	t[i←p[i]⌿⍨fm∧msk←t[p[i]]=G]←X ⋄ k[i]←¯29
+	t[i←p[i]⌿⍨fm∧msk←t[p[i]]=G]←X ⋄ k[i]←EMTGARD
 
 	⍝ Delete keywords we can't handle
 	t k n pos end⌿⍨←⊂msk←t≠K ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
@@ -277,10 +277,10 @@ PS←{⍺←⊢
 	⍝ Parse brackets and parentheses into ¯1 and Z nodes
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ fm←≠p[i]
 	pd←+⍀dx←(po←x∊'[(')-pc←'])'∊⍨x←IN[pos[i]]
-	t[j←i⌿⍨po∧pd=pd[j⍳⌽⌊⍀⌽j←⍋j[⍋(+⍀fm)[j←⍋pd]]]]←X ⋄ k[j]←¯30 ⋄ t[p[j]]←X
-	t[j←i⌿⍨pc∧pd=pd[j⍳⌊⍀j←⍋j[⍒(+⍀fm)[j←⍋pd←pd-dx]]]]←X ⋄ k[j]←¯31 ⋄ t[p[j]]←X
+	t[j←i⌿⍨po∧pd=pd[j⍳⌽⌊⍀⌽j←⍋j[⍋(+⍀fm)[j←⍋pd]]]]←X ⋄ k[j]←EOPRBAL ⋄ t[p[j]]←X
+	t[j←i⌿⍨pc∧pd=pd[j⍳⌊⍀j←⍋j[⍒(+⍀fm)[j←⍋pd←pd-dx]]]]←X ⋄ k[j]←ECPRBAL ⋄ t[p[j]]←X
 	i fm x pd pc⌿⍨←⊂t[p[i]]≠X ⋄ pcp←pc⌿pp←D2P pd-(fm⌿pd)[¯1++⍀fm]
-	t[j←i[pp][msk⌿pcp]⍪i⌿⍨pc⍀msk←x[pcp]≠'[('I')'=pc⌿x]←X ⋄ k[j]←¯32 ⋄ t[p[j]]←X
+	t[j←i[pp][msk⌿pcp]⍪i⌿⍨pc⍀msk←x[pcp]≠'[('I')'=pc⌿x]←X ⋄ k[j]←EPRNBKT ⋄ t[p[j]]←X
 	i x pc pp⌿⍨←⊂msk←t[p[i]]≠X ⋄ pp(⊣-1+⍸⍨)←⍸~msk
 	p[msk⌿i]←i[pp]⌿⍨msk←pp≠⍳≢pp ⋄ t[j←i[pc⌿pp]]←¯1 Z[')'=pc⌿x] ⋄ end[j]←end[pc⌿i]
 	t k n pos end⌿⍨←⊂msk←~(t=0)∧IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
@@ -306,8 +306,8 @@ PS←{⍺←⊢
 
 	⍝ Mark binding primitives
 	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←' ⋄ i←⍸(t[p]=Z)∧p≠⍳≢p
-	t[j←p[i⌿⍨bp[i]⌿≠p[i]]]←X ⋄ k[j]←¯33
-	t[j←p[i⌿⍨bp[i]⌿⌽≠⌽p[i]]]←X ⋄ k[j]←¯34
+	t[j←p[i⌿⍨bp[i]⌿≠p[i]]]←X ⋄ k[j]←EMTATGT
+	t[j←p[i⌿⍨bp[i]⌿⌽≠⌽p[i]]]←X ⋄ k[j]←EMTAVAL
 
 	⍝ Wrap binding values in Z nodes
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
@@ -466,7 +466,7 @@ PS←{⍺←⊢
 	lx[im,id,iz,ix,iy]←¯5
 
 	⍝ Mark brackets not addressing something as errors
-	t[i←⍸(≠p)∧t=¯1]←X ⋄ k[i]←¯35
+	t[i←⍸(≠p)∧t=¯1]←X ⋄ k[i]←EBKTSYN
 
 	⍝ Infer the type of groups and variables
 	t[⍸(t=P)∧n=¯2]←V ⋄ v←⍸(t=V)∧(k=0)∧vb≥0
@@ -526,7 +526,7 @@ PS←{⍺←⊢
 
 	⍝ Mark F[X] forms with k=4
 	i←i[⍋p[i←⍸(p≠⍳≢p)∧(t[p]=Z)∧k[p]∊1 2 5]]
-	t[j←i⌿⍨(t[i]=¯1)∧≠p[i]]←X ⋄ k[j]←¯36
+	t[j←i⌿⍨(t[i]=¯1)∧≠p[i]]←X ⋄ k[j]←EIDXTGT
 	k[i⌿⍨(t[i]=¯1)∧¯1⌽(k[i]∊2 3 5)∨¯1⌽k[i]=4]←4
 
 	⍝ Parse strands/plural value sequences to A7 nodes
@@ -539,7 +539,7 @@ PS←{⍺←⊢
 
 	⍝ Rationalize F[X] syntax
 	pi←p[i←⍸(t[p]=¯1)∧k[p]=4]
-	t[j←pi⌿⍨~msk←≠pi]←X ⋄ k[j]←¯37
+	t[j←pi⌿⍨~msk←≠pi]←X ⋄ k[j]←ECMPAXS
 	p[i]←p[pi] ⋄ t[j←msk⌿pi]←P ⋄ lx[j]←¯4 ⋄ end[pi]←1+pos[pi]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
@@ -548,7 +548,7 @@ PS←{⍺←⊢
 
 	⍝ Parse ⌶* nodes to V nodes
 	i←i[⍋p[i←⍸p∊p[⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']]]
-	t[j←i⌿⍨pm[i]>(~≠p[i])∧¯1⌽(t[i]=A)∧k[i]=1]←X ⋄ k[j]←¯39 ⋄ pm[j]←0
+	t[j←i⌿⍨pm[i]>(~≠p[i])∧¯1⌽(t[i]=A)∧k[i]=1]←X ⋄ k[j]←EBADIBM ⋄ pm[j]←0
 	vi←i⌿⍨1⌽pm[i] ⋄ pi←pm[i]⌿i
 	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←¯6 ⋄ end[vi]←end[pi]
 	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
@@ -583,12 +583,12 @@ PS←{⍺←⊢
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
 
 	⍝ Unparsed Z nodes become syntax error nodes
-	t[i←⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←X ⋄ k[i]←¯39
-	t[i←zs⌿⍨1<1⊃zs zc←↓⍉p[i]⍪∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←X ⋄ k[i]←¯39
-	t[i←p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←X ⋄ k[i]←¯39
-	t[i←p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←X ⋄ k[i]←¯39
-	t[i←p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←X ⋄ k[i]←¯39
-	t[i←p[⍸(t[p]=G)∧(≠p)∧(t∊A E)⍱k=1]]←X ⋄ k[i]←¯39
+	t[i←⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←X ⋄ k[i]←ESYNTAX
+	t[i←zs⌿⍨1<1⊃zs zc←↓⍉p[i]⍪∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=G)∧(≠p)∧(t∊A E)⍱k=1]]←X ⋄ k[i]←ESYNTAX
 
 	⍝ Eliminate Z nodes from the tree
 	msk←(t≠Z)∧m2←t[p]=Z
@@ -609,7 +609,7 @@ PS←{⍺←⊢
 	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
 	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
 	msk←bp∧((k=2)∧(t[p]=E)⍲k[p]=2)∨(k=3)∧(t[p][p]=E)⍲k[p][p]=2
-	t[j←p[⍸msk∧k=2]⍪p[p][⍸msk∧k=3]]←X ⋄ k[j]←¯40
+	t[j←p[⍸msk∧k=2]⍪p[p][⍸msk∧k=3]]←X ⋄ k[j]←ENOATGT
 	i←p[⍸bp∧k=2] ⋄ k[i]←4
 	i←p[j←⍸(≠p)∧(em←(t[p]=E)∧k[p]=4)∧am←(t∊P V)∨(t=A)∧k∊0 7]
 	i⍪←p[p][j⍪←⍸(⌽≠⌽p)∧am∧em[p]∧t[p]=N]
@@ -619,9 +619,9 @@ PS←{⍺←⊢
 	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂i
 	
 	⍝ Check that we have well-formed E4 nodes
-	t[i←⍸p[(~t∊A P V)∧msk←((t=E)⍲k=2)∧(≠p)∧(t[p]=E)∧k[p]=4]]←X ⋄ k[i]←¯41
-	t[i←⍸p[p][(t≠V)∧msk←((t=A)⍲k=¯1)∧(⌽≠⌽p)∧p∊⍸msk]]←X ⋄ k[i]←¯42
-	t[i←⍸p[p][p][(t≠V)∧(≠p)∧p∊⍸msk]]←X ⋄ k[i]←¯43
+	t[i←⍸p[(~t∊A P V)∧msk←((t=E)⍲k=2)∧(≠p)∧(t[p]=E)∧k[p]=4]]←X ⋄ k[i]←EASGTGT
+	t[i←⍸p[p][(t≠V)∧msk←((t=A)⍲k=¯1)∧(⌽≠⌽p)∧p∊⍸msk]]←X ⋄ k[i]←ESELASG
+	t[i←⍸p[p][p][(t≠V)∧(≠p)∧p∊⍸msk]]←X ⋄ k[i]←EIDXSEL
 
 	⍝ Convert E4 nodes to have their assigned target as the first child
 	i←j←⍸(em←(≠p)∧(t[p]=E)∧k[p]=4)∧(t∊P V)∨(t=A)∧k∊0 7
@@ -638,7 +638,7 @@ PS←{⍺←⊢
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 	
 	⍝ Check for nested ⍠← forms
-	t[i←⍸(t=B)∧(n∊-sym⍳⊂'⍠←')∧t[p]≠F]←X ⋄ k[i]←¯44
+	t[i←⍸(t=B)∧(n∊-sym⍳⊂'⍠←')∧t[p]≠F]←X ⋄ k[i]←EVARASG
 
 	⍝ Compute exports
 	i←⍸(p=⍳≢p)[p][p]∧(k[p][p]=0)∧(t[p][p]=T)∧t[p]=H
