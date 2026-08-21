@@ -86,11 +86,11 @@ PS←{⍺←⊢
 	t[⍸m2∧3≤end-pos]←EAMBNAB
 
 	⍝ Mark depths of dfns regions and give F type, with } as a child
-	d←+⍀bi←(bo←'{'=bi)-bc←'}'=bi←x⌿⍨bm←x∊'{}' ⋄ err←0⍴⍨≢d
-	(bo⌿err)←(bo⌿bo∧d=⌽⌊⍀⌽d)[⌽⍒+⍀bo⌿2<⌿0⍪bo]
-	(bc⌿err)←(bc⌿bc∧(⊢=⌊⍀)d-bi)[⌽⍒+⍀bc⌿2<⌿0⍪bc]
-	bo bi(bm⍀×)←⊂~err
-	t[err⌿⍸bm]←EBRCBAL ⋄ t[⍸bo]←F ⋄ d←¯1⌽+⍀bi
+	d←+⍀bi←(bo←'{'=bi)-bc←'}'=bi←x⌿⍨bm←x∊'{}' ⋄ msk←0⍴⍨≢d
+	(bo⌿msk)←(bo⌿bo∧d=⌽⌊⍀⌽d)[⌽⍒+⍀bo⌿2<⌿0⍪bo]
+	(bc⌿msk)←(bc⌿bc∧(⊢=⌊⍀)d-bi)[⌽⍒+⍀bc⌿2<⌿0⍪bc]
+	bo bi(bm⍀×)←⊂~msk
+	t[msk⌿⍸bm]←EBRCBAL ⋄ t[⍸bo]←F ⋄ d←¯1⌽+⍀bi
 
 	⍝ Check for out of context dfns formals
 	t[⍸(d=0)∧(t∊A P)∧(x∊'⍺⍵')∨(x='∇')∧2=end-pos]←EDFNFML
