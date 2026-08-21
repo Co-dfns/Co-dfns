@@ -5,8 +5,8 @@ TT←{
 	∨⌿msk←(t=X)∧k≠0: SIGNAL SELECT ⍸msk
 	
 	⍝ Kill the contents of X nodes
-	p t k n lx vb pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡t[p]=X
-	p vb(⊣-1+⍸⍨)←⊂⍸~msk
+	p t k n lx vb pos end⌿⍨←⊂~msk←{⍵∧⍵[p]}⍣≡t[p]=X
+	p vb(⊣-1+⍸⍨)←⊂⍸msk
 	
 	⍝ Convert E4(APV, APV, O, ...) mod. assignments to E4(APV, APV, C, ...)
 	j←p[i←⍸(≠p)∧((t=E)∧k=4)[p][p]∧((t=O)∧(p=¯1⌽p)∧(~⌽≠⌽p)∧¯1⌽t∊A P V)[p]]
