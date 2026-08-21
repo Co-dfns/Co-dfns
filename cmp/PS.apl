@@ -638,8 +638,7 @@ PS←{⍺←⊢
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 	
 	⍝ Check for nested ⍠← forms
-	t[err←⍸(t=B)∧(n∊-sym⍳⊂'⍠←')∧t[p]≠F]←X ⋄ k[err]←¯44
-	t[i←p[err]]←X ⋄ k[i]←0
+	t[i←⍸(t=B)∧(n∊-sym⍳⊂'⍠←')∧t[p]≠F]←X ⋄ k[i]←¯44
 
 	⍝ Compute exports
 	i←⍸(p=⍳≢p)[p][p]∧(k[p][p]=0)∧(t[p][p]=T)∧t[p]=H
