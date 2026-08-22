@@ -200,6 +200,7 @@ GC←{
 	pref,←⊂'DECLSPEC struct cell *powo;'
 	pref,←⊂'DECLSPEC struct cell *com;'
 	pref,←⊂'DECLSPEC struct cell *oup;'
+	pref,←⊂'DECLSPEC struct cell *jot;'
 	pref,←⊂''
 	pref,←⊂'#define CHK(expr, fail, msg)					\'
 	pref,←⊂'if (0 < (err = (expr))) {					\'
