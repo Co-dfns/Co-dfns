@@ -738,7 +738,7 @@ is_bound(struct cell *c)
 	}
  };
  
- struct cell scl_zero = {
+struct cell scl_zero = {
 	1, CELL_ARRAY, NULL, .a = {ELEM_INT, STG_HOST, 0, NULL, .i = 0}
 };
 
