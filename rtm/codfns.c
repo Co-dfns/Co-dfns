@@ -1751,7 +1751,7 @@ fail:
 }
 
 static int
-get_scalar_cell(struct cell **z, struct cell *l, struct cell *r)
+get_scalar_cell(struct cell **z, struct cell *l, struct cell *r, enum elem_type type)
 {
 	struct cell *t;
 	
@@ -1783,8 +1783,8 @@ get_scalar_cell(struct cell **z, struct cell *l, struct cell *r)
 		t->a.shp->refc++;
 	}
 	
-	t->a.etyp = elem_type_merge_map[l->a.etyp][r->a.etyp];
 	t->a.stg = STG_HOST;
+	t->a.etyp = type == ELEM_MAX ? elem_type_merge_map[l->a.etyp][r->a.etyp] : type;
 	
 	if (r->a.stg == STG_DEVICE || l->a.stg == STG_DEVICE)
 		t->a.stg = STG_DEVICE;
@@ -1840,7 +1840,7 @@ plus_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct c
 		goto fail;
 	}
 	
-	if ((err = get_scalar_cell(&t, l, r)))
+	if ((err = get_scalar_cell(&t, l, r, ELEM_MAX)))
 		goto fail;
 	
 	if (t->a.stg == STG_DEVICE) {
@@ -2468,7 +2468,7 @@ times_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct 
 		goto fail;
 	}
 	
-	if ((err = get_scalar_cell(&t, l, r)))
+	if ((err = get_scalar_cell(&t, l, r, ELEM_MAX)))
 		goto fail;
 	
 	if (t->a.stg == STG_DEVICE) {
@@ -3108,7 +3108,7 @@ divide_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct
 		goto fail;
 	}
 	
-	if ((err = get_scalar_cell(&t, l, r)))
+	if ((err = get_scalar_cell(&t, l, r, ELEM_MAX)))
 		goto fail;
 		
 	if (t->a.etyp == ELEM_INT)
