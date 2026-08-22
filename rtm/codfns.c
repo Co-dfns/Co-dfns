@@ -4720,3 +4720,63 @@ struct cell oup_c = {
 };
 EXPORT struct cell *oup = &oup_c;
 
+static int
+jotff_m(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int err;
+	
+	l;
+	
+	if ((err = s->f.ww->f.fn[0](s->f.ww, &t, NULL, r, fv)))
+		return err;
+	
+	err = s->f.aa->f.fn[0](s->f.aa, z, NULL, t, fv);
+	
+	free_cell(t);
+	
+	return err;
+}
+
+static int
+jotff_d(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int err;
+	
+	if ((err = s->f.ww->f.fn[0](s->f.ww, &t, NULL, r, fv)))
+		return err;
+	
+	err = s->f.aa->f.fn[1](s->f.aa, z, l, t, fv);
+	
+	free_cell(t);
+	
+	return err;
+}
+
+static int
+jotaf_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	l;
+	
+	return s->f.ww->f.fn[1](s->f.ww, z, s->f.aa, r, fv);
+}
+
+static int
+jotfa_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	l;
+	
+	return s->f.aa->f.fn[1](s->f.aa, z, r, s->f.ww, fv);
+}
+
+int (*jot_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, syntaxerr_f, jotfa_f, syntaxerr_f, jotaf_f, syntaxerr_f, jotff_m, jotff_d
+};
+struct cell jot_c = {
+	1, CELL_FUNC, NULL, .f = {
+		jot_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *jot = &jot_c;
+
