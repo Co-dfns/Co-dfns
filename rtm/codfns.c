@@ -3752,13 +3752,7 @@ reciprocal_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, st
 {
 	l; fv;
 	
-	struct cell one = {
-		1, CELL_ARRAY, NULL, .a = {
-			ELEM_INT, STG_HOST, 0, NULL, .i = 1
-		}
-	};
-	
-	return divide_f(s, z, &one, r, NULL);
+	return divide_f(s, z, &scl_one, r, NULL);
 }
 
 int (*div_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
