@@ -2454,28 +2454,22 @@ sign_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct c
 	
 	if (r->a.etyp == ELEM_CHAR) return 11;
 	if (r->a.stg == STG_DEVICE) return 16;
-	
-	if (!(t = get_cell()))
-		return 1;
-	
-	t->ctyp = CELL_ARRAY;
-	t->a = r->a;
-	
-	if (t->a.rnk) t->a.shp->refc++;
-	if (t->a.etyp == ELEM_FLOAT) t->a.etyp = ELEM_INT;
-	
-	cnt = array_count(t, 0);
+
+	cnt = array_count(r, 0);
 	
 	if (!cnt) {
-		if (!t->a.rnk && t->a.etyp == ELEM_CELL) {
-			ref_cell(t->a.p);
-		} else if (t->a.rnk) {
-			t->a.host->refc++;
-		}
+		t = ref_cell(r);
 		goto done;
 	}
 	
+	if (!(t = get_cell())) { err = 1; goto fail; }
+		
+	t->ctyp = CELL_ARRAY;
+	t->a = r->a;
+	
+	if (t->a.etyp == ELEM_FLOAT) t->a.etyp = ELEM_INT;
 	if (t->a.rnk) {
+		t->a.shp->refc++;
 		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt ? cnt : 1));
 		
 		if (!t->a.host) { err = 1; goto fail; }
