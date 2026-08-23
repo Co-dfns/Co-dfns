@@ -175,6 +175,10 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←I×I ⋄ ⎕←I×F ⋄ ⎕←I×B ⋄ ⎕←F×I ⋄ ⎕←F×F ⋄ ⎕←F×B ⋄ ⎕←B×I ⋄ ⎕←B×F ⋄ ⎕←B×B
 ⎕←÷INZ ⋄ ⎕←÷FNZ ⋄ ⎕←÷BNZ
 ⎕←I×INZ ⋄ ⎕←I×FNZ ⋄ ⎕←I×BNZ ⋄ ⎕←F×INZ ⋄ ⎕←F×FNZ ⋄ ⎕←F×BNZ ⋄ ⎕←B×INZ ⋄ ⎕←B×FNZ ⋄ ⎕←B×BNZ
+⎕←*I ⋄ ⎕←*F ⋄ ⎕←*B
+⎕←INZ*I ⋄ ⎕←INZ*B ⋄ ⎕←FNZ*I ⋄ ⎕←FNZ*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*B
+⎕←I*INT ⋄ ⎕←I*B ⋄ ⎕←F*INT ⋄ ⎕←F*B ⋄ ⎕←B*INT ⋄ ⎕←B*B
+⎕←IPS*I ⋄ ⎕←IPS*F ⋄ ⎕←IPS*B ⋄ ⎕←FPS*I ⋄ ⎕←FPS*F ⋄ ⎕←FPS*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*F ⋄ ⎕←BNZ*B
 
 
 
