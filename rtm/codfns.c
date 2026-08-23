@@ -4485,6 +4485,28 @@ struct cell dot_c = {
 };
 EXPORT struct cell *dot = &dot_c;
 
+static struct apl_cmpx
+exp_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx z;
+
+#ifdef _MSC_VER
+	_Dcomplex tx = {x.real, x.imag};
+	_Dcomplex tz;
+#else
+	double complex tx, tz;
+
+	tx = x.real + x.imag * I;
+#endif
+
+	tz = cexp(tx);	
+
+	z.real = creal(tz);	
+	z.imag = cimag(tz);	
+
+	return z;		
+}
+
 EXPORT int
 exponent_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
@@ -4542,8 +4564,35 @@ exponent_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, stru
 				tv[i] = exp(rv[i]);
 		}
 	}break;
-	case ELEM_CMPX: err = 16; goto fail;
-	case ELEM_CELL: err = 16; goto fail;
+	case ELEM_CMPX:{
+		if (!t->a.rnk) {
+			t->a.j = exp_cmpx(r->a.j);
+		} else {
+			struct apl_cmpx *restrict tv = t->a.host->j;
+			struct apl_cmpx *restrict rv = r->a.host->j;
+			
+			for (int64_t i = 0; i < cnt; i++)
+				tv[i] = exp_cmpx(rv[i]);
+		}
+	}break;
+	case ELEM_CELL:{
+		if (!t->a.rnk) {
+			err = exponent_f(NULL, &t->a.p, NULL, r->a.p, NULL);
+			
+			if (err) goto fail;
+		} else {
+			struct cell **restrict tv = t->a.host->p;
+			struct cell **restrict rv = r->a.host->p;
+			
+			memset(tv, 0, sizeof(*tv) * cnt);
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				err = exponent_f(NULL, &tv[i], NULL, rv[i], NULL);
+				
+				if (err) goto fail;
+			}
+		}
+	}break;
 	default: err = 99; goto fail;
 	}
 	
