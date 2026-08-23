@@ -2444,9 +2444,141 @@ EXPORT struct cell *add = &add_c;
 EXPORT int
 sign_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
-	s; z; l; r; fv;
+	struct cell *t;
+	int64_t cnt;
+	int err;
 	
-	return 16;
+	s; l; fv;
+	
+	t = NULL;
+	
+	if (r->a.etyp == ELEM_CHAR) return 11;
+	if (r->a.stg == STG_DEVICE) return 16;
+	
+	if (!(t = get_cell()))
+		return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	t->a = r->a;
+	
+	if (t->a.rnk) t->a.shp->refc++;
+	if (t->a.etyp == ELEM_FLOAT) t->a.etyp = ELEM_INT;
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) {
+		if (!t->a.rnk && t->a.etyp == ELEM_CELL) {
+			ref_cell(t->a.p);
+		} else if (t->a.rnk) {
+			t->a.host->refc++;
+		}
+		goto done;
+	}
+	
+	if (t->a.rnk) {
+		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt ? cnt : 1));
+		
+		if (!t->a.host) { err = 1; goto fail; }
+	}
+	
+	switch (r->a.etyp) {
+	case ELEM_INT:{
+		if (!t->a.rnk) {
+			if (r->a.i < 0) t->a.i = -1;
+			else if (r->a.i > 0) t->a.i = 1;
+			else t->a.i = 0;
+		} else {
+			int64_t *restrict tv = t->a.host->i;
+			int64_t *restrict rv = r->a.host->i;
+			
+			for (int64_t i = 0; i < cnt; i++)
+				if (rv[i] < 0) tv[i] = -1;
+				else if (rv[i] > 0) tv[i] = 1;
+				else tv[i] = 0;
+		}
+	}break;
+	case ELEM_FLOAT:{
+		if (!t->a.rnk) {
+			if (r->a.f < 0) t->a.i = -1;
+			else if (r->a.f > 0) t->a.i = 1;
+			else t->a.i = 0;
+		} else {
+			int64_t *restrict tv = t->a.host->i;
+			double *restrict rv = r->a.host->f;
+			
+			for (int64_t i = 0; i < cnt; i++)
+				if (rv[i] < 0) tv[i] = -1;
+				else if (rv[i] > 0) tv[i] = 1;
+				else tv[i] = 0;
+		}
+	}break;
+	case ELEM_CMPX:{
+		if (!t->a.rnk) {
+			if (!r->a.j.real && !r->a.j.imag) {
+				t->a.j.real = 0;
+				t->a.j.imag = 0;
+			} else {
+				double q;
+				
+				q = r->a.j.real * r->a.j.real;
+				q += r->a.j.imag * r->a.j.imag;
+				q = sqrt(q);
+				
+				t->a.j.real = r->a.j.real / q;
+				t->a.j.imag = r->a.j.imag / q;
+			}
+		} else {
+			struct apl_cmpx *restrict tv = t->a.host->j;
+			struct apl_cmpx *restrict rv = r->a.host->j;
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				if (!rv[i].real && !rv[i].imag) {
+					tv[i].real = 0;
+					tv[i].imag = 0;
+				} else {
+					double q;
+					
+					q = rv[i].real * rv[i].real;
+					q += rv[i].imag * rv[i].imag;
+					q = sqrt(q);
+					
+					tv[i].real = rv[i].real / q;
+					tv[i].imag = rv[i].imag / q;
+				}
+			}
+		}
+	}break;
+	case ELEM_CHAR: err = 99; goto fail;
+	case ELEM_CELL:{
+		if (!t->a.rnk) {
+			err = sign_f(NULL, &t->a.p, NULL, r->a.p, NULL);
+			
+			if (err) goto fail;
+		} else {
+			struct cell **restrict tv = t->a.host->p;
+			struct cell **restrict rv = r->a.host->p;
+			
+			memset(tv, 0, sizeof(*tv) * cnt);
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				err = sign_f(NULL, &tv[i], NULL, rv[i], NULL);
+				
+				if (err) goto fail;
+			}
+		}
+	}break;
+	default: err = 99; goto fail;
+	}
+	
+done:
+	*z = t;
+	
+	return 0;
+
+fail:
+	free_cell(t);
+	
+	return err;
 }
 
 EXPORT int
