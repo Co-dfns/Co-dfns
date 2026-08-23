@@ -173,6 +173,8 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←I-I ⋄ ⎕←I-F ⋄ ⎕←I-B ⋄ ⎕←F-I ⋄ ⎕←F-F ⋄ ⎕←F-B ⋄ ⎕←B-I ⋄ ⎕←B-F ⋄ ⎕←B-B
 ⎕←×I ⋄ ⎕←×F ⋄ ⎕←×B
 ⎕←I×I ⋄ ⎕←I×F ⋄ ⎕←I×B ⋄ ⎕←F×I ⋄ ⎕←F×F ⋄ ⎕←F×B ⋄ ⎕←B×I ⋄ ⎕←B×F ⋄ ⎕←B×B
+⎕←÷INZ ⋄ ⎕←÷FNZ ⋄ ⎕←÷BNZ
+⎕←I×INZ ⋄ ⎕←I×FNZ ⋄ ⎕←I×BNZ ⋄ ⎕←F×INZ ⋄ ⎕←F×FNZ ⋄ ⎕←F×BNZ ⋄ ⎕←B×INZ ⋄ ⎕←B×FNZ ⋄ ⎕←B×BNZ
 
 
 
