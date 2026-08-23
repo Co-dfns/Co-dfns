@@ -3880,7 +3880,7 @@ fail:
 }
 
 EXPORT int
-reciprocal_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+recip_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
 	l; fv;
 	
@@ -3888,7 +3888,7 @@ reciprocal_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, st
 }
 
 int (*div_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
-	reciprocal_f, divide_f
+	recip_f, divide_f
 };
 struct cell div_c = {
 	1, CELL_FUNC, NULL, .f = {
