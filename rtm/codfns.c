@@ -4497,6 +4497,7 @@ exponent_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, stru
 	t = NULL;
 	
 	if (r->a.etyp == ELEM_CHAR) { err = 11; goto fail; }
+	if (r->a.stg == STG_DEVICE) { err = 16; goto fail; }
 	
 	cnt = array_count(r, 0);
 	
@@ -4504,8 +4505,6 @@ exponent_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, stru
 		t = ref_cell(r);
 		goto done;
 	}
-	
-	if (r->a.stg == STG_DEVICE) { err = 16; goto fail; }
 	
 	if (!(t = get_cell())) { err = 1; goto fail; }
 	
