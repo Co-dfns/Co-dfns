@@ -191,6 +191,7 @@ GC←{
 	pref,←⊂'int negate_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int minus_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *sub;'
+	pref,←⊂'int sign_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int times_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *mul;'
 	pref,←⊂'int divide_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
