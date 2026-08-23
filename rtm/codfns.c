@@ -1848,8 +1848,16 @@ plus_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct c
 		goto fail;
 	}
 	
-	cnt = array_count(t, 1);
+	cnt = array_count(t, 0);
 	
+	if (!cnt) { 
+		free_cell(t);
+		if (!l->a.rnk) t = ref_cell(r);
+		else if (!r->a.rnk) t = ref_cell(l);
+		else t = ref_cell(r);
+		goto done;
+	}
+		
 	switch (l->a.etyp) {
 	case ELEM_INT:{
 		switch (r->a.etyp) {
@@ -2420,7 +2428,8 @@ plus_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct c
 		err = 99;
 		goto fail;
 	}
-	
+
+done:
 	*z = t;
 	
 	return 0;
@@ -2602,8 +2611,16 @@ times_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct 
 		goto fail;
 	}
 	
-	cnt = array_count(t, 1);
+	cnt = array_count(t, 0);
 	
+	if (!cnt) { 
+		free_cell(t);
+		if (!l->a.rnk) t = ref_cell(r);
+		else if (!r->a.rnk) t = ref_cell(l);
+		else t = ref_cell(r);
+		goto done;
+	}
+		
 	switch (l->a.etyp) {
 	case ELEM_INT:{
 		switch (r->a.etyp) {
@@ -3174,7 +3191,8 @@ times_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct 
 		err = 99;
 		goto fail;
 	}
-	
+
+done:
 	*z = t;
 	
 	return 0;
@@ -3245,8 +3263,16 @@ divide_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct
 		goto fail;
 	}
 	
-	cnt = array_count(t, 1);
+	cnt = array_count(t, 0);
 	
+	if (!cnt) { 
+		free_cell(t);
+		if (!l->a.rnk) t = ref_cell(r);
+		else if (!r->a.rnk) t = ref_cell(l);
+		else t = ref_cell(r);
+		goto done;
+	}
+		
 	switch (l->a.etyp) {
 	case ELEM_INT:{
 		switch (r->a.etyp) {
@@ -3862,7 +3888,8 @@ divide_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct
 		err = 99;
 		goto fail;
 	}
-	
+
+done:
 	*z = t;
 	
 	return 0;
