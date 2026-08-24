@@ -103,7 +103,7 @@ TT←{
 	syms,←⊂,'×'	  ⋄ nams⍪←'mul'	       'sign'	       'times'			'idxerr'
 	syms,←⊂,'÷'	  ⋄ nams⍪←'cd_div'	       'recip'	       'divide'			'idxerr'
 	syms,←⊂,'*'	  ⋄ nams⍪←'cd_exp'	       'exponent'      'power'			'idxerr'
-	syms,←⊂,'⍟'	  ⋄ nams⍪←'log'	       'natlog'	       'logarithm'		'idxerr'
+	syms,←⊂,'⍟'	  ⋄ nams⍪←'cd_log'	       'natlog'	       'logarithm'		'idxerr'
 	syms,←⊂,'|'	  ⋄ nams⍪←'res'	       'absolute'      'residue'		'idxerr'
 	syms,←⊂,'⌊'	  ⋄ nams⍪←'min'	       'floor_array'   'minimum'		'idxerr'
 	syms,←⊂,'⌈'	  ⋄ nams⍪←'max'	       'ceil_array'    'maximum'		'idxerr'
