@@ -179,8 +179,8 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←INZ*I ⋄ ⎕←INZ*B ⋄ ⎕←FNZ*I ⋄ ⎕←FNZ*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*B
 ⎕←I*INT ⋄ ⎕←I*B ⋄ ⎕←F*INT ⋄ ⎕←F*B ⋄ ⎕←B*INT ⋄ ⎕←B*B
 ⎕←IPS*I ⋄ ⎕←IPS*F ⋄ ⎕←IPS*B ⋄ ⎕←FPS*I ⋄ ⎕←FPS*F ⋄ ⎕←FPS*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*F ⋄ ⎕←BNZ*B
-
-
+⎕←⍟IPS ⋄ ⎕←⍟FPS
+⎕←IPS⍟IPS ⋄ ⎕←IPS⍟FPS ⋄ ⎕←FPS⍟IPS ⋄ ⎕←FPS⍟FPS
 
 
 :EndNamespace
