@@ -7557,7 +7557,7 @@ logarithm_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, str
 				struct cell **restrict rv = r->a.host->p;
 
 				for (int64_t i = 0; i < cnt; i++) {
-					err = times_f(NULL, &tv[i], l, rv[i], NULL);
+					err = logarithm_f(NULL, &tv[i], l, rv[i], NULL);
 					if (err) goto fail;
 				}
 			} else if (!r->a.rnk) {
