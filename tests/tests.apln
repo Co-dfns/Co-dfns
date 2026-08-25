@@ -181,6 +181,8 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←IPS*I ⋄ ⎕←IPS*F ⋄ ⎕←IPS*B ⋄ ⎕←FPS*I ⋄ ⎕←FPS*F ⋄ ⎕←FPS*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*F ⋄ ⎕←BNZ*B
 ⎕←⍟IPS ⋄ ⎕←⍟FPS
 ⎕←IPS⍟IPS ⋄ ⎕←IPS⍟FPS ⋄ ⎕←FPS⍟IPS ⋄ ⎕←FPS⍟FPS
-
+⎕←|I ⋄ ⎕←|F ⋄ ⎕←|B
+⎕←I|I ⋄ ⎕←I|I2 ⋄ ⎕←I|B ⋄ ⎕←I2|I ⋄ ⎕←I2|I2 ⋄ ⎕←I2|B ⋄ ⎕←B|I ⋄ ⎕←B|I2 ⋄ ⎕←B|B
+⎕←F|F ⋄ ⎕←F|F2 ⋄ ⎕←F|B ⋄ ⎕←F2|F ⋄ ⎕←F2|F2 ⋄ ⎕←F2|B ⋄ ⎕←B|F ⋄ ⎕←B|F2
 
 :EndNamespace
