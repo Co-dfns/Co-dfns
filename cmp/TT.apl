@@ -105,7 +105,7 @@ TT←{
 	syms,←⊂,'*'	  ⋄ nams⍪←'cd_exp'	       'exponent'      'power'			'idxerr'
 	syms,←⊂,'⍟'	  ⋄ nams⍪←'cd_log'	       'natlog'	       'logarithm'		'idxerr'
 	syms,←⊂,'|'	  ⋄ nams⍪←'res'	       'absolute'      'residue'		'idxerr'
-	syms,←⊂,'⌊'	  ⋄ nams⍪←'min'	       'floor_array'   'minimum'		'idxerr'
+	syms,←⊂,'⌊'	  ⋄ nams⍪←'min'	       'floor'         'minimum'		'idxerr'
 	syms,←⊂,'⌈'	  ⋄ nams⍪←'max'	       'ceil_array'    'maximum'		'idxerr'
 	syms,←⊂,'○'	  ⋄ nams⍪←'cir'	       'pitimes'       'trig'			'idxerr'
 	syms,←⊂,'!'	  ⋄ nams⍪←'fac'	       'factorial'     'binomial'		'idxerr'
