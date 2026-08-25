@@ -186,5 +186,7 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←F|F ⋄ ⎕←F|F2 ⋄ ⎕←F|B ⋄ ⎕←F2|F ⋄ ⎕←F2|F2 ⋄ ⎕←F2|B ⋄ ⎕←B|F ⋄ ⎕←B|F2
 ⎕←⌊I ⋄ ⎕←⌊F ⋄ ⎕←⌊B ⋄ ⎕←⌊IC ⋄ ⎕←⌊FC ⋄ ⎕←⌊BC
 ⎕←I⌊I ⋄ ⎕←I⌊F ⋄ ⎕←I⌊B ⋄ ⎕←F⌊I ⋄ ⎕←F⌊F ⋄ ⎕←F⌊B ⋄ ⎕←B⌊I ⋄ ⎕←B⌊F ⋄ ⎕←B⌊B
+⎕←⌈I ⋄ ⎕←⌈F ⋄ ⎕←⌈B ⋄ ⎕←⌈IC ⋄ ⎕←⌈FC ⋄ ⎕←⌈BC
+⎕←I⌈I ⋄ ⎕←I⌈F ⋄ ⎕←I⌈B ⋄ ⎕←F⌈I ⋄ ⎕←F⌈F ⋄ ⎕←F⌈B ⋄ ⎕←B⌈I ⋄ ⎕←B⌈F ⋄ ⎕←B⌈B
 
 :EndNamespace
