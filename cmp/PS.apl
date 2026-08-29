@@ -51,7 +51,7 @@ PS←{⍺←⊢
 	t pos end⌿⍨←⊂(t≠0)∨(~IN[pos]∊WS)∨⊃¯1 1∧.⌽⊂IN[pos]∊alp,num,'¯⍺⍵⎕.:'
 
 	⍝ Verify all open characters are valid
-	msk←~IN[pos]∊alp,num,syna,synb,prms,WS
+	msk←(t=0)∧~IN[pos]∊alp,num,syna,synb,prms,WS
 	∨⌿msk:'INVALID CHARACTER(S) IN SOURCE'SIGNAL msk⌿pos
 
 	⍝ This simplifies the following expressions
