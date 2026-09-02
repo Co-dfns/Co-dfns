@@ -627,10 +627,10 @@ is_bound(struct cell *c)
 /*************
  * Utilities *
  *************/
- 
- int
- println_pad(struct cell *r)
- {
+
+int
+println_pad(struct cell *r)
+{
 	int64_t cnt;
 	
 	if (!r->a.rnk) {
@@ -728,15 +728,15 @@ is_bound(struct cell *c)
 	}
 	
 	return 0;
- }
- 
- int64_t zero_list[] = {0};
- struct host_buffer zero_buf = {2, 0, NULL, .i = zero_list};
- struct cell mt_num_vec = {
+}
+
+int64_t zero_list[] = {0};
+struct host_buffer zero_buf = {2, 0, NULL, .i = zero_list};
+struct cell mt_num_vec = {
 	1, CELL_ARRAY, NULL, .a = {
 		ELEM_INT, STG_HOST, 1, &zero_buf, .host = &zero_buf
 	}
- };
+};
  
 struct cell scl_zero = {
 	1, CELL_ARRAY, NULL, .a = {ELEM_INT, STG_HOST, 0, NULL, .i = 0}
@@ -765,11 +765,11 @@ syntaxerr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, str
 /**************
  * PRIMITIVES *
  **************/
- 
- 
- EXPORT int
- println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
- {
+
+
+EXPORT int
+println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
+{
 	struct host_buffer *shp;
 	char *vs;
 	int64_t mc, cc, sz;
@@ -9806,4 +9806,3 @@ struct cell sqd_c = {
 	}
 };
 EXPORT struct cell *sqd = &sqd_c;
-
