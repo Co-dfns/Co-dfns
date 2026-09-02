@@ -4676,7 +4676,7 @@ power_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct 
 		switch (r->a.etyp) {
 		case ELEM_INT:{
 			if (!t->a.rnk) {
-				t->a.i = (int64_t)pow((double)l->a.i, (double)r->a.i);
+				t->a.f = pow((double)l->a.i, (double)r->a.i);
 			} else if (!l->a.rnk) {
 				double *restrict tv = t->a.host->f;
 				int64_t lv = l->a.i;
@@ -7180,7 +7180,7 @@ logarithm_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, str
 		switch (r->a.etyp) {
 		case ELEM_INT:{
 			if (!t->a.rnk) {
-				t->a.i = (int64_t)log_real((double)l->a.i, (double)r->a.i);
+				t->a.f = log_real((double)l->a.i, (double)r->a.i);
 			} else if (!l->a.rnk) {
 				double *restrict tv = t->a.host->f;
 				int64_t lv = l->a.i;
@@ -8610,7 +8610,6 @@ floor_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct 
 	t->ctyp = CELL_ARRAY;
 	t->a = r->a;
 	
-	if (t->a.etyp == ELEM_FLOAT) t->a.etyp = ELEM_INT;
 	if (t->a.rnk) {
 		t->a.shp->refc++;
 		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
@@ -8622,13 +8621,13 @@ floor_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct 
 	case ELEM_INT: err = 99; goto fail;
 	case ELEM_FLOAT:{
 		if (!t->a.rnk) {
-			t->a.i = (int64_t)floor(r->a.f);
+			t->a.f = floor(r->a.f);
 		} else {
-			int64_t *restrict tv = t->a.host->i;
+			double *restrict tv = t->a.host->f;
 			double *restrict rv = r->a.host->f;
 			
 			for (int64_t i = 0; i < cnt; i++)
-				tv[i] = (int64_t)floor(rv[i]);
+				tv[i] = floor(rv[i]);
 		}
 	}break;
 	case ELEM_CMPX:{
@@ -9102,7 +9101,6 @@ ceiling_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 	t->ctyp = CELL_ARRAY;
 	t->a = r->a;
 	
-	if (t->a.etyp == ELEM_FLOAT) t->a.etyp = ELEM_INT;
 	if (t->a.rnk) {
 		t->a.shp->refc++;
 		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
@@ -9114,13 +9112,13 @@ ceiling_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 	case ELEM_INT: err = 99; goto fail;
 	case ELEM_FLOAT:{
 		if (!t->a.rnk) {
-			t->a.i = (int64_t)ceil(r->a.f);
+			t->a.f = ceil(r->a.f);
 		} else {
-			int64_t *restrict tv = t->a.host->i;
+			double *restrict tv = t->a.host->f;
 			double *restrict rv = r->a.host->f;
 			
 			for (int64_t i = 0; i < cnt; i++)
-				tv[i] = (int64_t)ceil(rv[i]);
+				tv[i] = ceil(rv[i]);
 		}
 	}break;
 	case ELEM_CMPX:{
