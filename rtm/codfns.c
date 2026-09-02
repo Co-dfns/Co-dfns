@@ -9550,3 +9550,260 @@ struct cell max_c = {
 };
 EXPORT struct cell *max = &max_c;
 
+EXPORT int
+without_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+}
+
+EXPORT int
+notscl_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	s; l; fv;
+	
+	t = NULL;
+	
+	if (r->a.etyp == ELEM_CHAR) { err = 11; goto fail; }
+	if (r->a.etyp == ELEM_CMPX) { err = 11; goto fail; }
+	if (r->a.etyp == ELEM_FLOAT) { err = 11; goto fail; }
+	if (r->a.stg == STG_DEVICE) { err = 16; goto fail; }
+	
+	cnt = array_count(r, 0);
+	
+	if (!cnt) {
+		t = ref_cell(r);
+		goto done;
+	}
+	
+	if (!(t = get_cell())) { err = 1; goto fail; }
+	
+	t->ctyp = CELL_ARRAY;
+	t->a = r->a;
+	t->a.etyp = ELEM_INT;
+	
+	if (t->a.rnk) {
+		t->a.shp->refc++;
+		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
+		
+		if (!t->a.host) { err = 1; goto fail; }
+	}
+	
+	switch (r->a.etyp) {
+	case ELEM_INT:{
+		if (!t->a.rnk) {
+			if (r->a.i != 0 && r->a.i != 1) {
+				err = 11;
+				goto fail;
+			}
+			
+			t->a.i = !r->a.i;
+		} else {
+			int64_t *restrict tv = t->a.host->i;
+			int64_t *restrict rv = r->a.host->i;
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				if (rv[i] != 0 && rv[i] != 1) {
+					err = 11;
+					goto fail;
+				}
+				
+				tv[i] = !rv[i];
+			}
+		}
+	}break;
+	case ELEM_FLOAT: err = 99; goto fail;
+	case ELEM_CMPX: err = 99; goto fail;
+	case ELEM_CELL:{
+		if (!t->a.rnk) {
+			err = notscl_f(NULL, &t->a.p, NULL, r->a.p, NULL);
+			
+			if (err) goto fail;
+		} else {
+			struct cell **restrict tv = t->a.host->p;
+			struct cell **restrict rv = r->a.host->p;
+			
+			memset(tv, 0, sizeof(*tv) * cnt);
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				err = notscl_f(NULL, &tv[i], NULL, rv[i], NULL);
+				
+				if (err) goto fail;
+			}
+		}
+	}break;
+	default: err = 99; goto fail;
+	}
+	
+	
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*not_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	notscl_f, without_f
+};
+struct cell not_c = {
+	1, CELL_FUNC, NULL, .f = {
+		not_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *not = &not_c;
+
+EXPORT int
+factorial_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	s; l; fv;
+	
+	t = NULL;
+	
+	if (r->a.etyp == ELEM_CHAR) { err = 11; goto fail; }
+	if (r->a.stg == STG_DEVICE) { err = 16; goto fail; }
+	
+	cnt = array_count(r, 0);
+	
+	if (!cnt) {
+		t = ref_cell(r);
+		goto done;
+	}
+	
+	if (!(t = get_cell())) { err = 1; goto fail; }
+	
+	t->ctyp = CELL_ARRAY;
+	t->a = r->a;
+	
+	if (t->a.etyp == ELEM_INT) t->a.etyp = ELEM_FLOAT;
+	
+	if (t->a.rnk) {
+		t->a.shp->refc++;
+		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
+		
+		if (!t->a.host) { err = 1; goto fail; }
+	}
+	
+	switch (r->a.etyp) {
+	case ELEM_INT:{
+		if (!t->a.rnk) {
+			t->a.f = tgamma((double)(1 + r->a.i));
+		} else {
+			double *restrict tv = t->a.host->f;
+			int64_t *restrict rv = r->a.host->i;
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				tv[i] = tgamma((double)(rv[i] + 1));
+			}
+		}
+	}break;
+	case ELEM_FLOAT:{
+		if (!t->a.rnk) {
+			t->a.f = tgamma(1 + r->a.f);
+		} else {
+			double *restrict tv = t->a.host->f;
+			double *restrict rv = r->a.host->f;
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				tv[i] = tgamma(rv[i] + 1);
+			}
+		}
+	}break;
+	case ELEM_CMPX: err = 16; goto fail;
+	case ELEM_CELL:{
+		if (!t->a.rnk) {
+			err = factorial_f(NULL, &t->a.p, NULL, r->a.p, NULL);
+			
+			if (err) goto fail;
+		} else {
+			struct cell **restrict tv = t->a.host->p;
+			struct cell **restrict rv = r->a.host->p;
+			
+			memset(tv, 0, sizeof(*tv) * cnt);
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				err = factorial_f(NULL, &tv[i], NULL, rv[i], NULL);
+				
+				if (err) goto fail;
+			}
+		}
+	}break;
+	default: err = 99; goto fail;
+	}
+	
+	
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+EXPORT int
+binomial_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+}
+
+int (*fac_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	factorial_f, binomial_f
+};
+struct cell fac_c = {
+	1, CELL_FUNC, NULL, .f = {
+		fac_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *fac = &fac_c;
+
+EXPORT int
+materialize_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	int err;
+	
+	s; l; fv;
+	
+	if ((err = squeeze(r)))
+		return err;
+	
+	*z = ref_cell(r);
+	
+	return 0;
+}
+
+EXPORT int
+sqd_idx_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+}
+
+int (*sqd_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	materialize_f, sqd_idx_f
+};
+struct cell sqd_c = {
+	1, CELL_FUNC, NULL, .f = {
+		sqd_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *sqd = &sqd_c;
+

@@ -188,5 +188,6 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←I⌊I ⋄ ⎕←I⌊F ⋄ ⎕←I⌊B ⋄ ⎕←F⌊I ⋄ ⎕←F⌊F ⋄ ⎕←F⌊B ⋄ ⎕←B⌊I ⋄ ⎕←B⌊F ⋄ ⎕←B⌊B
 ⎕←⌈I ⋄ ⎕←⌈F ⋄ ⎕←⌈B ⋄ ⎕←⌈IC ⋄ ⎕←⌈FC ⋄ ⎕←⌈BC
 ⎕←I⌈I ⋄ ⎕←I⌈F ⋄ ⎕←I⌈B ⋄ ⎕←F⌈I ⋄ ⎕←F⌈F ⋄ ⎕←F⌈B ⋄ ⎕←B⌈I ⋄ ⎕←B⌈F ⋄ ⎕←B⌈B
+⎕←~B ⋄ ⎕←⌷I ⋄ ⎕←⌷F ⋄ ⎕←⌷B ⋄ ⎕←!IPS ⋄ ⎕←!FPS ⋄ ⎕←!B
 
 :EndNamespace
