@@ -32,16 +32,13 @@ PS←{⍺←⊢
 	⍝ Remove comments
 	pos msk⌿¨⍨←⊂∧⍀¨msk∨'⍝'≠IN∘I¨pos
 
-	⍝ Check for unbalanced strings
-	lin←⍸⊃∘⌽¨msk
-	0≠≢lin:('UNBALANCED STRING','S'⌿⍨2≤≢lin)SIGNAL ∊(msk⌿¨pos)[lin]
-
 	⍝ Flatten parser representation
-	t←⊃0⍴⊂pos ⋄ t pos msk(∊,∘⍪⍨)←Z (⊃¨pos) 0
+	t←⊃0⍴⊂pos ⋄ t pos msk(∊,∘⍪⍨)←Z (⊃¨pos) 0 ⋄ end←1+pos
 
 	⍝ Tokenize strings
-	end←1+pos ⋄ t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←1+end[⍸2>⌿msk⍪0]
-	t pos end⌿⍨←⊂(t=0)⍲¯1⌽msk
+	t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←1+end[⍸2>⌿msk⍪0]
+	t[i⌿⍨IN[end[i]-1]≠'''']←ESTRING
+	t pos end⌿⍨←⊂(t=0)⍲(t≠Z)∧¯1⌽msk
 
 	⍝ ⋄ should be Z nodes/groups
 	t[⍸'⋄'=IN[pos]]←Z
@@ -51,66 +48,59 @@ PS←{⍺←⊢
 	t pos end⌿⍨←⊂(t≠0)∨(~IN[pos]∊WS)∨⊃¯1 1∧.⌽⊂IN[pos]∊alp,num,'¯⍺⍵⎕.:'
 
 	⍝ Verify all open characters are valid
-	msk←~IN[pos]∊alp,num,syna,synb,prms,WS
-	∨⌿msk:'INVALID CHARACTER(S) IN SOURCE'SIGNAL msk⌿pos
+	t[⍸~IN[pos]∊alp,num,syna,synb,prms,WS]←EBADCHR
 
 	⍝ This simplifies the following expressions
 	x←' '@{t≠0}IN[pos]
 
 	⍝ Tokenize numbers
 	dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm←x∊num
-	∨⌿msk←1<+⌿¨dm⊆'.'=x:'MULTIPLE . IN FLOAT'SIGNAL ∊msk/dm⊆pos
+	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←('.'=x)∧dm]←EFLTDOT
 	dm∨←('¯'=x)∧1⌽dm
-	∨⌿msk←('¯'=x)∧¯1⌽dm:'¯ CANNOT APPEAR BETWEEN DIGITS'SIGNAL msk⌿pos
-	∨⌿msk←1<+⌿¨dm⊆'¯'=x:'MULTIPLE ¯ IN NUMBER'SIGNAL ∊msk⌿dm⊆pos
-	∨⌿msk←('¯'=x)∧~dm:'ORPHANED ¯'SIGNAL msk⌿pos
+	t[⍸('¯'=x)∧¯1⌽dm]←EBTWMIN
+	t[⍸msk∧~≠(+⍀2<⌿0⍪dm)×msk←dm∧'¯'=x]←EMULMIN
+	t[⍸dm<'¯'=x]←EORPMIN
 	dm∨←(msk←x∊'Ee')∧(¯1⌽dm)∧1⌽dm
 	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	dm∨←(msk←x∊'Jj')∧(¯1⌽dm)∧1⌽dm
 	dm⍀←∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	(msk⌿dm)←∊∧⍀¨(msk←x∊alp,num)⊆dm
 	dm[⍸dm∧(x='.')∧(¯1⌽dm)⍱1⌽dm]←0
-	msk←∨⌿¨dm⊆dm∧(x='.')∧¯1⌽(~dm)∧x∊num
-	∨⌿msk:'AMBIGUOUS PLACEMENT OF NUMERIC FORM'SIGNAL ∊msk⌿dm⊆pos
-	msk←∨⌿¨'.'={1⊃(⍵⊆⍨~⍵∊'Ee'),2⍴⊂''}¨x⊆⍨rm←dm∧~x∊'Jj'
-	∨⌿msk:'NON-INTEGER EXPONENT'SIGNAL ∊msk⌿rm⊆pos
-	t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
+	t[⍸dm∧(x='.')∧¯1⌽(~dm)∧x∊num]←EAMBNUM
+	t[⍸('.'=x)∧(0⍪hm⌿¯1⌽dm∧x∊'Ee')[msk∧+⍀hm←2<⌿0⍪msk←dm∧~x∊'EeJj']]←EBADEXP
+	t[i←⍸(t=0)∧2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
+	t[i[i⍸⌽j]]←t[j←⍸dm∧t<0] ⋄ t[j~i]←0
 
 	⍝ Tokenize variables
 	msk←dm<(t=0)∧x∊alp,num ⋄ t[i←⍸2<⌿0⍪msk]←V ⋄ end[i]←end⌿⍨2>⌿msk⍪0
 
 	⍝ Tokenize dfns formals
-	msk←3≤≢¨grp←(pos⊆⍨'⍺'=x),pos⊆⍨'⍵'=x
-	∨⌿msk:'AMBIGUOUS FORMALS'SIGNAL ∊msk⌿grp
-	msk←('⍺⍺'⍷x)∨'⍵⍵'⍷x ⋄ t[i←⍸msk]←P ⋄ end[i]+←1
-	t[⍸msk<(¯1⌽msk)<x∊'⍺⍵']←A
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍺'=x ⋄ end[⍸m2∨←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍵'=x
+	t[⍸m2]←0 A P EAMBFML[3⌊end[i]-pos[i←⍸m2]]
 
 	⍝ Tokenize primitives and atoms
 	t[⍸x∊syna]←A ⋄ t[⍸dm<x∊prms]←P
 	end[i]←end[1+i←⍸dm<⊃'⍠←' '∘←' '∘.' '##'∨.⍷⊂x] ⋄ t[i+1]←0
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⌶'=x ⋄ t[⍸m2<msk]←0
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'∇'=x ⋄ t[⍸m2<msk]←0
-	∨⌿msk←2<end[i]-pos[i←⍸msk∧x='∇']:{
-		'AMBIGUOUS ∇ CLUSTER'SIGNAL SELECT msk⌿i
-	}⍬
+	t[⍸m2∧3≤end-pos]←EAMBNAB
 
 	⍝ Mark depths of dfns regions and give F type, with } as a child
-	t[⍸'{'=x]←F ⋄ d←+⍀1 ¯1 0['{}'⍳x]
-	0<⊃⌽d:'MISSING CLOSING BRACE'SIGNAL pos[⊃⌽⍸(d=⊃⌽d)∧2<⌿0⍪d]
-	∨⌿0>d:'TOO MANY CLOSING BRACES'SIGNAL pos[⊃⍸0>d]
-	d←¯1⌽d
+	d←+⍀bi←(bo←'{'=bi)-bc←'}'=bi←x⌿⍨bm←x∊'{}' ⋄ msk←0⍴⍨≢d
+	(bo⌿msk)←(bo⌿bo∧d=⌽⌊⍀⌽d)[⌽⍒+⍀bo⌿2<⌿0⍪bo]
+	(bc⌿msk)←(bc⌿bc∧(⊢=⌊⍀)d-bi)[⌽⍒+⍀bc⌿2<⌿0⍪bc]
+	bo bi(bm⍀×)←⊂~msk
+	t[msk⌿⍸bm]←EBRCBAL ⋄ t[⍸bo]←F ⋄ d←¯1⌽+⍀bi
 
 	⍝ Check for out of context dfns formals
-	msk←(d=0)∧(t∊A P)∧x∊'⍺⍵'
-	∨⌿msk:'DFN FORMAL REFERENCED OUTSIDE DFNS'SIGNAL msk⌿pos
+	t[⍸(d=0)∧(t∊A P)∧(x∊'⍺⍵')∨(x='∇')∧2=end-pos]←EDFNFML
 
 	⍝ Mark trad-fns regions as tm
-	tm←(d=0)∧'∇'=x
-	∨⌿msk←tm∧¯1⌽Z≠t:'∇ MUST BE FIRST ON A LINE'SIGNAL SELECT ⍸msk
-	0≠⊃tm←¯1⌽≠⍀tm:'UNBALANCED TRAD-FNS'SIGNAL SELECT ⊃⌽⍸2<⌿0⍪tm
-	msk←(1⌽Z≠t)∧(2>⌿tm)⍪0
-	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL SELECT ⍸msk
-	
+	tm←(d=0)∧x='∇'
+	t[⍸tm>←tm∧¯1⌽t≠Z]←ENABPOS
+	t[⍸tm>←tm⍀(sm∧1⌽sm)∨(em∧¯1⌽em)∨((≢em)↑⊃em)∨(-≢sm)↑⊃⌽sm←~em←tm⌿1⌽t=Z]←ETRFBAL
+	tm←¯1⌽≠⍀tm
+
 	⍝ Flatten trad-fns headers
 	d[⍸msk←∊∨⍀¨(t=Z)⊂2<⌿tm⍪0]←0 ⋄ t[⍸msk∧x∊'{}']←P
 	
@@ -121,10 +111,9 @@ PS←{⍺←⊢
 	t[⍸tm∧(d=1)∧∊0,¨(<⍀∧∘~⊃)¨':'=1↓¨(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
-	∨⌿msk←3∧⌿(':'=x)∧t=0:'TOO MANY COLONS'SIGNAL SELECT ⍸msk
-	t[⍸(':'=x)∧t=0]←K
-	ki←⍸(t=K)∧(msk<1⌽t=K)∨(1⌽t=V)∧msk←(d=0)∨tm∧d=1
-	end[ki]←end[1+ki] ⋄ t[ki+1]←0
+	t[i←⍸2<⌿0⍪msk←(t=0)∧':'=x]←K ⋄ end[i]←end[⍸2>⌿0⍪⍨msk]
+	t[⍸(t=K)∧3≤end-pos]←ECOLONS
+	end[i]←end[1+i←⍸(t=K)∧(1⌽t=V)∧(d=0)∨tm∧d=1] ⋄ t[i+1]←0
 
 	⍝ Tokenize system variables
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
@@ -133,16 +122,13 @@ PS←{⍺←⊢
 	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{};'
 
 	⍝ Tokenize labels
-	ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
-	∨⌿msk←(Z≠t[li-1])∨V≠t[li←⍸1⌽lm←t=L]:ERR SIGNAL pos[(msk⌿li)∘.+¯1 0 1]
-	t[li]←L ⋄ d tm t pos end(⌿⍨)←⊂~lm
+	t[⍸(t=L)∧¯1⌽(t=V)⍲¯1⌽t=Z]←ELBLNAM
+	t[⍸1⌽msk←t=L]←L ⋄ d tm t pos end⌿⍨←⊂~msk
 
 	⍝ With tokens created, reify n field before tree-building
 	n←(w⌿1+⍳≢pos)⊆IN[(⍳≢x)+x←w⌿pos-+⍀0,¯1↓w←end-pos]
 	n←{¯1↓⍎¨⍵,⊂''''''}@{t=C}(⊂'')@{t∊Z F}⎕C@{t∊K S}(⊂⍬)@{n∊⊂,'⍬'}n
-	msk vals←⎕VFI ⍕n[i←⍸t=N]
-	~∧⌿msk:'CANNOT REPRESENT NUMBER'SIGNAL SELECT ⍸(t=N)⍀~msk
-	n[i]←vals
+	msk x←⎕VFI ⍕n[i←⍸t=N] ⋄ n[msk⌿i]←x ⋄ t[i⌿⍨~msk]←ENUMREP
 	
 	⍝ Split inheritance reference if necessary
 	msk←(t=K)∧¯1⌽(t=V)∧¯1⌽(t=K)∧n∊⊂':class'
@@ -159,13 +145,8 @@ PS←{⍺←⊢
 	KW,←⊂'INCLUDE'
 	KW,←':' ''
 	KW,¨⍨←':' ⋄ KW←⎕C KW
-	msk←~KW∊⍨kws←n⌿⍨km←t=K
-	∨⌿msk:2'UNRECOGNIZED KEYWORD(S)'SIGNAL SELECT ⍸km⍀msk
-
-	⍝ Check that all namespaces/sections are top level
 	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':CLASS' ':ENDCLASS' ':SECTION' ':ENDSECTION'
-	msk←(kws∊nssec)∧km⌿tm
-	∨⌿msk:2'INVALID NAMESPACE/SECTION CONTEXT'SIGNAL SELECT ⍸km⍀msk
+	t[i⌿⍨~n[i←⍸t=K]∊KW]←EUNKKWD ⋄ t[i⌿⍨tm[i]∧n[i]∊nssec]←ENSPCTX
 
 	⍝ Verify system variables used
 	SYSV←,¨'Á' 'A' 'AI' 'AN' 'AV' 'ATX' 'AVU' 'BASE' 'CT' 'D' 'DCT' 'DIV' 'DM'
@@ -190,11 +171,10 @@ PS←{⍺←⊢
 	SYSM←,¨,⊂'VEACH'
 	SYSD←,¨'OPT' 'R' 'S' 'AMBIV'
 	SYSV SYSF SYSM SYSD←⎕C '⎕',¨¨SYSV SYSF SYSM SYSD
-	msk←(t=S)∧~n∊SYSV,SYSF,SYSM,SYSD,⎕C¨ENVN
-	∨⌿msk:'INVALID SYSTEM NAME'SIGNAL SELECT ⍸msk
+	t[⍸(t=S)∧~n∊SYSV,SYSF,SYSM,SYSD,⎕C¨ENVN]←ESYSNAM
 
-	⍝ Introduce k field
-	k←2×t∊F
+	⍝ Introduce k field and mark errors as type X
+	k←(t⌊0)+2×t=F ⋄ t[⍸t<0]←X
 
 	⍝ Kinds of atoms, characters, numbers, primitives, and system variables
 	k[⍸(t∊A C N)∨(t=S)∧n∊SYSV]←1
@@ -232,14 +212,16 @@ PS←{⍺←⊢
 	_←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸(t=L)<t[p]∊T F
 	'Non-Z/L function body node'assert t[⍸t[p]∊T F]∊Z L:
 
+	⍝ Mark lines with tokenization errors
+	t[p⌿⍨t=X]←X
+
 	⍝ Parse the first line of a trad-fn as an H node
 	⍝ N M S A R L Z X Y←(9⍴2)⊤k ⋄ N M←0(2*16)⊤n
 	t[j←⍸(≠p)∧t[p]=T]←H ⋄ p[i]←j[p[j]⍳p[p][i←⍸p∊p[⍸(t[p][p]=T)∧(≠p)∧n=-sym⍳⊂,';']]]
-	∨⌿msk←(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H:'EMPTY RETURN HEADER'SIGNAL SELECT ⍸msk
-	∨⌿msk←(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H:'MISSING SIGNATURE'SIGNAL SELECT ⍸msk
+	t[i←p[⍸(n=-sym⍳⊂,'←')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←EMTHRET
+	t[i←p[⍸(n=-sym⍳⊂,';')∧(≠p)∧t[p]=H]]←X ⋄ k[i]←ENOHSIG
 	msysv←'⎕IO' '⎕ML' '⎕CT' '⎕PP' '⎕PW' '⎕RTL' '⎕FR' '⎕PATH' '⎕RL' '⎕DIV' '⎕TRAP' '⎕USING' '⎕WX'
-	msk←(t[p]=H)∧~(t=V)∨(n∊-sym⍳,¨'←(){};')∨(t=S)∧n∊-sym⍳⎕C¨msysv
-	∨⌿msk:'INVALID TRAD-FNS HEADER TOKEN'SIGNAL SELECT ⍸msk
+	t[i←⍸(t[p]=H)∧~(t=V)∨(n∊-sym⍳,¨'←(){};')∨(t=S)∧n∊-sym⍳⎕C¨msysv]←X ⋄ k[i]←EHDRTOK
 	_←p[i]{
 		0=≢i:0
 		nt←'←(){};V'['←(){};'⍳⊃¨sym[|n[⍵]]] ⋄ k[⍵⌿⍨nt≠'V']←¯99
@@ -272,46 +254,36 @@ PS←{⍺←⊢
 
 	⍝ Parse :Namespace syntax into M nodes
 	nss←(t=K)∧n∊-sym⍳⎕C⊂':NAMESPACE' ⋄ nse←(t=K)∧n∊-sym⍳⎕C⊂':ENDNAMESPACE'
-	ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE'
-	∨⌿msk←nss∧¯1⌽Z≠t:ERR SIGNAL SELECT ⍸msk
-	ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
-	∨⌿msk←nss∧(1⌽Z≠t)∧(1⌽V≠t)∨2⌽Z≠t:ERR SIGNAL SELECT ⍸msk
-	ERR←':ENDNAMESPACE KEYWORD MUST APPEAR ALONE ON A LINE'
-	∨⌿msk←nse∧⊃¯1 1∨.⌽⊂Z≠t:ERR SIGNAL SELECT ⍸msk
-	t[nsi←⍸1⌽nss]←M ⋄ t[nei←⍸1⌽nse]←-M
-	n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ end[nsi]←end[nei]
-	x←⍸p=⍳≢p ⋄ d←+⍀(t[x]=M)+-t[x]=-M
-	0<⊃⌽d:':NAMESPACE NOT CLOSED'SIGNAL SELECT x[⊃⌽⍸(d=⊃⌽d)∧2<⌿0⍪d]
-	∨⌿0>d:'EXCESSIVE :ENDNAMESPACE'SIGNAL SELECT x[⊃⍸d<0]
-	p[x]←x[D2P ¯1⌽d]
+	t[i←⍸nss>←nss∧¯1⌽t≠Z]←X ⋄ k[i]←ENSPPOS
+	t[i←⍸nss>←nss∧(1⌽t=Z)⍱(1⌽t=V)∧2⌽t=Z]←X ⋄ k[i]←ENSPDCL
+	t[i←⍸nse>←nse∧⊃¯1 1⍲.⌽⊂t=Z]←X ⋄ k[i]←EENSPOS
+	t[⍸1⌽nss]←M ⋄ t[⍸1⌽nse]←-M ⋄ n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ d←+⍀x←×t[i←⍸M=|t]
+	t[j←i⌿⍨(x=1)∧d=⌽⌊⍀⌽d]←X ⋄ k[j]←ENSPCLS
+	t[j←i⌿⍨(x=¯1)∧d=⌊⍀d←d-x]←X ⋄ k[j]←EXTRENS
+	t[i]←t[j←i[⌽⍒+⍀2≠⌿0⍪x]] ⋄ k[i]←k[j]
+	p[x]←x[D2P ¯1⌽+⍀(××M=|)t[x←⍸p=⍳≢p]] ⋄ end[p[i]]←end[i←⍸t=-M]
 	msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Parse guards to (G (Z ...) (Z ...))
-	_←p[i]{
-		0=+⌿m←K=t[⍵]:⍬
-		⊃m:'EMPTY GUARD TEST EXPRESSION'SIGNAL pos[⊃⍵]
-		1<+⌿m:'TOO MANY GUARDS'SIGNAL pos[m⌿⍵]
-		t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←0
-		ci←≢p ⋄ p⍪←⍺ ⋄ t⍪←0 ⋄ k⍪←0 ⋄ pos⍪←0 ⋄ end⍪←0 ⋄ n⍪←0 ⋄ gz cq,ci
-	0}⌸i←⍸t[p[p]]=F
+	i←i[⍋p[i←⍸(t[p][p]=F)∧p∊p⌿⍨t=K]] ⋄ fm←≠p[i] ⋄ km←t[i]=K
+	i fm km⌿⍨←⊂1+1⌽fm ⋄ i[⍸1⌽fm]←(≢p)+⍳fc←+⌿fm
+	t[p[j←fm⌿i]]←G ⋄ p⍪←p[j] ⋄ t k n pos end⍪←⊂fc⍴0 ⋄ _←gz¨i⊂⍨fm∨¯1⌽km
+	t[i←p[i]⌿⍨fm∧msk←t[p[i]]=G]←X ⋄ k[i]←EMTGARD
 
 	⍝ Delete keywords we can't handle
 	t k n pos end⌿⍨←⊂msk←t≠K ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Parse brackets and parentheses into ¯1 and Z nodes
-	_←p[i]{
-		x←IN[pos[⍵]]
-		pd←+⍀(x∊'[(')+-pc←x∊'])'
-		0<⊃⌽pd:'MISMATCHED PARENS/BRACKETS'SIGNAL pos[⍵⌿⍨⌽∧⍀⌽pd=⊃⌽pd]
-		∨⌿0>pd:'MISMATCHED PARENS/BRACKETS'SIGNAL pos[⍵⌿⍨∨⍀pd<0]
-		pcp←pc⌿pp←D2P ¯1⌽pd
-		msk←x[pcp]≠'[('[pt←')'=pc⌿x]
-		∨⌿msk:'OVERLAPPING PAREN/BRACKET'SIGNAL pos[⍵[(⍸,pp⌿⍨)pc⍀msk]]
-		p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}pp]
-		t[⍵[pcp]]←¯1 Z[pt] ⋄ end[⍵[pcp]]←end[pc⌿⍵]
-	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	t k n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ fm←≠p[i]
+	pd←+⍀dx←(po←x∊'[(')-pc←'])'∊⍨x←IN[pos[i]]
+	t[j←i⌿⍨po∧pd=pd[j⍳⌽⌊⍀⌽j←⍋j[⍋(+⍀fm)[j←⍋pd]]]]←X ⋄ k[j]←EOPRBAL ⋄ t[p[j]]←X
+	t[j←i⌿⍨pc∧pd=pd[j⍳⌊⍀j←⍋j[⍒(+⍀fm)[j←⍋pd←pd-dx]]]]←X ⋄ k[j]←ECPRBAL ⋄ t[p[j]]←X
+	i fm x pd pc⌿⍨←⊂t[p[i]]≠X ⋄ pcp←pc⌿pp←D2P pd-(fm⌿pd)[¯1++⍀fm]
+	t[j←i[pp][msk⌿pcp]⍪i⌿⍨pc⍀msk←x[pcp]≠'[('I')'=pc⌿x]←X ⋄ k[j]←EPRNBKT ⋄ t[p[j]]←X
+	i x pc pp⌿⍨←⊂msk←t[p[i]]≠X ⋄ pp(⊣-1+⍸⍨)←⍸~msk
+	p[msk⌿i]←i[pp]⌿⍨msk←pp≠⍳≢pp ⋄ t[j←i[pc⌿pp]]←¯1 Z[')'=pc⌿x] ⋄ end[j]←end[pc⌿i]
+	t k n pos end⌿⍨←⊂msk←~(t=0)∧IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Convert ; groups within brackets into Z nodes
 	_←p[i]{
@@ -333,12 +305,9 @@ PS←{⍺←⊢
 	t k(⊣@(⍸t∊N C))⍨←A 1
 
 	⍝ Mark binding primitives
-	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
-
-	⍝ Check for empty bindings
-	i←⍸(t[p]=Z)∧p≠⍳≢p
-	∨⌿msk←bp[j←i⌿⍨≠p[i]]:'EMPTY ASSIGNMENT TARGET'SIGNAL SELECT msk⌿p[j]
-	∨⌿msk←bp[j←i⌿⍨⌽≠⌽p[i]]:'EMPTY ASSIGNMENT VALUE'SIGNAL SELECT msk⌿p[j]
+	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←' ⋄ i←⍸(t[p]=Z)∧p≠⍳≢p
+	t[j←p[i⌿⍨bp[i]⌿≠p[i]]]←X ⋄ k[j]←EMTATGT
+	t[j←p[i⌿⍨bp[i]⌿⌽≠⌽p[i]]]←X ⋄ k[j]←EMTAVAL
 
 	⍝ Wrap binding values in Z nodes
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
@@ -496,11 +465,8 @@ PS←{⍺←⊢
 	k[iz,iy,ix]←1 ⋄ k[im]←(¯16↑12⍴2⌿1 2)[k[r[im]]] ⋄ k[id]←(¯16↑4⌿1 2)[k[r[id]]]
 	lx[im,id,iz,ix,iy]←¯5
 
-	⍝ Error if brackets are not addressing something
-	∨⌿msk←(≠p)∧t=¯1:{
-		EM←'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'
-		EM SIGNAL SELECT ⍸msk
-	}⍬
+	⍝ Mark brackets not addressing something as errors
+	t[i←⍸(≠p)∧t=¯1]←X ⋄ k[i]←EBKTSYN
 
 	⍝ Infer the type of groups and variables
 	t[⍸(t=P)∧n=¯2]←V ⋄ v←⍸(t=V)∧(k=0)∧vb≥0
@@ -559,11 +525,10 @@ PS←{⍺←⊢
 	pos[ij]←pos[jt] ⋄ end[ij]←end[jv]
 
 	⍝ Mark F[X] forms with k=4
-	_←p[i]{
-		⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX' SIGNAL SELECT ⍵
-		k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
-	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2 5
-	
+	i←i[⍋p[i←⍸(p≠⍳≢p)∧(t[p]=Z)∧k[p]∊1 2 5]]
+	t[j←i⌿⍨(t[i]=¯1)∧≠p[i]]←X ⋄ k[j]←EIDXTGT
+	k[i⌿⍨(t[i]=¯1)∧¯1⌽(k[i]∊2 3 5)∨¯1⌽k[i]=4]←4
+
 	⍝ Parse strands/plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸(t[p]=Z)∨(t[p]=¯1)∧k[p]=4
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊C N P V Z)∧k[i]=1
@@ -573,24 +538,18 @@ PS←{⍺←⊢
 	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]
 
 	⍝ Rationalize F[X] syntax
-	i←p[j←⍸(t[p]=¯1)∧k[p]=4]
-	i≢∪i:{
-		msg←'UNEXPECTED COMPOUND AXIS EXPRESSION'
-		99 msg SIGNAL SELECT {⊃⍺⌿⍨1<≢⍵}⌸i
-	}⍬
-	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←¯4 ⋄ end[i]←1+pos[i]
+	pi←p[i←⍸(t[p]=¯1)∧k[p]=4]
+	t[j←pi⌿⍨~msk←≠pi]←X ⋄ k[j]←ECMPAXS
+	p[i]←p[pi] ⋄ t[j←msk⌿pi]←P ⋄ lx[j]←¯4 ⋄ end[pi]←1+pos[pi]
 
 	⍝ Wrap V[X;...] expressions as A¯1 nodes
 	i←⍸t=¯1 ⋄ p←(x←p[i]@i⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x ⋄ t[p[i]]←A ⋄ k[p[i]]←¯1
 	p t k n lx vb pos end⌿⍨←⊂t≠¯1 ⋄ p vb(⊣-1+⍸⍨)←⊂i
 
 	⍝ Parse ⌶* nodes to V nodes
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
-	∨⌿msk←(i∊j)∧¯1⌽km∧(t[i]=A)⍲k[i]=1:{
-		msg←'INVALID ⌶ SYNTAX'
-		msg SIGNAL SELECT i⌿⍨msk∨¯1⌽msk
-	}⍬
-	vi←i⌿⍨1⌽msk←i∊j ⋄ pi←msk⌿i
+	i←i[⍋p[i←⍸p∊p[⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']]]
+	t[j←i⌿⍨pm[i]>(~≠p[i])∧¯1⌽(t[i]=A)∧k[i]=1]←X ⋄ k[j]←EBADIBM ⋄ pm[j]←0
+	vi←i⌿⍨1⌽pm[i] ⋄ pi←pm[i]⌿i
 	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←¯6 ⋄ end[vi]←end[pi]
 	p t k n lx vb pos end⌿⍨←⊂~pm ⋄ p vb(⊣-1+⍸⍨)←⊂⍸pm
 
@@ -623,20 +582,20 @@ PS←{⍺←⊢
 	⍝ Include parentheses in source range
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
 
-	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
-	k[⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←¯2
-	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
-	k[p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←¯2
-	k[p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←¯2
-	k[p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←¯2
-	i←p[⍸(t[p]=G)∧(≠p)∧(~t∊A E)∧k≠1] ⋄ t[i]←Z ⋄ k[i]←¯2
-	
-	⍝ Eliminate non-error Z nodes from the tree
-	msk←((t≠Z)∨(t=Z)∧k=¯2)∧m2←(t[p]=Z)∧k[p]≠¯2
+	⍝ Unparsed Z nodes become syntax error nodes
+	t[i←⍸(t=Z)∧(k=2)∧(t[p]=E)∧k[p]=6]←X ⋄ k[i]←ESYNTAX
+	t[i←zs⌿⍨1<1⊃zs zc←↓⍉p[i]⍪∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=Z)∧(k[p]=1)∧(t=O)∨(t∊B C N P V Z)∧k≠1]]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=Z)∧(k[p]=2)∧(t∊A E)∨(t∊B C N P V Z)∧k≠2]]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=Z)∧(k[p]∊3 4)∧(t∊A E O)∨(t∊B C N P V Z)∧k≠k[p]]]←X ⋄ k[i]←ESYNTAX
+	t[i←p[⍸(t[p]=G)∧(≠p)∧(t∊A E)⍱k=1]]←X ⋄ k[i]←ESYNTAX
+
+	⍝ Eliminate Z nodes from the tree
+	msk←(t≠Z)∧m2←t[p]=Z
 	zi←{p I@{m2[⍵]}⍵⊣vb I@(≥∘0)⍨←ki@⍵⍳≢p}⍣≡p[ki←⍸msk]
 	p←(x←zi@ki⍳≢p)[p] ⋄ vb I@(≥∘0)⍨←x
 	t k n lx vb pos end(⊣@zi⍨)←t k n lx vb pos end I¨⊂ki
-	p t k n lx vb pos end⌿⍨←⊂msk←msk⍱(t=Z)∧k≠¯2 ⋄ p vb(⊣-1+⍸⍨)←⊂⍸~msk
+	p t k n lx vb pos end⌿⍨←⊂msk←msk⍱t=Z ⋄ p vb(⊣-1+⍸⍨)←⊂⍸~msk
 
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
@@ -647,14 +606,11 @@ PS←{⍺←⊢
 	⍝ All A1 nodes should be lexical scope 7
 	lx[⍸(t=A)∧k=1]←¯7
 
-	⍝ Check for bindings/assignments without targets
+	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
 	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
 	msk←bp∧((k=2)∧(t[p]=E)⍲k[p]=2)∨(k=3)∧(t[p][p]=E)⍲k[p][p]=2
-	msk∧←nzm←{⍵∧⍵[p]}⍣≡(t=Z)⍲k=¯2
-	∨⌿msk:'MISSING ASSIGNMENT TARGET'SIGNAL SELECT p[⍸msk∧k=2],p[p][⍸msk∧k=3]
-	
-	⍝ Convert assignment expressions to E4 nodes, bindings to B nodes
-	i←p[⍸nzm∧bp∧k=2] ⋄ k[i]←4
+	t[j←p[⍸msk∧k=2]⍪p[p][⍸msk∧k=3]]←X ⋄ k[j]←ENOATGT
+	i←p[⍸bp∧k=2] ⋄ k[i]←4
 	i←p[j←⍸(≠p)∧(em←(t[p]=E)∧k[p]=4)∧am←(t∊P V)∨(t=A)∧k∊0 7]
 	i⍪←p[p][j⍪←⍸(⌽≠⌽p)∧am∧em[p]∧t[p]=N]
 	t[i]←B ⋄ k[i]←1 ⋄ lx[i]←lx[j]
@@ -663,12 +619,9 @@ PS←{⍺←⊢
 	p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂i
 	
 	⍝ Check that we have well-formed E4 nodes
-	i←⍸(≠p)∧(t[p]=E)∧k[p]=4 ⋄ msk←(t[i]∊A P V)⍱m2←(t[i]=E)∧k[i]=2
-	∨⌿msk:'INVALID ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
-	i←⍸(⌽≠⌽p)∧p∊m2⌿i ⋄ msk←(t[i]=V)⍱m2←(t[i]=A)∧k[i]=¯1
-	∨⌿msk:'INVALID SELECTIVE ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
-	i←⍸(≠p)∧p∊m2⌿i ⋄ msk←t[i]≠V
-	∨⌿msk:'INVALID INDEXED SELECTIVE ASSIGNMENT TARGET'SIGNAL SELECT msk⌿i
+	t[i←⍸p[(~t∊A P V)∧msk←((t=E)⍲k=2)∧(≠p)∧(t[p]=E)∧k[p]=4]]←X ⋄ k[i]←EASGTGT
+	t[i←⍸p[p][(t≠V)∧msk←((t=A)⍲k=¯1)∧(⌽≠⌽p)∧p∊⍸msk]]←X ⋄ k[i]←ESELASG
+	t[i←⍸p[p][p][(t≠V)∧(≠p)∧p∊⍸msk]]←X ⋄ k[i]←EIDXSEL
 
 	⍝ Convert E4 nodes to have their assigned target as the first child
 	i←j←⍸(em←(≠p)∧(t[p]=E)∧k[p]=4)∧(t∊P V)∨(t=A)∧k∊0 7
@@ -685,11 +638,8 @@ PS←{⍺←⊢
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 	
 	⍝ Check for nested ⍠← forms
-	∨⌿msk←(t=B)∧(n∊-sym⍳⊂'⍠←')∧t[p]≠F:{
-		ERR←'⍠← MUST BE THE LEFTMOST FORM IN AN UNGUARDED EXPRESSION'
-		ERR SIGNAL SELECT ⍸msk
-	}⍬
-	
+	t[i←⍸(t=B)∧(n∊-sym⍳⊂'⍠←')∧t[p]≠F]←X ⋄ k[i]←EVARASG
+
 	⍝ Compute exports
 	i←⍸(p=⍳≢p)[p][p]∧(k[p][p]=0)∧(t[p][p]=T)∧t[p]=H
 	xn←sym[|n[i]] ⋄ xt←k[i]
