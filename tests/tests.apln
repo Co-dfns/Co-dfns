@@ -1,5 +1,6 @@
 :Namespace 
 
+⎕←'Basic Literals'
 ⎕←5
 ⎕←1 2 3 4 5
 ⎕←,7
@@ -16,51 +17,49 @@
 ⎕←'abcdABCD'
 ⎕←'⍺⌈⌊⍛'
 
+⎕←'Variable References'
 X←5 10 15
 Y←5
 ⎕←X
 ⎕←Y
 
+⎕←'Stranding'
 ⎕←(5 4 3 2)1(1 2 3 4) X Y
-
 X Y←(3 2 1)(1 2 3)
-
 ⎕←X Y
-
 ⎕←((1 2 3)(4 5 6)) X Y
 
+⎕←'Function Calls'
 fn←{5 0 1}
 ⎕←fn⍬
-
 ⎕←{5 0 1}⍬
-
 ⎕←5 {⍺ ⍵} 23
 ⎕←5 {⍵} 23
 ⎕←{⍵}17
-
 ⎕←X{⍺ ⍵}Y
 
+⎕←'Left Arguments'
 fn←{⍺←5 ⋄ ⍺ ⍵}
-
 ⎕←fn 23
 ⎕←7 fn 120
 
+⎕←'Operators'
 ⎕←5{⍺⍺ ⍵}⍬
 ⎕←⊢{⍺⍺ ⍵}27
-
 ⎕←5{⍺⍺ ⍵⍵}7⊢⍬
 ⎕←⊢{⍺⍺ ⍵⍵}7⊢⍬
 ⎕←5{⍵⍵ ⍺⍺}⊢⍬
 ⎕←⊢{⍺⍺ ⍵⍵ ⍵}⊢8
-
 ⎕←1{⍺:⍵ ⋄ 'no'}'yes'
 ⎕←0{⍺:⍵ ⋄ 'no'}'yes'
 
+⎕←'Axis Operator'
 ⎕←{axis⍠←5 ⋄ axis}[3]⍬
 ⎕←{axis⍠←5 ⋄ axis}⍬
 ⎕←{axis⍠←5 ⋄ axis}[X]⍬
 ⎕←{axis⍠←5 ⋄ axis}[⊃X]⍬
 
+⎕←'Basic Assignment'
 X←1 2 3 4 5
 X[0 2 3]←¯7 ¯13 ¯17 ⋄ ⎕←X
 X[0 2 3]←¯7 ⋄ ⎕←X
@@ -96,6 +95,7 @@ X[0 2 3]←1 2 3 ⋄ ⎕←X
 X[0 2 3]←1j0 ¯1j13 5j6 ⋄ ⎕←X
 X[0 2 3]←'Z' ⋄ ⎕←X
 
+⎕←'Basic Free Variables'
 ⎕←{X}⍬
 
 right←{⍵}
@@ -104,9 +104,10 @@ left←{⍺}
 ⎕←⊢5 ⋄ ⎕←right 5 ⋄ ⎕←300 ⊢ 500 ⋄ ⎕←300 right 500 
 ⎕←⊣5 ⋄ ⎕←3 left 5 ⋄ ⎕←300 ⊣ 500 ⋄ ⎕←300 left 500
 
+⎕←'Empty Values'
 {}⍬
 
-⍝ Basic function syntax tests
+⎕←'Basic function syntax tests'
 
 monadic←{+⍵}
 dyadic←{⍺+⍵}
@@ -122,13 +123,13 @@ X←0 1 2 3 4 ⋄ Y←1+X
 ⎕←monadic X ⋄ ⎕←X dyadic X ⋄ ⎕←literal⍬ ⋄ ⎕←litvar X ⋄ ⎕←X multi X
 ⎕←X parens X ⋄ ⎕←lists X ⋄ ⎕←space 5
 
-⍝ Operator Syntax Tests
+⎕←'Operator Syntax Tests'
 
 X←0 1 2 3 4 ⋄ Y←0 1 2 3 4 5 6 7 8 9
 
 ⎕←+⌿X ⋄ ⎕←2+⌿Y ⋄ ⎕←X+.×X ⋄ ⎕←*⍣2⊢5 ⋄ ⎕←{5+⍺+⍵}⌿X ⋄ ⎕←∘.(+⍨)⌿X ⋄ ⎕←X∘.(+⍨)X
 
-⍝ Scoping tests
+⎕←'Scoping tests'
 
 f1←{X←5+⍵ ⋄ X}
 f2←{X←5+⍵ ⋄ Y←X+X ⋄ X←6+⍵ ⋄ Y+X}
@@ -146,7 +147,7 @@ f12←{X←A+A←⍳⍵ ⋄ X+X}
 ⎕←f1 ⍳5 ⋄ ⎕←f2 ⍳5 ⋄ ⎕←f3 5 ⋄ ⎕←f4 0 ⋄ ⎕←f5 0 ⋄ ⎕←f6 0 ⋄ ⎕←3 f7 1 2 3 1 2 3
 ⎕←f8 5 ⋄ ⎕←f9 5 ⋄ ⎕←f10 ⍬ ⋄ ⎕←f11 0 ⋄ ⎕←f12 10
 
-⍝ Scalar primitives
+⎕←'Scalar primitives'
 
 I←0 17 44 ¯36 35 2 12 38 ¯11 29
 I2←0 ¯16 25 ¯31 38 ¯7 ¯45 33 19 14
@@ -167,27 +168,29 @@ ING←19 12 ¯29 ¯40 ¯21 ¯24 23 ¯45 42 15
 FNZ←¯4.2 ¯4.08 ¯4.89 ¯4.07 ¯4.84 ¯4.08 ¯4.03 ¯4.28 ¯4.24 ¯4.22
 BNZ←1 1 1 1 1 1 1 1 1 1
 
-⎕←+I ⋄ ⎕←+F ⋄ ⎕←+B 
-⎕←I+I ⋄ ⎕←I+F ⋄ ⎕←I+B ⋄ ⎕←F+I ⋄ ⎕←F+F ⋄ ⎕←F+B ⋄ ⎕←B+I ⋄ ⎕←B+F ⋄ ⎕←B+B
-⎕←-I ⋄ ⎕←-F ⋄ ⎕←-B
-⎕←I-I ⋄ ⎕←I-F ⋄ ⎕←I-B ⋄ ⎕←F-I ⋄ ⎕←F-F ⋄ ⎕←F-B ⋄ ⎕←B-I ⋄ ⎕←B-F ⋄ ⎕←B-B
-⎕←×I ⋄ ⎕←×F ⋄ ⎕←×B
-⎕←I×I ⋄ ⎕←I×F ⋄ ⎕←I×B ⋄ ⎕←F×I ⋄ ⎕←F×F ⋄ ⎕←F×B ⋄ ⎕←B×I ⋄ ⎕←B×F ⋄ ⎕←B×B
-⎕←÷INZ ⋄ ⎕←÷FNZ ⋄ ⎕←÷BNZ
-⎕←*I ⋄ ⎕←*F ⋄ ⎕←*B
-⎕←INZ*I ⋄ ⎕←INZ*B ⋄ ⎕←FNZ*I ⋄ ⎕←FNZ*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*B
-⎕←I*INT ⋄ ⎕←I*B ⋄ ⎕←F*INT ⋄ ⎕←F*B ⋄ ⎕←B*INT ⋄ ⎕←B*B
-⎕←IPS*I ⋄ ⎕←IPS*F ⋄ ⎕←IPS*B ⋄ ⎕←FPS*I ⋄ ⎕←FPS*F ⋄ ⎕←FPS*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*F ⋄ ⎕←BNZ*B
-⎕←⍟IPS ⋄ ⎕←⍟FPS
-⎕←IPS⍟IPS ⋄ ⎕←IPS⍟FPS ⋄ ⎕←FPS⍟IPS ⋄ ⎕←FPS⍟FPS
-⎕←|I ⋄ ⎕←|F ⋄ ⎕←|B
-⎕←I|I ⋄ ⎕←I|I2 ⋄ ⎕←I|B ⋄ ⎕←I2|I ⋄ ⎕←I2|I2 ⋄ ⎕←I2|B ⋄ ⎕←B|I ⋄ ⎕←B|I2 ⋄ ⎕←B|B
-⎕←F|F ⋄ ⎕←F|F2 ⋄ ⎕←F|B ⋄ ⎕←F2|F ⋄ ⎕←F2|F2 ⋄ ⎕←F2|B ⋄ ⎕←B|F ⋄ ⎕←B|F2
-⎕←⌊I ⋄ ⎕←⌊F ⋄ ⎕←⌊B ⋄ ⎕←⌊IC ⋄ ⎕←⌊FC ⋄ ⎕←⌊BC
-⎕←I⌊I ⋄ ⎕←I⌊F ⋄ ⎕←I⌊B ⋄ ⎕←F⌊I ⋄ ⎕←F⌊F ⋄ ⎕←F⌊B ⋄ ⎕←B⌊I ⋄ ⎕←B⌊F ⋄ ⎕←B⌊B
-⎕←⌈I ⋄ ⎕←⌈F ⋄ ⎕←⌈B ⋄ ⎕←⌈IC ⋄ ⎕←⌈FC ⋄ ⎕←⌈BC
-⎕←I⌈I ⋄ ⎕←I⌈F ⋄ ⎕←I⌈B ⋄ ⎕←F⌈I ⋄ ⎕←F⌈F ⋄ ⎕←F⌈B ⋄ ⎕←B⌈I ⋄ ⎕←B⌈F ⋄ ⎕←B⌈B
-⎕←~B ⋄ ⎕←⌷I ⋄ ⎕←⌷F ⋄ ⎕←⌷B ⋄ ⎕←!IPS ⋄ ⎕←!FPS ⋄ ⎕←!B
+⎕←'Conjugate:' ⋄ ⎕←+I ⋄ ⎕←+F ⋄ ⎕←+B 
+⎕←'Plus:' ⋄ ⎕←I+I ⋄ ⎕←I+F ⋄ ⎕←I+B ⋄ ⎕←F+I ⋄ ⎕←F+F ⋄ ⎕←F+B ⋄ ⎕←B+I ⋄ ⎕←B+F ⋄ ⎕←B+B
+⎕←'Negate:' ⋄ ⎕←-I ⋄ ⎕←-F ⋄ ⎕←-B
+⎕←'Minus:' ⋄ ⎕←I-I ⋄ ⎕←I-F ⋄ ⎕←I-B ⋄ ⎕←F-I ⋄ ⎕←F-F ⋄ ⎕←F-B ⋄ ⎕←B-I ⋄ ⎕←B-F ⋄ ⎕←B-B
+⎕←'Sign:' ⋄ ⎕←×I ⋄ ⎕←×F ⋄ ⎕←×B
+⎕←'Times:' ⋄ ⎕←I×I ⋄ ⎕←I×F ⋄ ⎕←I×B ⋄ ⎕←F×I ⋄ ⎕←F×F ⋄ ⎕←F×B ⋄ ⎕←B×I ⋄ ⎕←B×F ⋄ ⎕←B×B
+⎕←'Reciprocal:' ⋄ ⎕←÷INZ ⋄ ⎕←÷FNZ ⋄ ⎕←÷BNZ
 ⎕←'Divide:' ⋄ ⎕←I÷INZ ⋄ ⎕←I÷FNZ ⋄ ⎕←I÷BNZ ⋄ ⎕←F÷INZ ⋄ ⎕←F÷FNZ ⋄ ⎕←F÷BNZ ⋄ ⎕←B÷INZ ⋄ ⎕←B÷FNZ ⋄ ⎕←B÷BNZ
+⎕←'Exponent:' ⋄ ⎕←*I ⋄ ⎕←*F ⋄ ⎕←*B
+⎕←'Power:' ⋄ ⎕←INZ*I ⋄ ⎕←INZ*B ⋄ ⎕←FNZ*I ⋄ ⎕←FNZ*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*B
+⎕←'Power:' ⋄ ⎕←I*INT ⋄ ⎕←I*B ⋄ ⎕←F*INT ⋄ ⎕←F*B ⋄ ⎕←B*INT ⋄ ⎕←B*B
+⎕←'Power:' ⋄ ⎕←IPS*I ⋄ ⎕←IPS*F ⋄ ⎕←IPS*B ⋄ ⎕←FPS*I ⋄ ⎕←FPS*F ⋄ ⎕←FPS*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*F ⋄ ⎕←BNZ*B
+⎕←'Nat Log:' ⋄ ⎕←⍟IPS ⋄ ⎕←⍟FPS
+⎕←'Logarithm:' ⋄ ⎕←IPS⍟IPS ⋄ ⎕←IPS⍟FPS ⋄ ⎕←FPS⍟IPS ⋄ ⎕←FPS⍟FPS
+⎕←'Absolute:' ⋄ ⎕←|I ⋄ ⎕←|F ⋄ ⎕←|B
+⎕←'Residue:' ⋄ ⎕←I|I ⋄ ⎕←I|I2 ⋄ ⎕←I|B ⋄ ⎕←I2|I ⋄ ⎕←I2|I2 ⋄ ⎕←I2|B ⋄ ⎕←B|I ⋄ ⎕←B|I2 ⋄ ⎕←B|B
+⎕←'Residue:' ⋄ ⎕←F|F ⋄ ⎕←F|F2 ⋄ ⎕←F|B ⋄ ⎕←F2|F ⋄ ⎕←F2|F2 ⋄ ⎕←F2|B ⋄ ⎕←B|F ⋄ ⎕←B|F2
+⎕←'Floor:' ⋄ ⎕←⌊I ⋄ ⎕←⌊F ⋄ ⎕←⌊B ⋄ ⎕←⌊IC ⋄ ⎕←⌊FC ⋄ ⎕←⌊BC
+⎕←'Minimum:' ⋄ ⎕←I⌊I ⋄ ⎕←I⌊F ⋄ ⎕←I⌊B ⋄ ⎕←F⌊I ⋄ ⎕←F⌊F ⋄ ⎕←F⌊B ⋄ ⎕←B⌊I ⋄ ⎕←B⌊F ⋄ ⎕←B⌊B
+⎕←'Ceiling:' ⋄ ⎕←⌈I ⋄ ⎕←⌈F ⋄ ⎕←⌈B ⋄ ⎕←⌈IC ⋄ ⎕←⌈FC ⋄ ⎕←⌈BC
+⎕←'Maximum:' ⋄ ⎕←I⌈I ⋄ ⎕←I⌈F ⋄ ⎕←I⌈B ⋄ ⎕←F⌈I ⋄ ⎕←F⌈F ⋄ ⎕←F⌈B ⋄ ⎕←B⌈I ⋄ ⎕←B⌈F ⋄ ⎕←B⌈B
+⎕←'Not:' ⋄ ⎕←~B
+⎕←'Materialize:' ⋄ ⎕←⌷I ⋄ ⎕←⌷F ⋄ ⎕←⌷B
+⎕←'Factorial:' ⋄ ⎕←!IPS ⋄ ⎕←!FPS ⋄ ⎕←!B
 
 :EndNamespace
