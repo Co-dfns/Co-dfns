@@ -106,7 +106,7 @@ GC←{
 	pref,←⊂'#endif'
 	pref,←⊂''
 	pref,←⊂'enum elem_type { '
-	pref,←⊂'	ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_CELL, ELEM_MAX'
+	pref,←⊂'	ELEM_BOOL, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_CELL, ELEM_MAX'
 	pref,←⊂'};'
 	pref,←⊂''
 	pref,←⊂'enum cell_type { CELL_VOID, CELL_ARRAY, CELL_FUNC };'
@@ -122,10 +122,11 @@ GC←{
 	pref,←⊂'	int64_t size;'
 	pref,←⊂'	struct host_buffer *next;'
 	pref,←⊂'	union {'
+	pref,←⊂'		char *b;'
 	pref,←⊂'		int64_t *i;'
 	pref,←⊂'		double *f;'
 	pref,←⊂'		struct apl_cmpx *j;'
-	pref,←⊂'		uint64_t *c;'
+	pref,←⊂'		uint32_t *c;'
 	pref,←⊂'		struct cell **p;'
 	pref,←⊂'	};'
 	pref,←⊂'};'
@@ -138,10 +139,11 @@ GC←{
 	pref,←⊂'	union {'
 	pref,←⊂'		struct host_buffer *host;'
 	pref,←⊂'		void *dev;'
+	pref,←⊂'		char b;'
 	pref,←⊂'		int64_t i;'
 	pref,←⊂'		double f;'
 	pref,←⊂'		struct apl_cmpx j;'
-	pref,←⊂'		uint64_t c;'
+	pref,←⊂'		uint32_t c;'
 	pref,←⊂'		struct cell *p;'
 	pref,←⊂'	};'
 	pref,←⊂'};'
@@ -257,16 +259,16 @@ GC←{
 	pref,←(0≠≢i)⍴⊂''
 	
 	⍝ Define all literals as static values
-	ftypes←'.i'      '.i'      '.i'      '.i'      '.f'     '.j'
-	atypes←'INT'     'INT'     'INT'     'INT'     'FLOAT'  'CMPX' 
-	ctypes←'int64_t' 'int64_t' 'int64_t' 'int64_t' 'double' 'struct apl_cmpx'
+	ftypes←'.b'      '.i'      '.i'      '.i'      '.f'     '.j'
+	atypes←'BOOL'     'INT'     'INT'     'INT'     'FLOAT'  'CMPX' 
+	ctypes←'char' 'int64_t' 'int64_t' 'int64_t' 'double' 'struct apl_cmpx'
 	drtypes←11       83        163       323       645      1289
 	ftypes,←'.c'       '.c'       '.c'
 	atypes,←'CHAR'     'CHAR'     'CHAR'
-	ctypes,←'uint64_t' 'uint64_t' 'uint64_t'
+	ctypes,←'uint32_t' 'uint32_t' 'uint32_t'
 	drtypes,←80        160        320
 	pref,←⊃⍪⌿{
-		rnk←≢shp←⍴dat←⍵⊃sym ⋄ dri←drtypes⍳⎕DR dat
+		rnk←≢shp←⍴dat←⍵⊃sym ⋄ dri←drtypes⍳{∧⌿⍵∊0 1:11 ⋄ ⎕DR ⍵}dat
 		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes ⋄ ftp←dri⊃ftypes
 		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:{'{',(⍕9○⍵),', ',(⍕11○⍵),'}'}¨⍵ ⋄ ⍕¨⍵}
 		dat←'¯'⎕R'-'¨fmt ⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
@@ -550,8 +552,10 @@ GC←{
 		z,←⊂'if (',tgt,'->a.shp)'
 		z,←⊂'	CHK(4, cleanup, "Non-scalar test expression");'
 		z,←⊂''
-		z,←⊂'if (',tgt,'->a.etyp != ELEM_INT)'
+		z,←⊂'if (',tgt,'->a.etyp != ELEM_INT && ',tgt,'->a.etyp != ELEM_BOOL)'
 		z,←⊂'	CHK(11, cleanup, "Non-integer test expression");'
+		z,←⊂''
+		z,←⊂'if (',tgt,'->a.etyp == ELEM_BOOL) ',tgt,'->a.i = ',tgt,'->a.b;'
 		z,←⊂''
 		z,←⊂'if (',tgt,'->a.i != 0 && ',tgt,'->a.i != 1)'
 		z,←⊂'	CHK(11, cleanup, "Non-Boolean test expression");'
