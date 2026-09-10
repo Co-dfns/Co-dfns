@@ -266,10 +266,10 @@ PS←{⍺←⊢
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Parse guards to (G (Z ...) (Z ...))
-	i←i[⍋p[i←⍸(t[p][p]=F)∧p∊p⌿⍨t=K]] ⋄ fm←≠p[i] ⋄ km←t[i]=K
-	i fm km⌿⍨←⊂1+1⌽fm ⋄ i[⍸1⌽fm]←(≢p)+⍳fc←+⌿fm
-	t[p[j←fm⌿i]]←G ⋄ p⍪←p[j] ⋄ t k n pos end⍪←⊂fc⍴0 ⋄ _←gz¨i⊂⍨fm∨¯1⌽km
-	t[i←p[i]⌿⍨fm∧msk←t[p[i]]=G]←X ⋄ k[i]←EMTGARD
+	i←⍸(t[p][p]=F)∧p∊p⌿⍨t=K ⋄ i⍪←(≢p)+⍳≢np←p[j←⍸≠p[i]]
+	p⍪←np ⋄ t⍪←K⍴⍨≢np ⋄ k n pos end⍪←⊂0⍴⍨≢np
+	i←i[⍋p[i]] ⋄ j⌿⍨←t[j]=K
+	t[np]←G ⋄ _←gz¨i⊂⍨¯1⌽t[i]=K ⋄ t[j]←X ⋄ k[j]←EMTGARD
 
 	⍝ Delete keywords we can't handle
 	t k n pos end⌿⍨←⊂msk←t≠K ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
