@@ -68,8 +68,8 @@ PS←{⍺←⊢
 	dm[⍸dm∧(x='.')∧(¯1⌽dm)⍱1⌽dm]←0
 	t[⍸dm∧(x='.')∧¯1⌽(~dm)∧x∊num]←EAMBNUM
 	t[⍸('.'=x)∧(0⍪hm⌿¯1⌽dm∧x∊'Ee')[msk∧+⍀hm←2<⌿0⍪msk←dm∧~x∊'EeJj']]←EBADEXP
-	t[i←⍸(t=0)∧2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
-	t[i[i⍸⌽j]]←t[j←⍸dm∧t<0] ⋄ t[j~i]←0
+	i←⍸msk←2<⌿0⍪dm ⋄ end[i]←end⌿⍨2>⌿dm⍪0
+	t[i[i⍸j]]←t[j←⌽⍸msk<dm∧t<0] ⋄ t[⍸msk∧t=0]←N ⋄ t[j]←0
 
 	⍝ Tokenize variables
 	msk←dm<(t=0)∧x∊alp,num ⋄ t[i←⍸2<⌿0⍪msk]←V ⋄ end[i]←end⌿⍨2>⌿msk⍪0
