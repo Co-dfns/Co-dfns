@@ -76,7 +76,7 @@ PS←{⍺←⊢
 
 	⍝ Tokenize dfns formals
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍺'=x ⋄ end[⍸m2∨←2<⌿0⍪msk]←end⌿⍨2>⌿0⍪⍨msk←'⍵'=x
-	t[⍸m2]←0 A P EAMBFML[3⌊end[i]-pos[i←⍸m2]]
+	t[⍸m2]←(0 A P EAMBFML)[3⌊end[i]-pos[i←⍸m2]]
 
 	⍝ Tokenize primitives and atoms
 	t[⍸x∊syna]←A ⋄ t[⍸dm<x∊prms]←P
