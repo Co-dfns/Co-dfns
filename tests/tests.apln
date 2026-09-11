@@ -197,5 +197,6 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←'Less Than:' ⋄  ⎕←I<I ⋄ ⎕←I<F ⋄ ⎕←I<B ⋄ ⎕←F<I ⋄ ⎕←F<F ⋄ ⎕←F<B ⋄ ⎕←B<I ⋄ ⎕←B<F ⋄ ⎕←B<B
 ⎕←'Less Than or Equal:' ⋄  ⎕←I≤I ⋄ ⎕←I≤F ⋄ ⎕←I≤B ⋄ ⎕←F≤I ⋄ ⎕←F≤F ⋄ ⎕←F≤B ⋄ ⎕←B≤I ⋄ ⎕←B≤F ⋄ ⎕←B≤B
 ⎕←'Equal:' ⋄  ⎕←I=I ⋄ ⎕←I=F ⋄ ⎕←I=B ⋄ ⎕←F=I ⋄ ⎕←F=F ⋄ ⎕←F=B ⋄ ⎕←B=I ⋄ ⎕←B=F ⋄ ⎕←B=B
+⎕←'Greater Than or Equal:' ⋄  ⎕←I≥I ⋄ ⎕←I≥F ⋄ ⎕←I≥B ⋄ ⎕←F≥I ⋄ ⎕←F≥F ⋄ ⎕←F≥B ⋄ ⎕←B≥I ⋄ ⎕←B≥F ⋄ ⎕←B≥B
 
 :EndNamespace
