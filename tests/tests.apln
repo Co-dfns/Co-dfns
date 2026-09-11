@@ -168,29 +168,31 @@ ING←19 12 ¯29 ¯40 ¯21 ¯24 23 ¯45 42 15
 FNZ←¯4.2 ¯4.08 ¯4.89 ¯4.07 ¯4.84 ¯4.08 ¯4.03 ¯4.28 ¯4.24 ¯4.22
 BNZ←1 1 1 1 1 1 1 1 1 1
 
+⎕←'Monadic Primitives:'
 ⎕←'Conjugate:' ⋄ ⎕←+I ⋄ ⎕←+F ⋄ ⎕←+B 
-⎕←'Plus:' ⋄ ⎕←I+I ⋄ ⎕←I+F ⋄ ⎕←I+B ⋄ ⎕←F+I ⋄ ⎕←F+F ⋄ ⎕←F+B ⋄ ⎕←B+I ⋄ ⎕←B+F ⋄ ⎕←B+B
 ⎕←'Negate:' ⋄ ⎕←-I ⋄ ⎕←-F ⋄ ⎕←-B
-⎕←'Minus:' ⋄ ⎕←I-I ⋄ ⎕←I-F ⋄ ⎕←I-B ⋄ ⎕←F-I ⋄ ⎕←F-F ⋄ ⎕←F-B ⋄ ⎕←B-I ⋄ ⎕←B-F ⋄ ⎕←B-B
 ⎕←'Sign:' ⋄ ⎕←×I ⋄ ⎕←×F ⋄ ⎕←×B
-⎕←'Times:' ⋄ ⎕←I×I ⋄ ⎕←I×F ⋄ ⎕←I×B ⋄ ⎕←F×I ⋄ ⎕←F×F ⋄ ⎕←F×B ⋄ ⎕←B×I ⋄ ⎕←B×F ⋄ ⎕←B×B
 ⎕←'Reciprocal:' ⋄ ⎕←÷INZ ⋄ ⎕←÷FNZ ⋄ ⎕←÷BNZ
-⎕←'Divide:' ⋄ ⎕←I÷INZ ⋄ ⎕←I÷FNZ ⋄ ⎕←I÷BNZ ⋄ ⎕←F÷INZ ⋄ ⎕←F÷FNZ ⋄ ⎕←F÷BNZ ⋄ ⎕←B÷INZ ⋄ ⎕←B÷FNZ ⋄ ⎕←B÷BNZ
 ⎕←'Exponent:' ⋄ ⎕←*I ⋄ ⎕←*F ⋄ ⎕←*B
-⎕←'Power:' ⋄ ⎕←INZ*I ⋄ ⎕←INZ*B ⋄ ⎕←FNZ*I ⋄ ⎕←FNZ*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*B
-⎕←'Power:' ⋄ ⎕←I*INT ⋄ ⎕←I*B ⋄ ⎕←F*INT ⋄ ⎕←F*B ⋄ ⎕←B*INT ⋄ ⎕←B*B
-⎕←'Power:' ⋄ ⎕←IPS*I ⋄ ⎕←IPS*F ⋄ ⎕←IPS*B ⋄ ⎕←FPS*I ⋄ ⎕←FPS*F ⋄ ⎕←FPS*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*F ⋄ ⎕←BNZ*B
 ⎕←'Nat Log:' ⋄ ⎕←⍟IPS ⋄ ⎕←⍟FPS
-⎕←'Logarithm:' ⋄ ⎕←IPS⍟IPS ⋄ ⎕←IPS⍟FPS ⋄ ⎕←FPS⍟IPS ⋄ ⎕←FPS⍟FPS
-⎕←'Absolute:' ⋄ ⎕←|I ⋄ ⎕←|F ⋄ ⎕←|B
-⎕←'Residue:' ⋄ ⎕←I|I ⋄ ⎕←I|I2 ⋄ ⎕←I|B ⋄ ⎕←I2|I ⋄ ⎕←I2|I2 ⋄ ⎕←I2|B ⋄ ⎕←B|I ⋄ ⎕←B|I2 ⋄ ⎕←B|B
-⎕←'Residue:' ⋄ ⎕←F|F ⋄ ⎕←F|F2 ⋄ ⎕←F|B ⋄ ⎕←F2|F ⋄ ⎕←F2|F2 ⋄ ⎕←F2|B ⋄ ⎕←B|F ⋄ ⎕←B|F2
+⎕←'Magnitude:' ⋄ ⎕←|I ⋄ ⎕←|F ⋄ ⎕←|B
 ⎕←'Floor:' ⋄ ⎕←⌊I ⋄ ⎕←⌊F ⋄ ⎕←⌊B ⋄ ⎕←⌊IC ⋄ ⎕←⌊FC ⋄ ⎕←⌊BC
-⎕←'Minimum:' ⋄ ⎕←I⌊I ⋄ ⎕←I⌊F ⋄ ⎕←I⌊B ⋄ ⎕←F⌊I ⋄ ⎕←F⌊F ⋄ ⎕←F⌊B ⋄ ⎕←B⌊I ⋄ ⎕←B⌊F ⋄ ⎕←B⌊B
 ⎕←'Ceiling:' ⋄ ⎕←⌈I ⋄ ⎕←⌈F ⋄ ⎕←⌈B ⋄ ⎕←⌈IC ⋄ ⎕←⌈FC ⋄ ⎕←⌈BC
-⎕←'Maximum:' ⋄ ⎕←I⌈I ⋄ ⎕←I⌈F ⋄ ⎕←I⌈B ⋄ ⎕←F⌈I ⋄ ⎕←F⌈F ⋄ ⎕←F⌈B ⋄ ⎕←B⌈I ⋄ ⎕←B⌈F ⋄ ⎕←B⌈B
 ⎕←'Not:' ⋄ ⎕←~B
 ⎕←'Materialize:' ⋄ ⎕←⌷I ⋄ ⎕←⌷F ⋄ ⎕←⌷B
 ⎕←'Factorial:' ⋄ ⎕←!IPS ⋄ ⎕←!FPS ⋄ ⎕←!B
+
+⎕←'Plus:' ⋄ ⎕←I+I ⋄ ⎕←I+F ⋄ ⎕←I+B ⋄ ⎕←F+I ⋄ ⎕←F+F ⋄ ⎕←F+B ⋄ ⎕←B+I ⋄ ⎕←B+F ⋄ ⎕←B+B
+⎕←'Minus:' ⋄ ⎕←I-I ⋄ ⎕←I-F ⋄ ⎕←I-B ⋄ ⎕←F-I ⋄ ⎕←F-F ⋄ ⎕←F-B ⋄ ⎕←B-I ⋄ ⎕←B-F ⋄ ⎕←B-B
+⎕←'Times:' ⋄ ⎕←I×I ⋄ ⎕←I×F ⋄ ⎕←I×B ⋄ ⎕←F×I ⋄ ⎕←F×F ⋄ ⎕←F×B ⋄ ⎕←B×I ⋄ ⎕←B×F ⋄ ⎕←B×B
+⎕←'Divide:' ⋄ ⎕←I÷INZ ⋄ ⎕←I÷FNZ ⋄ ⎕←I÷BNZ ⋄ ⎕←F÷INZ ⋄ ⎕←F÷FNZ ⋄ ⎕←F÷BNZ ⋄ ⎕←B÷INZ ⋄ ⎕←B÷FNZ ⋄ ⎕←B÷BNZ
+⎕←'Power:' ⋄ ⎕←INZ*I ⋄ ⎕←INZ*B ⋄ ⎕←FNZ*I ⋄ ⎕←FNZ*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*B
+⎕←'Power:' ⋄ ⎕←I*INT ⋄ ⎕←I*B ⋄ ⎕←F*INT ⋄ ⎕←F*B ⋄ ⎕←B*INT ⋄ ⎕←B*B
+⎕←'Power:' ⋄ ⎕←IPS*I ⋄ ⎕←IPS*F ⋄ ⎕←IPS*B ⋄ ⎕←FPS*I ⋄ ⎕←FPS*F ⋄ ⎕←FPS*B ⋄ ⎕←BNZ*I ⋄ ⎕←BNZ*F ⋄ ⎕←BNZ*B
+⎕←'Logarithm:' ⋄ ⎕←IPS⍟IPS ⋄ ⎕←IPS⍟FPS ⋄ ⎕←FPS⍟IPS ⋄ ⎕←FPS⍟FPS
+⎕←'Residue:' ⋄ ⎕←I|I ⋄ ⎕←I|I2 ⋄ ⎕←I|B ⋄ ⎕←I2|I ⋄ ⎕←I2|I2 ⋄ ⎕←I2|B ⋄ ⎕←B|I ⋄ ⎕←B|I2 ⋄ ⎕←B|B
+⎕←'Residue:' ⋄ ⎕←F|F ⋄ ⎕←F|F2 ⋄ ⎕←F|B ⋄ ⎕←F2|F ⋄ ⎕←F2|F2 ⋄ ⎕←F2|B ⋄ ⎕←B|F ⋄ ⎕←B|F2
+⎕←'Minimum:' ⋄ ⎕←I⌊I ⋄ ⎕←I⌊F ⋄ ⎕←I⌊B ⋄ ⎕←F⌊I ⋄ ⎕←F⌊F ⋄ ⎕←F⌊B ⋄ ⎕←B⌊I ⋄ ⎕←B⌊F ⋄ ⎕←B⌊B
+⎕←'Maximum:' ⋄ ⎕←I⌈I ⋄ ⎕←I⌈F ⋄ ⎕←I⌈B ⋄ ⎕←F⌈I ⋄ ⎕←F⌈F ⋄ ⎕←F⌈B ⋄ ⎕←B⌈I ⋄ ⎕←B⌈F ⋄ ⎕←B⌈B
 
 :EndNamespace
