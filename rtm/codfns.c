@@ -5204,3 +5204,126 @@ struct cell gth_c = {
 	}
 };
 EXPORT struct cell *gth = &gth_c;
+
+EXPORT int
+noteq_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	t = NULL;
+	
+	if ((err = get_scalar_cell(&t, l, r, ELEM_BOOL, ELEM_BOOL)))
+		goto fail;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 1);
+	
+	#define neq_rr(zt, z, l, r) (z) = (l) != (r);
+	#define neq_rj(zt, z, l, r) (z) = ((l) != (r).real) || !(r).imag;
+	#define neq_jr(zt, z, l, r) (z) = ((l).real != (r)) || !(l).imag;
+	#define neq_jj(zt, z, l, r) (z) = ((l).real != (r).real) || ((l).imag != (r).imag);
+	#define neq_one {					\
+		if (!t->a.rnk) {                        	\
+			t->a.b = 1;                     	\
+		} else {                                	\
+			char *restrict tv = t->a.host->b;	\
+			for (int64_t i = 0; i < cnt; i++)	\
+				tv[i] = 1;			\
+		}                                       	\
+	}break;
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, char, b, char, b, neq_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, char, b, int64_t, i, neq_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, char, b, double, f, neq_rr);
+		case ELEM_CMPX: SCALAR_SIMP(char, b, char, b, struct apl_cmpx, j, neq_rj);
+		case ELEM_CHAR: neq_one;
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, noteq_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_INT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, int64_t, i, char, b, neq_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, int64_t, i, int64_t, i, neq_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, int64_t, i, double, f, neq_rr);
+		case ELEM_CMPX: SCALAR_SIMP(char, b, int64_t, i, struct apl_cmpx, j, neq_rj);
+		case ELEM_CHAR: neq_one;
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, noteq_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_FLOAT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, double, f, char, b, neq_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, double, f, int64_t, i, neq_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, double, f, double, f, neq_rr);
+		case ELEM_CMPX: SCALAR_SIMP(char, b, double, f, struct apl_cmpx, j, neq_rj);
+		case ELEM_CHAR: neq_one;
+		case ELEM_CELL: SCALAR_SIMP_CELL(double, f, noteq_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CMPX:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, struct apl_cmpx, j, char, b, neq_jr);
+		case ELEM_INT: SCALAR_SIMP(char, b, struct apl_cmpx, j, int64_t, i, neq_jr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, struct apl_cmpx, j, double, f, neq_jr);
+		case ELEM_CMPX: SCALAR_SIMP(char, b, struct apl_cmpx, j, struct apl_cmpx, j, neq_jj);
+		case ELEM_CHAR: neq_one;
+		case ELEM_CELL: SCALAR_SIMP_CELL(struct apl_cmpx, j, noteq_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CHAR:
+		switch (r->a.etyp) {
+		case ELEM_BOOL:
+		case ELEM_INT:
+		case ELEM_FLOAT:
+		case ELEM_CMPX: neq_one;
+		case ELEM_CHAR: SCALAR_SIMP(char, b, uint32_t, c, uint32_t, c, neq_rr);
+		case ELEM_CELL: SCALAR_SIMP_CELL(uint32_t, c, noteq_f);
+		default: err = 99; goto fail;
+		}break;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, noteq_f);
+		case ELEM_INT: SCALAR_CELL_SIMP(int64_t, i, noteq_f);
+		case ELEM_FLOAT: SCALAR_CELL_SIMP(double, f, noteq_f);
+		case ELEM_CMPX: SCALAR_CELL_SIMP(struct apl_cmpx, j, noteq_f);
+		case ELEM_CHAR: SCALAR_CELL_SIMP(uint32_t, c, noteq_f);
+		case ELEM_CELL: SCALAR_CELL_CELL(noteq_f);
+		default:err = 99; goto fail;
+		}break;
+	default:err = 99; goto fail;
+	}
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*neq_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, noteq_f
+};
+struct cell neq_c = {
+	1, CELL_FUNC, NULL, .f = {
+		neq_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *neq = &neq_c;
+

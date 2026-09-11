@@ -199,5 +199,6 @@ BNZ←1 1 1 1 1 1 1 1 1 1
 ⎕←'Equal:' ⋄  ⎕←I=I ⋄ ⎕←I=F ⋄ ⎕←I=B ⋄ ⎕←F=I ⋄ ⎕←F=F ⋄ ⎕←F=B ⋄ ⎕←B=I ⋄ ⎕←B=F ⋄ ⎕←B=B
 ⎕←'Greater Than or Equal:' ⋄  ⎕←I≥I ⋄ ⎕←I≥F ⋄ ⎕←I≥B ⋄ ⎕←F≥I ⋄ ⎕←F≥F ⋄ ⎕←F≥B ⋄ ⎕←B≥I ⋄ ⎕←B≥F ⋄ ⎕←B≥B
 ⎕←'Greater Than:' ⋄  ⎕←I>I ⋄ ⎕←I>F ⋄ ⎕←I>B ⋄ ⎕←F>I ⋄ ⎕←F>F ⋄ ⎕←F>B ⋄ ⎕←B>I ⋄ ⎕←B>F ⋄ ⎕←B>B
+⎕←'Not Equal:' ⋄  ⎕←I≠I ⋄ ⎕←I≠F ⋄ ⎕←I≠B ⋄ ⎕←F≠I ⋄ ⎕←F≠F ⋄ ⎕←F≠B ⋄ ⎕←B≠I ⋄ ⎕←B≠F ⋄ ⎕←B≠B
 
 :EndNamespace

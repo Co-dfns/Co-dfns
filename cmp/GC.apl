@@ -233,6 +233,8 @@ GC←{
 	pref,←⊂'DECLSPEC struct cell *gte;'
 	pref,←⊂'int greaterthan_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *gth;'
+	pref,←⊂'int noteq_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'DECLSPEC struct cell *neq;'
 	pref,←⊂'int index_gen_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *rdf;'
 	pref,←⊂'DECLSPEC struct cell *dot;'
