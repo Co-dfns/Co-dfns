@@ -4943,3 +4943,90 @@ struct cell lth_c = {
 	}
 };
 EXPORT struct cell *lth = &lth_c;
+
+EXPORT int
+lesseql_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	if (l->a.etyp == ELEM_CHAR || r->a.etyp == ELEM_CHAR 
+	    || l->a.etyp == ELEM_CMPX || r->a.etyp == ELEM_CMPX)
+		return 11;
+	
+	t = NULL;
+	
+	if ((err = get_scalar_cell(&t, l, r, ELEM_BOOL, ELEM_BOOL)))
+		goto fail;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 1);
+	
+	#define lte_rr(zt, z, l, r) (z) = (l) <= (r);
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, char, b, char, b, lte_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, char, b, int64_t, i, lte_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, char, b, double, f, lte_rr);
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, lesseql_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_INT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, int64_t, i, char, b, lte_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, int64_t, i, int64_t, i, lte_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, int64_t, i, double, f, lte_rr);
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, lesseql_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_FLOAT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, double, f, char, b, lte_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, double, f, int64_t, i, lte_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, double, f, double, f, lte_rr);
+		case ELEM_CELL: SCALAR_SIMP_CELL(double, f, lesseql_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, lesseql_f);
+		case ELEM_INT: SCALAR_CELL_SIMP(int64_t, i, lesseql_f);
+		case ELEM_FLOAT: SCALAR_CELL_SIMP(double, f, lesseql_f);
+		case ELEM_CMPX: SCALAR_CELL_SIMP(struct apl_cmpx, j, lesseql_f);
+		case ELEM_CELL: SCALAR_CELL_CELL(lesseql_f);
+		default:err = 99; goto fail;
+		}break;
+	default:err = 99; goto fail;
+	}
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*lte_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, lesseql_f
+};
+struct cell lte_c = {
+	1, CELL_FUNC, NULL, .f = {
+		lte_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *lte = &lte_c;
