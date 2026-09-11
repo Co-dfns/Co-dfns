@@ -4856,3 +4856,90 @@ struct cell sqd_c = {
 	}
 };
 EXPORT struct cell *sqd = &sqd_c;
+
+EXPORT int
+lessthan_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	if (l->a.etyp == ELEM_CHAR || r->a.etyp == ELEM_CHAR 
+	    || l->a.etyp == ELEM_CMPX || r->a.etyp == ELEM_CMPX)
+		return 11;
+	
+	t = NULL;
+	
+	if ((err = get_scalar_cell(&t, l, r, ELEM_BOOL, ELEM_BOOL)))
+		goto fail;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 1);
+	
+	#define lth_rr(zt, z, l, r) (z) = (l) < (r);
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, char, b, char, b, lth_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, char, b, int64_t, i, lth_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, char, b, double, f, lth_rr);
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, lessthan_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_INT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, int64_t, i, char, b, lth_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, int64_t, i, int64_t, i, lth_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, int64_t, i, double, f, lth_rr);
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, lessthan_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_FLOAT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, double, f, char, b, lth_rr);
+		case ELEM_INT: SCALAR_SIMP(char, b, double, f, int64_t, i, lth_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(char, b, double, f, double, f, lth_rr);
+		case ELEM_CELL: SCALAR_SIMP_CELL(double, f, lessthan_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, lessthan_f);
+		case ELEM_INT: SCALAR_CELL_SIMP(int64_t, i, lessthan_f);
+		case ELEM_FLOAT: SCALAR_CELL_SIMP(double, f, lessthan_f);
+		case ELEM_CMPX: SCALAR_CELL_SIMP(struct apl_cmpx, j, lessthan_f);
+		case ELEM_CELL: SCALAR_CELL_CELL(lessthan_f);
+		default:err = 99; goto fail;
+		}break;
+	default:err = 99; goto fail;
+	}
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*lth_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, lessthan_f
+};
+struct cell lth_c = {
+	1, CELL_FUNC, NULL, .f = {
+		lth_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *lth = &lth_c;

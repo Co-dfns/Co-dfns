@@ -225,6 +225,8 @@ GC←{
 	pref,←⊂'DECLSPEC struct cell *fac;'
 	pref,←⊂'int equal_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *eql;'
+	pref,←⊂'int lessthan_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'DECLSPEC struct cell *lth;'
 	pref,←⊂'int index_gen_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *rdf;'
 	pref,←⊂'DECLSPEC struct cell *dot;'
