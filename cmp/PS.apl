@@ -52,7 +52,7 @@ PS←{⍺←⊢
 
 	⍝ Verify all open characters are valid
 	msk←~IN[pos]∊alp,num,syna,synb,prms,WS
-	∨⌿msk:'INVALID CHARACTER(S) IN SOURCE'SIGNAL msk⌿pos
+	∨⌿msk:('INVALID CHARACTER',('S'⌿⍨2≤+⌿msk),' IN SOURCE')SIGNAL msk⌿pos
 
 	⍝ This simplifies the following expressions
 	x←' '@{t≠0}IN[pos]
@@ -160,7 +160,7 @@ PS←{⍺←⊢
 	KW,←':' ''
 	KW,¨⍨←':' ⋄ KW←⎕C KW
 	msk←~KW∊⍨kws←n⌿⍨km←t=K
-	∨⌿msk:2'UNRECOGNIZED KEYWORD(S)'SIGNAL SELECT ⍸km⍀msk
+	∨⌿msk:2('UNRECOGNIZED KEYWORD','S'⌿⍨2≤+⌿msk)SIGNAL SELECT ⍸km⍀msk
 
 	⍝ Check that all namespaces/sections are top level
 	nssec←⎕C':NAMESPACE' ':ENDNAMESPACE' ':CLASS' ':ENDCLASS' ':SECTION' ':ENDSECTION'
