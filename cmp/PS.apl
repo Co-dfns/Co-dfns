@@ -280,7 +280,7 @@ PS←{⍺←⊢
 	pp←D2P⌽+⍀⌽-dx←dx×t[i]≠X
 	t[j←(msk⌿i[pp])⍪i⌿⍨msk←(dx=¯1)∧('[('⍳x[pp])≠'])'⍳x]←X ⋄ k[j]←EPRNBKT
 	pp←D2P⌽+⍀⌽-dx←dx×t[i]≠X
-	p[msk⌿i]←i[pp]⌿⍨msk←pp≠⍳≢pp ⋄ t[i]+←(t[i]≠X)×¯1 Z 0['[('⍳x] ⋄ end[pp]←end[i]
+	p[msk⌿i]←i[pp]⌿⍨msk←pp≠⍳≢pp ⋄ t[i]+←(t[i]≠X)×¯1 Z 0['[('⍳x] ⋄ end[i[pp]]←end[i]
 	t k n pos end⌿⍨←⊂msk←(t=0)⍲IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Convert ; groups within brackets into Z nodes
