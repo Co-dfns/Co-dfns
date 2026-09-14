@@ -274,15 +274,14 @@ PS←{⍺←⊢
 	t k n pos end⌿⍨←⊂msk←t≠K ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Parse brackets and parentheses into ¯1 and Z nodes
-	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ fm←≠p[i]
-	pd←+⍀dx←(po←x∊'[(')-pc←'])'∊⍨x←IN[pos[i]]
-	t[j←i⌿⍨po∧pd=pd[j⍳⌽⌊⍀⌽j←⍋j[⍋(+⍀fm)[j←⍋pd]]]]←X ⋄ k[j]←EOPRBAL ⋄ t[p[j]]←X
-	t[j←i⌿⍨pc∧pd=pd[j⍳⌊⍀j←⍋j[⍒(+⍀fm)[j←⍋pd←pd-dx]]]]←X ⋄ k[j]←ECPRBAL ⋄ t[p[j]]←X
-	i fm x pd pc⌿⍨←⊂t[p[i]]≠X ⋄ pcp←pc⌿pp←D2P pd-(fm⌿pd)[¯1++⍀fm]
-	t[j←i[pp][msk⌿pcp]⍪i⌿⍨pc⍀msk←x[pcp]≠'[('I')'=pc⌿x]←X ⋄ k[j]←EPRNBKT ⋄ t[p[j]]←X
-	i x pc pp⌿⍨←⊂msk←t[p[i]]≠X ⋄ pp(⊣-1+⍸⍨)←⍸~msk
-	p[msk⌿i]←i[pp]⌿⍨msk←pp≠⍳≢pp ⋄ t[j←i[pc⌿pp]]←¯1 Z[')'=pc⌿x] ⋄ end[j]←end[pc⌿i]
-	t k n pos end⌿⍨←⊂msk←~(t=0)∧IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ iz←+⍀≠p[i] ⋄ pd←+⍀dx←1 ¯1 1 ¯1 0I'[]()'⍳x←IN[pos[i]]
+	t[j←i⌿⍨(dx=1)∧pd=pd[j⍳⌽⌊⍀⌽j←⍋j[⍋iz[j←⍋pd]]]]←X ⋄ k[j]←EOPRBAL
+	t[j←i⌿⍨(dx=¯1)∧pd=pd[j⍳⌊⍀j←⍋j[⍒iz[j←⍋pd←pd-dx]]]]←X ⋄ k[j]←ECPRBAL
+	pp←D2P⌽+⍀⌽-dx←dx×t[i]≠X
+	t[j←(msk⌿i[pp])⍪i⌿⍨msk←(dx=¯1)∧('[('⍳x[pp])≠'])'⍳x]←X ⋄ k[j]←EPRNBKT
+	pp←D2P⌽+⍀⌽-dx←dx×t[i]≠X
+	p[msk⌿i]←i[pp]⌿⍨msk←pp≠⍳≢pp ⋄ t[i]+←(t[i]≠X)×¯1 Z 0['[('⍳x] ⋄ end[pp]←end[i]
+	t k n pos end⌿⍨←⊂msk←(t=0)⍲IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Convert ; groups within brackets into Z nodes
 	_←p[i]{
