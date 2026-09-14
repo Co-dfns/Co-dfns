@@ -265,7 +265,7 @@ PS←{⍺←⊢
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Parse guards to (G (Z ...) (Z ...))
-	i←⍸(t[p][p]=F)∧p∊p⌿⍨t=K ⋄ i⍪←(≢p)+⍳≢np←p[j←⍸≠p[i]]
+	i←⍸(t[p][p]=F)∧p∊p⌿⍨t=K ⋄ i⍪←(≢p)+⍳≢np←p[i][j←⍸≠p[i]]
 	p⍪←np ⋄ t⍪←K⍴⍨≢np ⋄ k n pos end⍪←⊂0⍴⍨≢np
 	i←i[⍋p[i]] ⋄ j⌿⍨←t[j]=K
 	t[np]←G ⋄ _←gz¨i⊂⍨¯1⌽t[i]=K ⋄ t[j]←X ⋄ k[j]←EMTGARD
