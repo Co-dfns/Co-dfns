@@ -5637,3 +5637,135 @@ struct cell and_c = {
 	}
 };
 EXPORT struct cell *and = &and_c;
+
+EXPORT int
+lognan_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+		
+	if (l->a.etyp != ELEM_BOOL && l->a.etyp != ELEM_CELL
+	    && r->a.etyp != ELEM_BOOL && r->a.etyp != ELEM_CELL)
+		return 11;
+	
+	t = NULL;
+	
+	if ((err = get_scalar_cell(&t, l, r, ELEM_BOOL, ELEM_BOOL)))
+		goto fail;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 1);
+	
+	#define nan_bb(zt, z, l, r) (z) = !((l) && (r));
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, char, b, char, b, nan_bb);
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, lognan_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, lognan_f);
+		case ELEM_CELL: SCALAR_CELL_CELL(lognan_f);
+		default:err = 99; goto fail;
+		}break;
+	default:err = 99; goto fail;
+	}
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*nan_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, lognan_f
+};
+struct cell nan_c = {
+	1, CELL_FUNC, NULL, .f = {
+		nan_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *cd_nan = &nan_c;
+
+EXPORT int
+lognor_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+		
+	if (l->a.etyp != ELEM_BOOL && l->a.etyp != ELEM_CELL
+	    && r->a.etyp != ELEM_BOOL && r->a.etyp != ELEM_CELL)
+		return 11;
+	
+	t = NULL;
+	
+	if ((err = get_scalar_cell(&t, l, r, ELEM_BOOL, ELEM_BOOL)))
+		goto fail;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 1);
+	
+	#define nor_bb(zt, z, l, r) (z) = !((l) || (r));
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, char, b, char, b, nor_bb);
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, lognor_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, lognor_f);
+		case ELEM_CELL: SCALAR_CELL_CELL(lognor_f);
+		default:err = 99; goto fail;
+		}break;
+	default:err = 99; goto fail;
+	}
+	
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*nor_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syntaxerr_f, lognor_f
+};
+struct cell nor_c = {
+	1, CELL_FUNC, NULL, .f = {
+		nor_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *nor = &nor_c;
