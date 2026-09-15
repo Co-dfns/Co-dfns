@@ -5327,3 +5327,208 @@ struct cell neq_c = {
 };
 EXPORT struct cell *neq = &neq_c;
 
+static int64_t
+gcd_int(int64_t a, int64_t b)
+{
+	int64_t t, u;
+	
+	a = llabs(a);
+	b = llabs(b);
+
+	while (a) {
+		t = a < b ? a : b;
+		u = a > b ? a : b;
+		b = t ? u % t : u;
+		a = t;
+	}
+
+	return b;
+}
+
+static int64_t
+lcm_int(int64_t a, int64_t b)
+{
+	return a * (b / gcd_int(a, b));
+}
+
+static void
+rational(int64_t *n, int64_t *d, double r)
+{
+	double a, b, x, y;
+	double c[2][2] = {1, 0, 0, 1};
+	
+	b = r;
+	
+	while (1) {
+		a = floor(b);
+		x = c[1][0] + a * c[0][0];
+		y = c[1][1] + a * c[0][1];
+		
+		if (r == x / y) break;
+		
+		c[1][0] = c[0][0];
+		c[1][1] = c[0][1];
+		c[0][0] = x;
+		c[0][1] = y;
+		
+		b = 1 / (b - a);
+	}
+	
+	*n = (int64_t)x;
+	*d = (int64_t)y;
+}
+
+static double
+gcd_dbl(double x, double y)
+{
+	int64_t a, b, c, d;
+	
+	x = fabs(x);
+	y = fabs(y);
+	
+	rational(&a, &b, x);
+	rational(&c, &d, y);
+	
+	return (double)gcd_int(a, c) / (double)lcm_int(b, d);
+}
+
+static double
+lcm_dbl(double a, double b)
+{
+	return a * (b / gcd_dbl(a, b));
+}
+
+static struct apl_cmpx
+gcd_cmpx(struct apl_cmpx a, struct apl_cmpx b)
+{
+	struct apl_cmpx t = {0, 0};
+	
+	a; b;
+	
+	return t;
+}
+
+EXPORT int
+logor_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	s; fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	t = NULL;
+	
+	if (l->a.etyp == ELEM_CHAR || r->a.etyp == ELEM_CHAR) {
+		err = 11;
+		goto fail;
+	}
+	
+	if ((err = get_scalar_cell(&t, l, r, ELEM_BOOL, ELEM_MAX)))
+		goto fail;
+	
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) { 
+		free_cell(t);
+		if (!l->a.rnk) t = ref_cell(r);
+		else if (!r->a.rnk) t = ref_cell(l);
+		else t = ref_cell(r);
+		goto done;
+	}
+	
+	#define lor_bb(zt, z, l, r) (z) = (zt)(l) || (zt)(r);
+	#define lor_bi(zt, z, l, r) (z) = (l) ? 1 : llabs(r);
+	#define lor_ib(zt, z, l, r) (z) = (r) ? 1 : llabs(l);
+	#define lor_ii(zt, z, l, r) (z) = gcd_int((l), (r));
+	#define lor_rr(zt, z, l, r) (z) = gcd_dbl((double)(l), (double)(r));
+	#define lor_jj(zt, z, l, r) (z) = gcd_cmpx((l), (r));
+	#define lor_rj(zt, z, l, r) {			\
+		struct apl_cmpx x = {(double)(l), 0};   \
+		(z) = gcd_cmpx(x, (r));                 \
+	}
+	#define lor_jr(zt, z, l, r) {			\
+		struct apl_cmpx y = {(double)(r), 0};	\
+		(z) = gcd_cmpx((l), y);			\
+	}
+		
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(char, b, char, b, char, b, lor_bb);
+		case ELEM_INT: SCALAR_SIMP(int64_t, i, char, b, int64_t, i, lor_bi);
+		case ELEM_FLOAT: SCALAR_SIMP(double, f, char, b, double, f, lor_rr);
+		case ELEM_CMPX: SCALAR_SIMP(struct apl_cmpx, j, char, b, struct apl_cmpx, j, lor_rj);
+		case ELEM_CELL: SCALAR_SIMP_CELL(char, b, logor_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_INT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(int64_t, i, int64_t, i, char, b, lor_ib);
+		case ELEM_INT: SCALAR_SIMP(int64_t, i, int64_t, i, int64_t, i, lor_ii);
+		case ELEM_FLOAT: SCALAR_SIMP(double, f, int64_t, i, double, f, lor_rr);
+		case ELEM_CMPX: SCALAR_SIMP(struct apl_cmpx, j, int64_t, i, struct apl_cmpx, j, lor_rj);
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, logor_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_FLOAT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(double, f, double, f, char, b, lor_rr);
+		case ELEM_INT: SCALAR_SIMP(double, f, double, f, int64_t, i, lor_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(double, f, double, f, double, f, lor_rr);
+		case ELEM_CMPX:  SCALAR_SIMP(struct apl_cmpx, j, double, f, struct apl_cmpx, j, lor_rj);
+		case ELEM_CELL: SCALAR_SIMP_CELL(double, f, logor_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CMPX:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(struct apl_cmpx, j, struct apl_cmpx, j, char, b, lor_jr);
+		case ELEM_INT: SCALAR_SIMP(struct apl_cmpx, j, struct apl_cmpx, j, int64_t, i, lor_jr);
+		case ELEM_FLOAT: SCALAR_SIMP(struct apl_cmpx, j, struct apl_cmpx, j, double, f, lor_jr);
+		case ELEM_CMPX: SCALAR_SIMP(struct apl_cmpx, j, struct apl_cmpx, j, struct apl_cmpx, j, lor_jj);
+		case ELEM_CELL: SCALAR_SIMP_CELL(struct apl_cmpx, j, logor_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, logor_f);
+		case ELEM_INT: SCALAR_CELL_SIMP(int64_t, i, logor_f);
+		case ELEM_FLOAT: SCALAR_CELL_SIMP(double, f, logor_f);
+		case ELEM_CMPX: SCALAR_CELL_SIMP(struct apl_cmpx, j, logor_f);
+		case ELEM_CHAR:err = 99; goto fail;
+		case ELEM_CELL: SCALAR_CELL_CELL(logor_f);
+		default:err = 99; goto fail;
+		}break;
+	default:
+		err = 99;
+		goto fail;
+	}
+
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*lor_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	conjugate_f, logor_f
+};
+struct cell lor_c = {
+	1, CELL_FUNC, NULL, .f = {
+		lor_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *lor = &lor_c;
