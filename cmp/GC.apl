@@ -237,6 +237,8 @@ GC←{
 	pref,←⊂'DECLSPEC struct cell *neq;'
 	pref,←⊂'int logor_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *lor;'
+	pref,←⊂'int logand_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'DECLSPEC struct cell *and;'
 	pref,←⊂'int index_gen_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *rdf;'
 	pref,←⊂'DECLSPEC struct cell *dot;'
