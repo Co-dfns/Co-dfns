@@ -95,8 +95,9 @@ PS←{⍺←⊢
 	t[⍸(d=0)∧(t∊A P)∧(x∊'⍺⍵')∨(x='∇')∧2=end-pos]←EDFNFML
 
 	⍝ Mark trad-fns regions as tm
-	tm←(d=0)∧x='∇'
-	t[⍸tm>←tm∧¯1⌽t≠Z]←ENABPOS
+	msk←(t≠Z)∧t≥0
+	tm←(d=0)∧(x='∇')∧(¯1⌽t=Z)∧1⌽(t=Z)∨msk∧(0⍪t[⍸¯1⌽2>⌿msk⍪0]=Z)[msk×+⍀2<⌿0⍪msk]
+	t[⍸(d=0)∧(x='∇')∧~tm]←ENABTOK
 	t[⍸tm>←tm⍀(sm∧1⌽sm)∨(em∧¯1⌽em)∨((≢em)↑⊃em)∨(-≢sm)↑⊃⌽sm←~em←tm⌿1⌽t=Z]←ETRFBAL
 	tm←¯1⌽≠⍀tm
 
