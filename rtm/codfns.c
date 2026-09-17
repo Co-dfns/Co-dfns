@@ -1,5 +1,4 @@
 #include <complex.h>
-#include <complex.h>
 #include <float.h>
 #include <limits.h>
 #include <math.h>
@@ -1487,6 +1486,14 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 	return set_host(z, l, r, 0, &zi, &ri);
 }
 
+static struct apl_cmpx
+conj_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx z = {x.real, -x.imag};
+	
+	return z;
+}
+
 EXPORT int
 conjugate_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
@@ -1507,7 +1514,7 @@ conjugate_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, str
 	
 	t->ctyp = CELL_ARRAY;
 	t->a = r->a;
-	t->a.etyp = ELEM_FLOAT;
+	t->a.etyp = ELEM_CMPX;
 	
 	if (!t->a.rnk)
 		goto done;
@@ -1522,20 +1529,20 @@ conjugate_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, str
 	case STG_HOST:{
 		int64_t cnt;
 		struct apl_cmpx *restrict rv;
-		double *restrict zv;
+		struct apl_cmpx *restrict zv;
 		
 		cnt = array_count(t, 1);
 		
-		if (!(t->a.host = get_host_buffer(buffer_size(ELEM_FLOAT, cnt)))) {
+		if (!(t->a.host = get_host_buffer(buffer_size(ELEM_CMPX, cnt)))) {
 			err = 1;
 			goto fail;
 		}
 		
 		rv = r->a.host->j;
-		zv = t->a.host->f;
+		zv = t->a.host->j;
 		
 		for (int64_t i = 0; i < cnt; i++)
-			zv[i] = rv[i].real;
+			zv[i] = conj_cmpx(rv[i]);
 		
 	}break;	
 	default:
@@ -5769,3 +5776,369 @@ struct cell nor_c = {
 	}
 };
 EXPORT struct cell *nor = &nor_c;
+
+#define PI 3.141592653589793238462643383279502884
+
+EXPORT int
+pitimes_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	
+	s; l; fv;
+	
+	t = NULL;
+	
+	if (r->a.etyp == ELEM_CHAR) { err = 11; goto fail; }
+	if (r->a.stg == STG_DEVICE) { err = 16; goto fail; }
+	
+	cnt = array_count(r, 0);
+	
+	if (!cnt) {
+		t = ref_cell(r);
+		goto done;
+	}
+	
+	if (!(t = get_cell())) { err = 1; goto fail; }
+	
+	t->ctyp = CELL_ARRAY;
+	t->a = r->a;
+	
+	if (t->a.etyp == ELEM_INT || t->a.etyp == ELEM_BOOL) t->a.etyp = ELEM_FLOAT;
+	if (t->a.rnk) {
+		t->a.shp->refc++;
+		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt ? cnt : 1));
+		
+		if (!t->a.host) { err = 1; goto fail; }
+		if (t->a.etyp == ELEM_CELL) memset(t->a.host->p, 0, sizeof(struct cell *) * cnt);
+	}
+	
+	#define pit_real(zt, z, r) (z) = PI * (r);
+	#define pit_cmpx_(zt, z, r) {		\
+		(z).real = PI * (r).real;       \
+		(z).imag = PI * (r).imag;       \
+	}
+	#define pit_cell(zt, z, r) {				\
+		err = pitimes_f(NULL, &(z), NULL, (r), NULL);	\
+		if (err) goto fail;				\
+	}
+	
+	switch (r->a.etyp) {
+	case ELEM_BOOL: SCALAR_MON(double, f, char, b, pit_real);
+	case ELEM_INT: SCALAR_MON(double, f, int64_t, i, pit_real);
+	case ELEM_FLOAT: SCALAR_MON(double, f, double, f, pit_real);
+	case ELEM_CMPX: SCALAR_MON(struct apl_cmpx, j, struct apl_cmpx, j, pit_cmpx_);
+	case ELEM_CELL: SCALAR_MON(struct cell *, p, struct cell *, p, pit_cell);
+	default: err = 99; goto fail;
+	}
+	
+	
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+static struct apl_cmpx
+add_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+
+	z.real = x.real + y.real;
+	z.imag = x.imag + y.imag;
+	
+	return z;
+}
+
+static struct apl_cmpx
+sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+	
+	z.real = x.real - y.real;
+	z.imag = x.imag - y.imag;
+	
+	return z;
+}
+
+static struct apl_cmpx
+neg_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx z;
+	
+	z.real = x.real ? -x.real : 0;
+	z.imag = x.imag ? -x.imag : 0;
+	
+	return z;
+}
+
+static struct apl_cmpx
+mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+	
+	z.real = x.real * y.real - x.imag * y.imag;
+	z.imag = x.imag * y.real + x.real * y.imag;
+	
+	return z;
+}
+
+static struct apl_cmpx
+sqrt_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx z;
+
+#ifdef _MSC_VER
+	_Dcomplex tz;
+	_Dcomplex tx = {x.real, x.imag};
+#else
+	double complex tz, tx;
+	
+	tx = x.real + x.imag * I;
+#endif
+
+	tz = csqrt(tx);
+
+	z.real = creal(tz);
+	z.imag = cimag(tz);
+	
+	return z;
+}
+
+static double
+cir_real(int64_t x, double y)
+{
+	switch (x) {
+	case 0: return sqrt(1-y*y);
+	case 1: return sin(y);
+	case -1: return asin(y);
+	case 2: return cos(y);
+	case -2: return acos(y);
+	case 3: return tan(y);
+	case -3: return atan(y);
+	case 4: return sqrt(1+y*y);
+	case -4: return y == -1 ? 0 : (y + 1) * sqrt((y - 1) / (y + 1));
+	case 5: return sinh(y);
+	case -5: return asinh(y);
+	case 6: return cosh(y);
+	case -6: return acosh(y);
+	case 7: return tanh(y);
+	case -7: return atanh(y);
+	case 8: return sqrt(-(1 + y*y));
+	case -8: return -sqrt(-(1 + y*y));
+	case 9: return y;
+	case -9: return y;
+	case 10: return fabs(y);
+	case -10: return y;
+	case 11: return 0;
+	case 12: return y >= 0 ? 0 : PI;
+	default: return NAN;
+	}
+}
+
+static struct apl_cmpx
+cir_cmpx(int64_t x, struct apl_cmpx y)
+{
+	struct apl_cmpx one = {1, 0};
+	struct apl_cmpx eye = {0, 1};
+	struct apl_cmpx fail = {NAN, NAN};
+	struct apl_cmpx z;
+	
+#ifdef _MSC_VER
+	_Dcomplex tz;
+	_Dcomplex ty = {y.real, y.imag};
+#else
+	double complex tz, ty;
+	
+	ty = y.real + y.imag * I;
+#endif
+
+#define RETZ z.real = creal(tz); z.imag = cimag(tz); return z;
+
+	switch (x) {
+	case 0: return sqrt_cmpx(sub_cmpx(one, mul_cmpx(y, y)));
+	case 1: tz = csin(ty); RETZ;
+	case -1: tz = casin(ty); RETZ;
+	case 2: tz = ccos(ty); RETZ;
+	case -2: tz = cacos(ty); RETZ;
+	case 3: tz = ctan(ty); RETZ; 
+	case -3: tz = catan(ty); RETZ;
+	case 4: return sqrt_cmpx(add_cmpx(one, mul_cmpx(y, y)));
+	case -4: return mul_cmpx(add_cmpx(y, one), sqrt_cmpx(div_cmpx(sub_cmpx(y, one), add_cmpx(y, one))));
+	case 5: tz = csinh(ty); RETZ; 
+	case -5: tz = casinh(ty); RETZ;
+	case 6: tz = ccosh(ty); RETZ;
+	case -6: tz = cacosh(ty); RETZ;
+	case 7: tz = ctanh(ty); RETZ;
+	case -7: tz = catanh(ty); RETZ;
+	case 8: return sqrt_cmpx(neg_cmpx(add_cmpx(one, mul_cmpx(y, y))));
+	case -8: return neg_cmpx(sqrt_cmpx(neg_cmpx(add_cmpx(one, mul_cmpx(y, y)))));
+	case 9: return y;
+	case -9: return y;
+	case 10: z.real = cabs(ty); z.imag = 0; return z;
+	case -10: return conj_cmpx(y);
+	case 11: z.real = y.imag; z.imag = 0; return z;
+	case -11: return mul_cmpx(y, eye);
+	case 12: z.real = carg(ty); z.imag = 0; return z;
+	case -12: return exp_cmpx(mul_cmpx(y, eye));
+	default: return fail;
+	}
+}
+
+EXPORT int
+trig_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt;
+	int err;
+	enum elem_type mintyp, maxtyp;
+	
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	t = NULL;
+	
+	if (r->a.etyp == ELEM_CHAR) {
+		err = 11;
+		goto fail;
+	}
+	
+	if (l->a.etyp != ELEM_INT && l->a.etyp != ELEM_BOOL && l->a.etyp != ELEM_CELL) {
+		err = 11;
+		goto fail;
+	}
+	
+	mintyp = ELEM_FLOAT;
+	maxtyp = ELEM_MAX;
+	
+	if (l->a.etyp == ELEM_INT) {
+		int64_t *restrict lv;
+		
+		cnt = array_count(l, 0);
+		
+		if (l->a.rnk) lv = l->a.host->i;
+		else lv = &l->a.i;
+		
+		if (r->a.etyp == ELEM_CMPX) {
+			maxtyp = ELEM_FLOAT;
+			
+			for (int64_t i = 0; i < cnt; i++) {
+				if (lv[i] != 9 && lv[i] != -10 && lv[i] != 10
+				    && lv[i] != 11 && lv[i] != 12) {
+					maxtyp = ELEM_CMPX;
+					break;
+				}
+			}
+		} else if (r->a.etyp != ELEM_CELL) {
+			for (int64_t i = 0; i < cnt; i++) {
+				if (lv[i] == 8 || lv[i] == -8 ||
+				    lv[i] == -11 || lv[i] == -12) {
+					mintyp = ELEM_CMPX;
+					break;
+				}
+			}
+		}
+	}
+	
+	if ((err = get_scalar_cell(&t, l, r, mintyp, maxtyp)))
+		goto fail;
+
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) { 
+		free_cell(t);
+		if (!l->a.rnk) t = ref_cell(r);
+		else if (!r->a.rnk) t = ref_cell(l);
+		else t = ref_cell(r);
+		goto done;
+	}
+	
+	#define cir_rrr(zt, z, l, r) (z) = cir_real((l), (double)(r));
+	#define cir_jrr(zt, z, l, r) {			\
+		struct apl_cmpx y = {(double)r, 0};     \
+		(z) = cir_cmpx((int64_t)(l), y);        \
+	}
+	#define cir_rrj(zt, z, l, r) {				\
+		struct apl_cmpx cz = cir_cmpx((l), (r));        \
+		(z) = cz.real;                                  \
+	}
+	#define cir_jrj(zt, z, l, r) (z) = cir_cmpx((l), (r));
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(double, f, char, b, char, b, cir_rrr);
+		case ELEM_INT: SCALAR_SIMP(double, f, char, b, int64_t, i, cir_rrr);
+		case ELEM_FLOAT: SCALAR_SIMP(double, f, char, b, double, f, cir_rrr);
+		case ELEM_CMPX: SCALAR_SIMP(struct apl_cmpx, j, char, b, struct apl_cmpx, j, cir_jrj);
+		case ELEM_CELL: SCALAR_SIMP_CELL(char, b, trig_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_INT:
+		if (t->a.etyp == ELEM_CMPX)
+			switch (r->a.etyp) {
+			case ELEM_BOOL: SCALAR_SIMP(struct apl_cmpx, j, int64_t, i, char, b, cir_jrr);
+			case ELEM_INT: SCALAR_SIMP(struct apl_cmpx, j, int64_t, i, int64_t, i, cir_jrr);
+			case ELEM_FLOAT: SCALAR_SIMP(struct apl_cmpx, j, int64_t, i, double, f, cir_jrr);
+			case ELEM_CMPX: SCALAR_SIMP(struct apl_cmpx, j, int64_t, i, struct apl_cmpx, j, cir_jrj);
+			case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, trig_f);
+			default:err = 99; goto fail;
+			}
+		else
+			switch (r->a.etyp) {
+			case ELEM_BOOL: SCALAR_SIMP(double, f, int64_t, i, char, b, cir_rrr);
+			case ELEM_INT: SCALAR_SIMP(double, f, int64_t, i, int64_t, i, cir_rrr);
+			case ELEM_FLOAT: SCALAR_SIMP(double, f, int64_t, i, double, f, cir_rrr);
+			case ELEM_CMPX: SCALAR_SIMP(double, f, int64_t, i, struct apl_cmpx, j, cir_rrj);
+			case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, trig_f);
+			default:err = 99; goto fail;
+			}
+		break;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, trig_f);
+		case ELEM_INT: SCALAR_CELL_SIMP(int64_t, i, trig_f);
+		case ELEM_FLOAT: SCALAR_CELL_SIMP(double, f, trig_f);
+		case ELEM_CMPX: SCALAR_CELL_SIMP(struct apl_cmpx, j, trig_f);
+		case ELEM_CELL: SCALAR_CELL_CELL(trig_f);
+		default:err = 99; goto fail;
+		}break;
+	default:
+		err = 99;
+		goto fail;
+	}
+
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*cir_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	pitimes_f, trig_f
+};
+struct cell cir_c = {
+	1, CELL_FUNC, NULL, .f = {
+		cir_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *cir = &cir_c;
+
