@@ -4813,12 +4813,140 @@ fail:
 	return err;
 }
 
+static double
+bin_real(double x, double y)
+{
+	double y_x = y - x;
+	
+	if (x >= 0) {
+		if (y >= 0) {
+			double z = tgamma(1+y)/(tgamma(1+x)*tgamma(1+y_x));
+			
+			return isnan(z) ? 0 : z;
+		} else {
+			if (y_x >= 0) {
+				return NAN;
+			} else {
+				return (-x)*bin_real(x, x-(y+1));
+			}
+		}
+	} else {
+		if (y >= 0) {
+			return 0;
+		} else {
+			if (y_x >= 0) {
+				return (-y_x)*bin_real(fabs(y+1), fabs(x+1));
+			} else {
+				return 0;
+			}
+		}
+	}
+}
+
 EXPORT int
 binomial_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
-	s; z; l; r; fv;
+	struct cell *t;
+	int64_t cnt;
+	int err;
 	
-	return 16;
+	fv;
+	
+	if (s != NULL && s->f.axis != NULL)
+		return 16;
+	
+	t = NULL;
+	
+	if (l->a.etyp == ELEM_CHAR || r->a.etyp == ELEM_CHAR) {
+		err = 11;
+		goto fail;
+	}
+	
+	if ((err = get_scalar_cell(&t, l, r, ELEM_FLOAT, ELEM_MAX)))
+		goto fail;
+
+	if (t->a.stg == STG_DEVICE) {
+		err = 16;
+		goto fail;
+	}
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) { 
+		free_cell(t);
+		if (!l->a.rnk) t = ref_cell(r);
+		else if (!r->a.rnk) t = ref_cell(l);
+		else t = ref_cell(r);
+		goto done;
+	}
+	
+	#define bin_rr(zt, z, l, r) (z) = bin_real((double)(l), (double)(r));
+	#define bin_rj(zt, z, l, r) {			\
+		struct apl_cmpx x = {(double)(l), 0};   \
+		(z) = bin_cmpx(x, (r));                 \
+	}
+	#define bin_jb(zt, z, l, r) {		\
+		struct apl_cmpx one = {1, 0};	\
+		(z) = (r) ? (l) : one;          \
+	}
+	#define bin_jr(zt, z, l, r) {			\
+		struct apl_cmpx x = {(double)(r), 0};	\
+		(z) = bin_cmpx((l), x);			\
+	}
+	#define bin_jj(zt, z, l, r) (z) = bin_cmpx((l), (r));
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(double, f, char, b, char, b, bin_rr);
+		case ELEM_INT: SCALAR_SIMP(double, f, char, b, int64_t, i, bin_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(double, f, char, b, double, f, bin_rr);
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CELL: SCALAR_SIMP_CELL(char, b, binomial_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_INT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(double, f, int64_t, i, char, b, bin_rr);
+		case ELEM_INT: SCALAR_SIMP(double, f, int64_t, i, int64_t, i, bin_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(double, f, int64_t, i, double, f, bin_rr);
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CELL: SCALAR_SIMP_CELL(int64_t, i, binomial_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_FLOAT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_SIMP(double, f, double, f, char, b, bin_rr);
+		case ELEM_INT: SCALAR_SIMP(double, f, double, f, int64_t, i, bin_rr);
+		case ELEM_FLOAT: SCALAR_SIMP(double, f, double, f, double, f, bin_rr);
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CELL: SCALAR_SIMP_CELL(double, f, binomial_f);
+		default:err = 99; goto fail;
+		}break;
+	case ELEM_CMPX: err = 16; goto fail;
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SCALAR_CELL_SIMP(char, b, binomial_f);
+		case ELEM_INT: SCALAR_CELL_SIMP(int64_t, i, binomial_f);
+		case ELEM_FLOAT: SCALAR_CELL_SIMP(double, f, binomial_f);
+		case ELEM_CMPX: err = 16; goto fail;
+		case ELEM_CELL: SCALAR_CELL_CELL(binomial_f);
+		default:err = 99; goto fail;
+		}break;
+	default:
+		err = 99;
+		goto fail;
+	}
+
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
 }
 
 int (*fac_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
