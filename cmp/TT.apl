@@ -115,7 +115,7 @@ TT←{
 	syms,←⊂,'~'	  ⋄ nams⍪←'not'	       'notscl'	       'without'		'idxerr'
 	syms,←⊂,'∧'	  ⋄ nams⍪←'and'	       'andmon'	       'logand'			'idxerr'
 	syms,←⊂,'∨'	  ⋄ nams⍪←'lor'	       'lormon'	       'logor'			'idxerr'
-	syms,←⊂,'⍲'	  ⋄ nams⍪←'nan'	       'nanmon'	       'lognan'			'idxerr'
+	syms,←⊂,'⍲'	  ⋄ nams⍪←'cd_nan'	       'nanmon'	       'lognan'			'idxerr'
 	syms,←⊂,'⍱'	  ⋄ nams⍪←'nor'	       'normon'	       'lognor'			'idxerr'
 	syms,←⊂,'<'	  ⋄ nams⍪←'lth'	       'lthmon'	       'lessthan'		'idxerr'
 	syms,←⊂,'≤'	  ⋄ nams⍪←'lte'	       'sortup'	       'lesseql'		'idxerr'

@@ -48,7 +48,7 @@ PS←{⍺←⊢
 	t pos end⌿⍨←⊂(t≠0)∨(~IN[pos]∊WS)∨⊃¯1 1∧.⌽⊂IN[pos]∊alp,num,'¯⍺⍵⎕.:'
 
 	⍝ Verify all open characters are valid
-	t[⍸~IN[pos]∊alp,num,syna,synb,prms,WS]←EBADCHR
+	t[⍸(t=0)∧~IN[pos]∊alp,num,syna,synb,prms,WS]←EBADCHR
 
 	⍝ This simplifies the following expressions
 	x←' '@{t≠0}IN[pos]
