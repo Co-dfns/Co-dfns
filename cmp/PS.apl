@@ -276,9 +276,9 @@ PS←{⍺←⊢
 	⍝ Parse brackets and parentheses into ¯1 and Z nodes
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ pd←+⍀dx←1 ¯1 1 ¯1 0['[]()'⍳x←IN[pos[i]]]
 	t[j←i⌿⍨(dx=1)∧j=⌽⌊⍀⌽j←⍋j[⍋p[i][j←⍋pd]]]←X ⋄ k[j]←EOPRBAL
-	t[j←i⌿⍨(dx=¯1)∧j=⌈⍀j←⍋j[⍋p[i][j←⍒pd←pd-dx]]]←X ⋄ k[j]←ECPRBAL
+	t[j←i⌿⍨(dx=¯1)∧j=⌈⍀j←⍋j[⍋p[i][j←⍒pd-dx]]]←X ⋄ k[j]←ECPRBAL
 	pp←D2P ¯1⌽+⍀dx←dx×t[i]≠X
-	t[j←p[j]⍪j←i⌿⍨msk←(dx=¯1)∧x[pp]≠'[('[x=')']]←X ⋄ k[j]←EPRNBKT
+	t[j←i[pp[j]⍪j←⍸(dx=¯1)∧x[pp]≠'[('[x=')']]]←X ⋄ k[j]←EPRNBKT
 	pp←D2P ¯1⌽+⍀dx←dx×t[i]≠X ⋄ p[msk⌿i]←i[pp⌿⍨msk←pp≠⍳≢pp]
 	t[i]+←0 ¯1 Z[(dx=1)(⊣+×)x='('] ⋄ end[i[pp]]←end[i]
 	t k n pos end⌿⍨←⊂msk←(t=0)⍲IN[pos]=')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
