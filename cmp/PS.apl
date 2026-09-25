@@ -304,7 +304,7 @@ PS←{⍺←⊢
 
 	⍝ Mark binding primitives
 	bp←(t=P)∧n∊-sym⍳,¨'←' '⍠←' '∘←'
-	t[i←⍸bp∧((≠p)∨(⌽≠⌽p))∧(t[p]=Z)∧p≠⍳≢p]←X ⋄ k[i]←EMTASGN
+	t[i←⍸bp>←bp∧((≠p)∨(⌽≠⌽p))∧(t[p]=Z)∧p≠⍳≢p]←X ⋄ k[i]←EMTASGN
 
 	⍝ Wrap binding values in Z nodes
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧p≠⍳≢p]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
