@@ -330,7 +330,7 @@ PS←{⍺←⊢
 	i←⍸(t[p]=Z)∧((t=F)∨(t=T)∧k=0)[r]∧p≠⍳≢p
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i]] ⋄ km←((-≢x)↑(≢pi)⍴1)[x]
 	bm←{bm⊣bm[p]∧←⍵}⍣≡bm←(t∊A V Z)∨dm←(t=P)∧n=-sym⍳⊂,'.'
-	zv∧←(0⍪(2>⌿zv⍪0)⌿1⌽n[i]∊-sym⍳,¨'←' '⍠←' '∘←')[+⍀2<⌿0⍪zv←km∧bm[i]]
+	zv∧←(0⍪(2>⌿zv⍪0)⌿1⌽bp[i])[+⍀2<⌿0⍪zv←km∧bm[i]]
 	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv]
 	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0 ⋄ _←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
 	zv×←{⍵∧⍵[p]}⍣≡~⊃¯1 0 1∨.⌽⊂dm
@@ -441,7 +441,7 @@ PS←{⍺←⊢
 	k[i]←j+isd[i]+2×(1⌈j←0 1 2 4 8[k[i]])|ro[i←⍸isa<t=T]
 	
 	⍝ Link Z nodes of V←Z forms to V target
-	i←{⍵[⍋p[⍵]]}⍸p∊p⌿⍨msk←n∊-sym⍳,¨'←' '∘←'
+	i←{⍵[⍋p[⍵]]}⍸p∊p⌿⍨msk←(t=P)∧n∊-sym⍳,¨'←' '∘←'
 	vb[i⌿⍨¯2⌽vm]←i⌿⍨vm←(1⌽msk[i])∧(t[i]=V)∨n[i]=¯2
 
 	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
@@ -517,7 +517,7 @@ PS←{⍺←⊢
 
 	⍝ Wrap obvious and non-array bindings as B2+(V, Z)
 	i←i[⍋p[i←⍸(t[p]=Z)∧p≠⍳≢p]]
-	j←⍸(n[i]∊-sym⍳,¨'←' '∘←')∧(⊃¯1 1∧.⌽⊂k[i]≥2)∨((≠p)∧t=V)[¯1⌽i]
+	j←⍸(t[i]=P)∧(n[i]∊-sym⍳,¨'←' '∘←')∧(⊃¯1 1∧.⌽⊂k[i]≥2)∨((≠p)∧t=V)[¯1⌽i]
 	p[(jt←i[j-1]),jv←i[j+1]]←,⍨ij←i[j] ⋄ t[ij]←B ⋄ k[ij]←k[jv] ⋄ lx[ij]←lx[jt]
 	pos[ij]←pos[jt] ⋄ end[ij]←end[jv]
 
