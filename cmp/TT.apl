@@ -1,9 +1,6 @@
 TT←{
 	(p d t k n lx vb pos end)exp sym IN←⍵
 
-	⍝ Report parse errors
-	∨⌿msk←(t=X)∧k≠0: SIGNAL SELECT ⍸msk
-	
 	⍝ Kill the contents of X nodes
 	p t k n lx vb pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡t[p]≠X
 	p vb(⊣-1+⍸⍨)←⊂⍸~msk
@@ -84,7 +81,7 @@ TT←{
 	p r I@{⍵≥0}⍨←⊂n[i]@i⊢⍳≢p ⋄ k[j]←3+5 11⍸k[j←i⌿⍨t[i]=F] ⋄ t[i]←V
 
 	⍝ Wrap expressions as binding or return statements
-	i←(⍸(t[p]∊F T)>t∊F G H T Z),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
+	i←(⍸(t[p]∊F T)>t∊F G H T X),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
 	p t k n lx vb mu r pos end⌿⍨←⊂m←2@i⊢1⍴⍨≢p
 	p r i vb I@{⍵≥0}⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@{⌽≠⌽(p×p≠⍳≢p)[j]}(t[j]=B)∨(t[j]=E)∧k[j]=4
@@ -232,7 +229,7 @@ TT←{
 	j←¯1+msk⌿i ⋄ k[j⌿⍨(t[j]∊A E S)∨(t[j]=B)∧k[j]=0]←1 ⋄ k[j⌿⍨t[j]=O]←2 ⋄ t[j]←V
 	
 	⍝ Lift and flatten expressions
-	i←⍸(t∊B E G O S Z)∨(t=A)∧k≠1
+	i←⍸(t∊B E G O S X)∨(t=A)∧k≠1
 	msk←~(t∊F G T)∨((t=B)∧k=7)∨gm←(t[p]=G)∧~(t=V)∨((t=A)∧k=1)∨(t=E)∧k=0
 	p[i]←p[x←p[p] I@{gm[p[⍵]]}p I@{msk[p[⍵]]}⍣≡p I@{gm[⍵]}i]
 	p t k n lx vb mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽x] ⋄ p vb I@{⍵≥0}⍨←⊂i@j⍳≢p
@@ -240,8 +237,8 @@ TT←{
 	p t k n lx vb mu r pos end{⍺[⍵]@i⊢⍺}←⊂j←(⌽i)[⍋⌽+⍀¯1⌽t[i]=B] ⋄ p vb I@{⍵≥0}⍨←⊂i@j⍳≢p
 
 	⍝ Remove dead code paths: Empty B0; post-X nodes
-	_←p[i]{msk[⍵]←∨⍀¯1⌽msk[⍵]}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←t=X
-	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0 ⋄ msk>←t=H
+	_←p[i]{msk[⍵]←∨⍀0,¯1↓t[⍵]=X}⌸i←⍸(p≠⍳≢p)∧t[p]∊F G⊣msk←0⍴⍨≢p
+	k[p⌿⍨(t[p]=B)∧k[p]=0]←1 ⋄ msk∨←(t=B)∧k=0 ⋄ msk∧←t≠H
 	msk←{1@(n⌿⍨⍵∧(t=V)∧(lx=¯5)∧n∊⍸t=F)⊢⍵∨⍵[p]}⍣≡msk
 	p t k n lx vb mu r pos end⌿⍨←⊂~msk
 	p r vb(⊣-1+⍸⍨)←⊂i←⍸msk ⋄ n[j]←i(⊢-1+⍸)n[j←⍸n>0]

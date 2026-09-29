@@ -322,8 +322,8 @@ GC←{
 	⍝ We have a vector output for each node in the AST
 	zz←(≢p)⍴⊂'' ⋄ kk←(≢p)⍴⊂⍬ ⋄ _←{kk[⍺]←⊂⍵~⍺}⌸p
 	
-	⍝ Z¯N: Error nodes
-	i←⍸(t=Z)∧k<0
+	⍝ X¯N: Error nodes
+	i←⍸(t=X)∧k≤0
 	zz[i],←{
 		line←highlight ⍵
 		('CHK(',(⍕|k[⍵]),', cleanup, ',line,');') ''
