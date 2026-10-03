@@ -1,0 +1,84 @@
+:Namespace t0101_trains_parsing
+
+CHK←{⍺←⊢ ⋄ (0∊∊⍵)∨0=≢⍵:⍺ ⎕SIGNAL 8 ⋄ _←0}
+
+∇{Z}←PARSE X
+ Z←1
+ (p d t k n lx vb pos end)(xn xt)sym IN←##.codfns.PS src←X
+∇
+
+∇Z←NS src
+ Z←(⊂':Namespace'),src,⊂':EndNamespace'
+∇
+
+∇{Z}←TEST;train;p;d;t;k;n;lx;pos;end;xn;xt;sym;IN;CD
+ Z←⍪⍬
+
+ CD←##.codfns
+
+ CHK PARSE NS 'FN←-⍟' ''
+ train←⍸t=CD.R
+ CHK k[train]≡,2
+ CHK k[train]≡+⌿p∘.=train
+
+ CHK PARSE NS 'FN←+×-' ''
+ train←⍸t=CD.R
+ CHK k[train]≡,3
+ CHK k[train]≡+⌿p∘.=train
+
+ CHK PARSE NS 'FN←10 - +' ''
+ train←⍸t=CD.R
+ CHK k[train]≡,3
+ CHK t[⍸p=⊃train]≡CD.(A P P)
+ CHK k[⍸p=⊃train]≡1 2 2
+
+ CHK PARSE NS 'FN←((+-)×(÷-))' ''
+ train←⍸t=CD.R
+ CHK k[train]≡3 2 2
+ CHK k[train]≡+⌿p∘.=train
+ CHK (1↓p[train])≡(2⍴⊃train)
+
+ ⍝ Longer trains form nested atop/fork nodes.
+ CHK PARSE NS 'FN←+×-÷*' ''
+ train←⍸t=CD.R
+ CHK k[train]≡3 3
+ CHK k[train]≡+⌿p∘.=train
+ CHK (1↓p[train])≡¯1↓train
+
+ CHK PARSE NS 'FN←+×-÷*⍟' ''
+ train←⍸t=CD.R
+ CHK k[train]≡2 3 3
+ CHK k[train]≡+⌿p∘.=train
+ CHK (1↓p[train])≡¯1↓train
+
+ CHK PARSE NS 'FN←+×-÷*⍟○' ''
+ train←⍸t=CD.R
+ CHK k[train]≡3 3 3
+ CHK k[train]≡+⌿p∘.=train
+ CHK (1↓p[train])≡¯1↓train
+
+ CHK PARSE NS ':Namespace ns' 'F←+' ':EndNamespace' 'FN←ns.F×-'
+ train←⍸t=CD.R
+ CHK k[train]≡,3
+ CHK k[train]≡+⌿p∘.=train
+ CHK k[⍸t=CD.N]≡,2
+
+ CHK PARSE NS 'FN←{(⊢⍱¯1∘⌽)⍵}' ''
+ train←⍸t=CD.R
+ CHK k[train]≡3 3
+ CHK k[train]≡+⌿p∘.=train
+ CHK p[⍸t=CD.O]≡train
+ CHK k[⍸t=CD.O]≡7 7
+ CHK t[p[train]]≡CD.E CD.E
+
+ CHK PARSE NS 'x←(+×-) 5' ''
+ train←⍸t=CD.R
+ CHK k[train]≡,3
+ CHK t[p[⊃train]]=CD.E
+ CHK k[p[⊃train]]=1
+ CHK (+/p=p[⊃train])=2
+
+ ⎕←'🚂'
+∇
+
+:EndNamespace
