@@ -93,9 +93,6 @@ struct cell {
 	};
 };
 
-struct cell *next_cell;
-struct host_buffer *next_buffer[7]; /* 32 128 512 2048 8192 16384 */
-
 int64_t
 array_count(struct cell *a, int min)
 {
@@ -111,46 +108,47 @@ array_count(struct cell *a, int min)
 	return cnt;
 }
 
+#define HOST_BUFFER_CLASS_COUNT 7
+
+int64_t host_buffer_size[HOST_BUFFER_CLASS_COUNT] = { 
+	32, 128, 512, 2048, 8192, 16384, 0
+};
+
+struct cell *next_cell;
+struct host_buffer *next_buffer[HOST_BUFFER_CLASS_COUNT];
+
+int
+host_buffer_class(int64_t size)
+{
+	int i;
+	
+	for (i = 0; host_buffer_size[i]; i++)
+		if (size <= host_buffer_size[i])
+			return i;
+	
+	return i;
+}
+
 EXPORT struct host_buffer *
 get_host_buffer(int64_t size)
 {
 	struct host_buffer *res;
 	int i;
 	
-	if (size <= 32) {
-		i = 0;
-		size = 32;
-	} else if (size <= 128) {
-		i = 1;
-		size = 128;
-	} else if (size <= 512) {
-		i = 2;
-		size = 512;
-	} else if (size <= 2048) {
-		i = 3;
-		size = 2048;
-	} else if (size <= 8192) {
-		i = 4;
-		size = 8192;
-	} else if (size <= 16384) {
-		i = 5;
-		size = 16384;
-	} else {
-		i = 6;
-	}
+	i = host_buffer_class(size);
 	
 	if (next_buffer[i]) {
 		res = next_buffer[i];
 		next_buffer[i] = res->next;
 	} else {
-		res = malloc(sizeof(*res) + size);
+		res = malloc(sizeof(*res) + host_buffer_size[i]);
 		
 		if (res == NULL)
 			return NULL;
 	}
 	
 	res->refc = 1;
-	res->size = size;
+	res->size = host_buffer_size[i];
 	res->i = (int64_t *)((char *)res + sizeof(*res));
 	
 	return res;
@@ -160,7 +158,7 @@ get_host_buffer(int64_t size)
 void
 free_host_buffer(struct host_buffer *b)
 {
-	int64_t i;
+	int i;
 	
 	if (!b || !b->refc)
 		return;
@@ -169,19 +167,15 @@ free_host_buffer(struct host_buffer *b)
 		
 	if (b->refc)
 		return;
+		
+	i = host_buffer_class(b->size);
 	
-	switch(b->size) {
-	case 32: i = 0; break;
-	case 128: i = 1; break;
-	case 512: i = 2; break;
-	case 2048: i = 3; break;
-	case 8192: i = 4; break;
-	case 16384: i = 5; break;
-	default: free(b); return;
+	if (host_buffer_size[i]) {
+		b->next = next_buffer[i];
+		next_buffer[i] = b;
+	} else {
+		free(b);
 	}
-	
-	b->next = next_buffer[i];
-	next_buffer[i] = b;
 }
 
 EXPORT struct cell *
