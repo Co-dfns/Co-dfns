@@ -792,6 +792,7 @@ blank_array_copy(struct cell *v)
 	
 	if (!(t = get_cell())) return t;
 	
+	t->ctyp = CELL_ARRAY;
 	t->a = v->a;
 	
 	t->a.stg = STG_HOST;
@@ -6391,6 +6392,7 @@ reshape_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 	
 	if (!(t = get_cell())) return 1;
 	
+	t->ctyp = CELL_ARRAY;
 	t->a.etyp = r->a.etyp;
 	t->a.stg = r->a.stg;
 	t->a.rnk = 0;
