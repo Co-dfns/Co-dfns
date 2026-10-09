@@ -6510,9 +6510,44 @@ fail:
 EXPORT int
 shape_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {
-	s; z; l; r; fv;
+	struct cell *t;
+	int err;
 	
-	return 16;
+	s; l; fv;
+	
+	err = 0;
+	
+	if (!r->a.rnk) {
+		t = ref_cell(&mt_num_vec);
+		
+		goto done;
+	}
+	
+	if (!(t = get_cell())) { err = 1; goto fail; }
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.etyp = ELEM_INT;
+	t->a.stg = STG_HOST;
+	t->a.rnk = 1;
+	
+	if (!(t->a.shp = get_host_buffer(buffer_size(ELEM_INT, 1)))) {
+		err = 1;
+		goto fail;
+	}
+	
+	t->a.shp->i[0] = r->a.rnk;
+	t->a.host = r->a.shp;
+	t->a.host->refc++;
+
+done:
+	*z = t;
+	
+	return 0;
+
+fail:
+	free_cell(t);
+	
+	return err;
 }
 
 int (*shp_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
