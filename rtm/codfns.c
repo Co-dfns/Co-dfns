@@ -948,6 +948,9 @@ println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 		
 		if ((err = println_f(NULL, &nil, NULL, &x, NULL)))
 			goto fail;
+		
+		if (x.a.rnk >= 2 && i < mc - 1)
+			printf("\n");
 	}
 	
 	free_host_buffer(shp);
