@@ -6563,3 +6563,269 @@ struct cell shp_c = {
 };
 EXPORT struct cell *shp = &shp_c;
 
+EXPORT int
+catenate_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt, ca, cb, cc, rx, lx;
+	double axis;
+	int err, rk, fx, ri;
+	
+	fv;
+	
+	if (l->a.stg == STG_DEVICE) return 16;
+	if (r->a.stg == STG_DEVICE) return 16;
+	if (s && s->f.axis) return 16;
+	
+	rk = l->a.rnk > r->a.rnk ? l->a.rnk : r->a.rnk;
+	
+	if (!rk) rk = 1;
+	
+	axis = rk - 1;
+	
+	if (l->a.rnk && r->a.rnk && 1 < labs(l->a.rnk - r->a.rnk)) return 4;
+	
+	fx = (int)ceil(axis);
+	
+	if (l->a.rnk && r->a.rnk) {
+		if (l->a.rnk < r->a.rnk) {
+			for (int i = 0, j = 0; i < l->a.rnk;) {
+				if (j == fx) j++;
+				else if (l->a.shp->i[i++] != r->a.shp->i[j++]) return 5;
+			}
+		} else if (l->a.rnk > r->a.rnk) {
+			for (int i = 0, j = 0; i < l->a.rnk; i++, j++) {
+				if (i == fx) i++;
+				else if (l->a.shp->i[i++] != r->a.shp->i[j++]) return 5;
+			}
+		} else {
+			for (int i = 0, j = 0; i < l->a.rnk; i++, j++) {
+				if (i == fx) { }
+				else if (l->a.shp->i[i] != r->a.shp->i[j]) return 5;
+			}
+		}
+	}
+	
+	if (!(t = get_cell())) return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.rnk = rk;
+	t->a.stg = STG_HOST;
+	t->a.etyp = elem_type_merge_map[l->a.etyp][r->a.etyp];
+	t->a.host = NULL;
+	t->a.shp = get_host_buffer(buffer_size(ELEM_INT, rk));
+	
+	if (!t->a.shp) { err = 1; goto fail; }
+	
+	t->a.shp->i[fx] = 0;
+	
+	if (l->a.rnk < r->a.rnk) {
+		for (int i = 0; i < r->a.rnk; i++)
+			t->a.shp->i[i] = r->a.shp->i[i];
+		t->a.shp->i[fx]++;
+	} else if (l->a.rnk > r->a.rnk) {
+		for (int i = 0; i < l->a.rnk; i++)
+			t->a.shp->i[i] = l->a.shp->i[i];
+		t->a.shp->i[fx]++;
+	} else if (!l->a.rnk && !r->a.rnk) {
+		t->a.shp->i[fx] = 2;
+	} else {
+		for (int i = 0; i < l->a.rnk; i++)
+			t->a.shp->i[i] = l->a.shp->i[i];
+		t->a.shp->i[fx] += r->a.shp->i[fx];
+	}
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) {
+		struct cell *v = l->a.rnk >= r->a.rnk ? l : r;
+		int64_t c = v->a.rnk ? v->a.shp->i[v->a.rnk - 1] : 1;
+		
+		t->a.host = array_fill_element(v, c);
+		
+		if (!t->a.host) { err = 1; goto fail; }
+		
+		goto done;
+	}
+	
+	t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
+	
+	if (!t->a.host) { err = 1; goto fail; }
+	
+	for (ca = 1, ri = 0; ri < fx; ri++) ca *= t->a.shp->i[ri];
+	cb = t->a.shp->i[ri++];
+	for (cc = 1; ri < rk; ri++) cc *= t->a.shp->i[ri];
+	rx = r->a.rnk == rk ? r->a.shp->i[fx] : 1;
+	lx = l->a.rnk == rk ? l->a.shp->i[fx] : 1;
+	
+	#define CAT_CPY(tt, tf, lt, lf, rt, rf, exl, exr) {			\
+		tt *restrict tv = t->a.host->tf;                                \
+										\
+		if (l->a.rnk) {                                                 \
+			lt *restrict lv = l->a.host->lf;                        \
+										\
+			for (int64_t i = 0; i < ca; i++)                        \
+				for (int64_t j = 0; j < lx; j++)                \
+					for (int64_t k = 0; k < cc; k++) {      \
+						tt *x = &tv[i*cb*cc + j*cc + k];\
+						lt y = lv[i*lx*cc + j*cc + k];	\
+										\
+						exl;				\
+					}					\
+		} else {                                                        \
+			lt y = l->a.lf;                                         \
+										\
+			for (int64_t i = 0; i < ca; i++)                        \
+				for (int64_t j = 0; j < cc; j++) {              \
+					tt *x = &tv[i*cb*cc + j];		\
+										\
+					exl;					\
+				}						\
+		}                                                               \
+										\
+		if (r->a.rnk) {                                                 \
+			rt *restrict rv = r->a.host->rf;                        \
+										\
+			for (int64_t i = 0; i < ca; i++)                        \
+				for (int64_t j = 0; j < rx; j++)                \
+					for (int64_t k = 0; k < cc; k++) {      \
+						tt *x = &tv[i*cb*cc + (lx + j)*cc + k];\
+						rt y = rv[i*rx*cc + j*cc + k];	\
+										\
+						exr;				\
+					}					\
+		} else {                                                        \
+			rt y = r->a.rf;                                         \
+										\
+			for (int64_t i = 0; i < ca; i++)                        \
+				for (int64_t j = 0; j < cc; j++) {              \
+					tt *x = &tv[i*cb*cc + lx*cc + j];	\
+										\
+					exr;					\
+				}						\
+		}                                                               \
+	}break;
+	
+	#define CAT_CPY_RR(tt, tf, lt, lf, rt, rf) \
+		CAT_CPY(tt, tf, lt, lf, rt, rf, \
+		    *x = (tt)y, *x = (tt)y)
+		
+	#define CAT_CPY_RJ(lt, lf) \
+		CAT_CPY(struct apl_cmpx, j, lt, lf, struct apl_cmpx, j, \
+		    x->real = (double)y; x->imag = 0;, *x = y)
+		    
+	#define CAT_CPY_JR(rt, rf) \
+		CAT_CPY(struct apl_cmpx, j, struct apl_cmpx, j, rt, rf, \
+		    *x = y, x->real = (double)y; x->imag = 0;)
+		    
+	#define CAT_CPY_JJ() \
+		CAT_CPY(struct apl_cmpx, j, struct apl_cmpx, j, struct apl_cmpx, j, \
+		    *x = y, *x = y)
+		    
+	#define CAT_CPY_PR(val, fd) {			\
+		struct cell *tmp = get_cell();		\
+		if (!tmp) { err = 1; goto fail; } 	\
+		tmp->ctyp = CELL_ARRAY;			\
+		tmp->a.etyp = val->a.etyp;		\
+		tmp->a.stg = STG_HOST;			\
+		tmp->a.rnk = 0;				\
+		tmp->a.shp = NULL;			\
+		tmp->a.fd = y;				\
+		*x = tmp;				\
+	}
+		
+	#define CAT_CPY_PRR(lt, lf, rt, rf) \
+		CAT_CPY(struct cell *, p, lt, lf, rt, rf, \
+		    CAT_CPY_PR(l, lf), CAT_CPY_PR(r, rf))
+		    
+	#define CAT_CPY_PRP(lt, lf) \
+		CAT_CPY(struct cell *, p, lt, lf, struct cell *, p, \
+		    CAT_CPY_PR(l, lf), *x = ref_cell(y))
+	
+	#define CAT_CPY_PPR(rt, rf) \
+		CAT_CPY(struct cell *, p, struct cell *, p, rt, rf, \
+		    *x = ref_cell(y), CAT_CPY_PR(r, rf))
+	
+	#define CAT_CPY_PPP() \
+		CAT_CPY(struct cell *, p, struct cell *, p, struct cell *, p, \
+		    *x = ref_cell(y), *x = ref_cell(y))
+	
+	switch (l->a.etyp) {
+	case ELEM_BOOL: switch (r->a.etyp) {
+		case ELEM_BOOL: CAT_CPY_RR(char, b, char, b, char, b);
+		case ELEM_INT: CAT_CPY_RR(int64_t, i, char, b, int64_t, i);
+		case ELEM_FLOAT: CAT_CPY_RR(double, f, char, b, double, f);
+		case ELEM_CMPX: CAT_CPY_RJ(char, b);
+		case ELEM_CHAR: CAT_CPY_PRR(char, b, uint32_t, c);
+		case ELEM_CELL: CAT_CPY_PRP(char, b);
+		default: err = 99; goto fail;
+	}break;
+	case ELEM_INT: switch (r->a.etyp) {
+		case ELEM_BOOL: CAT_CPY_RR(int64_t, i, int64_t, i, char, b);
+		case ELEM_INT: CAT_CPY_RR(int64_t, i, int64_t, i, int64_t, i);
+		case ELEM_FLOAT: CAT_CPY_RR(double, f, int64_t, i, double, f);
+		case ELEM_CMPX: CAT_CPY_RJ(int64_t, i);
+		case ELEM_CHAR: CAT_CPY_PRR(int64_t, i, uint32_t, c);
+		case ELEM_CELL: CAT_CPY_PRP(int64_t, i);
+		default: err = 99; goto fail;
+	}break;
+	case ELEM_FLOAT: switch (r->a.etyp) {
+		case ELEM_BOOL: CAT_CPY_RR(double, f, double, f, char, b);
+		case ELEM_INT: CAT_CPY_RR(double, f, double, f, int64_t, i);
+		case ELEM_FLOAT: CAT_CPY_RR(double, f, double, f, double, f);
+		case ELEM_CMPX: CAT_CPY_RJ(double, f);
+		case ELEM_CHAR: CAT_CPY_PRR(double, f, uint32_t, c);
+		case ELEM_CELL: CAT_CPY_PRP(double, f);
+		default: err = 99; goto fail;
+	}break;
+	case ELEM_CMPX: switch (r->a.etyp) {
+		case ELEM_BOOL: CAT_CPY_JR(char, b);
+		case ELEM_INT: CAT_CPY_JR(int64_t, i);
+		case ELEM_FLOAT: CAT_CPY_JR(double, f);
+		case ELEM_CMPX: CAT_CPY_JJ();
+		case ELEM_CHAR: CAT_CPY_PRR(struct apl_cmpx, j, uint32_t, c);
+		case ELEM_CELL: CAT_CPY_PRP(struct apl_cmpx, j);
+		default: err = 99; goto fail;
+	}break;
+	case ELEM_CHAR: switch (r->a.etyp) {
+		case ELEM_BOOL: CAT_CPY_PRR(uint32_t, c, char, b);
+		case ELEM_INT: CAT_CPY_PRR(uint32_t, c, int64_t, i);
+		case ELEM_FLOAT: CAT_CPY_PRR(uint32_t, c, double, f);
+		case ELEM_CMPX: CAT_CPY_PRR(uint32_t, c, struct apl_cmpx, j);
+		case ELEM_CHAR: CAT_CPY_RR(uint32_t, c, uint32_t, c, uint32_t, c);
+		case ELEM_CELL: CAT_CPY_PRP(uint32_t, c);
+		default: err = 99; goto fail;
+	}break;
+	case ELEM_CELL: switch(r->a.etyp) {
+		case ELEM_BOOL: CAT_CPY_PPR(char, b);
+		case ELEM_INT: CAT_CPY_PPR(int64_t, i);
+		case ELEM_FLOAT: CAT_CPY_PPR(double, f);
+		case ELEM_CMPX: CAT_CPY_PPR(struct apl_cmpx, j);
+		case ELEM_CHAR: CAT_CPY_PPR(uint32_t, c);
+		case ELEM_CELL: CAT_CPY_PPP();
+		default: err = 99; goto fail;
+	}break;
+	default: err = 99; goto fail;
+	}
+	
+done:
+	*z = t;
+	
+	return 0;
+
+fail:
+	free_cell(t);
+	
+	return err;
+}
+
+int (*cat_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	ravel_f, catenate_f
+};
+struct cell cat_c = {
+	1, CELL_FUNC, NULL, .f = {
+		cat_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *cat = &cat_c;
+
