@@ -190,6 +190,7 @@ GC←{
 	pref,←⊂'int left_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *lft;'
 	pref,←⊂'int brkidx_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int brk_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int set_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int conjugate_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int plus_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'

@@ -6837,3 +6837,162 @@ struct cell cat_c = {
 };
 EXPORT struct cell *cat = &cat_c;
 
+#define INDEX_FILL(fn, tp, fd) 								\
+static void										\
+fn(struct cell *t, struct cell *l, struct cell *r, int64_t *ti, int64_t li, int ri)	\
+{											\
+	tp *restrict lv;								\
+	tp *restrict tv;								\
+	struct cell *d;                                                                 \
+	char *restrict db;                                                              \
+	int64_t *restrict di;                                                           \
+	int64_t cnt;                                                                    \
+											\
+	li *= l->a.shp->i[ri];					                        \
+	d = r->a.host->p[ri];                                                           \
+	cnt = array_count(d, 0);                                                        \
+											\
+	if (ri == l->a.rnk - 1) {                                                       \
+		lv = l->a.rnk ? l->a.host->fd : &l->a.fd;                               \
+		tv = t->a.rnk ? t->a.host->fd : &t->a.fd;                               \
+											\
+		if (d->a.etyp == ELEM_SPAN) {                                           \
+			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
+				tv[(*ti)++] = lv[li + i];                               \
+		} else if (!d->a.rnk) {                                                 \
+			if (d->a.etyp == ELEM_BOOL)                                     \
+				tv[(*ti)++] = lv[li + d->a.b];                          \
+			else                                                            \
+				tv[(*ti)++] = lv[li + d->a.i];                          \
+		} else if (d->a.etyp == ELEM_BOOL) {                                    \
+			db = d->a.host->b;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				tv[(*ti)++] = lv[li + db[i]];                           \
+		} else {                                                                \
+			di = d->a.host->i;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				tv[(*ti)++] = lv[li + di[i]];                           \
+		}                                                                       \
+	} else {                                                                        \
+		if (d->a.etyp == ELEM_SPAN) {                                           \
+			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
+				fn(t, l, r, ti, li+i, ri+1);                            \
+		} else if (!d->a.rnk) {                                                 \
+			if (d->a.etyp == ELEM_BOOL)                                     \
+				fn(t, l, r, ti, li+d->a.b, ri+1);                       \
+			else                                                            \
+				fn(t, l, r, ti, li+d->a.i, ri+1);                       \
+		} else if (d->a.etyp == ELEM_BOOL) {                                    \
+			db = d->a.host->b;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				fn(t, l, r, ti, li+db[i], ri+1);                        \
+		} else {                                                                \
+			di = d->a.host->i;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				fn(t, l, r, ti, li+di[i], ri+1);                        \
+		}                                                                       \
+	}                                                                               \
+}
+
+INDEX_FILL(index_fill_bool, char, b)
+INDEX_FILL(index_fill_int, int64_t, i)
+INDEX_FILL(index_fill_float, double, f)
+INDEX_FILL(index_fill_cmpx, struct apl_cmpx, j)
+INDEX_FILL(index_fill_char, uint32_t, c)
+INDEX_FILL(index_fill_cell, struct cell *, p)
+
+EXPORT int
+brk_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt, ti;
+	int err;
+	
+	s; fv;
+	
+	if (r->a.rnk != 1) return 4;
+	if (r->a.etyp != ELEM_CELL) return 11;
+	if (l->a.rnk != r->a.shp->i[0]) return 5;
+	
+	for (int64_t i = 0; i < l->a.rnk; i++) {
+		struct cell *x = r->a.host->p[i];
+		
+		if (x->a.etyp > ELEM_INT)
+			return 11;
+		
+		if (x->a.stg != STG_HOST) return 16;
+	}
+	
+	if (!(t = get_cell())) return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.etyp = l->a.etyp;
+	t->a.stg = STG_HOST;
+	t->a.rnk = 0;
+	t->a.shp = NULL;
+	t->a.host = NULL;
+	
+	for (int64_t i = 0; i < l->a.rnk; i++) {
+		struct cell *x = r->a.host->p[i];
+		
+		t->a.rnk += x->a.etyp == ELEM_SPAN ? 1 : x->a.rnk;
+	}
+	
+	if (t->a.rnk) {
+		t->a.shp = get_host_buffer(buffer_size(ELEM_INT, t->a.rnk));
+		if (!t->a.shp) { err = 1; goto fail; }
+	}
+	
+	for (int64_t i = 0, j = 0; i < l->a.rnk; i++) {
+		struct cell *x = r->a.host->p[i];
+		
+		if (x->a.etyp == ELEM_SPAN)
+			t->a.shp->i[j++] = l->a.shp->i[i];
+		else
+			for (int k = 0; k < x->a.rnk; k++)
+				t->a.shp->i[j++] = x->a.shp->i[k];
+	}
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) {
+		int64_t c;
+		
+		c = t->a.shp->i[t->a.rnk - 1];
+		
+		if (!c) c = 1;
+		
+		t->a.host = array_fill_element(l, c);
+		
+		if (!t->a.host) { err = 1; goto fail; }
+		
+		goto done;
+	}
+	
+	ti = 0;
+	
+	if (t->a.rnk) {
+		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
+		if (!t->a.host) { err = 1; goto fail; }
+	}
+	
+	switch (t->a.etyp) {
+	case ELEM_BOOL: index_fill_bool(t, l, r, &ti, 0, 0); break;
+	case ELEM_INT: index_fill_int(t, l, r, &ti, 0, 0); break;
+	case ELEM_FLOAT: index_fill_float(t, l, r, &ti, 0, 0); break;
+	case ELEM_CMPX: index_fill_cmpx(t, l, r, &ti, 0, 0); break;
+	case ELEM_CHAR: index_fill_char(t, l, r, &ti, 0, 0); break;
+	case ELEM_CELL: index_fill_cell(t, l, r, &ti, 0, 0); break;
+	default: err = 1; goto fail;
+	}
+
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
+}
