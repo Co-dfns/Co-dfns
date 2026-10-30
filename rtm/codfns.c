@@ -6642,6 +6642,8 @@ catenate_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, stru
 		struct cell *v = l->a.rnk >= r->a.rnk ? l : r;
 		int64_t c = v->a.rnk ? v->a.shp->i[v->a.rnk - 1] : 1;
 		
+		if (!c) c = 1;
+		
 		t->a.host = array_fill_element(v, c);
 		
 		if (!t->a.host) { err = 1; goto fail; }
