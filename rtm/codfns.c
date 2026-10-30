@@ -768,6 +768,11 @@ struct cell scl_one = {
 	1, CELL_ARRAY, NULL, .a = {ELEM_BOOL, STG_HOST, 0, NULL, .b = 1}
 };
 
+struct cell spn_a = {
+	1, CELL_ARRAY, NULL, .a = {ELEM_SPAN, STG_HOST, 0, NULL, 0}
+};
+EXPORT struct cell *spn = &spn_a;	
+
 static int
 syserr_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
 {

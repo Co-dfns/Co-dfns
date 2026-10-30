@@ -175,6 +175,7 @@ GC←{
 	pref,←⊂'void print_debug_info(int);'
 	pref,←⊂'struct host_buffer *get_host_buffer(int64_t);'
 	pref,←⊂'void squeeze(struct cell *);'
+	pref,←⊂'DECLSPEC struct cell *spn;'
 	pref,←⊂''
 	pref,←⊂'int println_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'int ravel_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
