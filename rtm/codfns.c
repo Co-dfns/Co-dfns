@@ -1439,7 +1439,7 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 	int64_t cnt, zi, ri;
 	enum elem_type ztyp;
 	
-	s, fv;
+	s; fv;
 	
 	if (l->a.rnk != 1 || l->a.etyp != ELEM_CELL)
 		return 99;
