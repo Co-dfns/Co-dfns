@@ -106,7 +106,7 @@ GC←{
 	pref,←⊂'#endif'
 	pref,←⊂''
 	pref,←⊂'enum elem_type { '
-	pref,←⊂'	ELEM_BOOL, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_CELL, ELEM_MAX'
+	pref,←⊂'	ELEM_SPAN, ELEM_BOOL, ELEM_INT, ELEM_FLOAT, ELEM_CMPX, ELEM_CHAR, ELEM_CELL, ELEM_MAX'
 	pref,←⊂'};'
 	pref,←⊂''
 	pref,←⊂'enum cell_type { CELL_VOID, CELL_ARRAY, CELL_FUNC };'
