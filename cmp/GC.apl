@@ -591,7 +591,7 @@ GC←{
 		z,←⊂'	goto cleanup;'
 		z,←⊂'}'
 		z,←⊂''
-		z,←(n[ti]>0)⌿'free_cell(',tgt,'); ',tgt,' = NULL;'
+		z,←⊂(n[ti]>0)⌿'free_cell(',tgt,'); ',tgt,' = NULL;'
 		z,←⊂'err = 0;'
 		z,⊂''
 	}¨i
