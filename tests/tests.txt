@@ -593,3 +593,21 @@ Bracket Indexing
 3 15 3 15
 Return Expression
 1
+Guard Tests
+1
+0
+-
+0
+1
+-
+0
+1
+-
+0
+0
+-
+0
+1
+-
+5
+4
