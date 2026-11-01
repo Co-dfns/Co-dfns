@@ -186,6 +186,7 @@ TT←{
 	syms,←⊂,'⍵'	  ⋄ nams⍪←'omega'      'omega'	       'omega'			'idxerr'
 	syms,←⊂,'⍺⍺'	  ⋄ nams⍪←'s->f.aa' 	's->f.aa'    	's->f.aa'		'idxerr'
 	syms,←⊂,'⍵⍵'	  ⋄ nams⍪←'s->f.ww' 	's->f.ww'	's->f.ww'		'idxerr'
+	syms,←⊂,'∇'      ⋄ nams⍪←'s'          's'             's'                     'idxerr'
 
 	syms,←⊂,'⎕PRINT_MEMSTATS' ⋄ nams⍪←(3⍴⊂'q_print_memstats'),⊂'idxerr'
 	syms,←⊂,'%u'      ⋄ nams⍪←''           ''              ''			''
