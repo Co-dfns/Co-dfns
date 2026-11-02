@@ -911,3 +911,5 @@ Mantis 17 Tests
 1
 Double Return Expressions
 5
+Operator chain tests
+52

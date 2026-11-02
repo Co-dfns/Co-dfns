@@ -342,4 +342,8 @@ m17∆small←{V←7 ⋄ {V←13 ⋄ f1←{V=13:f2 ⍵ ⋄ 0} ⋄ f2←{V=13:1 �
 
 ⎕←{5 ⋄ 10}0
 
+⎕←'Operator chain tests'
+
+⎕←{X←2 ⋄ Y←3 ⋄ G←{⍺+X+⍵} ⋄ F←{Y+Y G ⍵} ⋄ H←5∘G∘(6∘+)∘F ⋄ H H ⍵}10
+
 :EndNamespace
