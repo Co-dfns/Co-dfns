@@ -6569,26 +6569,23 @@ struct cell shp_c = {
 };
 EXPORT struct cell *shp = &shp_c;
 
-EXPORT int
-catenate_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+static int
+catenate_axis(double axis, struct cell **z, struct cell *l, struct cell *r)
 {
 	struct cell *t;
 	int64_t cnt, ca, cb, cc, rx, lx;
-	double axis;
 	int err, rk, fx, ri;
-	
-	fv;
 	
 	if (l->a.stg == STG_DEVICE) return 16;
 	if (r->a.stg == STG_DEVICE) return 16;
-	if (s && s->f.axis) return 16;
+	if (ceil(axis) != axis) return 16;
 	
 	rk = l->a.rnk > r->a.rnk ? l->a.rnk : r->a.rnk;
-	
 	if (!rk) rk = 1;
 	
-	axis = rk - 1;
-	
+	if (axis <= -1) return 11;
+	if (axis >= rk) return 4;
+		
 	if (l->a.rnk && r->a.rnk && 1 < labs(l->a.rnk - r->a.rnk)) return 4;
 	
 	fx = (int)ceil(axis);
@@ -6827,6 +6824,34 @@ fail:
 	return err;
 }
 
+EXPORT int
+catenate_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	double axis;
+	
+	fv;
+	
+	if (!l->a.rnk && !r->a.rnk && s && s->f.axis) return 4;
+	
+	if (!s || !s->f.axis) {
+		axis = l->a.rnk > r->a.rnk ? l->a.rnk : r->a.rnk;
+		
+		if (axis) axis--;
+		
+		return catenate_axis(axis, z, l, r);
+	}
+
+	if (s->f.axis->a.rnk) return 5;
+
+	switch (s->f.axis->a.etyp) {
+	case ELEM_BOOL: return catenate_axis(s->f.axis->a.b, z, l, r);
+	case ELEM_INT: return catenate_axis((double)s->f.axis->a.i, z, l, r);
+	case ELEM_FLOAT: return catenate_axis(s->f.axis->a.f, z, l, r);
+	default:
+		return 11;
+	}
+}
+
 int (*cat_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
 	ravel_f, catenate_f
 };
@@ -6836,6 +6861,44 @@ struct cell cat_c = {
 	}
 };
 EXPORT struct cell *cat = &cat_c;
+
+EXPORT int
+table_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	s; z; l; r; fv;
+	
+	return 16;
+}
+
+EXPORT int
+catenatefirst_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	fv;
+	
+	if (!l->a.rnk && !r->a.rnk && s && s->f.axis) return 4;
+	
+	if (!s || !s->f.axis) return catenate_axis(0, z, l, r);
+
+	if (s->f.axis->a.rnk) return 5;
+
+	switch (s->f.axis->a.etyp) {
+	case ELEM_BOOL: return catenate_axis(s->f.axis->a.b, z, l, r);
+	case ELEM_INT: return catenate_axis((double)s->f.axis->a.i, z, l, r);
+	case ELEM_FLOAT: return catenate_axis(s->f.axis->a.f, z, l, r);
+	default:
+		return 11;
+	}
+}
+
+int (*ctf_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	table_f, catenatefirst_f
+};
+struct cell ctf_c = {
+	1, CELL_FUNC, NULL, .f = {
+		ctf_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *ctf = &ctf_c;
 
 #define INDEX_FILL(fn, tp, fd) 								\
 static void										\
