@@ -338,4 +338,8 @@ m17∆small←{V←7 ⋄ {V←13 ⋄ f1←{V=13:f2 ⍵ ⋄ 0} ⋄ f2←{V=13:1 �
 
 ⎕←f1 0 ⋄ ⎕←f2 0 ⋄ ⎕←f3 1 ⋄ ⎕←f4 1 ⋄ ⎕←f5 1 ⋄ ⎕←m17∆small 0 ⋄ ⎕←m17∆small 1
 
+⎕←'Double Return Expressions'
+
+⎕←{5 ⋄ 10}0
+
 :EndNamespace

@@ -909,3 +909,5 @@ Mantis 17 Tests
 5
 1
 1
+Double Return Expressions
+5
