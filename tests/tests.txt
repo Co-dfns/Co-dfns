@@ -913,3 +913,6 @@ Double Return Expressions
 5
 Operator chain tests
 52
+Modified Assignment
+2
+3
