@@ -482,7 +482,7 @@ GC←{
 		z ←check_vars xi fi yi
 		z,←⊂tgt,' = ref_cell(',y,');'
 		z,←(lx[fi]=¯4)⍴⊂'CHK(',fn,'_f(NULL, &',bxv,', ',x,', ',tgt,', NULL), cleanup, ',dbg,');'
-		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', ',bxv,', ',x,', ',tgt,', env), cleanup, ',dbg,');'
+		z,←(lx[fi]≠¯4)⍴⊂'CHK((',fn,'->f.fn[1])(',fn,', &',bxv,', ',x,', ',tgt,', env), cleanup, ',dbg,');'
 		z,←(n[xi]>0)⌿⊂'free_cell(',x,'); ',x,' = NULL;'
 		z,←((lx[fi]≠¯7)∧n[fi]>0)⌿⊂'release_func(',fn,'); ',fn,' = NULL;'
 		z,←(n[yi]>0)⌿⊂'free_cell(',y,'); ',y,' = NULL;'
