@@ -99,6 +99,8 @@ P    | 1      | Symbol   | ---             | Array Primitive
 P    | 2      | Symbol   | ---             | Function Primitive
 P    | 3      | Symbol   | ---             | Mon. Oper. Primitive
 P    | 4      | Symbol   | ---             | Dya. Oper. Primitive
+R    | 2      | ---      | Fun Fun         | Atop train
+R    | 3      | ---      | Arr/Fun Fun Fun | Fork train
 T    | 0      | Symbol   | ABCEGNOPV*[H]   | Namespace Module
 T    | 1..15  | Symbol   | HABCEGNOPV*     | Trad-fn
 V    | 1      | Symbol   | ---             | Array Variable
