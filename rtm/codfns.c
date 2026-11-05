@@ -7059,3 +7059,30 @@ fail:
 	
 	return err;
 }
+
+EXPORT int
+enclose_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	
+	s; l; fv;
+	
+	if (!r->a.rnk && r->a.etyp != ELEM_CELL) {
+		*z = ref_cell(r);
+		
+		return 0;
+	}
+	
+	if (!(t = get_cell())) return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.etyp = ELEM_CELL;
+	t->a.stg = STG_HOST;
+	t->a.rnk = 0;
+	t->a.shp = NULL;
+	t->a.p = ref_cell(r);
+	
+	*z = t;
+	
+	return 0;
+}

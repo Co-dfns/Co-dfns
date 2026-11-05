@@ -258,6 +258,7 @@ GC←{
 	pref,←⊂'int catenatefirst_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *ctf;'
 	pref,←⊂'int index_gen_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
+	pref,←⊂'int enclose_f(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***);'
 	pref,←⊂'DECLSPEC struct cell *rdf;'
 	pref,←⊂'DECLSPEC struct cell *dot;'
 	pref,←⊂'DECLSPEC struct cell *powo;'
