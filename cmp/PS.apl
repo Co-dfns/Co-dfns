@@ -596,7 +596,8 @@ PS←{⍺←⊢
 
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧0=≡¨sym[|0⌊n])∧(t[p]=A)∧k[p]=7
-	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk ⋄ msk∧←pm[p]
+	tm←0⍴⍨≢msk ⋄ tm[i]←(' '=∘⊃0⍴⊢)¨sym[|n[i←⍸msk]] ⋄ tm[p[i]]←tm[i]
+	pm←(t=A)∧k=7 ⋄ pm[p]∧←msk∧tm[p]=tm ⋄ msk∧←pm[p]
 	k[p[i←⍸msk]]←1 ⋄ n[∪pi]←-sym⍳sym∪←(pi←p[i]){⊂⍵}⌸sym[|n[i]]
 	vb I@(≥∘0)⍨←pi@i⍳≢p ⋄ p t k n lx vb pos end⌿⍨←⊂~msk ⋄ p vb(⊣-1+⍸⍨)←⊂⍸msk
 	
