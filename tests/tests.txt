@@ -933,3 +933,9 @@ Operator chain tests
 Modified Assignment
 2
 3
+Enclose
+5
+a
+ 5 6 
+ abc 
+  5 a  
