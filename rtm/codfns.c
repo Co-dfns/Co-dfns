@@ -94,7 +94,7 @@ struct cell {
 };
 
 int64_t
-array_count(struct cell *a, int min)
+array_count(struct cell *a, int64_t min)
 {
 	int64_t cnt;
 	
@@ -136,19 +136,20 @@ get_host_buffer(int64_t size)
 	int i;
 	
 	i = host_buffer_class(size);
+	size = host_buffer_size[i] ? host_buffer_size[i] : size;
 	
 	if (next_buffer[i]) {
 		res = next_buffer[i];
 		next_buffer[i] = res->next;
 	} else {
-		res = malloc(sizeof(*res) + host_buffer_size[i]);
+		res = malloc(sizeof(*res) + size);
 		
 		if (res == NULL)
 			return NULL;
 	}
 	
 	res->refc = 1;
-	res->size = host_buffer_size[i];
+	res->size = size;
 	res->i = (int64_t *)((char *)res + sizeof(*res));
 	
 	return res;
