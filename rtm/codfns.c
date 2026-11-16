@@ -1251,236 +1251,171 @@ brkidx_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct
 	return 0;
 }
 
-int
-set_host(struct cell **z, struct cell *l, struct cell *r, int64_t k, int64_t *zi, int64_t *ri)
+static int
+renew_buffer(struct cell *t, enum elem_type ztyp)
 {
-	struct cell *idx;
+	int64_t zc, xc;
+	struct host_buffer *h;
 	
-	idx = l->a.host->p[k];
+	xc = t->a.rnk ? t->a.shp->i[t->a.rnk - 1] : 1;
+	if (!xc) xc = 1;
 	
-	if (k == l->a.shp->i[0] - 1) {
-		int64_t * restrict iv, cnt;
+	zc = array_count(t, xc);
+	h = get_host_buffer(buffer_size(ztyp, zc));
+	
+	if (!h)
+		return 1;
 		
-		iv = idx->a.rnk ? idx->a.host->i : &idx->a.i;
-		cnt = array_count(idx, 0);
-		*zi *= (*z)->a.shp->i[k];
-		
-		#define SET_HOST_REAL(zt, zf, rt, rf) {				\
-			zt * restrict zv = (*z)->a.host->zf;			\
-										\
-			if (r->a.rnk) {						\
-				rt * restrict rv = r->a.host->rf;		\
-										\
-				for (int64_t i = 0; i < cnt; i++)		\
-					zv[*zi + iv[i]] = (zt)rv[(*ri)++];	\
-			} else {						\
-				for (int64_t i = 0; i < cnt; i++)		\
-					zv[*zi + iv[i]] = (zt)r->a.rf;		\
-			}							\
+	#define SET_CPY_REAL(ht, hf, zf)			\
+		for (int64_t i = 0; i < zc; i++)		\
+			h->hf[i] = (ht)t->a.host->zf[i];	\
+		break;
+	
+	#define SET_CPY_CMPX(zf)					\
+		for (int64_t i = 0; i < zc; i++) {			\
+			h->j[i].real = (double)t->a.host->zf[i];	\
+			h->j[i].imag = 0;				\
+		}							\
+		break;
+	
+	#define SET_CPY_CELL(zf)			\
+		for (int64_t i = 0; i < zc; i++) {      \
+			struct cell *c = get_cell();    \
+							\
+			if (!c) {                       \
+				free_host_buffer(h);    \
+				return 1;               \
+			}                               \
+							\
+			c->ctyp = CELL_ARRAY;           \
+			c->a.etyp = t->a.etyp;          \
+			c->a.stg = STG_HOST;            \
+			c->a.rnk = 0;                   \
+			c->a.shp = NULL;                \
+			c->a.zf = t->a.host->zf[i];     \
+							\
+			h->p[i] = c;                    \
+		}                                       \
+		break;
+	
+	switch (ztyp) {
+	
+	case ELEM_BOOL: SET_CPY_REAL(char, b, b);
+	case ELEM_INT:
+		switch (t->a.etyp) {
+		case ELEM_BOOL: SET_CPY_REAL(int64_t, i, b);
+		case ELEM_INT: SET_CPY_REAL(int64_t, i, i);
 		}break;
-		
-		#define SET_HOST_CMPX(rt, rf) {					\
-			if (r->a.rnk) {						\
-				rt * restrict rv = r->a.host->rf;		\
-										\
-				for (int64_t i = 0; i < cnt; i++) {		\
-					int64_t j = *zi + iv[i];		\
-										\
-					zv[j].real = (double)rv[(*ri)++];	\
-					zv[j].imag = 0;				\
-				}						\
-			} else {						\
-				for (int64_t i = 0; i < cnt; i++) {		\
-					int64_t j = *zi + iv[i];		\
-										\
-					zv[j].real = (double)r->a.rf;		\
-					zv[j].imag = 0;				\
-				}						\
-			}							\
+	case ELEM_FLOAT:
+		switch (t->a.etyp) {
+		case ELEM_BOOL: SET_CPY_REAL(double, f, b);
+		case ELEM_INT: SET_CPY_REAL(double, f, i);
+		case ELEM_FLOAT: SET_CPY_REAL(double, f, f);
 		}break;
-		
-		#define SET_HOST_CELL(rt, rf) {				\
-			if (r->a.rnk) {					\
-				rt * restrict rv = r->a.host->rf;	\
-									\
-				for (int64_t i = 0; i < cnt; i++) {	\
-					struct cell *c = get_cell();	\
-					int64_t j = *zi + iv[i];	\
-									\
-					if (!c) return 1;		\
-									\
-					c->ctyp = CELL_ARRAY;		\
-					c->a.etyp = r->a.etyp;		\
-					c->a.stg = STG_HOST;		\
-					c->a.rnk = 0;			\
-					c->a.shp = NULL;		\
-					c->a.rf = rv[(*ri)++];		\
-									\
-					free_cell(zv[j]);		\
-					zv[j] = c;			\
-				}					\
-			} else {					\
-				for (int64_t i = 0; i < cnt; i++) {	\
-					struct cell *c = get_cell();	\
-					int64_t j = *zi + iv[i];	\
-									\
-					if (!c) return 1;		\
-									\
-					c->ctyp = CELL_ARRAY;		\
-					c->a.etyp = r->a.etyp;		\
-					c->a.stg = STG_HOST;		\
-					c->a.rnk = 0;			\
-					c->a.shp = NULL;		\
-					c->a.rf = r->a.rf;		\
-									\
-					free_cell(zv[j]);		\
-					zv[j] = c;			\
-				}					\
-			}						\
-		}break;
-		
-		switch ((*z)->a.etyp) {
-		case ELEM_BOOL:
-			switch (r->a.etyp) {
-			case ELEM_BOOL: SET_HOST_REAL(char, b, char, b);
-			default: return 99;
-			}break;
-		case ELEM_INT:
-			switch (r->a.etyp) {
-			case ELEM_BOOL: SET_HOST_REAL(int64_t, i, char, b);
-			case ELEM_INT: SET_HOST_REAL(int64_t, i, int64_t, i);
-			default: return 99;
-			}break;
-		
-		case ELEM_FLOAT:
-			switch (r->a.etyp) {
-			case ELEM_BOOL: SET_HOST_REAL(double, f, char, b);
-			case ELEM_INT: SET_HOST_REAL(double, f, int64_t, i);
-			case ELEM_FLOAT: SET_HOST_REAL(double, f, double, f);
-			default: return 99;
-			}break;
-				
-		case ELEM_CMPX:{
-			struct apl_cmpx * restrict zv = (*z)->a.host->j;
-			
-			switch (r->a.etyp) {
-			case ELEM_BOOL: SET_HOST_CMPX(char, b);
-			case ELEM_INT: SET_HOST_CMPX(int64_t, i);
-			case ELEM_FLOAT: SET_HOST_CMPX(double, f);
-			case ELEM_CMPX:
-				if (r->a.rnk) {
-					struct apl_cmpx * restrict rv = r->a.host->j;
-					
-					for (int64_t i = 0; i < cnt; i++)
-						zv[*zi + iv[i]] = rv[(*ri)++];
-				} else {
-					for (int64_t i = 0; i < cnt; i++)
-						zv[*zi + iv[i]] = r->a.j;
-				}
+	case ELEM_CMPX:
+		switch (t->a.etyp) {
+		case ELEM_BOOL: SET_CPY_CMPX(b);
+		case ELEM_INT: SET_CPY_CMPX(i);
+		case ELEM_FLOAT: SET_CPY_CMPX(f);
+		case ELEM_CMPX:
+			for (int64_t i = 0; i < zc; i++) 
+				h->j[i] = t->a.host->j[i];
 			break;
-			
-			default:
-				return 99;
-			}
 		}break;
-		
-		case ELEM_CHAR:
-			switch (r->a.etyp) {
-			case ELEM_CHAR: SET_HOST_REAL(uint32_t, c, uint32_t, c);
-			default: return 99;
-			}break;
-		
-		case ELEM_CELL:{
-			struct cell ** restrict zv = (*z)->a.host->p;
-			
-			switch (r->a.etyp) {
-			case ELEM_BOOL: SET_HOST_CELL(char, b);
-			case ELEM_INT: SET_HOST_CELL(int64_t, i);
-			case ELEM_FLOAT: SET_HOST_CELL(double, f);
-			case ELEM_CMPX: SET_HOST_CELL(struct apl_cmpx, j);
-			case ELEM_CHAR: SET_HOST_CELL(uint32_t, c);
-			case ELEM_CELL:
-				if (r->a.rnk) {
-					struct cell ** restrict rv = r->a.host->p;
-
-					for (int64_t i = 0; i < cnt; i++) {
-						int64_t j = *zi + iv[i];
-						
-						free_cell(zv[j]);
-						zv[j] = ref_cell(rv[(*ri)++]);
-					}
-				} else {
-					for (int64_t i = 0; i < cnt; i++) {
-						int64_t j = *zi + iv[i];
-						
-						free_cell(zv[j]);
-						zv[j] = ref_cell(r->a.p);
-					}
-				}
+	case ELEM_CHAR: SET_CPY_REAL(uint32_t, c, c);
+	case ELEM_CELL:
+		switch (t->a.etyp) {
+		case ELEM_BOOL: SET_CPY_CELL(b);
+		case ELEM_INT: SET_CPY_CELL(i);
+		case ELEM_FLOAT: SET_CPY_CELL(f);
+		case ELEM_CMPX: SET_CPY_CELL(j);
+		case ELEM_CHAR: SET_CPY_CELL(c);
+		case ELEM_CELL:
+			for (int64_t i = 0; i < zc; i++)
+				h->p[i] = ref_cell(t->a.host->p[i]);
 			break;
-			
-			default:
-				return 99;
-			}
-		}break;
-		
-		default:
-			return 99;
 		}
-			
-		return 0;
+		break;
+	default:
+		free_host_buffer(h);
+		return 99;
 	}
 	
-	return 16;
+	free_host_buffer(t->a.host);
+	t->a.host = h;
+	t->a.etyp = ztyp;
+	
+	return 0;
 }
 
-EXPORT int
-set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+static int
+set_prepare(struct cell **z, struct cell *l, struct cell *r, enum elem_type ztyp)
 {
-	int64_t cnt, zi, ri;
-	enum elem_type ztyp;
-	
-	s; fv;
+	int64_t cnt;
+	int err;
 	
 	if (l->a.rnk != 1 || l->a.etyp != ELEM_CELL)
 		return 99;
 		
+	if ((*z)->a.rnk != l->a.shp->i[0]) return 4;
+		
+	for (int64_t i = 0; i < (*z)->a.rnk; i++) {
+		struct cell *x = l->a.host->p[i];
+		
+		if (x->a.etyp > ELEM_INT)
+			return 11;
+		
+		if (x->a.stg != STG_HOST) return 16;
+	}
+		
 	if (r->a.rnk) {
-		int64_t j;
+		int64_t j = 0;
 		
-		j = 0;
-		
-		for (int64_t k = 0; k < l->a.shp->i[0]; k++) {
-			struct cell *idx = l->a.host->p[k];
-		
-			for (int64_t i = 0; i < idx->a.rnk; i++) {
-				if (j == r->a.rnk)
+		for (int64_t k = 0; k < (*z)->a.rnk; k++) {
+			struct cell *x = l->a.host->p[k];
+			
+			if (x->a.etyp == ELEM_SPAN) {
+				if ((*z)->a.shp->i[k] != r->a.shp->i[j++])
+					return 5;
+				
+				continue;
+			}
+			
+			for (int64_t i = 0; i < x->a.rnk; i++) {
+				if (j == r->a.rnk) 
 					return 4;
-					
-				if (idx->a.shp->i[i] != r->a.shp->i[j++])
+				
+				if (x->a.shp->i[i] != r->a.shp->i[j++])
 					return 5;
 			}
 		}
-		
+			
 		if (j != r->a.rnk)
 			return 4;
 	}
 	
 	cnt = 1;
 	
-	for (int64_t i = 0; i < l->a.shp->i[0]; i++) {
-		struct cell *idx = l->a.host->p[i];
+	for (int64_t i = 0; i < (*z)->a.rnk; i++) {
+		struct cell *x = l->a.host->p[i];
 		
-		for (int64_t j = 0; j < idx->a.rnk; j++)
-			cnt *= idx->a.shp->i[j];
+		if (x->a.etyp == ELEM_SPAN) {
+			cnt *= (*z)->a.shp->i[i];
+		}
+		
+		for (int64_t j = 0; j < x->a.rnk; j++)
+			cnt *= x->a.shp->i[j];
 	}
 	
 	if (!cnt)
-		return 0;
+		return -1;
 	
 	if ((*z)->a.stg != STG_HOST)
 		return 16;
 		
+	if (r->a.stg != STG_HOST)
+		return 16;
+
 	if ((*z)->refc != 1) {
 		struct cell *t = get_cell();
 		
@@ -1496,106 +1431,601 @@ set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 		*z = t;
 	}
 	
+	if ((*z)->a.host->refc != 1 || (*z)->a.etyp != ztyp)
+		if ((err = renew_buffer(*z, ztyp))) return err;
+	
+	return 0;
+}
+
+#define SET_HOST(set_host, tt, tf, rt, rf, expr) 				\
+static int									\
+set_host(struct cell *t, struct cell *l, struct cell *r,                        \
+    int64_t ti, int64_t li, int64_t *ri)                                        \
+{                                                                               \
+	tt *restrict tv;                                                        \
+	rt *restrict rv;                                                        \
+	struct cell *d;                                                         \
+	char *restrict db;                                                      \
+	int64_t *restrict di;                                                   \
+	int64_t cnt;                                                            \
+	int err;								\
+										\
+	ti *= t->a.shp->i[li];                                                  \
+	d = l->a.host->p[li];                                                   \
+	cnt = array_count(d, 0);                                                \
+										\
+	if (li == t->a.rnk - 1) {                                               \
+		tv = t->a.rnk ? t->a.host->tf : &t->a.tf;                       \
+		rv = r->a.rnk ? r->a.host->rf : &r->a.rf;                       \
+										\
+		if (d->a.etyp == ELEM_SPAN) {                                   \
+			for (int64_t i = 0; i < t->a.shp->i[li]; i++)           \
+				expr(i, tt, rf);                                \
+		} else if (!d->a.rnk) {                                         \
+			if (d->a.etyp == ELEM_BOOL) {                           \
+				expr(d->a.b, tt, rf);                           \
+			} else {                                                \
+				expr(d->a.i, tt, rf);                           \
+			}							\
+		} else if (d->a.etyp == ELEM_BOOL) {                            \
+			db = d->a.host->b;                                      \
+										\
+			for (int64_t i = 0; i < cnt; i++)                       \
+				expr(db[i], tt, rf);                            \
+		} else {                                                        \
+			di = d->a.host->i;                                      \
+										\
+			for (int64_t i = 0; i < cnt; i++)                       \
+				expr(di[i], tt, rf);                            \
+		}                                                               \
+										\
+		return 0;                                                       \
+	}                                                                       \
+										\
+	if (d->a.etyp == ELEM_SPAN) {						\
+		for (int64_t i = 0; i < t->a.shp->i[li]; i++)			\
+			if ((err = set_host(t, l, r, ti+i, li+1, ri)))          \
+				return err;                                     \
+	} else if (!d->a.rnk) {                                                 \
+		if (d->a.etyp == ELEM_BOOL) {                                   \
+			if ((err = set_host(t, l, r, ti+d->a.b, li+1, ri)))     \
+				return err;                                     \
+		} else {                                                        \
+			if ((err = set_host(t, l, r, ti+d->a.i, li+1, ri)))     \
+				return err;                                     \
+		}                                                               \
+	} else if (d->a.etyp == ELEM_BOOL) {                                    \
+		db = d->a.host->b;                                              \
+		for (int64_t i = 0; i < cnt; i++)                               \
+			if ((err = set_host(t, l, r, ti+db[i], li+1, ri)))      \
+				return err;                                     \
+	} else {                                                                \
+		di = d->a.host->i;                                              \
+		for (int64_t i = 0; i < cnt; i++)                               \
+			if ((err = set_host(t, l, r, ti+di[i], li+1, ri)))      \
+				return err;                                     \
+	}                                                                       \
+										\
+	return 0;                                                               \
+}
+
+#define SET_HOST_RRS(i, tp, fd) tv[ti + i] = (tp) *rv;
+#define SET_HOST_RRV(i, tp, fd) tv[ti + i] = (tp) rv[(*ri)++];
+
+SET_HOST(set_host_bbs, char, b, char, b, SET_HOST_RRS)
+SET_HOST(set_host_bbv, char, b, char, b, SET_HOST_RRV)
+SET_HOST(set_host_ibs, int64_t, i, char, b, SET_HOST_RRS)
+SET_HOST(set_host_ibv, int64_t, i, char, b, SET_HOST_RRV)
+SET_HOST(set_host_iis, int64_t, i, int64_t, i, SET_HOST_RRS)
+SET_HOST(set_host_iiv, int64_t, i, int64_t, i, SET_HOST_RRV)
+SET_HOST(set_host_fbs, double, f, char, b, SET_HOST_RRS)
+SET_HOST(set_host_fbv, double, f, char, b, SET_HOST_RRV)
+SET_HOST(set_host_fis, double, f, int64_t, i, SET_HOST_RRS)
+SET_HOST(set_host_fiv, double, f, int64_t, i, SET_HOST_RRV)
+SET_HOST(set_host_ffs, double, f, double, f, SET_HOST_RRS)
+SET_HOST(set_host_ffv, double, f, double, f, SET_HOST_RRV)
+SET_HOST(set_host_ccs, uint32_t, c, uint32_t, c, SET_HOST_RRS)
+SET_HOST(set_host_ccv, uint32_t, c, uint32_t, c, SET_HOST_RRV)
+
+#define SET_HOST_JRS(i, tp, fd) { \
+	int64_t j = ti + i; \
+	tv[j].real = (double) *rv; \
+	tv[j].imag = 0; \
+}
+#define SET_HOST_JRV(i, tp, fd) { \
+	int64_t j = ti + i; \
+	tv[j].real = (double)rv[(*ri)++]; \
+	tv[j].imag = 0; \
+}
+#define SET_HOST_JJS(i, tp, fd) tv[ti + i] = *rv;
+#define SET_HOST_JJV(i, tp, fd) tv[ti + i] = rv[(*ri)++];
+
+SET_HOST(set_host_jbs, struct apl_cmpx, j, char, b, SET_HOST_JRS)
+SET_HOST(set_host_jbv, struct apl_cmpx, j, char, b, SET_HOST_JRV)
+SET_HOST(set_host_jis, struct apl_cmpx, j, int64_t, i, SET_HOST_JRS)
+SET_HOST(set_host_jiv, struct apl_cmpx, j, int64_t, i, SET_HOST_JRV)
+SET_HOST(set_host_jfs, struct apl_cmpx, j, double, f, SET_HOST_JRS)
+SET_HOST(set_host_jfv, struct apl_cmpx, j, double, f, SET_HOST_JRV)
+SET_HOST(set_host_jjs, struct apl_cmpx, j, struct apl_cmpx, j, SET_HOST_JJS)
+SET_HOST(set_host_jjv, struct apl_cmpx, j, struct apl_cmpx, j, SET_HOST_JJV)
+
+#define SET_HOST_PRS(i, tp, fd) tv[ti + i] = ref_cell(r);
+#define SET_HOST_PRV(i, tp, fd) { \
+	struct cell *x = get_cell(); \
+	if (!x) return 1; \
+	x->ctyp = CELL_ARRAY; \
+	x->a.etyp = r->a.etyp; \
+	x->a.stg = STG_HOST; \
+	x->a.rnk = 0; \
+	x->a.shp = NULL; \
+	x->a.fd = rv[(*ri)++]; \
+	free_cell(tv[ti + i]); \
+	tv[ti + i] = x; \
+}
+#define SET_HOST_PPV(i, tp, fd) tv[ti + i] = ref_cell(rv[(*ri)++]);
+
+SET_HOST(set_host_pbs, struct cell *, p, char, b, SET_HOST_PRS)
+SET_HOST(set_host_pbv, struct cell *, p, char, b, SET_HOST_PRV)
+SET_HOST(set_host_pis, struct cell *, p, int64_t, i, SET_HOST_PRS)
+SET_HOST(set_host_piv, struct cell *, p, int64_t, i, SET_HOST_PRV)
+SET_HOST(set_host_pfs, struct cell *, p, double, f, SET_HOST_PRS)
+SET_HOST(set_host_pfv, struct cell *, p, double, f, SET_HOST_PRV)
+SET_HOST(set_host_pjs, struct cell *, p, struct apl_cmpx, j, SET_HOST_PRS)
+SET_HOST(set_host_pjv, struct cell *, p, struct apl_cmpx, j, SET_HOST_PRV)
+SET_HOST(set_host_pcs, struct cell *, p, uint32_t, c, SET_HOST_PRS)
+SET_HOST(set_host_pcv, struct cell *, p, uint32_t, c, SET_HOST_PRV)
+SET_HOST(set_host_pps, struct cell *, p, struct cell *, p, SET_HOST_PRS)
+SET_HOST(set_host_ppv, struct cell *, p, struct cell *, p, SET_HOST_PPV)
+
+EXPORT int
+set_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	int64_t ri;
+	enum elem_type ztyp;
+	int err;
+	
+	s; fv;
+	
 	ztyp = elem_type_merge_map[(*z)->a.etyp][r->a.etyp];
 	
-	if ((*z)->a.host->refc != 1 || (*z)->a.etyp != ztyp){
-		int64_t zc;
-		struct host_buffer *h;
-		
-		zc = array_count(*z, 1);
-		h = get_host_buffer(buffer_size(ztyp, zc));
-		
-		if (!h)
-			return 1;
-			
-		#define SET_CPY_REAL(ht, hf, zf)			\
-			for (int64_t i = 0; i < zc; i++)		\
-				h->hf[i] = (ht)(*z)->a.host->zf[i];	\
-			break;
-		
-		#define SET_CPY_CMPX(zf)					\
-			for (int64_t i = 0; i < zc; i++) {			\
-				h->j[i].real = (double)(*z)->a.host->zf[i];	\
-				h->j[i].imag = 0;				\
-			}							\
-			break;
-		
-		#define SET_CPY_CELL(zf)			\
-			for (int64_t i = 0; i < zc; i++) {      \
-				struct cell *c = get_cell();    \
-								\
-				if (!c) {                       \
-					free_host_buffer(h);    \
-					return 1;               \
-				}                               \
-								\
-				c->ctyp = CELL_ARRAY;           \
-				c->a.etyp = (*z)->a.etyp;       \
-				c->a.stg = STG_HOST;            \
-				c->a.rnk = 0;                   \
-				c->a.shp = NULL;                \
-				c->a.zf = (*z)->a.host->zf[i];  \
-								\
-				h->p[i] = c;                    \
-			}                                       \
-			break;
-		
-		switch (ztyp) {
-		
-		case ELEM_BOOL: SET_CPY_REAL(char, b, b);
-		case ELEM_INT:
-			switch ((*z)->a.etyp) {
-			case ELEM_BOOL: SET_CPY_REAL(int64_t, i, b);
-			case ELEM_INT: SET_CPY_REAL(int64_t, i, i);
-			}break;
-		case ELEM_FLOAT:
-			switch ((*z)->a.etyp) {
-			case ELEM_BOOL: SET_CPY_REAL(double, f, b);
-			case ELEM_INT: SET_CPY_REAL(double, f, i);
-			case ELEM_FLOAT: SET_CPY_REAL(double, f, f);
-			}break;
-		case ELEM_CMPX:
-			switch ((*z)->a.etyp) {
-			case ELEM_BOOL: SET_CPY_CMPX(b);
-			case ELEM_INT: SET_CPY_CMPX(i);
-			case ELEM_FLOAT: SET_CPY_CMPX(f);
-			case ELEM_CMPX:
-				for (int64_t i = 0; i < zc; i++) 
-					h->j[i] = (*z)->a.host->j[i];
-				break;
-			}break;
-		case ELEM_CHAR: SET_CPY_REAL(uint32_t, c, c);
-		case ELEM_CELL:
-			switch ((*z)->a.etyp) {
-			case ELEM_BOOL: SET_CPY_CELL(b);
-			case ELEM_INT: SET_CPY_CELL(i);
-			case ELEM_FLOAT: SET_CPY_CELL(f);
-			case ELEM_CMPX: SET_CPY_CELL(j);
-			case ELEM_CHAR: SET_CPY_CELL(c);
-			case ELEM_CELL:
-				for (int64_t i = 0; i < zc; i++)
-					h->p[i] = ref_cell((*z)->a.host->p[i]);
-				break;
-			}
-			break;
-		default:
-			free_host_buffer(h);
-			return 99;
-		}
-		
-		free_host_buffer((*z)->a.host);
-		(*z)->a.host = h;
-		(*z)->a.etyp = ztyp;
-	}
+	err = set_prepare(z, l, r, ztyp);
 	
+	if (err == -1) return 0;
+	if (err) return err;
 	
-	if (r->a.stg != STG_HOST)
-		return 16;
-	
-	zi = 0;
 	ri = 0;
 	
-	return set_host(z, l, r, 0, &zi, &ri);
+	#define SET_SCL_VEC(scl, vec) \
+		if (r->a.rnk) return vec(*z, l, r, 0, 0, &ri); \
+		else return scl(*z, l, r, 0, 0, &ri); \
+	
+	switch ((*z)->a.etyp) {
+	case ELEM_BOOL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SET_SCL_VEC(set_host_bbs, set_host_bbv);
+		default: return 99;
+		}
+	case ELEM_INT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SET_SCL_VEC(set_host_ibs, set_host_ibv);
+		case ELEM_INT: SET_SCL_VEC(set_host_iis, set_host_iiv);
+		default: return 99;
+		}
+	case ELEM_FLOAT:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SET_SCL_VEC(set_host_fbs, set_host_fbv);
+		case ELEM_INT: SET_SCL_VEC(set_host_fis, set_host_fiv);
+		case ELEM_FLOAT: SET_SCL_VEC(set_host_ffs, set_host_ffv);
+		default: return 99;
+		}
+	case ELEM_CMPX:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SET_SCL_VEC(set_host_jbs, set_host_jbv);
+		case ELEM_INT: SET_SCL_VEC(set_host_jis, set_host_jiv);
+		case ELEM_FLOAT: SET_SCL_VEC(set_host_jfs, set_host_jfv);
+		case ELEM_CMPX: SET_SCL_VEC(set_host_jjs, set_host_jjv);
+		default:
+			return 99;
+		}
+	case ELEM_CHAR:
+		switch (r->a.etyp) {
+		case ELEM_CHAR: SET_SCL_VEC(set_host_ccs, set_host_ccv);
+		default: return 99;
+		}
+	case ELEM_CELL:
+		switch (r->a.etyp) {
+		case ELEM_BOOL: SET_SCL_VEC(set_host_pbs, set_host_pbv);
+		case ELEM_INT: SET_SCL_VEC(set_host_pis, set_host_piv);
+		case ELEM_FLOAT: SET_SCL_VEC(set_host_pfs, set_host_pfv);
+		case ELEM_CMPX: SET_SCL_VEC(set_host_pjs, set_host_pjv);
+		case ELEM_CHAR: SET_SCL_VEC(set_host_pcs, set_host_pcv);
+		case ELEM_CELL: SET_SCL_VEC(set_host_pps, set_host_ppv);
+		default:
+			return 99;
+		}
+	default:
+		return 99;
+	}
+}
+
+#define MST_HOST_CALL(fd) 						\
+	x.a.fd = t->a.host->fd[ti];					\
+	if ((err = fn->f.fn[1](fn, &d, &x, yp, NULL))) return err;      \
+	if (d->a.rnk) MST_HOST_RENEW_CELL;
+	
+#define MST_HOST_RENEW(fd) 						\
+	if ((err = renew_buffer(t, d->a.etyp))) goto assign_done;	\
+	t->a.host->fd[ti] = d->a.fd;					\
+	goto assign_done;
+
+#define MST_HOST_RENEW_CELL {						\
+	if ((err = renew_buffer(t, ELEM_CELL))) goto assign_done;	\
+	free_cell(t->a.host->p[ti]);                                    \
+	t->a.host->p[ti] = d;                                           \
+	return 0;							\
+}
+
+#define MST_HOST_SCL(rf) struct cell *yp = r; ri;
+
+#define MST_HOST_VEC_CELL(rf) struct cell *yp = r->a.host->p[(*ri)++];
+
+#define MST_HOST_VEC(rf)							\
+	struct cell y = {1, CELL_ARRAY, NULL,                                   \
+			.a = {r->a.etyp, STG_HOST, 0, NULL, .host = NULL}       \
+	};                                                                      \
+	struct cell *yp = &y;                                                   \
+										\
+	y.a.rf = r->a.host->rf[(*ri)++];                                        \
+
+
+#define MST_HOST(mst_host, rf, val_blk)							\
+static int										\
+mst_host(struct cell *fn, struct cell *t, struct cell *l, struct cell *r, 		\
+    int64_t ti, int li, int64_t *ri)                                                    \
+{                                                                                       \
+	struct cell *d;                                                                 \
+	char *restrict db;                                                              \
+	int64_t *restrict di;                                                           \
+	int64_t cnt;                                                                    \
+	int err;                                                                        \
+											\
+	if (li == t->a.rnk) {                                                           \
+		struct cell x = {1, CELL_ARRAY, NULL,                                   \
+			.a = {t->a.etyp, STG_HOST, 0, NULL, .host = NULL}               \
+		};                                                                      \
+											\
+		val_blk(rf);								\
+											\
+		d = NULL;                                                               \
+											\
+		switch (t->a.etyp) {                                                    \
+		case ELEM_BOOL:	MST_HOST_CALL(b);                                       \
+			switch (d->a.etyp) {                                            \
+			case ELEM_BOOL: t->a.host->b[ti] = d->a.b; goto assign_done;    \
+			case ELEM_INT: MST_HOST_RENEW(i);                               \
+			case ELEM_FLOAT: MST_HOST_RENEW(f);                             \
+			case ELEM_CMPX: MST_HOST_RENEW(j);                              \
+			case ELEM_CHAR:                                                 \
+			case ELEM_CELL: MST_HOST_RENEW_CELL;                            \
+			default: err = 99; goto assign_done;                            \
+			}                                                               \
+											\
+		case ELEM_INT: MST_HOST_CALL(i);                                        \
+			switch (d->a.etyp) {                                            \
+			case ELEM_BOOL: t->a.host->i[ti] = d->a.b; goto assign_done;    \
+			case ELEM_INT: t->a.host->i[ti] = d->a.i; goto assign_done;     \
+			case ELEM_FLOAT: MST_HOST_RENEW(f);                             \
+			case ELEM_CMPX: MST_HOST_RENEW(j);                              \
+			case ELEM_CHAR:                                                 \
+			case ELEM_CELL: MST_HOST_RENEW_CELL;                            \
+			default: err = 99; goto assign_done;                            \
+			}                                                               \
+											\
+		case ELEM_FLOAT: MST_HOST_CALL(f);                                      \
+			switch (d->a.etyp) {                                            \
+			case ELEM_BOOL: t->a.host->f[ti] = d->a.b; goto assign_done;    \
+			case ELEM_INT: t->a.host->i[ti] = d->a.i; goto assign_done;     \
+			case ELEM_FLOAT: t->a.host->f[ti] = d->a.f; goto assign_done;   \
+			case ELEM_CMPX: MST_HOST_RENEW(j);                              \
+			case ELEM_CHAR:                                                 \
+			case ELEM_CELL: MST_HOST_RENEW_CELL;                            \
+			default: err = 99; goto assign_done;                            \
+			}                                                               \
+											\
+		case ELEM_CMPX: MST_HOST_CALL(j);                                       \
+			switch (d->a.etyp) {                                            \
+			case ELEM_BOOL:                                                 \
+				t->a.host->j[ti].real = d->a.b;                         \
+				t->a.host->j[ti].imag = 0;                              \
+				goto assign_done;                                       \
+			case ELEM_INT:                                                  \
+				t->a.host->j[ti].real = (double)d->a.i;                 \
+				t->a.host->j[ti].imag = 0;                              \
+				goto assign_done;                                       \
+			case ELEM_FLOAT:                                                \
+				t->a.host->j[ti].real = d->a.f;                         \
+				t->a.host->j[ti].imag = 0;                              \
+				goto assign_done;                                       \
+			case ELEM_CMPX:                                                 \
+				t->a.host->j[ti] = d->a.j;                              \
+				goto assign_done;                                       \
+			case ELEM_CHAR:                                                 \
+			case ELEM_CELL: MST_HOST_RENEW_CELL;                            \
+			default: err = 99; goto assign_done;                            \
+			}                                                               \
+											\
+		case ELEM_CHAR: MST_HOST_CALL(c);                                       \
+			switch (d->a.etyp) {                                            \
+			case ELEM_CHAR: t->a.host->c[ti] = d->a.c; goto assign_done;    \
+			case ELEM_BOOL:                                                 \
+			case ELEM_INT:                                                  \
+			case ELEM_FLOAT:                                                \
+			case ELEM_CMPX:                                                 \
+			case ELEM_CELL: MST_HOST_RENEW_CELL;                            \
+			default: err = 99; goto assign_done;                            \
+			}                                                               \
+											\
+		case ELEM_CELL:                                                         \
+			err = fn->f.fn[1](fn, &d, t->a.host->p[ti], yp, NULL);          \
+			if (err) return err;                                            \
+											\
+			free_cell(t->a.host->p[ti]);                                    \
+			t->a.host->p[ti] = d;                                           \
+			return 0;                                                       \
+											\
+		default: return 99;                                                     \
+		}                                                                       \
+											\
+assign_done:                                                                            \
+		free_cell(d);                                                           \
+		return err;                                                             \
+	}                                                                               \
+											\
+	ti *= t->a.shp->i[li];                                                          \
+	d = l->a.host->p[li];                                                           \
+	cnt = array_count(d, 0);                                                        \
+											\
+	if (d->a.etyp == ELEM_SPAN) {							\
+		for (int64_t i = 0; i < t->a.shp->i[li]; i++)				\
+			if ((err = mst_host(fn, t, l, r, ti+i, li+1, ri)))              \
+				return err;                                             \
+	} else if (!d->a.rnk) {                                                         \
+		if (d->a.etyp == ELEM_BOOL) {                                           \
+			if ((err = mst_host(fn, t, l, r, ti+d->a.b, li+1, ri)))         \
+				return err;                                             \
+		} else {                                                                \
+			if ((err = mst_host(fn, t, l, r, ti+d->a.i, li+1, ri)))         \
+				return err;                                             \
+		}                                                                       \
+	} else if (d->a.etyp == ELEM_BOOL) {                                            \
+		db = d->a.host->b;                                                      \
+		for (int64_t i = 0; i < cnt; i++)                                       \
+			if ((err = mst_host(fn, t, l, r, ti+db[i], li+1, ri)))          \
+				return err;                                             \
+	} else {                                                                        \
+		di = d->a.host->i;                                                      \
+		for (int64_t i = 0; i < cnt; i++)                                       \
+			if ((err = mst_host(fn, t, l, r, ti+di[i], li+1, ri)))          \
+				return err;                                             \
+	}                                                                               \
+											\
+	return 0;                                                                       \
+}
+
+MST_HOST(mst_host_scl, b, MST_HOST_SCL)
+MST_HOST(mst_host_vec_bool, b, MST_HOST_VEC)
+MST_HOST(mst_host_vec_int, i, MST_HOST_VEC)
+MST_HOST(mst_host_vec_float, f, MST_HOST_VEC)
+MST_HOST(mst_host_vec_cmpx, j, MST_HOST_VEC)
+MST_HOST(mst_host_vec_char, c, MST_HOST_VEC)
+MST_HOST(mst_host_vec_cell, p, MST_HOST_VEC_CELL)
+
+EXPORT int
+mst_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	int64_t ri;
+	int err;
+	
+	fv;
+	
+	err = set_prepare(z, l, r, (*z)->a.etyp);
+	
+	if (err == -1) return 0;
+	if (err) return err;
+	
+	ri = 0;
+	
+	if (r->a.rnk)
+		switch (r->a.etyp) {
+		case ELEM_BOOL: return mst_host_vec_bool(s->f.aa, *z, l, r, 0, 0, &ri);
+		case ELEM_INT: return mst_host_vec_int(s->f.aa, *z, l, r, 0, 0, &ri);
+		case ELEM_FLOAT: return mst_host_vec_float(s->f.aa, *z, l, r, 0, 0, &ri);
+		case ELEM_CMPX: return mst_host_vec_cmpx(s->f.aa, *z, l, r, 0, 0, &ri);
+		case ELEM_CHAR: return mst_host_vec_char(s->f.aa, *z, l, r, 0, 0, &ri);
+		case ELEM_CELL: return mst_host_vec_cell(s->f.aa, *z, l, r, 0, 0, &ri);
+		default: return 99;
+		}
+	else
+		return mst_host_scl(s->f.aa, *z, l, r, 0, 0, &ri);
+}
+
+int (*mst_fn[])(struct cell *, struct cell **, struct cell *, struct cell *, struct cell ***) = {
+	syserr_f, syserr_f, syserr_f, mst_f
+};
+struct cell mst_c = {
+	1, CELL_FUNC, NULL, .f = {
+		mst_fn, NULL, NULL, NULL
+	}
+};
+EXPORT struct cell *mst = &mst_c;
+
+#define INDEX_FILL(fn, tp, fd, expr)							\
+static void										\
+fn(struct cell *t, struct cell *l, struct cell *r, int64_t *ti, int64_t li, int ri)	\
+{											\
+	tp *restrict lv;								\
+	tp *restrict tv;								\
+	struct cell *d;                                                                 \
+	char *restrict db;                                                              \
+	int64_t *restrict di;                                                           \
+	int64_t cnt;                                                                    \
+											\
+	li *= l->a.shp->i[ri];					                        \
+	d = r->a.host->p[ri];                                                           \
+	cnt = array_count(d, 0);                                                        \
+											\
+	if (ri == l->a.rnk - 1) {                                                       \
+		lv = l->a.rnk ? l->a.host->fd : &l->a.fd;                               \
+		tv = t->a.rnk ? t->a.host->fd : &t->a.fd;                               \
+											\
+		if (d->a.etyp == ELEM_SPAN) {                                           \
+			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
+				expr(i);                                                \
+		} else if (!d->a.rnk) {                                                 \
+			if (d->a.etyp == ELEM_BOOL) {                                   \
+				expr(d->a.b);                                           \
+			} else {                                                        \
+				expr(d->a.i);                                           \
+			}								\
+		} else if (d->a.etyp == ELEM_BOOL) {                                    \
+			db = d->a.host->b;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				expr(db[i]);                                            \
+		} else {                                                                \
+			di = d->a.host->i;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				expr(di[i]);                                            \
+		}                                                                       \
+	} else {                                                                        \
+		if (d->a.etyp == ELEM_SPAN) {                                           \
+			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
+				fn(t, l, r, ti, li+i, ri+1);                            \
+		} else if (!d->a.rnk) {                                                 \
+			if (d->a.etyp == ELEM_BOOL)                                     \
+				fn(t, l, r, ti, li+d->a.b, ri+1);                       \
+			else                                                            \
+				fn(t, l, r, ti, li+d->a.i, ri+1);                       \
+		} else if (d->a.etyp == ELEM_BOOL) {                                    \
+			db = d->a.host->b;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				fn(t, l, r, ti, li+db[i], ri+1);                        \
+		} else {                                                                \
+			di = d->a.host->i;						\
+			for (int64_t i = 0; i < cnt; i++)                               \
+				fn(t, l, r, ti, li+di[i], ri+1);                        \
+		}                                                                       \
+	}                                                                               \
+}
+
+#define INDEX_FILL_REAL(i) tv[(*ti)++] = lv[li + i];
+#define INDEX_FILL_CELL(i) { \
+	int64_t j = (*ti)++; \
+	free_cell(tv[j]); \
+	tv[j] = ref_cell(lv[li + i]); \
+}
+
+INDEX_FILL(index_fill_bool, char, b, INDEX_FILL_REAL)
+INDEX_FILL(index_fill_int, int64_t, i, INDEX_FILL_REAL)
+INDEX_FILL(index_fill_float, double, f, INDEX_FILL_REAL)
+INDEX_FILL(index_fill_cmpx, struct apl_cmpx, j, INDEX_FILL_REAL)
+INDEX_FILL(index_fill_char, uint32_t, c, INDEX_FILL_REAL)
+INDEX_FILL(index_fill_cell, struct cell *, p,  INDEX_FILL_CELL)
+
+EXPORT int
+brk_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
+{
+	struct cell *t;
+	int64_t cnt, ti;
+	int err;
+	
+	s; fv;
+	
+	if (r->a.rnk != 1) return 99;
+	if (r->a.etyp != ELEM_CELL) return 99;
+	
+	if (l->a.rnk != r->a.shp->i[0]) return 4;
+	
+	for (int64_t i = 0; i < l->a.rnk; i++) {
+		struct cell *x = r->a.host->p[i];
+		
+		if (x->a.etyp > ELEM_INT)
+			return 11;
+		
+		if (x->a.stg != STG_HOST) return 16;
+	}
+	
+	if (!(t = get_cell())) return 1;
+	
+	t->ctyp = CELL_ARRAY;
+	t->a.etyp = l->a.etyp;
+	t->a.stg = STG_HOST;
+	t->a.rnk = 0;
+	t->a.shp = NULL;
+	t->a.host = NULL;
+	
+	for (int64_t i = 0; i < l->a.rnk; i++) {
+		struct cell *x = r->a.host->p[i];
+		
+		t->a.rnk += x->a.etyp == ELEM_SPAN ? 1 : x->a.rnk;
+	}
+	
+	if (t->a.rnk) {
+		t->a.shp = get_host_buffer(buffer_size(ELEM_INT, t->a.rnk));
+		if (!t->a.shp) { err = 1; goto fail; }
+	}
+	
+	for (int64_t i = 0, j = 0; i < l->a.rnk; i++) {
+		struct cell *x = r->a.host->p[i];
+		
+		if (x->a.etyp == ELEM_SPAN)
+			t->a.shp->i[j++] = l->a.shp->i[i];
+		else
+			for (int k = 0; k < x->a.rnk; k++)
+				t->a.shp->i[j++] = x->a.shp->i[k];
+	}
+	
+	cnt = array_count(t, 0);
+	
+	if (!cnt) {
+		int64_t c;
+		
+		c = t->a.shp->i[t->a.rnk - 1];
+		
+		if (!c) c = 1;
+		
+		t->a.host = array_fill_element(l, c);
+		
+		if (!t->a.host) { err = 1; goto fail; }
+		
+		goto done;
+	}
+	
+	ti = 0;
+	
+	if (t->a.rnk) {
+		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
+		if (!t->a.host) { err = 1; goto fail; }
+	}
+	
+	switch (t->a.etyp) {
+	case ELEM_BOOL: index_fill_bool(t, l, r, &ti, 0, 0); break;
+	case ELEM_INT: index_fill_int(t, l, r, &ti, 0, 0); break;
+	case ELEM_FLOAT: index_fill_float(t, l, r, &ti, 0, 0); break;
+	case ELEM_CMPX: index_fill_cmpx(t, l, r, &ti, 0, 0); break;
+	case ELEM_CHAR: index_fill_char(t, l, r, &ti, 0, 0); break;
+	case ELEM_CELL: index_fill_cell(t, l, r, &ti, 0, 0); break;
+	default: err = 1; goto fail;
+	}
+
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	free_cell(t);
+	
+	return err;
 }
 
 static struct apl_cmpx
@@ -6895,166 +7325,6 @@ struct cell ctf_c = {
 	}
 };
 EXPORT struct cell *ctf = &ctf_c;
-
-#define INDEX_FILL(fn, tp, fd) 								\
-static void										\
-fn(struct cell *t, struct cell *l, struct cell *r, int64_t *ti, int64_t li, int ri)	\
-{											\
-	tp *restrict lv;								\
-	tp *restrict tv;								\
-	struct cell *d;                                                                 \
-	char *restrict db;                                                              \
-	int64_t *restrict di;                                                           \
-	int64_t cnt;                                                                    \
-											\
-	li *= l->a.shp->i[ri];					                        \
-	d = r->a.host->p[ri];                                                           \
-	cnt = array_count(d, 0);                                                        \
-											\
-	if (ri == l->a.rnk - 1) {                                                       \
-		lv = l->a.rnk ? l->a.host->fd : &l->a.fd;                               \
-		tv = t->a.rnk ? t->a.host->fd : &t->a.fd;                               \
-											\
-		if (d->a.etyp == ELEM_SPAN) {                                           \
-			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
-				tv[(*ti)++] = lv[li + i];                               \
-		} else if (!d->a.rnk) {                                                 \
-			if (d->a.etyp == ELEM_BOOL)                                     \
-				tv[(*ti)++] = lv[li + d->a.b];                          \
-			else                                                            \
-				tv[(*ti)++] = lv[li + d->a.i];                          \
-		} else if (d->a.etyp == ELEM_BOOL) {                                    \
-			db = d->a.host->b;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
-				tv[(*ti)++] = lv[li + db[i]];                           \
-		} else {                                                                \
-			di = d->a.host->i;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
-				tv[(*ti)++] = lv[li + di[i]];                           \
-		}                                                                       \
-	} else {                                                                        \
-		if (d->a.etyp == ELEM_SPAN) {                                           \
-			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
-				fn(t, l, r, ti, li+i, ri+1);                            \
-		} else if (!d->a.rnk) {                                                 \
-			if (d->a.etyp == ELEM_BOOL)                                     \
-				fn(t, l, r, ti, li+d->a.b, ri+1);                       \
-			else                                                            \
-				fn(t, l, r, ti, li+d->a.i, ri+1);                       \
-		} else if (d->a.etyp == ELEM_BOOL) {                                    \
-			db = d->a.host->b;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
-				fn(t, l, r, ti, li+db[i], ri+1);                        \
-		} else {                                                                \
-			di = d->a.host->i;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
-				fn(t, l, r, ti, li+di[i], ri+1);                        \
-		}                                                                       \
-	}                                                                               \
-}
-
-INDEX_FILL(index_fill_bool, char, b)
-INDEX_FILL(index_fill_int, int64_t, i)
-INDEX_FILL(index_fill_float, double, f)
-INDEX_FILL(index_fill_cmpx, struct apl_cmpx, j)
-INDEX_FILL(index_fill_char, uint32_t, c)
-INDEX_FILL(index_fill_cell, struct cell *, p)
-
-EXPORT int
-brk_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
-{
-	struct cell *t;
-	int64_t cnt, ti;
-	int err;
-	
-	s; fv;
-	
-	if (r->a.rnk != 1) return 4;
-	if (r->a.etyp != ELEM_CELL) return 11;
-	if (l->a.rnk != r->a.shp->i[0]) return 5;
-	
-	for (int64_t i = 0; i < l->a.rnk; i++) {
-		struct cell *x = r->a.host->p[i];
-		
-		if (x->a.etyp > ELEM_INT)
-			return 11;
-		
-		if (x->a.stg != STG_HOST) return 16;
-	}
-	
-	if (!(t = get_cell())) return 1;
-	
-	t->ctyp = CELL_ARRAY;
-	t->a.etyp = l->a.etyp;
-	t->a.stg = STG_HOST;
-	t->a.rnk = 0;
-	t->a.shp = NULL;
-	t->a.host = NULL;
-	
-	for (int64_t i = 0; i < l->a.rnk; i++) {
-		struct cell *x = r->a.host->p[i];
-		
-		t->a.rnk += x->a.etyp == ELEM_SPAN ? 1 : x->a.rnk;
-	}
-	
-	if (t->a.rnk) {
-		t->a.shp = get_host_buffer(buffer_size(ELEM_INT, t->a.rnk));
-		if (!t->a.shp) { err = 1; goto fail; }
-	}
-	
-	for (int64_t i = 0, j = 0; i < l->a.rnk; i++) {
-		struct cell *x = r->a.host->p[i];
-		
-		if (x->a.etyp == ELEM_SPAN)
-			t->a.shp->i[j++] = l->a.shp->i[i];
-		else
-			for (int k = 0; k < x->a.rnk; k++)
-				t->a.shp->i[j++] = x->a.shp->i[k];
-	}
-	
-	cnt = array_count(t, 0);
-	
-	if (!cnt) {
-		int64_t c;
-		
-		c = t->a.shp->i[t->a.rnk - 1];
-		
-		if (!c) c = 1;
-		
-		t->a.host = array_fill_element(l, c);
-		
-		if (!t->a.host) { err = 1; goto fail; }
-		
-		goto done;
-	}
-	
-	ti = 0;
-	
-	if (t->a.rnk) {
-		t->a.host = get_host_buffer(buffer_size(t->a.etyp, cnt));
-		if (!t->a.host) { err = 1; goto fail; }
-	}
-	
-	switch (t->a.etyp) {
-	case ELEM_BOOL: index_fill_bool(t, l, r, &ti, 0, 0); break;
-	case ELEM_INT: index_fill_int(t, l, r, &ti, 0, 0); break;
-	case ELEM_FLOAT: index_fill_float(t, l, r, &ti, 0, 0); break;
-	case ELEM_CMPX: index_fill_cmpx(t, l, r, &ti, 0, 0); break;
-	case ELEM_CHAR: index_fill_char(t, l, r, &ti, 0, 0); break;
-	case ELEM_CELL: index_fill_cell(t, l, r, &ti, 0, 0); break;
-	default: err = 1; goto fail;
-	}
-
-done:
-	*z = t;
-	
-	return 0;
-	
-fail:
-	free_cell(t);
-	
-	return err;
-}
 
 EXPORT int
 enclose_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***fv)
