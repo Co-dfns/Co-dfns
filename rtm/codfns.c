@@ -911,7 +911,7 @@ fail:
 EXPORT int
 println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct cell ***env)
 {
-	struct host_buffer *shp;
+	struct host_buffer shp;
 	char *vs;
 	int64_t mc, cc, sz;
 	int err;
@@ -932,12 +932,10 @@ println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 	mc = r->a.shp->i[0];
 	cc = array_count(r, 0) / mc;
 	
-	if (!(shp = get_host_buffer(buffer_size(ELEM_INT, r->a.rnk - 1))))
-		return 1;
+	shp.refc = 1;
+	shp.size = r->a.shp->size;
+	shp.i = &r->a.shp->i[1];
 	
-	for (int64_t i = 0; i < r->a.rnk - 1; i++)
-		shp->i[i] = r->a.shp->i[i + 1];
-		
 	sz = buffer_size(r->a.etyp, cc);
 	vs = (char *)r->a.host->i;
 	
@@ -947,7 +945,7 @@ println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 		};
 		struct cell x = {
 			1, CELL_ARRAY, NULL, .a = {
-				r->a.etyp, STG_HOST, r->a.rnk - 1, shp,
+				r->a.etyp, STG_HOST, r->a.rnk - 1, &shp,
 				.host = &hb
 			}
 		};
@@ -955,12 +953,11 @@ println_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struc
 		
 		if ((err = println_f(NULL, &nil, NULL, &x, NULL)))
 			goto fail;
-		
+			
 		if (x.a.rnk >= 2 && i < mc - 1)
-			printf("\n");
+			for (int j = 0; j < x.a.rnk - 1; j++)
+				printf("\n");
 	}
-	
-	free_host_buffer(shp);
 	
 done:
 	*z = ref_cell(r);
@@ -968,8 +965,6 @@ done:
 	return 0;
 
 fail:
-	free_host_buffer(shp);
-	
 	return err;
 }
 
