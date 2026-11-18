@@ -1686,7 +1686,7 @@ mst_host(struct cell *fn, struct cell *t, struct cell *l, struct cell *r, 		\
 	struct cell *d;                                                                 \
 	char *restrict db;                                                              \
 	int64_t *restrict di;                                                           \
-	int64_t cnt;                                                                    \
+	int64_t cnt, rng;                                                               \
 	int err;                                                                        \
 											\
 	if (li == t->a.rnk) {                                                           \
@@ -1781,32 +1781,39 @@ assign_done:                                                                    
 		return err;                                                             \
 	}                                                                               \
 											\
-	ti *= t->a.shp->i[li];                                                          \
+	rng = t->a.shp->i[li];								\
+	ti *= rng;                                                                      \
 	d = l->a.host->p[li];                                                           \
 	cnt = array_count(d, 0);                                                        \
 											\
 	if (d->a.etyp == ELEM_SPAN) {							\
-		for (int64_t i = 0; i < t->a.shp->i[li]; i++)				\
+		for (int64_t i = 0; i < rng; i++)					\
 			if ((err = mst_host(fn, t, l, r, ti+i, li+1, ri)))              \
 				return err;                                             \
 	} else if (!d->a.rnk) {                                                         \
 		if (d->a.etyp == ELEM_BOOL) {                                           \
+			if (d->a.b < 0 || d->a.b >= rng) return 3;			\
 			if ((err = mst_host(fn, t, l, r, ti+d->a.b, li+1, ri)))         \
 				return err;                                             \
 		} else {                                                                \
+			if (d->a.i < 0 || d->a.i >= rng) return 3;			\
 			if ((err = mst_host(fn, t, l, r, ti+d->a.i, li+1, ri)))         \
 				return err;                                             \
 		}                                                                       \
 	} else if (d->a.etyp == ELEM_BOOL) {                                            \
 		db = d->a.host->b;                                                      \
-		for (int64_t i = 0; i < cnt; i++)                                       \
+		for (int64_t i = 0; i < cnt; i++) {                                     \
+			if (db[i] < 0 || db[i] >= rng) return 3;			\
 			if ((err = mst_host(fn, t, l, r, ti+db[i], li+1, ri)))          \
 				return err;                                             \
+		}									\
 	} else {                                                                        \
 		di = d->a.host->i;                                                      \
-		for (int64_t i = 0; i < cnt; i++)                                       \
+		for (int64_t i = 0; i < cnt; i++) {                                     \
+			if (di[i] < 0 || di[i] >= rng) return 3;			\
 			if ((err = mst_host(fn, t, l, r, ti+di[i], li+1, ri)))          \
 				return err;                                             \
+		}									\
 	}                                                                               \
 											\
 	return 0;                                                                       \
