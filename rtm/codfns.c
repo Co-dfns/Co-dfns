@@ -1860,7 +1860,7 @@ struct cell mst_c = {
 EXPORT struct cell *mst = &mst_c;
 
 #define INDEX_FILL(fn, tp, fd, expr)							\
-static void										\
+static int										\
 fn(struct cell *t, struct cell *l, struct cell *r, int64_t *ti, int64_t li, int ri)	\
 {											\
 	tp *restrict lv;								\
@@ -1868,9 +1868,11 @@ fn(struct cell *t, struct cell *l, struct cell *r, int64_t *ti, int64_t li, int 
 	struct cell *d;                                                                 \
 	char *restrict db;                                                              \
 	int64_t *restrict di;                                                           \
-	int64_t cnt;                                                                    \
+	int64_t cnt, rng;                                                               \
+	int err;									\
 											\
-	li *= l->a.shp->i[ri];					                        \
+	rng = l->a.shp->i[ri];								\
+	li *= rng;					                        	\
 	d = r->a.host->p[ri];                                                           \
 	cnt = array_count(d, 0);                                                        \
 											\
@@ -1879,42 +1881,63 @@ fn(struct cell *t, struct cell *l, struct cell *r, int64_t *ti, int64_t li, int 
 		tv = t->a.rnk ? t->a.host->fd : &t->a.fd;                               \
 											\
 		if (d->a.etyp == ELEM_SPAN) {                                           \
-			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
+			for (int64_t i = 0; i < rng; i++)                               \
 				expr(i);                                                \
 		} else if (!d->a.rnk) {                                                 \
 			if (d->a.etyp == ELEM_BOOL) {                                   \
+				if (d->a.b < 0 || d->a.b >= rng) return 3;		\
 				expr(d->a.b);                                           \
 			} else {                                                        \
+				if (d->a.i < 0 || d->a.i >= rng) return 3;		\
 				expr(d->a.i);                                           \
 			}								\
 		} else if (d->a.etyp == ELEM_BOOL) {                                    \
 			db = d->a.host->b;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
+			for (int64_t i = 0; i < cnt; i++) {                             \
+				if (db[i] < 0 || db[i] >= rng) return 3;		\
 				expr(db[i]);                                            \
+			}								\
 		} else {                                                                \
 			di = d->a.host->i;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
+			for (int64_t i = 0; i < cnt; i++) {                             \
+				if (di[i] < 0 || di[i] >= rng) return 3;		\
 				expr(di[i]);                                            \
+			}								\
 		}                                                                       \
 	} else {                                                                        \
 		if (d->a.etyp == ELEM_SPAN) {                                           \
-			for (int64_t i = 0; i < l->a.shp->i[ri]; i++)                   \
-				fn(t, l, r, ti, li+i, ri+1);                            \
+			for (int64_t i = 0; i < l->a.shp->i[ri]; i++) {                 \
+				err = fn(t, l, r, ti, li+i, ri+1);                      \
+				if (err) return err;					\
+			}								\
 		} else if (!d->a.rnk) {                                                 \
-			if (d->a.etyp == ELEM_BOOL)                                     \
-				fn(t, l, r, ti, li+d->a.b, ri+1);                       \
-			else                                                            \
-				fn(t, l, r, ti, li+d->a.i, ri+1);                       \
+			if (d->a.etyp == ELEM_BOOL) {                                   \
+				if (d->a.b < 0 || d->a.b >= rng) return 3;		\
+				err = fn(t, l, r, ti, li+d->a.b, ri+1);                 \
+				if (err) return err;					\
+			} else {                                                        \
+				if (d->a.i < 0 || d->a.i >= rng) return 3;		\
+				err = fn(t, l, r, ti, li+d->a.i, ri+1);                 \
+				if (err) return err;					\
+			}								\
 		} else if (d->a.etyp == ELEM_BOOL) {                                    \
 			db = d->a.host->b;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
-				fn(t, l, r, ti, li+db[i], ri+1);                        \
+			for (int64_t i = 0; i < cnt; i++) {                             \
+				if (db[i] < 0 || db[i] >= rng) return 3;		\
+				err = fn(t, l, r, ti, li+db[i], ri+1);                  \
+				if (err) return err;					\
+			}								\
 		} else {                                                                \
 			di = d->a.host->i;						\
-			for (int64_t i = 0; i < cnt; i++)                               \
-				fn(t, l, r, ti, li+di[i], ri+1);                        \
+			for (int64_t i = 0; i < cnt; i++) {                             \
+				if (di[i] < 0 || di[i] >= rng) return 3;		\
+				err = fn(t, l, r, ti, li+di[i], ri+1);                  \
+				if (err) return err;					\
+			}								\
 		}                                                                       \
 	}                                                                               \
+											\
+	return 0;									\
 }
 
 #define INDEX_FILL_REAL(i) tv[(*ti)++] = lv[li + i];
@@ -2008,14 +2031,16 @@ brk_f(struct cell *s, struct cell **z, struct cell *l, struct cell *r, struct ce
 	}
 	
 	switch (t->a.etyp) {
-	case ELEM_BOOL: index_fill_bool(t, l, r, &ti, 0, 0); break;
-	case ELEM_INT: index_fill_int(t, l, r, &ti, 0, 0); break;
-	case ELEM_FLOAT: index_fill_float(t, l, r, &ti, 0, 0); break;
-	case ELEM_CMPX: index_fill_cmpx(t, l, r, &ti, 0, 0); break;
-	case ELEM_CHAR: index_fill_char(t, l, r, &ti, 0, 0); break;
-	case ELEM_CELL: index_fill_cell(t, l, r, &ti, 0, 0); break;
-	default: err = 1; goto fail;
+	case ELEM_BOOL: err = index_fill_bool(t, l, r, &ti, 0, 0); break;
+	case ELEM_INT: err = index_fill_int(t, l, r, &ti, 0, 0); break;
+	case ELEM_FLOAT: err = index_fill_float(t, l, r, &ti, 0, 0); break;
+	case ELEM_CMPX: err = index_fill_cmpx(t, l, r, &ti, 0, 0); break;
+	case ELEM_CHAR: err = index_fill_char(t, l, r, &ti, 0, 0); break;
+	case ELEM_CELL: err = index_fill_cell(t, l, r, &ti, 0, 0); break;
+	default: err = 1;
 	}
+	
+	if (err) goto fail;
 
 done:
 	*z = t;
