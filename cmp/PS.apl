@@ -332,7 +332,8 @@ PS←{⍺←⊢
 	bm←{bm⊣bm[p]∧←⍵}⍣≡bm←(t∊A V Z)∨dm←(t=P)∧n=-sym⍳⊂,'.'
 	zv∧←(0⍪(2>⌿zv⍪0)⌿1⌽(t[i]=P)∧n[i]∊-sym⍳,¨'←' '⍠←' '∘←')[+⍀2<⌿0⍪zv←km∧bm[i]]
 	zv×←(0⍪i⌿⍨¯2⌽2>⌿zv⍪0)[+⍀2<⌿0⍪zv]
-	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0 ⋄ _←p[i]{zv[⍵]⌈←zv[⍺]}⍣≡i←⍸bm
+	zv←(zm⌿zv)@(i⌿⍨zm←zv≠0)⊢(≢p)⍴0
+	_←p[i]{zv[i]←zv[i]⌈zv[⍺]}⍣≡zv[i←⍸bm]
 	zv×←{⍵∧⍵[p]}⍣≡~⊃¯1 0 1∨.⌽⊂dm
 	zv[i]←i←⍸t=T ⋄ lx[i]←i←⍸(t=T)∧k=0
 	i←⍸(t∊T V)∧zv≠0
@@ -341,7 +342,7 @@ PS←{⍺←⊢
 	vb[p⍳zv[msk⌿i]]←(≢p)+ux⍳x⌿⍨msk←zv[i]∊p[⍸(t=F)∧(≠p)∧⌽≠⌽p]
 	p⍪←j[p[j←⍸t=H]⍳r[ui]] ⋄ t⍪←V⍴⍨≢ui ⋄ k n r rf rz lx vb zv pos end(⊣⍪I)←⊂ui
 
-	⍝ Tag all variables as either lexical or dynamic
+	⍝ Tag all variables as either lexical (¯2) or dynamic (¯3)
 	lx[i]←¯3+F=t[r[i←⍸(t[p]≠H)∧(t=V)∧vb=¯1]]
 
 	⍝ Type known namespace-assigned variables
