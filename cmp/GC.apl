@@ -617,7 +617,7 @@ GC←{
 		z,←⊂id,'(struct cell *s, struct cell **z, struct cell *alpha, struct cell *omega, struct cell ***fv)'
 		z,←⊂'{'
 		z,←'	'∘,¨decl_vars svs
-		z,←⊂'	void *tmp;'
+		z,←⊂'	struct cell *tmp;'
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	tmp = NULL;'
