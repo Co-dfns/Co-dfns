@@ -491,7 +491,7 @@ PS←{⍺←⊢
 			_←{dz⊣m2[dz←dz⍪vp⌿⍨m2[vp]<vd∊zd[dz←tm[⍵]⌿p[⍵]]]←1}⍣{0=≢⍺}msk⌿zp
 		m2[z]<z∊msk⌿zp}⍣(nk∧.=0)⊢0
 		k[z]←nk ⋄ zo[z]∨←zo[zc]∧(nk=1)∨(nk=2)∧(k[zc]=2)∧4≠|k[zb]
-		i←z⌿⍨(vb[z]≠¯1)∧(zl≥zo[z])∧(k[zd[z]⌈0]=0)∧(nk≠4)∧(nk>1)∨(nk=1)∧(≠p)[0⌈vb[z]]
+		i←z⌿⍨(vb[z]≠¯1)∧(zl≥zo[z])∧(k[zd[z]⌈0]=0)∧(nk>1)∨(nk=1)∧(≠p)[0⌈vb[z]]
 		k[zd[i]]←k[i] ⋄ k[v]←k[vb[v]]
 		zo[zd[i]]←zo[i] ⋄ zo[v]∨←zo[vb[v]]
 		z za zb zc zl⌿⍨←⊂nk=0 ⋄ v⌿⍨←k[v]=0
