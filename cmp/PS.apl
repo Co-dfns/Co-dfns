@@ -566,10 +566,22 @@ PS←{⍺←⊢
 	ol←(k[om⌿i]≠4)×1+(k[i⌿⍨1⌽om]=4)∨k[om⌿i]∊2 3 ⋄ or←(msk⌿dm)⍀1+k[dm⌿i]=2
 	k[oi]←3 3⊥↑or ol
 
+	⍝ Parse trains as R nodes with kinds 2 (atop) and 3 (fork)
+	isfn←{(t[⍵]∊O R)∨(t[⍵]∊B C N P V Z)∧k[⍵]=2}
+	isarr←{(k[⍵]=1)∨((t[⍵]=A)∧k[⍵]∊¯1 0 7)∨((t[⍵]=P)∧(n[⍵]∊¯1 ¯2)∧vb[⍵]=¯1)}
+	_←p[i]{
+		~(⊃fn)∧(2≤c)∧(∧⌿fn⌿⍨2|⍳c←≢⍵)∧∧⌿(⌽isarr⍵)∨fn←⌽isfn⍵:0
+		r←(≢p)+nf←⍳¯1+⌊c÷2 ⋄ s←⌽(⊂2+2×nf)⌷⌽⍳c
+		p[⍵]←(⍺,r)[+⍀(⍳c)∊s] ⋄ p,←(≢r)↑⍺,r
+		t[⍺]←R ⋄ k[⍺]←2+2|c ⋄ n[⍺]←0
+		t,←r≢⍛⍴R ⋄ k,←r≢⍛⍴3 ⋄ n,←r≢⍛⍴0 ⋄ lx,←r≢⍛⍴0 ⋄ vb,←r≢⍛⍴¯1
+		pos,←pos[⍵[s]] ⋄ end,←r≢⍛⍴end[⊃⌽⍵]
+	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+
 	⍝ Parse value expressions
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]]
 	km∧←(¯1⌽km)∨1⌽km←((-≢x)↑(≢pi)⍴1)[x]
-	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
+	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]∊O R)∨(t[i]≠A)∧k[i]=2
 	i km msk m2⌿⍨←⊂msk∨(~km)∨(¯2⌽m2)∨¯1⌽msk←m2∨fm∧~¯1⌽m2←am∧1⌽fm
 	i km msk m2⌿⍨←⊂km∨1⌽km
 	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0 ⋄ lx,←xc⍴¯1 ⋄ vb,←xc⍴¯1
