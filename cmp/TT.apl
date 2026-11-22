@@ -1,6 +1,8 @@
 TT←{
 	(p d t k n lx vb pos end)exp sym IN←⍵
 
+	∨⌿t=R:'TRAIN NODES MUST BE LOWERED BEFORE TT' SIGNAL SELECT ⍸t=R
+
 	⍝ Kill the contents of X nodes
 	p t k n lx vb pos end⌿⍨←⊂msk←{⍵∧⍵[p]}⍣≡t[p]≠X
 	p vb(⊣-1+⍸⍨)←⊂⍸~msk

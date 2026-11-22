@@ -566,10 +566,23 @@ PS←{⍺←⊢
 	ol←(k[om⌿i]≠4)×1+(k[i⌿⍨1⌽om]=4)∨k[om⌿i]∊2 3 ⋄ or←(msk⌿dm)⍀1+k[dm⌿i]=2
 	k[oi]←3 3⊥↑or ol
 
+	⍝ Parse trains as R nodes with kinds 2 (atop) and 3 (fork)
+	msk←(t[p]=Z)∧(n[p]=-sym⍳⊂,'(')∨(t[p[p]]=B)∧k[p[p]]=2
+	i←(i⍪ih)[x←⌽⍋pi⍪ih←∪pi←p[i←⍸msk]] ⋄ km←x<≢pi
+	am←km∧(t[i]=A)∨(t[i]≠O)∧t[i]=1 ⋄ fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
+	msk←(¯1⌽km)∧≠⍀km≠(~km)⍀2≠⌿0⍪(~km)⌿≠⍀km
+	m2←km>(am∧msk)∨fm∧(¯1⌽km)∨1⌽km
+	i km msk⌿⍨←⊂~≠⍀(~km)⍀2≠⌿0⍪(~(⌿⍨⍨)1⌽⊢)(m2∨~km)⌿m2
+	t[j←i⌿⍨~km]←R ⋄ k[j]←2+msk⌿⍨1⌽~km ⋄ n[j]←0
+	np←(≢p)+⍳xc←+⌿msk←msk∧1⌽km ⋄ x←msk⌿msk>¯2⌽msk
+	p,←(p[j←msk⌿i]×1⌽x)+(1+np)×~1⌽x ⋄ p[i⌿⍨msk∨(1⌽msk)∨2⌽msk]←np⌿⍨2+x
+	t k n lx vb,←xc⍴¨R 3 0 0 ¯1
+	pos,←pos[j] ⋄ end,←end[i⌿⍨msk<2⌽msk][¯1++⍀x]
+
 	⍝ Parse value expressions
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]]
 	km∧←(¯1⌽km)∨1⌽km←((-≢x)↑(≢pi)⍴1)[x]
-	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
+	am←km∧(t[i]=A)∨(t[i]≠O)∧k[i]=1 ⋄ fm←fm∧1⌽am∨fm←km∧(t[i]∊O R)∨(t[i]≠A)∧k[i]=2
 	i km msk m2⌿⍨←⊂msk∨(~km)∨(¯2⌽m2)∨¯1⌽msk←m2∨fm∧~¯1⌽m2←am∧1⌽fm
 	i km msk m2⌿⍨←⊂km∨1⌽km
 	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴0 ⋄ lx,←xc⍴¯1 ⋄ vb,←xc⍴¯1
