@@ -568,16 +568,17 @@ PS←{⍺←⊢
 	k[oi]←3 3⊥↑or ol
 
 	⍝ Parse trains as R nodes with kinds 2 (atop) and 3 (fork)
-	isfn←{(t[⍵]∊O R)∨(t[⍵]∊B C N P V Z)∧k[⍵]=2}
-	isarr←{(k[⍵]=1)∨((t[⍵]=A)∧k[⍵]∊¯1 0 7)∨((t[⍵]=P)∧(n[⍵]∊¯1 ¯2)∧vb[⍵]=¯1)}
-	_←p[i]{
-		~(⊃fn)∧(2≤c)∧(∧⌿fn⌿⍨2|⍳c←≢⍵)∧∧⌿(⌽isarr⍵)∨fn←⌽isfn⍵:0
-		r←(≢p)+nf←⍳¯1+⌊c÷2 ⋄ s←⌽(⊂2+2×nf)⌷⌽⍳c
-		p[⍵]←(⍺,r)[+⍀(⍳c)∊s] ⋄ p,←(≢r)↑⍺,r
-		t[⍺]←R ⋄ k[⍺]←2+2|c ⋄ n[⍺]←0
-		t,←r≢⍛⍴R ⋄ k,←r≢⍛⍴3 ⋄ n,←r≢⍛⍴0 ⋄ lx,←r≢⍛⍴0 ⋄ vb,←r≢⍛⍴¯1
-		pos,←pos[⍵[s]] ⋄ end,←r≢⍛⍴end[⊃⌽⍵]
-	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	msk←(t[p]=Z)∧(n[p]=-sym⍳⊂,'(')∨(t[p[p]]=B)∧k[p[p]]=2
+	i←(i⍪ih)[x←⌽⍋pi⍪ih←∪pi←p[i←⍸msk]] ⋄ km←x<≢pi
+	am←km∧(t[i]=A)∨(t[i]≠O)∧t[i]=1 ⋄ fm←km∧(t[i]=O)∨(t[i]≠A)∧k[i]=2
+	msk←(¯1⌽km)∧≠⍀km≠(~km)⍀2≠⌿0⍪(~km)⌿≠⍀km
+	m2←km>(am∧msk)∨fm∧(¯1⌽km)∨1⌽km
+	i km msk⌿⍨←⊂~≠⍀(~km)⍀2≠⌿0⍪(~(⌿⍨⍨)1⌽⊢)(m2∨~km)⌿m2
+	t[j←i⌿⍨~km]←R ⋄ k[j]←2+msk⌿⍨1⌽~km ⋄ n[j]←0
+	np←(≢p)+⍳xc←+⌿msk←msk∧1⌽km ⋄ x←msk⌿msk>¯2⌽msk
+	p,←(p[j←msk⌿i]×1⌽x)+(1+np)×~1⌽x ⋄ p[i⌿⍨msk∨(1⌽msk)∨2⌽msk]←np⌿⍨2+x
+	t k n lx vb,←xc⍴¨R 3 0 0 ¯1
+	pos,←pos[j] ⋄ end,←end[i⌿⍨msk<2⌽msk][¯1++⍀x]
 
 	⍝ Parse value expressions
 	i←(ih⍪i)[x←⍋(ih←∪pi)⍪pi←p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]]
